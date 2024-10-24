@@ -23,8 +23,11 @@ use App\Services\FileUploadService;
 use Illuminate\Support\Facades\Route;
 
 
+// Route::get('/', function () {
+//     return redirect()->route('login');
+// });
 Route::get('/', function () {
-    return redirect()->route('login');
+    return view('index');
 });
 
 
