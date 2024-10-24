@@ -31,15 +31,8 @@ class UserController extends Controller
      */
     public function index(Request $request): View
     {
-        $client = Client::where('user_id',Auth::id())->first();
-        if($client){
-            $staff = Staff::where('client_admin_id',$client->id)->pluck('user_id');
-            // dd($staff);
-            $data = User::whereIn('id',$staff)->latest()->paginate(5);
 
-        }else{
-            $data = User::latest()->paginate(5);
-        }
+        $data = User::latest()->paginate(5);
 
 
 

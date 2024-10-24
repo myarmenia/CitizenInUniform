@@ -4,10 +4,12 @@ namespace App\Providers;
 
 
 use App\Interfaces\AttendanceSheetInterface;
+use App\Interfaces\CategoryInterface;
 use App\Interfaces\CheckEntryCodeInterface;
 use App\Interfaces\ClientIdFromTurnstileInterface;
 use App\Interfaces\CreateEntryCodeInterface;
 use App\Repositories\AttendanceSheetRepository;
+use App\Repositories\CategoryRepository;
 use App\Repositories\EntryCodeRepository;
 use App\Repositories\Interfaces\PersonRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
@@ -24,6 +26,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(CategoryInterface::class, CategoryRepository::class);
+
+
+
+        // ====================== hiny ================================
         $this->app->bind(CreateEntryCodeInterface::class, EntryCodeRepository::class);
         $this->app->bind(ClientIdFromTurnstileInterface::class, TurnstileRepository::class);
         $this->app->bind(CheckEntryCodeInterface::class, TurnstileRepository::class);
