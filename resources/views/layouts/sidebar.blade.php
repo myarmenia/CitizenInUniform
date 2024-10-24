@@ -192,14 +192,14 @@
 
 
     {{-- @if (Auth::user()->hasRole("super_admin")) --}}
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link {{ Route::is(['entry-codes-list', 'entry-codes-create', 'entry-codes-edit']) ? '' : 'collapsed' }}" href="{{ route('entry-codes-list') }} "
 
             >
             <i class="bi bi-person"></i>
             <span>Entry Code</span>
             </a>
-        </li>
+        </li> --}}
 
 
       <li class="nav-item">
@@ -224,6 +224,14 @@
         </a>
       </li>
       @endif
+
+
+      <li class="nav-item">
+        <a class="nav-link {{ Route::is(['category.*']) ? '' : 'collapsed' }}"  href=" {{ route('category.index') }}">
+          <i class="bi bi-menu-app"></i>
+          <span>Մենյուի բաժիններ</span>
+        </a>
+      </li>
 
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('products.index') }}">
