@@ -11,12 +11,11 @@ class CategoryRepository implements CategoryInterface
     public function index(){
         return Category::all();
     }
-    // public function create(){
-    //     //
-    // }
-    // public function store($data){
-    //     //
-    // }
+
+    public function store($data): Category
+    {
+        return Category::create($data);
+    }
     // public function edit(string $id){
     //     //
     // }

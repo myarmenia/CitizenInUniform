@@ -21,7 +21,7 @@
                         </nav>
                         </h5>
                         <div class="pull-right d-flex justify-content-end m-3" >
-                            <a class="btn btn-primary  mb-2" href=""><i class="fa fa-plus"></i> Ստեղծել նոր բաժին</a>
+                            <a class="btn btn-primary  mb-2" href="{{ route('category.create')}}"><i class="fa fa-plus"></i> Ստեղծել նոր բաժին</a>
                         </div>
                     </div>
                 </div>

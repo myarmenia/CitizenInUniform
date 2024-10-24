@@ -17,4 +17,9 @@ class CategoryService
         return $this->categorryRepository->index();
     }
 
+    public function store($date)
+    {
+        return $this->categorryRepository->store($date->toArray());
+    }
+
 }

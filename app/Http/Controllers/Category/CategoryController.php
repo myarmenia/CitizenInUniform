@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Category;
 
 use App\DTO\CategoryDto;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
 
@@ -30,31 +31,30 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view("category.create");
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        //
+        $data = $this->service->store(CategoryDto::fromCategoryDto($request));
+
+        return redirect()->route("category.index");
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        
+        return redirect()->route("category.index");
+
     }
 
     /**
