@@ -26,9 +26,12 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return redirect()->route('login');
 // });
-Route::get('/', function () {
+// Route::get('/', function () {
+//     return view('index');
+// });
+Route::get('/{any}',function(){
     return view('index');
-});
+})->where('any',".*");
 
 
 Auth::routes();
@@ -46,6 +49,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
 
 });
+
 
 Route::get('get-file', [FileUploadService::class, 'get_file'])->name('get-file');
 // =====================coment=====================================

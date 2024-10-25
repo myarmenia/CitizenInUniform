@@ -1,16 +1,22 @@
 import { createRouter, createWebHistory } from  "vue-router";
-import faqCategoriesIndex from '../components/faqCategories/Index.vue'
 import AdminLayout from '../components/AdminLayout.vue'
+import faqCategoriesIndex from '../views/faq-category/FaqCategory.vue'
+import faqCategoriesCreate from '../views/faq-category/FaqCategoryCreate.vue'
 
 const routes = [
 {
     path:'/',
     componenet:AdminLayout,
-    chinlren:[
+    children:[
         {
             path:'/faq-categories',
-            name:'faqCategories.index',
+            name:'faqcategory',
             component:faqCategoriesIndex
+        },
+        {
+            path:'/faq-categories/create',
+            name:'faqcategorycreate',
+            component:faqCategoriesCreate
         }
 
     ]
