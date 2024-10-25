@@ -16,16 +16,15 @@ class CategoryDto
     public static function fromCategoryDto(Request $request): CategoryDto
     {
         return new self(
-            title: $request->mac
+            title: $request->title
         );
     }
-
-    
 
     public function toArray()
     {
         return [
             'title' => $this->title
+
         ];
     }
 

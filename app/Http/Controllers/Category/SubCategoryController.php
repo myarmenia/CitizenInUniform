@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Category;
 
-use App\DTO\CategoryDto;
+use App\DTO\SubCategoryDto;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryRequest;
-use App\Services\CategoryService;
+use App\Services\SubCategoryService;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class SubCategoryController extends Controller
 {
-    public function __construct(protected CategoryService $service)
+    public function __construct(protected SubCategoryService $service)
     {
 
     }
@@ -19,11 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-
         $data = $this->service->index();
 
-        return view("category.index", compact('data'));
-
+        return view("sub-category.index", compact('data'));
     }
 
     /**
@@ -31,19 +28,19 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view("category.create");
+        $categories = $this->service->create();
 
+        return view("sub-category.create", compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CategoryRequest $request)
+    public function store(Request $request)
     {
-        $data = $this->service->store(CategoryDto::fromCategoryDto($request));
+        $data = $this->service->store(SubCategoryDto::fromSubCategoryDto($request));
 
-        return redirect()->route("category.index");
-
+        return redirect()->route("sub-category.index");
     }
 
 
@@ -52,23 +49,17 @@ class CategoryController extends Controller
      */
     public function edit(string $id)
     {
-
-
         $data = $this->service->edit($id);
 
-        return view("category.edit", compact('data'));
-
+        return view("sub-category.edit", compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(CategoryRequest $request, string $id)
+    public function update(Request $request, string $id)
     {
-
-        $data = $this->service->update(CategoryDto::fromCategoryDto($request), $id);
-
-        return redirect()->route("category.index");
+        //
     }
 
     /**
