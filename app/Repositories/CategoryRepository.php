@@ -16,12 +16,17 @@ class CategoryRepository implements CategoryInterface
     {
         return Category::create($data);
     }
-    // public function edit(string $id){
-    //     //
-    // }
-    // public function update($data, string $id){
-    //     //
-    // }
+    public function edit(string $id){
+        return Category::find($id);
+    }
+
+    public function update($data, string $id){
+        
+        $category = Category::find($id);
+        return $category ? $category->update($data) : false;
+    }
+
+
     // public function destroy(string $id){
     //     //
     // }

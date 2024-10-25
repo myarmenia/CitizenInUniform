@@ -12,13 +12,13 @@
                             <h5 class="card-title">
                                 <nav>
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="{{ route('category.index') }}">Մենյուի բաժիններ </a></li>
+                                        <li class="breadcrumb-item"><a href="{{ route('sub-category.index') }}">Մենյուի բաժիններ </a></li>
                                         <li class="breadcrumb-item active">Փոփոխել</li>
                                     </ol>
                                 </nav>
                             </h5>
 
-                            <form action="{{ route('category.update', $data->id) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('sub-category.update', $data->id) }}" method="post" enctype="multipart/form-data">
                                 @method('PUT')
 
                                 <div class="row mb-3">
@@ -34,6 +34,15 @@
                                             </div>
                                         @enderror
                                     </div>
+
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="inputText" class="col-sm-3 col-form-label">Բովանդակություն </label>
+                                    <div class="col-sm-9">
+
+                                         <textarea class="tinymce-editor" name="content">{!! $data->content !!}</textarea>
+
 
                                 </div>
 

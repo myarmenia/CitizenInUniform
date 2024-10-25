@@ -1,9 +1,5 @@
 @extends('layouts.app')
- <style>
-        .dropdown-toggle::after {
-            content: none;
-        }
-    </style>
+
 @section('content')
     <main id="main" class="main">
 
@@ -28,12 +24,7 @@
 
             </div>
         </div>
-{{--
-        @session('success')
-            <div class="alert alert-success" role="alert">
-                {{ $value }}
-            </div>
-        @endsession --}}
+
 
         <table class="table table-bordered">
             <tr>
@@ -60,7 +51,7 @@
                                 <i class="bx bx-dots-vertical-rounded"></i>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href=""><i
+                                <a class="dropdown-item" href="{{route('category.edit', $category->id)}}"><i
                                         class="bx bx-edit-alt me-1"></i>Խմբագրել</a>
                                 <button type="button" class="dropdown-item click_delete_item"
                                     data-bs-toggle="modal" data-bs-target="#smallModal"><i

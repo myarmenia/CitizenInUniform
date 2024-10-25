@@ -8,12 +8,14 @@ use App\Interfaces\CategoryInterface;
 use App\Interfaces\CheckEntryCodeInterface;
 use App\Interfaces\ClientIdFromTurnstileInterface;
 use App\Interfaces\CreateEntryCodeInterface;
+use App\Interfaces\SubCategoryInterface;
 use App\Repositories\AttendanceSheetRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\EntryCodeRepository;
 use App\Repositories\Interfaces\PersonRepositoryInterface;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\PersonRepository;
+use App\Repositories\SubCategoryRepository;
 use App\Repositories\TurnstileRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Pagination\Paginator;
@@ -27,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(CategoryInterface::class, CategoryRepository::class);
-
+        $this->app->bind(SubCategoryInterface::class, SubCategoryRepository::class);
 
 
         // ====================== hiny ================================

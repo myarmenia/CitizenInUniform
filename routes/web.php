@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\Category\CategoryController;
+use App\Http\Controllers\Category\SubCategoryController;
 use App\Http\Controllers\ChangeStatusController;
 use App\Http\Controllers\Component\ClientComponentController;
 use App\Http\Controllers\DeleteItemController;
@@ -37,6 +38,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
 
     Route::resource('category', CategoryController::class);
+    Route::resource('sub-category', SubCategoryController::class);
 
 
 

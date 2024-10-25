@@ -22,4 +22,15 @@ class CategoryService
         return $this->categorryRepository->store($date->toArray());
     }
 
+    public function edit($id)
+    {
+        return $this->categorryRepository->edit($id);
+    }
+
+    public function update($date, $id)
+    {
+        return $this->categorryRepository->update($date->toArray(), $id);
+    }
+
+
 }
