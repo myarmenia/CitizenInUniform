@@ -202,36 +202,36 @@
         </li> --}}
 
 
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link {{ Route::is(['users.index', 'users.create', 'users.edit']) ? '' : 'collapsed' }}"  href=" {{ route('users.index') }}">
           <i class="bi bi-person"></i>
           <span>Users</span>
         </a>
-      </li>
-      @if (Auth::user()->hasRole("super_admin"))
+      </li> --}}
+      {{-- @if (Auth::user()->hasRole("super_admin"))
         <li class="nav-item">
             <a class="nav-link {{ Route::is(['roles.index', 'roles.create', 'roles.edit']) ? '' : 'collapsed' }}" href="{{ route('roles.index') }}">
             <i class="bi bi-person"></i>
             <span>Roles</span>
             </a>
         </li>
-       @endif
-       @if (Auth::user()->hasRole("client_admin"))
+       @endif --}}
+       {{-- @if (Auth::user()->hasRole("client_admin"))
       <li class="nav-item">
         <a class="nav-link {{ Route::is(['people.index', 'people.create', 'people.edit']) ? '' : 'collapsed' }}" href="{{ route('people.index') }}">
           <i class="bi bi-person"></i>
           <span>People</span>
         </a>
       </li>
-      @endif
+      @endif --}}
 
 
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link {{ Route::is(['category.*']) ? '' : 'collapsed' }}"  href=" {{ route('category.index') }}">
           <i class="bi bi-menu-app"></i>
           <span>Մենյուի բաժիններ</span>
         </a>
-      </li>
+      </li> --}}
 
       {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('products.index') }}">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
+use App\Http\Controllers\FaqCategoryController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/user', function (Request $request) {
@@ -20,3 +21,4 @@ Route::group(['prefix' => 'turnstile'], function ($router) {
     // Route::post('qr-black-list', QrBlackListController::class);
 
 });
+Route::get('/faq-categories',[FaqCategoryController::class,'index']);

@@ -49,10 +49,10 @@
 </head>
 <body>
     <div id="app">
-        @if (Auth::user())
+        {{-- @if (Auth::user()) --}}
             @include('layouts.navbar')
-            @include('layouts.sidebar')
-        @endif
+            {{-- @include('layouts.sidebar') --}}
+        {{-- @endif --}}
 
 
         @yield('content')
