@@ -21,7 +21,7 @@ class CategoryRepository implements CategoryInterface
     }
 
     public function update($data, string $id){
-        
+
         $category = Category::find($id);
         return $category ? $category->update($data) : false;
     }

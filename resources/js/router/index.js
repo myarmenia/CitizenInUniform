@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from  "vue-router";
 import AdminLayout from '../components/AdminLayout.vue'
 import faqCategoriesIndex from '../views/faq-category/FaqCategory.vue'
-import faqCategoriesCreate from '../views/faq-category/FaqCategoryCreate.vue'
+import faqCategoriesCreate from '../views/faq-category/Create.vue'
 
 const routes = [
 {
