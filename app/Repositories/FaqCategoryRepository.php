@@ -7,9 +7,13 @@ use App\Models\FAQCategory;
 
 class FaqCategoryRepository implements FaqCategoryRepositoryInterface
 {
-    public function store($data){
-        // dd($data);
-        return FAQCategory::create(FaqCategoryDto::toArray());
+    public function store($faqCategoryDto){
+
+        $faqCategory = new FaqCategory();
+        $faqCategory->title = $faqCategoryDto->title;
+        $faqCategory->save();
+        return  $faqCategory;
+
 
     }
     public function update(){
