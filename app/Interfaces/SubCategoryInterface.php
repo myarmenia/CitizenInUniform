@@ -2,7 +2,7 @@
 
 namespace App\Interfaces;
 
-interface CategoryInterface
+interface SubCategoryInterface
 {
     public function index();
     public function store($data);

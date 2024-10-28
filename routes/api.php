@@ -21,4 +21,9 @@ Route::group(['prefix' => 'turnstile'], function ($router) {
     // Route::post('qr-black-list', QrBlackListController::class);
 
 });
-Route::get('/faq-categories',[FaqCategoryController::class,'index']);
+Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
+Route::post('/create-faq-category',[FaqCategoryController::class,'store']);
+Route::get('/faq-categories/{id}/edit',[FaqCategoryController::class,'edit']);
+Route::put('/faq-categories/{id}',[FaqCategoryController::class,'update']);
+Route::delete('/faq-categories/{id}',[FaqCategoryController::class,'destroy']);
+
