@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\FaqCategorySubcategory;
 use App\DTO\FaqCategorySubcategoryDto;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FaqCategorySubcategoryRequest;
+use App\Http\Resources\FaqCategorySubcategoryResource;
+use App\Models\FAQSubCategory;
 use App\Services\FaqCategorySubcategoryService;
 use Illuminate\Http\Request;
 
@@ -19,7 +22,14 @@ class FaqCategorySubcategoryController extends BaseController
     }
     public function index()
     {
-        // $faq_category_subcategory=
+
+            $data = $this->service->index();
+            $data=FaqCategorySubcategoryResource::collection($data );
+
+        return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
+
+
+
     }
 
     /**
@@ -33,10 +43,11 @@ class FaqCategorySubcategoryController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FaqCategorySubcategoryRequest $request)
     {
-     
+
         $data = $this->service->store(FaqCategorySubcategoryDto::fromRequestDto($request));
+
 
         return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
 
@@ -47,7 +58,7 @@ class FaqCategorySubcategoryController extends BaseController
      */
     public function show(string $id)
     {
-        //
+        dd($id);
     }
 
     /**

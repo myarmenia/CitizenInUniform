@@ -2,6 +2,7 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
+import { initTinyMCE } from '../../utils/tinymceConfig';
 
 const router = useRouter()
 let errors = ref([])
@@ -13,6 +14,7 @@ const form = reactive({
 })
 
 const handleSave = () =>{
+    form.content = tinymce.get('tiny-editor').getContent()
     axios.post('/api/faq-category-subcategory',form)
     .then((response)=>{
         router.push('/faq-category-subcategory')
@@ -38,6 +40,7 @@ let faqCategories = ref([]);
 
 onMounted( async () =>{
     getAllFaqCategory()
+    initTinyMCE()
 })
 
 const getAllFaqCategory = async () => {
@@ -101,9 +104,9 @@ const handleSelectionChange = () => {
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-3 col-form-label">Վերնագիր</label>
+                  <label for="inputText" class="col-sm-3 col-form-label">Բովանդակություն</label>
                   <div class="col-sm-9">
-                    <textarea class="tinymce-editor"  v-model="form.content"></textarea>
+                    <textarea class="tinymce-editor"  id="tiny-editor" v-model="form.content"></textarea>
 
                     <small style = "color:red" v-if="errors.title">{{errors.content}}</small>
                   </div>

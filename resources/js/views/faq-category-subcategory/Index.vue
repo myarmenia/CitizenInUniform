@@ -12,13 +12,62 @@ const getAllData = async () => {
     let response = await axios.get('/api/faq-category-subcategory')
         .then((response)=>{
 
-            allData.value = response.data.faqCategories
+            allData.value = response.data.data
             // .data
             // links.value =  response.data.faqCategories.links
 
 
         })
 }
+
+const  onEdit = (id) =>{
+alert()
+router.push(`/faq-category-subcategory/${id}/edit`)
+}
+const deleteItem = (id) =>{
+
+    Swal.fire({
+    title: "Դուք համոզված եք?",
+    // text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    cancelButtonText:"Ոչ" ,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Այո"
+    })
+    .then((result) => {
+        if (result.isConfirmed) {
+            axios.delete(`/api/faq-categories/${id}`)
+                .then(()=>{
+                   Swal.fire({
+                        title: "Ջնջված է",
+                        text: "Ձեր գրառումը բարեհաջող ջնջվել է",
+                        icon: "success",
+                        confirmButtonText: "Լավ",
+                        //   // dont work css
+                            customClass: {
+                                icon: 'small-icon'  // Add custom class for the icon
+                            }
+                        });
+                        // dont work css
+                        didRender: () => {
+                        const icon = document.querySelector('.small-icon .swal2-icon');
+                        console.log(icon)
+                        if (icon) {
+                            icon.style.fontSize = '5px';
+                            icon.style.width = '50px';
+                            icon.style.height = '50px';
+                        }
+                        }
+
+                        getFaqCategories()
+
+                })
+        }
+    });
+}
+
 
 </script>
 <template>
@@ -55,15 +104,15 @@ const getAllData = async () => {
                 <tr>
                     <th>Հ/Հ</th>
                     <th>Վերնագիր</th>
-                    <th>Կարգավիճակ</th>
+                    <th>Բովանդակություն</th>
                     <th width="10%">Գործողություն</th>
                 </tr>
                 </thead>
                  <tbody>
-                    <tr v-for ="category in faqCategories" :key="category.id">
-                        <td>{{category.id}}</td>
-                        <td>{{category.title}}</td>
-                        <td>{{category.status==0 ? 'Պասիվ' : 'Ակտիվ' }}</td>
+                    <tr v-for ="item in allData" :key="item.id">
+                        <td>{{item.id}}</td>
+                        <td>{{item.title}}</td>
+                        <td>{{item.content }}</td>
                         <td>
 
 
@@ -73,10 +122,10 @@ const getAllData = async () => {
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item"   @click="onEdit(category.id)"><i
+                                    <a class="dropdown-item"   @click="onEdit(item.id)"><i
                                             class="bx bx-edit-alt me-1"></i>Խմբագրել</a>
                                     <button type="button" class="dropdown-item click_delete_item"
-                                        data-bs-toggle="modal" data-bs-target="#smallModal" @click = "deleteItem(category.id)"><i
+                                        data-bs-toggle="modal" data-bs-target="#smallModal" @click = "deleteItem(item.id)"><i
                                             class="bx bx-trash me-1"></i>
                                         Ջնջել</button>
                                 </div>

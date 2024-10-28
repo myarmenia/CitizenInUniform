@@ -9,6 +9,10 @@ use App\Services\FaqCategorySubcategory;
 
 class FaqCategorySubcategoryRepository implements FaqCategorySubcategoryRepositoryInterface
 {
+    public function index(){
+       return FAQSubCategory::query()->get();
+
+    }
     public function store($data){
 
         return FAQSubCategory::create($data);

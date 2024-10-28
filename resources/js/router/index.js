@@ -54,7 +54,7 @@ import faqCategorySubcategoryCreate from '../views/faq-category-subcategory/Crea
             component: CategoriesEdit
         }
     ]
-    
+
     const subCategoriesRoutes = [
         {
 
@@ -85,6 +85,11 @@ import faqCategorySubcategoryCreate from '../views/faq-category-subcategory/Crea
             name: 'faqCategorySubcategory.cteate',
             component: faqCategorySubcategoryCreate
         },
+         {
+            path: '/faq-category-subcategory/:id/edit',
+            name: 'faqCategorySubcategory.edit',
+            component: faqCategorySubcategoryEdit
+        }
 
     ]
 
