@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Category\SubCategoryController;
+use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryController;
+
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
 use App\Http\Controllers\FaqCategoryController;
@@ -26,7 +28,7 @@ Route::group(['prefix' => 'turnstile'], function ($router) {
 
     // Route::post('entry-code/store', [EntryCodeController::class, 'store']); // karogh e petq ga
 
-    Route::post('ees', EntryExitSystemController::class);  //  Entry/Exit System
+    // Route::post('ees', EntryExitSystemController::class);  //  Entry/Exit System
     // Route::post('active-qrs', ActiveQrsController::class);
     // Route::post('qr-black-list', QrBlackListController::class);
 
@@ -37,5 +39,7 @@ Route::post('/create-faq-category',[FaqCategoryController::class,'store']);
 Route::get('/faq-categories/{id}/edit',[FaqCategoryController::class,'edit']);
 Route::put('/faq-categories/{id}',[FaqCategoryController::class,'update']);
 Route::delete('/faq-categories/{id}',[FaqCategoryController::class,'destroy']);
+
+Route::apiResource('faq-category-subcategory',FaqCategorySubcategoryController::class);
 
 

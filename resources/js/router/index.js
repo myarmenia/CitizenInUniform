@@ -13,6 +13,9 @@ import SubCategories from '../views/sub-categories/Index.vue'
 import SubCategoriesCreate from '../views/sub-categories/Create.vue'
 import SubCategoriesEdit from '../views/sub-categories/Edit.vue'
 
+import faqCategorySubcategoryIndex from '../views/faq-category-subcategory/Index.vue'
+import faqCategorySubcategoryCreate from '../views/faq-category-subcategory/Create.vue'
+// import faqCategoriesEdit from '../views/faq-category/Edit.vue'
 
     const faqCategoryRoutes = [
         {
@@ -51,7 +54,7 @@ import SubCategoriesEdit from '../views/sub-categories/Edit.vue'
             component: CategoriesEdit
         }
     ]
-
+    
     const subCategoriesRoutes = [
         {
 
@@ -71,6 +74,20 @@ import SubCategoriesEdit from '../views/sub-categories/Edit.vue'
         }
     ]
 
+    const  faqCategorySubCategoryRoutes=[
+        {
+            path: '/faq-category-subcategory',
+            name: 'faqCategorySubcategory.index',
+            component: faqCategorySubcategoryIndex
+        },
+        {
+            path: '/faq-category-subcategory/cteate',
+            name: 'faqCategorySubcategory.cteate',
+            component: faqCategorySubcategoryCreate
+        },
+
+    ]
+
     const routes = [
         {
             path: '/',
@@ -78,7 +95,8 @@ import SubCategoriesEdit from '../views/sub-categories/Edit.vue'
             children: [
                 ...faqCategoryRoutes,
                 ...categoriesRoutes,
-                ...subCategoriesRoutes
+                ...subCategoriesRoutes,
+                ...faqCategorySubCategoryRoutes
             ]
 
         }

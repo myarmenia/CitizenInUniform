@@ -16,13 +16,20 @@
                 </router-link>
             </li>
 
-        <li class="nav-item">
-            <router-link class="nav-link"  to="/faq-categories">
-                <i class="bi bi-grid"></i>
-                <span>ՀՏՀ կատեգորիա</span>
+            <li class="nav-item">
+                <router-link class="nav-link"  to="/faq-categories">
+                    <i class="bi bi-grid"></i>
+                    <span>ՀՏՀ կատեգորիա</span>
 
-            </router-link>
-        </li>
+                </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link class="nav-link"  to="/faq-category-subcategory">
+                    <i class="bi bi-grid"></i>
+                    <span>ՀՏՀ  ենթակատեգորիա</span>
+
+                </router-link>
+            </li>
         </ul>
     </aside>
 </template>
