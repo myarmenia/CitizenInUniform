@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+
 use App\DTO\FaqCategoryDto;
 use App\Http\Requests\FaqCategoryRequest;
 use App\Models\FAQCategory;
 use App\Services\FaqCategoryService;
+
 use Illuminate\Http\Request;
 
 class FaqCategoryController extends Controller
 {
+
 
 
     public function __construct( protected FaqCategoryService $faqCategoryService){
@@ -58,6 +61,7 @@ $faqCategory = FAQCategory::find($id);
 
         $faq_category = FaqCategory::findOrFail($id);
         $faq_category->delete();
+
 
     }
 }

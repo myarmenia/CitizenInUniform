@@ -35,7 +35,9 @@
 
                 <!-- Template Main CSS File -->
             <link href="./assets/css/style.css" rel="stylesheet">
+            <link href="{{ asset('assets/css/index.css') }}" rel="stylesheet">
             <link href="./assets/css/custom-style.css" rel="stylesheet">
+
     {{-- added  template links end --}}
 
     @yield("page-script")

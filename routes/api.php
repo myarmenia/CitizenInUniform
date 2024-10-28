@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
 use App\Http\Controllers\FaqCategoryController;
@@ -10,6 +11,12 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 
+// Route::get('/categories', [CategoryController::class, 'index']);
+// Route::post('/categories/store', [CategoryController::class, 'store']);
+// Route::get('/categories/{id}/edit', [CategoryController::class, 'edit']);
+// Route::put('/categories/{id}', [CategoryController::class, 'update']);
+
+Route::apiResource('categories', CategoryController::class);
 
 // ======================== turnstile Турникет ======================================
 Route::group(['prefix' => 'turnstile'], function ($router) {
@@ -21,9 +28,11 @@ Route::group(['prefix' => 'turnstile'], function ($router) {
     // Route::post('qr-black-list', QrBlackListController::class);
 
 });
+
 Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
 Route::post('/create-faq-category',[FaqCategoryController::class,'store']);
 Route::get('/faq-categories/{id}/edit',[FaqCategoryController::class,'edit']);
 Route::put('/faq-categories/{id}',[FaqCategoryController::class,'update']);
 Route::delete('/faq-categories/{id}',[FaqCategoryController::class,'destroy']);
+
 
