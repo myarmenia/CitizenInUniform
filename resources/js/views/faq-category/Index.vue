@@ -38,6 +38,49 @@ const changePage =(link) =>{
 
         router.push(`/faq-categories/${id}/edit`)
     }
+    const deleteItem = (id) =>{
+
+            Swal.fire({
+            title: "Դուք համոզված եք?",
+            // text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            cancelButtonText:"Ոչ" ,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Այո"
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    axios.delete(`/api/faq-categories/${id}`)
+                        .then(()=>{
+                           Swal.fire({
+                                title: "Ջնջված է",
+                                text: "Ձեր գրառումը բարեհաջող ջնջվել է",
+                                icon: "success",
+                                confirmButtonText: "Լավ",
+                                //   // dont work css
+                                    customClass: {
+                                        icon: 'small-icon'  // Add custom class for the icon
+                                    }
+                                });
+                                // dont work css
+                                didRender: () => {
+                                const icon = document.querySelector('.small-icon .swal2-icon');
+                                console.log(icon)
+                                if (icon) {
+                                    icon.style.fontSize = '5px';
+                                    icon.style.width = '50px';
+                                    icon.style.height = '50px';
+                                }
+                                }
+
+                                getFaqCategories()
+
+                        })
+                }
+            });
+    }
 
 
 
@@ -47,7 +90,7 @@ const changePage =(link) =>{
 
     <main id="main" class="main">
 
-        <div class="row">
+        <div class="row mycss">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
                     <div class = "d-flex justify-content-between">
@@ -97,7 +140,7 @@ const changePage =(link) =>{
                                     <a class="dropdown-item"   @click="onEdit(category.id)"><i
                                             class="bx bx-edit-alt me-1"></i>Խմբագրել</a>
                                     <button type="button" class="dropdown-item click_delete_item"
-                                        data-bs-toggle="modal" data-bs-target="#smallModal"><i
+                                        data-bs-toggle="modal" data-bs-target="#smallModal" @click = "deleteItem(category.id)"><i
                                             class="bx bx-trash me-1"></i>
                                         Ջնջել</button>
                                 </div>
@@ -123,3 +166,13 @@ const changePage =(link) =>{
 
 
 </template>
+<style scoped>
+.small-icon  {
+    font-size: 5px;  /* Adjust the size */
+    width: 50px;    /* Adjust the width */
+    height: 50px;   /* Adjust the height */
+}
+/* .mycss{
+    background-color:green
+} */
+</style>

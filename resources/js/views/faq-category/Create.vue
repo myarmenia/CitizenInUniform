@@ -46,7 +46,7 @@ const handleSave = () =>{
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Home</a></li>
           <li class="breadcrumb-item">Forms</li>
-          <li class="breadcrumb-item active">Elements</li>
+          <li class="breadcrumb-item active">Ստեղծել</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -57,13 +57,15 @@ const handleSave = () =>{
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">General Form Elements</h5>
+              <h5 class="card-title">
+                <!-- General Form Elements -->
+            </h5>
 
               <!-- General Form Elements -->
               <!-- <form> -->
                <div>
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Text</label>
+                  <label for="inputText" class="col-sm-2 col-form-label">Վերնագիր</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" v-model="form.title">
                     <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
@@ -71,9 +73,11 @@ const handleSave = () =>{
                 </div>
 
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">Submit Button</label>
+                  <label class="col-sm-2 col-form-label">
+                    <!-- Submit Button -->
+                </label>
                   <div class="col-sm-10">
-                    <button class="btn btn-primary" @click="handleSave">Submit Form</button>
+                    <button class="btn btn-primary" @click="handleSave">Ստեղծել</button>
                   </div>
                 </div>
 

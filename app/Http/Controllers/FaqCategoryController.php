@@ -25,9 +25,9 @@ class FaqCategoryController extends Controller
 
     public function store(FaqCategoryRequest $request){
 
-        $faqCategoryDTO = new FaqCategoryDTO($request->title);
+        // $faqCategoryDTO = new FaqCategoryDTO($request->title);
 
-        $data = $this->faqCategoryService->storeFaqCategory($faqCategoryDTO);
+        $data = $this->faqCategoryService->storeFaqCategory(FaqCategoryDTO::fromFaqCategoryDto($request));
 
         return response()->json("success");
     }
@@ -39,9 +39,25 @@ class FaqCategoryController extends Controller
         return response()->json(["faqCategory"=>$faqCategory],200);
     }
     public function update(Request $request,$id){
-      
-        $faqCategory = FAQCategory::find($id);
+
+if($request->status==true){
+    $request['status']=1;
+}else{
+    $request['status']=0;
+}
+// dd($request->all());
+$faqCategory = FAQCategory::find($id);
+        // $faqCategory = FAQCategory::where('id',$id)->first();
+        // $faqCategory->update($request->all());
         $faqCategory->title=$request->title;
+        $faqCategory->status=$request->status;
         $faqCategory->save();
+    }
+
+    public function destroy($id){
+
+        $faq_category = FaqCategory::findOrFail($id);
+        $faq_category->delete();
+
     }
 }

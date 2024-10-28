@@ -44,20 +44,20 @@ const getFaqCategory = async () => {
         .then((response)=>{
             console.log(response.data.faqCategory)
             form.title = response.data.faqCategory.title
+            form.status = response.data.faqCategory.status
         })
 }
 
- const updateData = (values,action) =>{
-    // alert(values)
+ const updateData = () =>{
 
         axios.put(`/api/faq-categories/${route.params.id}`,form)
             .then((response)=>{
-                router.push('/faq-categories/:id/edit')
+
                 toast.fire({icon:"success",title:"ՀՏՀ բարեհաջող թարմացվել է"})
             })
             .catch((error) => {
                 if(error.response.status ===422){
-                    console.log(error.response.data.errors)
+
                     errors.value = error.response.data.errors
                 }
 
@@ -100,6 +100,19 @@ const getFaqCategory = async () => {
                     <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
                   </div>
                 </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-3 col-form-label">Կարգավիճակ</label>
+                            <div class="col-sm-9">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                        v-model="form.status"
+                                      >
+
+                                </div>
+                            </div>
+                </div>
+
 
                 <div class="row mb-3">
                   <label class="col-sm-2 col-form-label"></label>

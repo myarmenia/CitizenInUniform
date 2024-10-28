@@ -12,11 +12,9 @@ class FaqCategoryService{
     public function __construct(protected FaqCategoryRepositoryInterface $faqCategoryRepository){
 
     }
-    public function storeFaqCategory( FaqCategoryDto $faqCategoryDto){
+    public function storeFaqCategory( $data){
 
-
-
-        return $this->faqCategoryRepository->store( $faqCategoryDto);
+        return $this->faqCategoryRepository->store( $data->toArray());
 
     }
 
