@@ -43,8 +43,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
 
-    Route::resource('category', CategoryController::class);
-    Route::resource('sub-category', SubCategoryController::class);
+    // Route::resource('category', CategoryController::class);
+    // Route::resource('sub-category', SubCategoryController::class);
 
 
 
