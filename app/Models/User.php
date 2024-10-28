@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasRoles, SoftDeletes;
+    use HasFactory, Notifiable, HasRoles, SoftDeletes, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -46,29 +47,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    // public function role()
-    // {
-    //     return $this->belongsTo(Role::class);
-    // }
+  
 
 
-    public function entry_codes(): HasMany{
-
-        return $this->hasMany(EntryCode::class);
-    }
-    public function people(): HasMany{
-
-        return $this->hasMany(Person::class);
-    }
-    public function turnstiles(){
-
-        return $this->hasMany(Turnstile::class);
-
-    }
-    public function staff(){
-
-        return $this->hasMany(Staff::class);
-
-    }
 
 }
