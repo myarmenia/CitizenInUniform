@@ -1,6 +1,6 @@
 
 <script setup>
-import { reactive, ref } from "vue"
+import { onMounted, reactive, ref } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
@@ -8,13 +8,15 @@ let errors = ref([])
 
 const form = reactive({
     title:"",
+    f_a_q_category_id:null,
+    content:""
 })
 
 const handleSave = () =>{
-    axios.post('/api/create-faq-category',form)
+    axios.post('/api/faq-category-subcategory',form)
     .then((response)=>{
-        router.push('/faq-categories')
-        toast.fire({icon:"success",title:"ՀՏՀ բարեհաջող ավելացվել է"})
+        router.push('/faq-category-subcategory')
+        toast.fire({icon:"success",title:"ՀՏՀ ենթակատեգորիան բարեհաջող ավելացվել է"})
     })
      .catch((error) => {
 
@@ -32,6 +34,26 @@ const handleSave = () =>{
 
 }
 
+let faqCategories = ref([]);
+
+onMounted( async () =>{
+    getAllFaqCategory()
+})
+
+const getAllFaqCategory = async () => {
+    let response = await axios.get('/api/list-faq-categories')
+        .then((response)=>{
+            console.log(response.data.faqCategories)
+            faqCategories.value = response.data.faqCategories
+
+        })
+}
+
+const selectedCategory = ref(null);
+const handleSelectionChange = () => {
+    form.f_a_q_category_id=selectedCategory.value
+
+}
 
 </script>
 <template>
@@ -62,10 +84,28 @@ const handleSave = () =>{
               <!-- <form> -->
                <div>
                 <div class="row mb-3">
+                  <label for="inputText" class="col-sm-3 col-form-label">ՀՏՀ կատեգորիա</label>
+                  <div class="col-sm-9">
+                    <select class="form-select" aria-label="Default select example" v-model="selectedCategory" @change="handleSelectionChange">
+                            <option value='' disabled >Ընտրել ՀՏՀ կատեգորիա </option>
+                            <option v-for="category in faqCategories" :key="category.id" :value = "category.id">{{category.title}}</option>
+                    </select>
+                    <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
+                  </div>
+                </div>
+                <div class="row mb-3">
                   <label for="inputText" class="col-sm-3 col-form-label">Վերնագիր</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" v-model="form.title">
                     <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-3 col-form-label">Վերնագիր</label>
+                  <div class="col-sm-9">
+                    <textarea class="tinymce-editor"  v-model="form.content"></textarea>
+
+                    <small style = "color:red" v-if="errors.title">{{errors.content}}</small>
                   </div>
                 </div>
 
