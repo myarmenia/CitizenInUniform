@@ -8,7 +8,7 @@
 // document.addEventListener('DOMContentLoaded', function() {
 (function() {
   "use strict";
-
+console.log(111111111111)
   /**
    * Easy selector helper function
    */

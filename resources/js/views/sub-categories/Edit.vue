@@ -78,7 +78,7 @@ const categoryEdit = async () => {
                                 <div class="row mb-3">
                                     <label class="col-sm-3 col-form-label"></label>
                                     <div class="col-sm-9">
-                                        <button type="submit" class="btn btn-primary" @click="categoryEdit">Փոփոխել</button>
+                                        <button type="submit" class="btn btn-primary" @click="categoryEdit">Ստեղծել</button>
                                     </div>
                                 </div>
 
