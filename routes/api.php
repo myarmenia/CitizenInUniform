@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\Category\CategoryController;
+use App\Http\Controllers\Api\Category\SubCategoryController;
 use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryController;
+
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
 use App\Http\Controllers\FaqCategoryController;
@@ -18,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 // Route::put('/categories/{id}', [CategoryController::class, 'update']);
 
 Route::apiResource('categories', CategoryController::class);
+Route::apiResource('sub-categories', SubCategoryController::class);
+
 
 // ======================== turnstile Турникет ======================================
 Route::group(['prefix' => 'turnstile'], function ($router) {

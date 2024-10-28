@@ -9,6 +9,12 @@
                     <span>Մենյուի բաժիններ</span>
                 </router-link>
             </li>
+            <li class="nav-item">
+                <router-link class="nav-link"  :to="{name: 'subCategories.index'}">
+                    <i class="bi bi-menu-app-fill"></i>
+                    <span>Մենյուի ենթաբաժիններ</span>
+                </router-link>
+            </li>
 
             <li class="nav-item">
                 <router-link class="nav-link"  to="/faq-categories">
