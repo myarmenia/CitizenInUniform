@@ -5,19 +5,56 @@ import { initTinyMCE } from '../../utils/tinymceConfig';
 
 const router = useRouter()
 
-let subCategory = ref([])
 let errors = ref([])
+let allCategories = ref([])
+const selectedCategory = ref(null);
 
 const form = reactive({
+    category_id: null,
     title: '',
     content: '',
-    // files: []
+    image: ''
 })
 
 onMounted(async () => {
     initTinyMCE()
+    getAllCategies()
 })
 
+const getAllCategies = async () => {
+    let response = await axios.get ( `/api/categories`)
+    .then((response) => {
+       allCategories.value = response.data.data
+       console.log(allCategories)
+    })
+}
+
+const handleSelectionChange = () => {
+    form.category_id = selectedCategory.value
+
+}
+
+const getImage = () => {
+    let img = '/iploade/no-image.png'
+    if(form.files){
+        console.log(form.files)
+    }
+
+    return img
+}
+
+const handleFileChange = (e) => {
+    let file = e.target.files[0]
+
+    let reader  = new FileReader()
+    reader.onload = () => {
+        form.image = reader.result
+        // console.log( form, 5555555555)
+    }
+
+    reader.readAsDataURL(file)
+
+}
 
 const dataSave = async () => {
 
@@ -66,6 +103,22 @@ const dataSave = async () => {
                                 <div class="row mb-3">
                                     <label for="title" class="col-sm-3 col-form-label">Վերնագիր </label>
                                     <div class="col-sm-9">
+
+                                        <select class="form-select"  v-model="selectedCategory"  @change="handleSelectionChange" >
+                                                <option value='' disabled selected>Ընտրել մենյուի կատեգորիան </option>
+                                                <option v-for="category in allCategories" :key="category.id" :value="category.id">{{category.title}}</option>
+                                        </select>
+
+                                        <div class="mb-3 row " v-if="errors.title">
+                                            <p class="col-sm-10 text-danger fs-6" v-for="errorTitle in errors.title">{{ errorTitle }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="title" class="col-sm-3 col-form-label">Վերնագիր </label>
+                                    <div class="col-sm-9">
                                         <input type="text" class="form-control" v-model="form.title" id="title"
                                             placeholder="Վերնագիր" >
                                         <div class="mb-3 row " v-if="errors.title">
@@ -89,13 +142,10 @@ const dataSave = async () => {
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="items" class="col-sm-3 col-form-label">Ֆայլեր </label>
+                                    <label for="files" class="col-sm-3 col-form-label">Ֆայլեր </label>
                                     <div class="col-sm-9">
-                                        <input type="file" class="form-control" id="items" @change="handleFiles"  multiple>
-                                        <div class="mb-3 row " v-if="errors.files">
-                                            <p class="col-sm-10 text-danger fs-6" v-for="filesError in errors.files">{{ filesError }}
-                                            </p>
-                                        </div>
+                                        <input type="file" class="form-control" id="files" @change="handleFileChange" >
+                                        <img :src="getImage()">
                                     </div>
                                 </div>
 
