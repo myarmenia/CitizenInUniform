@@ -7,13 +7,15 @@ const router = useRouter()
 
 let errors = ref([])
 let allCategories = ref([])
-const selectedCategory = ref(null);
+const selectedCategory = ref('Ընտրել մենյուի կատեգորիան');
+
 
 const form = reactive({
-    category_id: null,
+    category_id: '',
     title: '',
     content: '',
-    image: ''
+    files: [],
+    dataFiles: []
 })
 
 onMounted(async () => {
@@ -29,50 +31,72 @@ const getAllCategies = async () => {
     })
 }
 
+
 const handleSelectionChange = () => {
     form.category_id = selectedCategory.value
 
 }
 
-const getImage = () => {
-    let img = '/iploade/no-image.png'
-    if(form.files){
-        console.log(form.files)
-    }
-
-    return img
-}
 
 const handleFileChange = (e) => {
-    let file = e.target.files[0]
+    const selectedFiles = e.target.files;
 
-    let reader  = new FileReader()
-    reader.onload = () => {
-        form.image = reader.result
-        // console.log( form, 5555555555)
-    }
+    Array.from(selectedFiles).forEach((file) => {
+        // Сохраняем оригинальные объекты File
+        form.dataFiles.push(file);
+    });
 
-    reader.readAsDataURL(file)
+    Array.from(selectedFiles).forEach((file) => {
+        const reader = new FileReader();
 
-}
+        reader.onload = () => {
+            form.files.push({ src: reader.result, type: file.type});
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+};
+
+
+const removeFile = (index) => {
+  form.files.splice(index, 1); // Удаляем файл по индексу из массива files
+  form.dataFiles.splice(index, 1);
+
+  console.log(files)
+};
+
 
 const dataSave = async () => {
+    const formData = new FormData();
 
     form.content = tinymce.get('tiny-editor').getContent()
 
-    let response = await axios.post('/api/sub-categories', form)
-    .then((response) => {
+    formData.append('category_id', form.category_id);
+    formData.append('title', form.title);
+    formData.append('content', form.content);
+
+    form.dataFiles.forEach((file) => {
+        formData.append('files[]', file); // Добавляем оригинальные объекты File
+    });
+
+    let response = await axios.post('/api/sub-categories', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response) => {
 
         router.push('/sub-categories')
         toast.fire({icon: 'success', title: 'soccess message'})
 
-    })
-    .catch((error) => {
-        if(error.response.status === 422){
-            errors.value = error.response.data.errors
-        }
-
-    })
+        })
+        .catch((error) => {
+            errors.value = []
+            if(error.response.status === 422){
+                errors.value = error.response.data.errors
+            }
+        })
 }
 
 </script>
@@ -101,16 +125,16 @@ const dataSave = async () => {
                             <h5 class="card-title">Ստեղծել նոր ենթաբաժին </h5>
 
                                 <div class="row mb-3">
-                                    <label for="title" class="col-sm-3 col-form-label">Վերնագիր </label>
+                                    <label for="title" class="col-sm-3 col-form-label">Կատեգորիա </label>
                                     <div class="col-sm-9">
 
                                         <select class="form-select"  v-model="selectedCategory"  @change="handleSelectionChange" >
-                                                <option value='' disabled selected>Ընտրել մենյուի կատեգորիան </option>
+                                                <option disabled selected>Ընտրել մենյուի կատեգորիան </option>
                                                 <option v-for="category in allCategories" :key="category.id" :value="category.id">{{category.title}}</option>
                                         </select>
 
-                                        <div class="mb-3 row " v-if="errors.title">
-                                            <p class="col-sm-10 text-danger fs-6" v-for="errorTitle in errors.title">{{ errorTitle }}
+                                        <div class="mb-3 row " v-if="errors.category_id">
+                                            <p class="col-sm-10 text-danger fs-6" v-for="errorCategoryId in errors.category_id">{{ errorCategoryId }}
                                             </p>
                                         </div>
                                     </div>
@@ -144,8 +168,20 @@ const dataSave = async () => {
                                 <div class="row mb-3">
                                     <label for="files" class="col-sm-3 col-form-label">Ֆայլեր </label>
                                     <div class="col-sm-9">
-                                        <input type="file" class="form-control" id="files" @change="handleFileChange" >
-                                        <img :src="getImage()">
+                                        <input type="file" class="form-control" id="files" @change="handleFileChange" multiple>
+
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="files" class="col-sm-3 col-form-label"></label>
+                                    <div class="d-flex justify-content-start col-sm-9 flex-wrap">
+                                        <div v-for="(file, index) in form.files" :key="index" class="files d-flex align-items-start">
+
+                                            <img v-if="file.type.startsWith('image/')" :src="file.src" alt="Изображение" class="image img-thumbnail mx-0 my-2" />
+                                            <video v-else-if="file.type.startsWith('video/')" :src="file.src" controls class="video img-thumbnail mx-0 my-2"></video>
+
+                                            <span class="deleteFile" @click="removeFile(index)"><i class="bx bx-trash me-1"></i></span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -165,3 +201,18 @@ const dataSave = async () => {
     </main><!-- End #main -->
 
 </template>
+<style scoped>
+
+.image,
+.video {
+  max-width: 150px;
+  max-height: 150px;
+  margin-right: 10px;
+}
+
+.deleteFile{
+    cursor: pointer;
+}
+
+
+</style>

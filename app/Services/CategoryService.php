@@ -17,9 +17,9 @@ class CategoryService
         return $this->categorryRepository->index();
     }
 
-    public function store($date)
+    public function store($data)
     {
-        return $this->categorryRepository->store($date->toArray());
+        return $this->categorryRepository->store($data->toArray());
     }
 
     public function edit($id)
@@ -27,9 +27,9 @@ class CategoryService
         return $this->categorryRepository->edit($id);
     }
 
-    public function update($date, $id)
+    public function update($data, $id)
     {
-        return $this->categorryRepository->update($date->toArray(), $id);
+        return $this->categorryRepository->update($data->toArray(), $id);
     }
 
 

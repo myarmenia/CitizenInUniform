@@ -6,10 +6,12 @@ namespace App\Providers;
 use App\Interfaces\CategoryInterface;
 use App\Interfaces\FaqCategoryRepositoryInterface;
 use App\Interfaces\FaqCategorySubcategoryRepositoryInterface;
+use App\Interfaces\FileInterface;
 use App\Interfaces\SubCategoryInterface;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FaqCategoryRepository;
 use App\Repositories\FaqCategorySubcategoryRepository;
+use App\Repositories\FileRepository;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\SubCategoryRepository;
 use App\Repositories\UserRepository;
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SubCategoryInterface::class, SubCategoryRepository::class);
         $this->app->bind(FaqCategoryRepositoryInterface::class, FaqCategoryRepository::class);
         $this->app->bind(FaqCategorySubcategoryRepositoryInterface::class, FaqCategorySubcategoryRepository::class);
+        $this->app->bind(FileInterface::class, FileRepository::class);
 
         // ====================== hiny ================================
 
