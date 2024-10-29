@@ -21,6 +21,10 @@ class FaqCategorySubcategoryService{
         return $this->faqCategorySubcategoryRepository->store( $data->toArray());
 
     }
+    public function show($id){
+        return $this->faqCategorySubcategoryRepository->show( $id);
+
+    }
 
 
 }

@@ -18,6 +18,9 @@ class FaqCategorySubcategoryRepository implements FaqCategorySubcategoryReposito
         return FAQSubCategory::create($data);
 
     }
+    public function show($id){
+        return FAQSubCategory::find($id);
+    }
     public function update(){
 
     }

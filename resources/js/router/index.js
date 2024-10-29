@@ -15,7 +15,7 @@ import SubCategoriesEdit from '../views/sub-categories/Edit.vue'
 
 import faqCategorySubcategoryIndex from '../views/faq-category-subcategory/Index.vue'
 import faqCategorySubcategoryCreate from '../views/faq-category-subcategory/Create.vue'
-// import faqCategoriesEdit from '../views/faq-category/Edit.vue'
+import faqCategorySubcategoryEdit from '../views/faq-category-subcategory/Edit.vue'
 
     const faqCategoryRoutes = [
         {

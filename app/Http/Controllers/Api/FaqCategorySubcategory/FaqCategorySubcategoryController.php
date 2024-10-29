@@ -6,7 +6,9 @@ use App\DTO\FaqCategorySubcategoryDto;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FaqCategorySubcategoryRequest;
+use App\Http\Resources\FaqCategoryResource;
 use App\Http\Resources\FaqCategorySubcategoryResource;
+use App\Models\FAQCategory;
 use App\Models\FAQSubCategory;
 use App\Services\FaqCategorySubcategoryService;
 use Illuminate\Http\Request;
@@ -24,9 +26,9 @@ class FaqCategorySubcategoryController extends BaseController
     {
 
             $data = $this->service->index();
-            $data=FaqCategorySubcategoryResource::collection($data );
+            $data = FaqCategorySubcategoryResource::collection($data );
 
-        return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
 
 
@@ -47,8 +49,6 @@ class FaqCategorySubcategoryController extends BaseController
     {
 
         $data = $this->service->store(FaqCategorySubcategoryDto::fromRequestDto($request));
-
-
         return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
 
     }
@@ -58,7 +58,15 @@ class FaqCategorySubcategoryController extends BaseController
      */
     public function show(string $id)
     {
-        dd($id);
+
+        $faqCategorySubcategory = $this->service->show($id);
+        $faqCategorySubcategory = new FaqCategorySubcategoryResource($faqCategorySubcategory );
+
+        $data['faqCategoryubcategory']=$faqCategorySubcategory;
+        $data['faqCategory']=FaqCategoryResource::collection(FAQCategory::all());
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
     }
 
     /**
@@ -66,7 +74,7 @@ class FaqCategorySubcategoryController extends BaseController
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**

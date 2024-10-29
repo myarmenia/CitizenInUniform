@@ -9,6 +9,7 @@ let errors = ref([])
 
 const form = reactive({
     title:"",
+    content:"",
 })
 
 // const handleSave = () =>{
@@ -36,33 +37,35 @@ const form = reactive({
 
 // }
 onMounted(async () =>{
-    getFaqCategory()
+    getFaqCategorySubcategory()
 
     })
-const getFaqCategory = async () => {
-    let response =await axios.get(`/api/faq-categories/${route.params.id}/edit`)
+const getFaqCategorySubcategory = async () => {
+
+    let response =await axios.get(`/api/faq-category-subcategory/${route.params.id}`)
         .then((response)=>{
-            console.log(response.data.faqCategory)
-            form.title = response.data.faqCategory.title
-            form.status = response.data.faqCategory.status
+            console.log(response.data.data)
+            form.title = response.data.data.faqCategoryubcategory.title
+             form.content = response.data.data.faqCategoryubcategory.content
+            // form.status = response.data.faqCategory.status
         })
 }
 
- const updateData = () =>{
+//  const updateData = () =>{
 
-        axios.put(`/api/faq-categories/${route.params.id}`,form)
-            .then((response)=>{
+//         axios.put(`/api/faq-categories/${route.params.id}`,form)
+//             .then((response)=>{
 
-                toast.fire({icon:"success",title:"ՀՏՀ բարեհաջող թարմացվել է"})
-            })
-            .catch((error) => {
-                if(error.response.status ===422){
+//                 toast.fire({icon:"success",title:"ՀՏՀ բարեհաջող թարմացվել է"})
+//             })
+//             .catch((error) => {
+//                 if(error.response.status ===422){
 
-                    errors.value = error.response.data.errors
-                }
+//                     errors.value = error.response.data.errors
+//                 }
 
-            })
-    }
+//             })
+//     }
 
 
 </script>
@@ -93,35 +96,43 @@ const getFaqCategory = async () => {
               <!-- General Form Elements -->
               <!-- <form> -->
                <div>
+                 <div class="row mb-3">
+                  <label for="inputText" class="col-sm-3 col-form-label">ՀՏՀ կատեգորիա</label>
+                  <div class="col-sm-9">
+                    <select class="form-select" aria-label="Default select example" v-model="selectedCategory" @change="handleSelectionChange">
+                            <option value='' disabled >Ընտրել ՀՏՀ կատեգորիա </option>
+                            <option v-for="category in faqCategories" :key="category.id" :value = "category.id">{{category.title}}</option>
+                    </select>
+                    <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
+                  </div>
+                </div>
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-2 col-form-label">Վերնագիր</label>
-                  <div class="col-sm-10">
+                  <label for="inputText" class="col-sm-3 col-form-label">Վերնագիր</label>
+                  <div class="col-sm-9">
                     <input type="text" class="form-control" v-model="form.title">
                     <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
                   </div>
                 </div>
-
                 <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label">Կարգավիճակ</label>
-                            <div class="col-sm-9">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
-                                        v-model="form.status"
-                                      >
+                  <label for="inputText" class="col-sm-3 col-form-label">Բովանդակություն</label>
+                  <div class="col-sm-9">
+                    <textarea class="tinymce-editor"  id="tiny-editor" v-model="form.content"></textarea>
 
-                                </div>
-                            </div>
+                    <small style = "color:red" v-if="errors.title">{{errors.content}}</small>
+                  </div>
                 </div>
 
 
+
+
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label"></label>
-                  <div class="col-sm-10">
+                  <label class="col-sm-3 col-form-label"></label>
+                  <div class="col-sm-9">
                     <button class="btn btn-primary" @click="updateData">Պահպանել</button>
                   </div>
                 </div>
 
-              <!-- </form> -->
+
                </div>
               <!-- End General Form Elements -->
 

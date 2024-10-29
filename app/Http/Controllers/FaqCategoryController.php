@@ -36,7 +36,6 @@ class FaqCategoryController extends Controller
     }
     public function edit($id){
 
-
         $faqCategory = FAQCategory::find($id);
 
         return response()->json(["faqCategory"=>$faqCategory],200);

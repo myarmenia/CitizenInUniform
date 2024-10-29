@@ -1,6 +1,8 @@
 <script setup>
 import  { ref, onMounted } from "vue"
+import {useRouter } from "vue-router"
 
+const router = useRouter()
 
  let allData = ref([])
 
@@ -21,9 +23,10 @@ const getAllData = async () => {
 }
 
 const  onEdit = (id) =>{
-alert()
-router.push(`/faq-category-subcategory/${id}/edit`)
+    router.push(`/faq-category-subcategory/${id}/edit`)
 }
+
+
 const deleteItem = (id) =>{
 
     Swal.fire({
@@ -83,7 +86,7 @@ const deleteItem = (id) =>{
 
                             <nav>
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item active"> ՀՏՀ</li>
+                                    <li class="breadcrumb-item active"> ՀՏՀ  ենթակատեգորիա</li>
                                     <li class="breadcrumb-item active">Ցանկ</li>
                                 </ol>
                             </nav>
@@ -112,7 +115,7 @@ const deleteItem = (id) =>{
                     <tr v-for ="item in allData" :key="item.id">
                         <td>{{item.id}}</td>
                         <td>{{item.title}}</td>
-                        <td>{{item.content }}</td>
+                        <td>{{ item.content }}</td>
                         <td>
 
 
