@@ -2,12 +2,22 @@
 import  { ref, onMounted } from "vue"
 import {useRouter } from "vue-router"
 
+import ModalDelete from '../../components/includes/ModalDelete.vue';
+
+
+
+
+
+
 const router = useRouter()
 
  let allData = ref([])
 
+
 onMounted(async () =>{
     getAllData()
+
+
 })
 
 const getAllData = async () => {
@@ -25,51 +35,59 @@ const getAllData = async () => {
 const  onEdit = (id) =>{
     router.push(`/faq-category-subcategory/${id}/edit`)
 }
+// for modal
+const urlValue = ref('');
+
+const deleteItem = (id,tb_name) =>{
+
+const newUrl  = `/delete-item/${tb_name}/${id}`
+
+      urlValue.value = newUrl;
 
 
-const deleteItem = (id) =>{
 
-    Swal.fire({
-    title: "Դուք համոզված եք?",
-    // text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    cancelButtonText:"Ոչ" ,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Այո"
-    })
-    .then((result) => {
-        if (result.isConfirmed) {
-            axios.delete(`/api/faq-categories/${id}`)
-                .then(()=>{
-                   Swal.fire({
-                        title: "Ջնջված է",
-                        text: "Ձեր գրառումը բարեհաջող ջնջվել է",
-                        icon: "success",
-                        confirmButtonText: "Լավ",
-                        //   // dont work css
-                            customClass: {
-                                icon: 'small-icon'  // Add custom class for the icon
-                            }
-                        });
-                        // dont work css
-                        didRender: () => {
-                        const icon = document.querySelector('.small-icon .swal2-icon');
-                        console.log(icon)
-                        if (icon) {
-                            icon.style.fontSize = '5px';
-                            icon.style.width = '50px';
-                            icon.style.height = '50px';
-                        }
-                        }
+//     // Swal.fire({
+//     // title: "Դուք համոզված եք?",
+//     // // text: "You won't be able to revert this!",
+//     // icon: "warning",
+//     // showCancelButton: true,
+//     // cancelButtonText:"Ոչ" ,
+//     // confirmButtonColor: "#3085d6",
+//     // cancelButtonColor: "#d33",
+//     // confirmButtonText: "Այո"
+//     // })
+//     // .then((result) => {
+//     //     if (result.isConfirmed) {
+//     //         axios.delete(`/api/faq-categories/${id}`)
+//     //             .then(()=>{
+//     //                Swal.fire({
+//     //                     title: "Ջնջված է",
+//     //                     text: "Ձեր գրառումը բարեհաջող ջնջվել է",
+//     //                     icon: "success",
+//     //                     confirmButtonText: "Լավ",
+//     //                     //   // dont work css
+//     //                         customClass: {
+//     //                             icon: 'small-icon'  // Add custom class for the icon
+//     //                         }
+//     //                     });
+//     //                     // dont work css
+//     //                     didRender: () => {
+//     //                     const icon = document.querySelector('.small-icon .swal2-icon');
+//     //                     console.log(icon)
+//     //                     if (icon) {
+//     //                         icon.style.fontSize = '5px';
+//     //                         icon.style.width = '50px';
+//     //                         icon.style.height = '50px';
+//     //                     }
+//     //                     }
 
-                        getFaqCategories()
+//     //                     getFaqCategories()
 
-                })
-        }
-    });
+//     //             })
+//     //     }
+//     // });
 }
+
 
 
 </script>
@@ -77,80 +95,106 @@ const deleteItem = (id) =>{
 
 
     <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>ՀՏՀ  ենթակատեգորիա</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item ">Ցանկ</li>
+                </ol>
+            </nav>
+        </div>
+        <section class="section">
 
-        <div class="row mycss">
-            <div class="col-lg-12 margin-tb">
-                <div class="pull-left">
-                    <div class = "d-flex justify-content-between">
-                        <h5 class="card-title">
+            <div class="row">
+                <div class="col-lg-12 margin-tb">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="pull-left">
+                                <div class = "d-flex justify-content-between">
+                                    <h5 class="card-title">
 
-                            <nav>
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item active"> ՀՏՀ  ենթակատեգորիա</li>
-                                    <li class="breadcrumb-item active">Ցանկ</li>
-                                </ol>
-                            </nav>
-                        </h5>
-                        <div class="pull-right d-flex justify-content-end m-3" >
-                             <router-link class="btn btn-primary  mb-2"  :to="{name: 'faqCategorySubcategory.cteate'}">
-                            <i class="fa fa-plus"></i> Ստեղծել</router-link>
+
+                                    </h5>
+                                    <div class="pull-right d-flex justify-content-end m-3" >
+                                        <router-link class="btn btn-primary  mb-2"  :to="{name: 'faqCategorySubcategory.cteate'}">
+                                        <i class="fa fa-plus"></i> Ստեղծել</router-link>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+                           <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Հ/Հ</th>
+                                        <th>ՀՏՀ կատեգորիա</th>
+                                        <th>Հարց</th>
+                                        <th width="10%">Գործողություն</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr v-for ="item in allData" :key="item.id">
+                                            <td>{{item.id}}</td>
+                                            <td>{{ item.f_a_q_category_name }}</td>
+                                            <td>{{item.title}}</td>
+
+                                            <td>
+
+                                                <div class="dropdown action"data-id="{{ item.id }}" data-tb-name="f_a_q_sub_categories" >
+
+                                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                        data-bs-toggle="dropdown">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item"   @click="onEdit(item.id)"><i
+                                                                class="bx bx-edit-alt me-1"></i>Խմբագրել</a>
+                                                        <button type="button" class="dropdown-item click_delete_item"
+
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#smallModal"
+                                                                @click = "deleteItem(item.id,'f_a_q_sub_categories')"
+
+                                                                ><i
+                                                                class="bx bx-trash me-1"></i>
+                                                            Ջնջել</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                            </table>
+                            <div class="pagination">
+                                <a
+                                        href="#"
+                                        class="btn"
+                                        v-for="(link,index) in links"
+                                        :key="index"
+                                        v-html="link.lable"
+                                        :class="{active: link.active,disabled:!link.url }"
+                                        @click="changePage(link)"
+                                            ></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-        </div>
 
-
-        <table class="table table-bordered">
-             <thead>
-                <tr>
-                    <th>Հ/Հ</th>
-                    <th>Վերնագիր</th>
-                    <th>Բովանդակություն</th>
-                    <th width="10%">Գործողություն</th>
-                </tr>
-                </thead>
-                 <tbody>
-                    <tr v-for ="item in allData" :key="item.id">
-                        <td>{{item.id}}</td>
-                        <td>{{item.title}}</td>
-                        <td>{{ item.content }}</td>
-                        <td>
-
-
-                            <div class="dropdown action"  data-id="" data-tb-name="category">
-                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                    data-bs-toggle="dropdown">
-                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item"   @click="onEdit(item.id)"><i
-                                            class="bx bx-edit-alt me-1"></i>Խմբագրել</a>
-                                    <button type="button" class="dropdown-item click_delete_item"
-                                        data-bs-toggle="modal" data-bs-target="#smallModal" @click = "deleteItem(item.id)"><i
-                                            class="bx bx-trash me-1"></i>
-                                        Ջնջել</button>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                 </tbody>
-
-        </table>
-        <div class="pagination">
-            <a
-                    href="#"
-                    class="btn"
-                    v-for="(link,index) in links"
-                    :key="index"
-                    v-html="link.lable"
-                    :class="{active: link.active,disabled:!link.url }"
-                    @click="changePage(link)"
-                        ></a>
-        </div>
+             <!-- Basic Modal -->
+             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#smallModal">
+                Basic Modal
+              </button>
+              <!-- End Basic Modal-->
+        </section>
 
     </main>
-
+    <ModalDelete  :url='urlValue' />
+    <!-- <ModalDelete :itemId="itemId" :url="deleteUrl" ref="deleteModal" /> -->
 
 </template>
+

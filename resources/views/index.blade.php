@@ -68,6 +68,7 @@
 
             <!-- Template Main JS File -->
                 <script src="./assets/js/main.js"></script>
+               
 
     {{-- added template js end --}}
 </body>

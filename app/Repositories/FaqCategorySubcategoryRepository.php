@@ -21,7 +21,11 @@ class FaqCategorySubcategoryRepository implements FaqCategorySubcategoryReposito
     public function show($id){
         return FAQSubCategory::find($id);
     }
-    public function update(){
+    public function update($data,$id){
+
+        $faqCategorySubcategory = FAQSubCategory::find($id);
+        
+        return  $faqCategorySubcategory ? $faqCategorySubcategory->update($data) : false;
 
     }
 }

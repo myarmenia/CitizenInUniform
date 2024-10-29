@@ -10,5 +10,5 @@ interface  FaqCategorySubcategoryRepositoryInterface {
 
     public function show($id);
 
-    public function update();
+    public function update($data,$id);
 }

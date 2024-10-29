@@ -48,6 +48,7 @@ class FaqCategorySubcategoryController extends BaseController
     public function store(FaqCategorySubcategoryRequest $request)
     {
 
+ 
         $data = $this->service->store(FaqCategorySubcategoryDto::fromRequestDto($request));
         return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
 
@@ -62,7 +63,7 @@ class FaqCategorySubcategoryController extends BaseController
         $faqCategorySubcategory = $this->service->show($id);
         $faqCategorySubcategory = new FaqCategorySubcategoryResource($faqCategorySubcategory );
 
-        $data['faqCategoryubcategory']=$faqCategorySubcategory;
+        $data['faqCategorySubcategory']=$faqCategorySubcategory;
         $data['faqCategory']=FaqCategoryResource::collection(FAQCategory::all());
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
@@ -80,9 +81,12 @@ class FaqCategorySubcategoryController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FaqCategorySubcategoryRequest $request, string $id)
     {
-        //
+
+        $data = $this->service->update(FaqCategorySubcategoryDto::fromRequestDto($request), $id);
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 
     /**

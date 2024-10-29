@@ -22,9 +22,17 @@ class FaqCategorySubcategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'f_a_q_category_id'=>'required',
+           
             'title'=>'required',
             'content'=>'required',
+        ];
+    }
+    public function messages()
+    {
+        return [
+
+            'title.required' => 'Հարցի տեքստ դաշտը պարտադիր է',
+            'content.required' => 'Հարցի պատասխան դաշտը պարտադիր է',
         ];
     }
 }

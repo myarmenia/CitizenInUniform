@@ -20,8 +20,8 @@ class FaqCategoryController extends Controller
     }
     public function index(){
 
-        $data=FAQCategory::query();
-        $data = $data->latest()->get();
+        $data=FAQCategory::all();
+    //    dd($data);
 
         return response()->json(['faqCategories'=>$data]);
     }
@@ -42,13 +42,13 @@ class FaqCategoryController extends Controller
     }
     public function update(Request $request,$id){
 
-if($request->status==true){
-    $request['status']=1;
-}else{
-    $request['status']=0;
-}
+        if($request->status==true){
+            $request['status']=1;
+        }else{
+            $request['status']=0;
+        }
 // dd($request->all());
-$faqCategory = FAQCategory::find($id);
+        $faqCategory = FAQCategory::find($id);
         // $faqCategory = FAQCategory::where('id',$id)->first();
         // $faqCategory->update($request->all());
         $faqCategory->title=$request->title;

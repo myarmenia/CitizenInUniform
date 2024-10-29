@@ -1,6 +1,9 @@
-$(function () {
+export const deleteItem = () => {
+    console.log(888888888)
+
     $('.click_delete_item').on('click', function () {
- 
+
+
       let id = $(this).parents('.action').attr('data-id')
       let tb_name = $(this).parents('.action').attr('data-tb-name')
       let url = `/delete-item/${tb_name}/${id}`
@@ -10,10 +13,10 @@ $(function () {
       $('.message_cont').html('')
 
     })
-  })
 
 
-  $(function () {
+
+
     $('.delete_item').on('click', function () {
       let url = $(this).attr('data-url')
       let id = url.split("/").pop();
@@ -46,4 +49,5 @@ $(function () {
         });
       }
     })
-  })
+
+}

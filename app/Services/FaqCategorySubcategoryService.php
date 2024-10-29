@@ -25,6 +25,10 @@ class FaqCategorySubcategoryService{
         return $this->faqCategorySubcategoryRepository->show( $id);
 
     }
+    public function update($data,$id){
+
+        return $this->faqCategorySubcategoryRepository->update($data->toArray(), $id);
+    }
 
 
 }
