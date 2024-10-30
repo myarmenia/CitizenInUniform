@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted } from "vue"
+import { reactive,ref, onMounted } from "vue"
 import { useRouter } from "vue-router"
 const router = useRouter()
 
@@ -82,8 +82,37 @@ const changePage =(link) =>{
     });
 }
 // ========
-const changeStatus = (checkedStatus,id,tb_name)=>{
-    console.log(checkedStatus, id,tb_name,'55555555555')
+const form = reactive({
+    id:'',
+    tb_name: '',
+    status:'',
+    field_name:'',
+
+})
+
+const categoryStatus=ref();
+
+const changeStatus = ($id, $tb_name,$categoryStatus,$field_name)=>{
+
+    form.id = $id
+    form.tb_name = $tb_name
+    form.status = $categoryStatus
+    form.field_name = $field_name
+
+    axios.post('/api/change-status',form)
+    .then((response)=>{
+        getFaqCategories()
+
+        toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
+    })
+     .catch((error) => {
+
+            if (error.response && error.response.status === 422) {
+
+
+                }
+
+        })
 
 }
 
@@ -128,10 +157,18 @@ const changeStatus = (checkedStatus,id,tb_name)=>{
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for ="category in faqCategories" :key="category.id">
-                                            <td>{{category.id}}</td>
+                                        <tr v-for ="(category,index) in faqCategories" :key="category.id">
+                                            <td>{{++index}}</td>
                                             <td>{{category.title}}</td>
-                                            <td>{{category.status==0 ? 'Պասիվ' : 'Ակտիվ' }}</td>
+                                            <td :style="{ color: category.status == 0 ? 'red' : 'green' }">
+
+                                                <button
+                                                    type="button"
+                                                    :class="category.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
+                                                    {{ category.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
+                                                </button>
+
+                                            </td>
                                             <td>
 
 
@@ -146,9 +183,10 @@ const changeStatus = (checkedStatus,id,tb_name)=>{
                                                                 <a class="dropdown-item d-flex" href="javascript:void(0);">
                                                                     <div class="form-check form-switch">
                                                                         <input class="form-check-input change_status" type="checkbox"
-                                                                            role="switch" data-field-name="status"
+                                                                            role="switch"
+                                                                            v-model="categoryStatus"
                                                                         :checked="category.status"
-                                                                        @change="changeStatus(event.target.checked,category.id,'f_a_q_categories')"
+                                                                        @change="changeStatus(category.id,'f_a_q_categories',categoryStatus,'status')"
                                                                         >
                                                                     </div>Կարգավիճակ
                                                                 </a>
@@ -170,7 +208,7 @@ const changeStatus = (checkedStatus,id,tb_name)=>{
                                         class="btn"
                                         v-for="(link,index) in links"
                                         :key="index"
-                                        v-html="link.lable"
+                                        v-html="link.label"
                                         :class="{active: link.active,disabled:!link.url }"
                                         @click="changePage(link)"
                                             ></a>
@@ -179,18 +217,11 @@ const changeStatus = (checkedStatus,id,tb_name)=>{
                     </div>
                 </div>
             </div>
+
+                <!-- <h4>categoryStatus:{{categoryStatus  }}</h4> -->
         </section>
     </main>
 
 
 </template>
-<style scoped>
-.small-icon  {
-    font-size: 5px;  /* Adjust the size */
-    width: 50px;    /* Adjust the width */
-    height: 50px;   /* Adjust the height */
-}
-/* .mycss{
-    background-color:green
-} */
-</style>
+

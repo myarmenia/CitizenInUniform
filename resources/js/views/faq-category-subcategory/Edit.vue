@@ -60,12 +60,13 @@ const getFaqCategorySubcategory = async () => {
 }
 
  const updateData = () =>{
+    errors.value = {}; 
 
         axios.put(`/api/faq-category-subcategory/${route.params.id}`,form)
             .then((response)=>{
                 router.push('/faq-category-subcategory')
 
-                toast.fire({icon:"success",title:"ՀՏՀ ենթակատեգորիան բարեհաջող թարմացվել է"})
+                toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
             })
             .catch((error) => {
                 if (error.response && error.response.status === 422) {

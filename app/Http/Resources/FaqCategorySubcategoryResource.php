@@ -17,10 +17,10 @@ class FaqCategorySubcategoryResource extends JsonResource
 
         return [
             "id"=>$this->id,
-            "f_a_q_category_id"=>$this->f_a_q_category_id,
-            "f_a_q_category_name"=>$this->f_a_q_category->title,
-            "title"=>$this->title,
-            "content"=>$this->content
+            "f_a_q_category_id"=>$this->f_a_q_category_id ?? null,
+            "f_a_q_category_name"=>$this->f_a_q_category->title ?? null,
+            "title"=>$this->title ?? null,
+            "content"=>$this->content  ?? null
         ];
     }
 }
