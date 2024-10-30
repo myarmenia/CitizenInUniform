@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FaqCategoryRequest extends FormRequest
+class FaqCategorySubcategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,15 +22,17 @@ class FaqCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
+           'f_a_q_category_id'=>'required',
             'title'=>'required',
+            'content'=>'required',
         ];
     }
-    public function messages(){
+    public function messages()
+    {
         return [
-
-            'title.required' => 'ՀՏՀ կատեգորիա դաշտը պարտադիր է',
-           
+            'f_a_q_category_id.required' => 'ՀՏՀ կատեգորիա դաշտը պարտադիր է',
+            'title.required' => 'Հարցի տեքստ դաշտը պարտադիր է',
+            'content.required' => 'Հարցի պատասխան դաշտը պարտադիր է',
         ];
     }
-
 }

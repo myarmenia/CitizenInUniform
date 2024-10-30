@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Api\FaqCategorySubcategory;
 use App\DTO\FaqCategorySubcategoryDto;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FaqCategorySubcategoryRequest;
+use App\Http\Resources\FaqCategoryResource;
+use App\Http\Resources\FaqCategorySubcategoryResource;
+use App\Models\FAQCategory;
+use App\Models\FAQSubCategory;
 use App\Services\FaqCategorySubcategoryService;
 use Illuminate\Http\Request;
 
@@ -19,7 +24,14 @@ class FaqCategorySubcategoryController extends BaseController
     }
     public function index()
     {
-        // $faq_category_subcategory=
+
+            $data = $this->service->index();
+            $data = FaqCategorySubcategoryResource::collection($data );
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
+
+
     }
 
     /**
@@ -33,11 +45,11 @@ class FaqCategorySubcategoryController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FaqCategorySubcategoryRequest $request)
     {
-     
-        $data = $this->service->store(FaqCategorySubcategoryDto::fromRequestDto($request));
 
+ 
+        $data = $this->service->store(FaqCategorySubcategoryDto::fromRequestDto($request));
         return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
 
     }
@@ -47,7 +59,15 @@ class FaqCategorySubcategoryController extends BaseController
      */
     public function show(string $id)
     {
-        //
+
+        $faqCategorySubcategory = $this->service->show($id);
+        $faqCategorySubcategory = new FaqCategorySubcategoryResource($faqCategorySubcategory );
+
+        $data['faqCategorySubcategory']=$faqCategorySubcategory;
+        $data['faqCategory']=FaqCategoryResource::collection(FAQCategory::all());
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
     }
 
     /**
@@ -55,15 +75,18 @@ class FaqCategorySubcategoryController extends BaseController
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FaqCategorySubcategoryRequest $request, string $id)
     {
-        //
+
+        $data = $this->service->update(FaqCategorySubcategoryDto::fromRequestDto($request), $id);
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 
     /**

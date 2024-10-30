@@ -2,11 +2,13 @@
 
 namespace App\Interfaces;
 
-use App\DTO\FaqCategoryDto;
-
 interface  FaqCategorySubcategoryRepositoryInterface {
+
+    public function index();
 
     public function store($data);
 
-    public function update();
+    public function show($id);
+
+    public function update($data,$id);
 }
