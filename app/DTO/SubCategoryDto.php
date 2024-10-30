@@ -10,22 +10,19 @@ class SubCategoryDto
         public string $category_id,
         public string $title,
         public string $content,
-        // public array $links,
-        // public array $files
-
-        // public ?bool $status = null,
+        public ?array $files = null
 
     ) {
     }
 
     public static function fromSubCategoryDto(Request $request): SubCategoryDto
     {
+
         return new self(
             category_id: $request->category_id,
             title: $request->title,
             content: $request->content,
-            // links: $request->links,
-            // files: $request->files
+            files: $request['files']
 
         );
     }

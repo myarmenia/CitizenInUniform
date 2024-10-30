@@ -23,7 +23,7 @@ class CategoryController extends BaseController
 
         $data = $this->service->index();
 
-        return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
 
     }
@@ -36,7 +36,7 @@ class CategoryController extends BaseController
 
         $data = $this->service->store(CategoryDto::fromCategoryDto($request));
 
-        return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
     }
 
@@ -50,7 +50,7 @@ class CategoryController extends BaseController
 
         $data = $this->service->edit($id);
 
-        return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
 
     }
@@ -63,7 +63,7 @@ class CategoryController extends BaseController
 
         $data = $this->service->update(CategoryDto::fromCategoryDto($request), $id);
 
-        return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
     }
 
