@@ -11,30 +11,6 @@ const form = reactive({
     title:"",
 })
 
-// const handleSave = () =>{
-//     axios.post('/api/create-faq-category',form)
-//     .then((response)=>{
-//         router.push('/faq-categories')
-//         toast.fire({icon:"success",title:"ՀՏՀ բարեհաջող ավելացվել է"})
-//     })
-//      .catch((error) => {
-//                 // if(error.response.status ===422){
-//                 //     console.log(error.response.data.errors)
-//                 //     errors.value = error.response.data.errors
-//                 // }
-//                 if (error.response && error.response.status === 422) {
-//             // Capture validation errors and extract the first message for each field
-//             const allErrors = error.response.data.errors;
-//             for (const field in allErrors) {
-//                 if (allErrors.hasOwnProperty(field)) {
-//                     errors.value[field] = allErrors[field][0]; // Get only the first error message
-//                 }
-//             }
-//         }
-
-//             })
-
-// }
 onMounted(async () =>{
     getFaqCategory()
 
@@ -49,11 +25,12 @@ const getFaqCategory = async () => {
 }
 
  const updateData = () =>{
+    errors.value = {}; 
 
         axios.put(`/api/faq-categories/${route.params.id}`,form)
             .then((response)=>{
                 router.push('/faq-categories')
-                toast.fire({icon:"success",title:"ՀՏՀ բարեհաջող թարմացվել է"})
+                toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
             })
             .catch((error) => {
                if (error.response && error.response.status === 422) {

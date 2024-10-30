@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\DTO\FaqCategoryDto;
 use App\Http\Requests\FaqCategoryRequest;
+use App\Http\Resources\FaqCategoryResource;
 use App\Models\FAQCategory;
 use App\Services\FaqCategoryService;
 
@@ -20,15 +21,23 @@ class FaqCategoryController extends Controller
     }
     public function index(){
 
-        $data=FAQCategory::all();
-    //    dd($data);
 
-        return response()->json(['faqCategories'=>$data]);
+
+        $data = $this->faqCategoryService->index();
+
+        $data = FaqCategoryResource::collection($data );
+        // dd($data->paginator(2));
+
+    return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
+
+
+  
     }
 
     public function store(FaqCategoryRequest $request){
 
-        // $faqCategoryDTO = new FaqCategoryDTO($request->title);
+
 
         $data = $this->faqCategoryService->storeFaqCategory(FaqCategoryDTO::fromFaqCategoryDto($request));
 
@@ -42,14 +51,9 @@ class FaqCategoryController extends Controller
     }
     public function update(FaqCategoryRequest $request,$id){
 
-        // if($request->status==true){
-        //     $request['status']=1;
-        // }else{
-        //     $request['status']=0;
-        // }
-// dd($request->all());
+
         $faqCategory = FAQCategory::find($id);
-       
+
         $faqCategory->title=$request->title;
         // $faqCategory->status=$request->status;
         $faqCategory->save();

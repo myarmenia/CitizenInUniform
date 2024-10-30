@@ -42,9 +42,6 @@ const deleteItem = (id,tb_name) =>{
 
 const newUrl  = `/api/delete-item/${tb_name}/${id}`
 
-    //   urlValue.value = newUrl;
-
-
 
     Swal.fire({
     title: "Դուք համոզված եք?",
@@ -130,8 +127,8 @@ const newUrl  = `/api/delete-item/${tb_name}/${id}`
                                     </thead>
                                     <tbody>
 
-                                        <tr v-for ="item in allData" :key="item.id">
-                                            <td>{{item.id}}</td>
+                                        <tr v-for ="(item,index) in allData" :key="item.id">
+                                             <td>{{++index}}</td>
                                             <td>{{ item.f_a_q_category_name }}</td>
                                             <td>{{item.title}}</td>
 

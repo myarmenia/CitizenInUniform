@@ -9,18 +9,19 @@ let errors = ref([])
 
 const form = reactive({
     title:"",
-    f_a_q_category_id:null,
+    f_a_q_category_id:'',
     content:""
 })
 
 
 const handleSave = () =>{
+    errors.value = {}; 
 
     form.content = tinymce.get('tiny-editor').getContent()
     axios.post('/api/faq-category-subcategory',form)
     .then((response)=>{
         router.push('/faq-category-subcategory')
-        toast.fire({icon:"success",title:"ՀՏՀ ենթակատեգորիան բարեհաջող ավելացվել է"})
+        toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
      .catch((error) => {
 
@@ -51,16 +52,17 @@ const getAllFaqCategory = async () => {
         .then((response)=>{
             console.log(response.data.faqCategories)
             faqCategories.value = response.data.faqCategories
-            // selectedCategory.value = "Ընտրել ՀՏՀ կատեգորիա";
+
 
         })
 }
 
-const selectedCategory = ref(null);
+const selectedCategory = ref('Ընտրել ՀՏՀ կատեգորիա');
 const handleSelectionChange = () => {
     form.f_a_q_category_id=selectedCategory.value
 
 }
+
 
 </script>
 <template>
@@ -93,10 +95,10 @@ const handleSelectionChange = () => {
                   <label for="inputText" class="col-sm-2 col-form-label">ՀՏՀ կատեգորիա</label>
                   <div class="col-sm-9">
                     <select class="form-select" aria-label="Default select example" v-model="selectedCategory" @change="handleSelectionChange">
-                        <option  value=" " disabled  selected> Ընտրել ՀՏՀ կատեգորիա </option>
+                        <option   disabled  > Ընտրել ՀՏՀ կատեգորիա </option>
                         <option v-for="category in faqCategories" :key="category.id" :value = "category.id">{{category.title}}</option>
                     </select>
-                    <small style = "color:red" v-if="errors.title">{{errors.f_a_q_category_id }}</small>
+                    <small style = "color:red" v-if="errors.f_a_q_category_id">{{errors.f_a_q_category_id }}</small>
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -111,7 +113,7 @@ const handleSelectionChange = () => {
                   <div class="col-sm-9">
                     <textarea class="tinymce-editor"  id="tiny-editor" v-model="form.content"></textarea>
 
-                    <small style = "color:red" v-if="errors.title">{{errors.content}}</small>
+                    <small style = "color:red" v-if="errors.content">{{errors.content}}</small>
                   </div>
                 </div>
 
@@ -135,6 +137,8 @@ const handleSelectionChange = () => {
 
 
       </div>
+
+
     </section>
 
   </main>
