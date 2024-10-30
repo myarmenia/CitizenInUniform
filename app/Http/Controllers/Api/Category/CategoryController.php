@@ -6,11 +6,14 @@ use App\DTO\CategoryDto;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
+use App\Http\Resources\CategoryResource;
 use App\Services\CategoryService;
+use App\Traits\Paginator;
 use Illuminate\Http\Request;
 
 class CategoryController extends BaseController
 {
+    use Paginator;
     public function __construct(protected CategoryService $service)
     {
 
@@ -18,13 +21,17 @@ class CategoryController extends BaseController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $page = request()->page ?? 1;
+        $perPage = 2;
 
         $data = $this->service->index();
 
-        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+        $data = CategoryResource::collection($data);
+        $data = $this->arrayPaginator($data, $request, $perPage);
 
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
     }
 

@@ -22,10 +22,16 @@ class SubCategoryRequest extends FormRequest
     public function rules(): array
     {
 
-        return [
-            // 'category_id' => 'required',
-            // 'title' => 'required',
-            // 'content' => 'required',
+        $data =  [
+            'category_id' => 'required',
+            'title' => 'required',
+            'content' => 'required',
         ];
+
+        if(isset($this->files)){
+            $data['files.*'] = 'required|file|max:5012';
+        }
+
+        return $data;
     }
 }

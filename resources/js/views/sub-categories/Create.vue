@@ -15,7 +15,8 @@ const form = reactive({
     title: '',
     content: '',
     files: [],
-    dataFiles: []
+    dataFiles: [],
+    errorMessage: ''
 })
 
 onMounted(async () => {
@@ -26,7 +27,7 @@ onMounted(async () => {
 const getAllCategies = async () => {
     let response = await axios.get ( `/api/categories`)
     .then((response) => {
-       allCategories.value = response.data.data
+       allCategories.value = response.data.data.data
        console.log(allCategories)
     })
 }
@@ -37,9 +38,39 @@ const handleSelectionChange = () => {
 
 }
 
+const fileInput = ref(null); // Ссылка на элемент input
+const MAX_SIZE = 5 * 1024 * 1024; // Максимальный размер файла 5MB
+
+const formatSize = (size) => {
+  const units = ['Բ', 'ԿԲ', 'ՄԲ', 'ԳԲ'];
+  let index = 0;
+  let formattedSize = size;
+
+  while (formattedSize > 1024 && index < units.length - 1) {
+    formattedSize /= 1024;
+    index++;
+  }
+
+  return `${formattedSize.toFixed(2)} ${units[index]}`;
+};
+
+
 
 const handleFileChange = (e) => {
     const selectedFiles = e.target.files;
+
+    form.errorMessage = ''; // Сброс сообщения об ошибке
+
+    // Проверка размера файлов
+    const invalidFiles = Array.from(selectedFiles).filter(file => file.size > MAX_SIZE);
+    if (invalidFiles.length) {
+        form.errorMessage = `ֆաիլի առավելագույն չախը ${formatSize(MAX_SIZE)}.`;
+        return;
+    }
+
+    // Очистка массивов перед добавлением новых файлов
+    form.dataFiles = [];
+    form.files = [];
 
     Array.from(selectedFiles).forEach((file) => {
         // Сохраняем оригинальные объекты File
@@ -168,7 +199,8 @@ const dataSave = async () => {
                                 <div class="row mb-3">
                                     <label for="files" class="col-sm-3 col-form-label">Ֆայլեր </label>
                                     <div class="col-sm-9">
-                                        <input type="file" class="form-control" id="files" @change="handleFileChange" multiple>
+                                        <input type="file" class="form-control" id="files" @change="handleFileChange" multiple ref="fileInput">
+                                        <p class="col-sm-10 text-danger fs-6 mt-2" v-if="form.errorMessage">{{ form.errorMessage }} </p>
 
                                     </div>
                                 </div>

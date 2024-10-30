@@ -11,7 +11,7 @@ class CategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return T_SR_EQUAL;
+        return true;
     }
 
     /**

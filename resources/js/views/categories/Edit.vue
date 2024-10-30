@@ -27,9 +27,9 @@ const getCategy = async () => {
 const categoryEdit = async () => {
     let response = await axios.put(`/api/categories/${route.params.id}`, form)
     .then((response) => {
-        // router.push('/categories')
-        toast.fire({icon: 'success', messages: 'soccess message'})
 
+        router.push('/categories')
+        toast.fire({icon: 'success', title: 'Գործողությունը բարեհաջող կատարված է'})
     })
     .catch((error) => {
         if(error.response.status === 422){
@@ -38,6 +38,9 @@ const categoryEdit = async () => {
         }
     })
 }
+
+
+
 </script>
 
 
@@ -51,7 +54,7 @@ const categoryEdit = async () => {
                     <li class="breadcrumb-item ">
                         <router-link class="dropdown-item" :to="{name: 'categories.index' }"> Ցանկ</router-link>
                     </li>
-                    <li class="breadcrumb-item active">Փոփոխել</li>
+                    <li class="breadcrumb-item active">Խմբագրել</li>
                 </ol>
             </nav>
         </div>
@@ -61,7 +64,7 @@ const categoryEdit = async () => {
                     <div class="card">
 
                         <div class="card-body">
-                            <h5 class="card-title">Փոփոխել բաժինը </h5>
+                            <h5 class="card-title">Խմբագրել բաժինը </h5>
 
                                 <div class="row mb-3">
                                     <label for="title" class="col-sm-3 col-form-label">Վերնագիր </label>
@@ -78,7 +81,7 @@ const categoryEdit = async () => {
                                 <div class="row mb-3">
                                     <label class="col-sm-3 col-form-label"></label>
                                     <div class="col-sm-9">
-                                        <button type="submit" class="btn btn-primary" @click="categoryEdit">Փոփոխել</button>
+                                        <button type="submit" class="btn btn-primary" @click="categoryEdit">Պահպանել</button>
                                     </div>
                                 </div>
 

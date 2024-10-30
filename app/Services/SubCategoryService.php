@@ -71,7 +71,7 @@ class SubCategoryService
 
                 $type = !$value->getError() ? explode('/', $value->getMimeType())[0] : null;
 
-                $path = FileUploadService::upload($value, "sub-categories/$subCategoryId/");
+                $path = FileUploadService::upload($value, "sub_categories/$subCategoryId/");
                 $dataFile['name'] = $value->getClientOriginalName();
                 $dataFile['path'] = $path;
                 $dataFile['type'] = $type;

@@ -29,10 +29,12 @@ class DeleteItemService
           $file_path = '';
           $item_db = $item->first();
 
-
-          if(isset($item_db->image)){
+          if(isset($item_db->image) || isset($item_db->files)){
             Storage::disk('public')->deleteDirectory("$tb_name/$id");
 
+          }
+          elseif(isset($item_db->files) && count($item_db->files) > 0){
+                Storage::disk('public')->deleteDirectory("$tb_name/$id");
           }
           else{
 

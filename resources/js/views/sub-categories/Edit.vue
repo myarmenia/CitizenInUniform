@@ -16,7 +16,8 @@ const form = reactive({
     content: '',
     files: [],
     dataFiles: [],
-    responseFiles: []
+    responseFiles: [],
+    errorMessage: ''
 
 })
 
@@ -51,8 +52,40 @@ const getSubCategy = async () => {
 }
 
 
+const fileInput = ref(null); // Ссылка на элемент input
+const MAX_SIZE = 5 * 1024 * 1024; // Максимальный размер файла 5MB
+
+const formatSize = (size) => {
+  const units = ['Բ', 'ԿԲ', 'ՄԲ', 'ԳԲ'];
+  let index = 0;
+  let formattedSize = size;
+
+  while (formattedSize > 1024 && index < units.length - 1) {
+    formattedSize /= 1024;
+    index++;
+  }
+
+  return `${formattedSize.toFixed(2)} ${units[index]}`;
+};
+
+
+
 const handleFileChange = (e) => {
     const selectedFiles = e.target.files;
+
+    form.errorMessage = ''; // Сброс сообщения об ошибке
+
+    // Проверка размера файлов
+    const invalidFiles = Array.from(selectedFiles).filter(file => file.size > MAX_SIZE);
+    if (invalidFiles.length) {
+        form.errorMessage = `ֆաիլի առավելագույն չախը ${formatSize(MAX_SIZE)}.`;
+        return;
+    }
+
+    // Очистка массивов перед добавлением новых файлов
+    form.dataFiles = [];
+    form.files = [];
+
 
     Array.from(selectedFiles).forEach((file) => {
         // Сохраняем оригинальные объекты File
@@ -79,14 +112,15 @@ const removeFile = (index) => {
 
 };
 
-// const removeFileFromDB = (subCategoryId) => {
-//     let response = await axios.get ( `/api/delete-item/files/${subCategoryId}`)
-//         .then((response) => {
-//             this.parent.remove()
-//             element.parentNode.remove()
-//             toast.fire({icon: 'success', title: 'Գործողությունը կատարված է'})
-//         })
-//  }
+const removeFileFromDB = async(index, subCategoryId) => {
+
+    let response = await axios.get(`/api/delete-item/files/${subCategoryId}`)
+        .then((response) => {
+
+            form.responseFiles.splice(index, 1)
+            toast.fire({icon: 'success', title: 'Գործողությունը կատարված է'})
+        })
+ }
 
 
 const dataEdit = async () => {
@@ -136,7 +170,7 @@ const dataEdit = async () => {
                     <li class="breadcrumb-item ">
                         <router-link class="dropdown-item" :to="{name: 'subCategories.index' }"> Ցանկ</router-link>
                     </li>
-                    <li class="breadcrumb-item active">Ստեղծել</li>
+                    <li class="breadcrumb-item active">Խմբագրել</li>
                 </ol>
             </nav>
         </div>
@@ -146,7 +180,7 @@ const dataEdit = async () => {
                     <div class="card">
 
                         <div class="card-body">
-                            <h5 class="card-title">Ստեղծել նոր ենթաբաժին </h5>
+                            <h5 class="card-title">Խմբագրել ենթաբաժինը </h5>
 
                                 <div class="row mb-3">
                                     <label for="title" class="col-sm-3 col-form-label">Կատեգորիա </label>
@@ -193,6 +227,7 @@ const dataEdit = async () => {
                                     <label for="files" class="col-sm-3 col-form-label">Ֆայլեր </label>
                                     <div class="col-sm-9">
                                         <input type="file" class="form-control" id="files" @change="handleFileChange" multiple>
+                                        <p class="col-sm-10 text-danger fs-6 " v-if="form.errorMessage">{{ form.errorMessage }} </p>
 
                                     </div>
                                 </div>
@@ -204,7 +239,7 @@ const dataEdit = async () => {
                                             <img v-if="file.type == 'image'" :src="file.path" alt="Изображение" class="image img-thumbnail mx-0 my-2" />
                                             <video v-else-if="file.type == 'video'" :src="file.path" controls class="video img-thumbnail mx-0 my-2"></video>
 
-                                            <span class="deleteFile" @click="removeFileFromDB(file.id)">
+                                            <span class="deleteFile" @click="removeFileFromDB(index, file.id)" id="a6">
                                                 <i class="bx bx-trash me-1"></i>
                                             </span>
                                         </div>
