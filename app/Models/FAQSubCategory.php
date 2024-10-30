@@ -10,4 +10,8 @@ class FAQSubCategory extends Model
     use SoftDeletes;
     protected $guarded = [];
 
+    public function f_a_q_category(){
+        return $this->belongsTo(FAQCategory::class,'f_a_q_category_id');
+    }
+
 }
