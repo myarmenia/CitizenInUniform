@@ -12,6 +12,7 @@ import {useRouter } from "vue-router"
 const router = useRouter()
 
  let allData = ref([])
+ let links = ref([]);
 
 
 onMounted(async () =>{
@@ -23,10 +24,11 @@ onMounted(async () =>{
 const getAllData = async () => {
     let response = await axios.get('/api/faq-category-subcategory')
         .then((response)=>{
+console.log(response.data.result.data)
+            allData.value = response.data.result.data
 
-            allData.value = response.data.data
-            // .data
-            // links.value =  response.data.faqCategories.links
+            links.value =  response.data.result.links
+
 
 
         })
@@ -76,6 +78,21 @@ const newUrl  = `/api/delete-item/${tb_name}/${id}`
                 })
         }
     });
+}
+
+
+const changePage =(link) =>{
+    console.log(link,"")
+
+    if(!link.url || link.active){
+        return
+    }
+    axios.get(link.url)
+        .then((response) =>{
+            allData.value = response.data.result.data
+           links.value =  response.data.result.links
+
+        })
 }
 
 
@@ -158,17 +175,19 @@ const newUrl  = `/api/delete-item/${tb_name}/${id}`
                                     </tbody>
 
                             </table>
-                            <div class="pagination">
-                                <a
-                                        href="#"
-                                        class="btn"
+                            <nav aria-label="" class="d-flex justify-content-end">
+                                <ul class="pagination">
+                                    <li class="page-item "
                                         v-for="(link,index) in links"
                                         :key="index"
-                                        v-html="link.lable"
                                         :class="{active: link.active,disabled:!link.url }"
                                         @click="changePage(link)"
-                                            ></a>
-                            </div>
+                                    >
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true" v-html="link.label"></a>
+                                    </li>
+
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>

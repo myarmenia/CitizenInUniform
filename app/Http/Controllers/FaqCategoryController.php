@@ -4,35 +4,39 @@ namespace App\Http\Controllers;
 
 
 use App\DTO\FaqCategoryDto;
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\FaqCategoryRequest;
 use App\Http\Resources\FaqCategoryResource;
 use App\Models\FAQCategory;
 use App\Services\FaqCategoryService;
+use App\Traits\Paginator;
 
 use Illuminate\Http\Request;
 
-class FaqCategoryController extends Controller
+class FaqCategoryController extends BaseController
 {
+    use Paginator;
 
 
 
     public function __construct( protected FaqCategoryService $faqCategoryService){
 
     }
-    public function index(){
-
+    public function index(Request $request){
+        $page = request()->page ?? 1;
+        $perPage = 2;
 
 
         $data = $this->faqCategoryService->index();
 
         $data = FaqCategoryResource::collection($data );
-        // dd($data->paginator(2));
+        $data = $this->arrayPaginator($data, $request, $perPage);
 
     return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
 
 
-  
+
     }
 
     public function store(FaqCategoryRequest $request){

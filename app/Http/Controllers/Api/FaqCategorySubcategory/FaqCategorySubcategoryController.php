@@ -11,10 +11,12 @@ use App\Http\Resources\FaqCategorySubcategoryResource;
 use App\Models\FAQCategory;
 use App\Models\FAQSubCategory;
 use App\Services\FaqCategorySubcategoryService;
+use App\Traits\Paginator;
 use Illuminate\Http\Request;
 
 class FaqCategorySubcategoryController extends BaseController
 {
+    use Paginator;
     /**
      * Display a listing of the resource.
      */
@@ -22,12 +24,15 @@ class FaqCategorySubcategoryController extends BaseController
     {
 
     }
-    public function index()
+    public function index(Request $request)
     {
+
+        $page = request()->page ?? 1;
+        $perPage = 2;
 
             $data = $this->service->index();
             $data = FaqCategorySubcategoryResource::collection($data );
-
+            $data = $this->arrayPaginator($data, $request, $perPage);
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
 
@@ -48,7 +53,7 @@ class FaqCategorySubcategoryController extends BaseController
     public function store(FaqCategorySubcategoryRequest $request)
     {
 
- 
+
         $data = $this->service->store(FaqCategorySubcategoryDto::fromRequestDto($request));
         return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
 
