@@ -16,7 +16,7 @@ const categorySave = async () => {
     .then((response) => {
 
         router.push('/categories')
-        toast.fire({icon: 'success', title: 'soccess message'})
+        toast.fire({icon: 'success', title: 'Գործողությունը բարեհաջող կատարված է'})
 
     })
     .catch((error) => {
