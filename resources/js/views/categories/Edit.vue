@@ -20,7 +20,7 @@ const getCategy = async () => {
     let response = await axios.get ( `/api/categories/${route.params.id}`)
     .then((response) => {
 
-       form.title = response.data.data.title
+       form.title = response.data.result.title
     })
 }
 

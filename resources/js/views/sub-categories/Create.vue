@@ -27,7 +27,7 @@ onMounted(async () => {
 const getAllCategies = async () => {
     let response = await axios.get ( `/api/categories`)
     .then((response) => {
-       allCategories.value = response.data.data.data
+       allCategories.value = response.data.result.data
        console.log(allCategories)
     })
 }

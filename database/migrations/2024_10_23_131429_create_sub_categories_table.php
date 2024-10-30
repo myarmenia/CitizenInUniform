@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->mediumText('title');
             $table->longText('content');
+            $table->boolean('status')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

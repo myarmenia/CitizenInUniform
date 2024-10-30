@@ -1,23 +1,32 @@
 <script setup>
 import { useRouter } from "vue-router"
-import { ref, onMounted } from  "vue"
+import { ref, reactive, onMounted } from  "vue"
 
 const router = useRouter()
 
 let categories = ref([])
 let links = ref([])
+let activePage = ref(1)
+
+const form = reactive({
+    id:'',
+    tb_name: '',
+    status:'',
+    field_name:'',
+
+})
 
 onMounted(async () => {
     getCategories()
 })
 
 const getCategories = async () => {
-    let response = await axios.get ( '/api/categories')
+    let response = await axios.get ( `/api/categories?page=${activePage.value}`)
     .then((response) => {
-        console.log(response)
-        categories.value = response.data.data.data
-        links.value = response.data.data.links
-        console.log(response.data.data.links[3].label)
+
+        categories.value = response.data.result.data
+        links.value = response.data.result.links
+
     })
 }
 
@@ -26,11 +35,32 @@ const changePage =(link) =>{
     if(!link.url || link.active){
         return
     }
+
+    activePage.value = link.label
+
     axios.get(link.url)
         .then((response) =>{
-           categories.value = response.data.data.data
-            links.value = response.data.data.links
+           categories.value = response.data.result.data
+            links.value = response.data.result.links
         })
+}
+
+const changeStatus = (id, tb_name, categoryStatus, field_name)=>{
+
+    form.id = id
+    form.tb_name = tb_name
+    form.status = categoryStatus
+    form.field_name = field_name
+
+    axios.post('/api/change-status',form)
+    .then((response)=>{
+
+        getCategories(activePage.value)
+
+        toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
+    })
+
+
 }
 
 const deleteItem = (id, tb_name) =>{
@@ -103,6 +133,7 @@ const deleteItem = (id, tb_name) =>{
                                     <tr>
                                     <th>Հ/Հ</th>
                                         <th>Վերնագիր</th>
+                                        <th>Կարգավիճակ</th>
                                         <th width="10%">Գործողություն</th>
                                     </tr>
                                 </thead>
@@ -110,6 +141,14 @@ const deleteItem = (id, tb_name) =>{
                                     <tr v-for="(category, index) in categories">
                                         <td>{{ ++index }}</td>
                                         <td>{{ category.title }}</td>
+                                        <td :style="{ color: category.status == 0 ? 'red' : 'green' }">
+                                                <button
+                                                    type="button"
+                                                    :class="category.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
+                                                    {{ category.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
+                                                </button>
+
+                                            </td>
                                         <td>
                                             <div class="dropdown action" >
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -119,6 +158,16 @@ const deleteItem = (id, tb_name) =>{
                                                 <div class="dropdown-menu">
                                                     <router-link class="dropdown-item" :to="{name: 'categories.edit', params: { id: category.id } }">
                                                         <i class="bx bx-edit-alt me-1"></i>Խմբագրել</router-link>
+                                                    <a class="dropdown-item d-flex" href="javascript:void(0);">
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input change_status" type="checkbox"
+                                                                role="switch"
+                                                                v-model="categoryStatus"
+                                                            :checked="category.status"
+                                                            @change="changeStatus(category.id, 'categories', categoryStatus, 'status')"
+                                                            >
+                                                        </div>Կարգավիճակ
+                                                    </a>
 
                                                     <button type="button" class="dropdown-item click_delete_item" @click = "deleteItem(category.id,'categories')"><i
                                                             class="bx bx-trash me-1"></i>

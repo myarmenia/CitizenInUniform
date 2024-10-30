@@ -32,7 +32,7 @@ onMounted(async () => {
 const getAllCategies = async () => {
     let response = await axios.get ( `/api/categories`)
     .then((response) => {
-       allCategories.value = response.data.data
+       allCategories.value = response.data.result
        console.log(allCategories)
     })
 }
@@ -41,7 +41,7 @@ const getSubCategy = async () => {
     let response = await axios.get ( `/api/sub-categories/${route.params.id}`)
     .then((response) => {
 
-        let result = response.data.data
+        let result = response.data.result
 
             form.category_id = result.category_id
             form.title = result.title
