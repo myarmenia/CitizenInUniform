@@ -56,10 +56,15 @@ const getFaqCategory = async () => {
                 toast.fire({icon:"success",title:"ՀՏՀ բարեհաջող թարմացվել է"})
             })
             .catch((error) => {
-                if(error.response.status ===422){
+               if (error.response && error.response.status === 422) {
 
-                    errors.value = error.response.data.errors
-                }
+                        const allErrors = error.response.data.errors;
+                        for (const field in allErrors) {
+                            if (allErrors.hasOwnProperty(field)) {
+                                errors.value[field] = allErrors[field][0]; // Get only the first error message
+                            }
+                        }
+               }
 
             })
     }
@@ -94,14 +99,14 @@ const getFaqCategory = async () => {
               <!-- <form> -->
                <div>
                     <div class="row mb-3">
-                    <label for="inputText" class="col-sm-4 col-form-label">ՀՏՀ կատեգորիա</label>
-                    <div class="col-sm-8">
+                    <label for="inputText" class="col-sm-3 col-form-label">ՀՏՀ կատեգորիա</label>
+                    <div class="col-sm-9">
                         <input type="text" class="form-control" v-model="form.title">
                         <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
                     </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <!-- <div class="row mb-3">
                         <label class="col-sm-4 col-form-label">Կարգավիճակ</label>
                                 <div class="col-sm-8">
                                     <div class="form-check form-switch">
@@ -111,12 +116,12 @@ const getFaqCategory = async () => {
 
                                     </div>
                                 </div>
-                    </div>
+                    </div> -->
 
 
                     <div class="row mb-3">
-                    <label class="col-sm-4 col-form-label"></label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 col-form-label"></label>
+                    <div class="col-sm-9">
                         <button class="btn btn-primary" @click="updateData">Պահպանել</button>
                     </div>
                     </div>

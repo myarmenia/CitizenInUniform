@@ -71,13 +71,13 @@ const getFaqCategorySubcategory = async () => {
                 if (error.response && error.response.status === 422) {
 
                     const allErrors = error.response.data.errors;
-                    for (const field in allErrors) {
-                        console.log(allErrors.hasOwnProperty(field))
-                        if (allErrors.hasOwnProperty(field)) {
-                            errors.value[field] = allErrors[field][0]; // Get only the first error message
+                        for (const field in allErrors) {
+                            console.log(allErrors.hasOwnProperty(field))
+                            if (allErrors.hasOwnProperty(field)) {
+                                errors.value[field] = allErrors[field][0]; // Get only the first error message
+                            }
                         }
-                    }
-                    }
+                        }
             })
     }
 
@@ -110,7 +110,7 @@ const getFaqCategorySubcategory = async () => {
               <!-- <form> -->
                <div>
                  <div class="row mb-3">
-                  <label for="inputText" class="col-sm-3 col-form-label">ՀՏՀ կատեգորիա</label>
+                  <label for="inputText" class="col-sm-2 col-form-label">ՀՏՀ կատեգորիա</label>
                   <div class="col-sm-9">
                     <select class="form-select" aria-label="Default select example" v-model="form.f_a_q_category_id" >
                             <option value='' disabled >Ընտրել ՀՏՀ կատեգորիա </option>
@@ -120,14 +120,14 @@ const getFaqCategorySubcategory = async () => {
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-3 col-form-label">Հարցի տեքստ</label>
+                  <label for="inputText" class="col-sm-2 col-form-label">Հարցի տեքստ</label>
                   <div class="col-sm-9">
                     <input type="text" class="form-control" v-model="form.title">
                     <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label for="inputText" class="col-sm-3 col-form-label">Հարցի պատասխան</label>
+                  <label for="inputText" class="col-sm-2 col-form-label">Հարցի պատասխան</label>
                   <div class="col-sm-9">
                     <textarea class="tinymce-editor"  id="tiny-editor" v-model="form.content"></textarea>
                     <br>
@@ -139,7 +139,7 @@ const getFaqCategorySubcategory = async () => {
 
 
                 <div class="row mb-3">
-                  <label class="col-sm-3 col-form-label"></label>
+                  <label class="col-sm-2 col-form-label"></label>
                   <div class="col-sm-9">
                     <button class="btn btn-primary" @click="updateData">Պահպանել</button>
                   </div>

@@ -2,7 +2,7 @@
 import  { ref, onMounted } from "vue"
 import {useRouter } from "vue-router"
 
-import ModalDelete from '../../components/includes/ModalDelete.vue';
+
 
 
 
@@ -36,56 +36,49 @@ const  onEdit = (id) =>{
     router.push(`/faq-category-subcategory/${id}/edit`)
 }
 // for modal
-const urlValue = ref('');
+// const urlValue = ref('');
 
 const deleteItem = (id,tb_name) =>{
 
-const newUrl  = `/delete-item/${tb_name}/${id}`
+const newUrl  = `/api/delete-item/${tb_name}/${id}`
 
-      urlValue.value = newUrl;
+    //   urlValue.value = newUrl;
 
 
 
-//     // Swal.fire({
-//     // title: "Դուք համոզված եք?",
-//     // // text: "You won't be able to revert this!",
-//     // icon: "warning",
-//     // showCancelButton: true,
-//     // cancelButtonText:"Ոչ" ,
-//     // confirmButtonColor: "#3085d6",
-//     // cancelButtonColor: "#d33",
-//     // confirmButtonText: "Այո"
-//     // })
-//     // .then((result) => {
-//     //     if (result.isConfirmed) {
-//     //         axios.delete(`/api/faq-categories/${id}`)
-//     //             .then(()=>{
-//     //                Swal.fire({
-//     //                     title: "Ջնջված է",
-//     //                     text: "Ձեր գրառումը բարեհաջող ջնջվել է",
-//     //                     icon: "success",
-//     //                     confirmButtonText: "Լավ",
-//     //                     //   // dont work css
-//     //                         customClass: {
-//     //                             icon: 'small-icon'  // Add custom class for the icon
-//     //                         }
-//     //                     });
-//     //                     // dont work css
-//     //                     didRender: () => {
-//     //                     const icon = document.querySelector('.small-icon .swal2-icon');
-//     //                     console.log(icon)
-//     //                     if (icon) {
-//     //                         icon.style.fontSize = '5px';
-//     //                         icon.style.width = '50px';
-//     //                         icon.style.height = '50px';
-//     //                     }
-//     //                     }
+    Swal.fire({
+    title: "Դուք համոզված եք?",
+    // text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    cancelButtonText:"Ոչ" ,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Այո"
+    })
+    .then((result) => {
+        if (result.isConfirmed) {
+            axios.get(newUrl)
+                .then((response)=>{
+                    if(response.data.result==1){
 
-//     //                     getFaqCategories()
+                        Swal.fire({
+                        // title: "Ջնջված է",
+                        text: "Ձեր գրառումը բարեհաջող ջնջվել է",
+                        // icon: "success",
+                        confirmButtonText: "Լավ",
+                        //   // dont work css
+                            customClass: {
+                                icon: 'small-icon'  // Add custom class for the icon
+                            }
+                        });
+                           getAllData()
 
-//     //             })
-//     //     }
-//     // });
+                    }
+
+                })
+        }
+    });
 }
 
 
@@ -144,7 +137,7 @@ const newUrl  = `/delete-item/${tb_name}/${id}`
 
                                             <td>
 
-                                                <div class="dropdown action"data-id="{{ item.id }}" data-tb-name="f_a_q_sub_categories" >
+                                                <div class="dropdown action" >
 
                                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                         data-bs-toggle="dropdown">
@@ -153,13 +146,12 @@ const newUrl  = `/delete-item/${tb_name}/${id}`
                                                     <div class="dropdown-menu">
                                                         <a class="dropdown-item"   @click="onEdit(item.id)"><i
                                                                 class="bx bx-edit-alt me-1"></i>Խմբագրել</a>
+
+
                                                         <button type="button" class="dropdown-item click_delete_item"
-
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#smallModal"
                                                                 @click = "deleteItem(item.id,'f_a_q_sub_categories')"
-
-                                                                ><i
+                                                              >
+                                                              <i
                                                                 class="bx bx-trash me-1"></i>
                                                             Ջնջել</button>
                                                     </div>
@@ -184,17 +176,11 @@ const newUrl  = `/delete-item/${tb_name}/${id}`
                     </div>
                 </div>
             </div>
-
-             <!-- Basic Modal -->
-             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#smallModal">
-                Basic Modal
-              </button>
-              <!-- End Basic Modal-->
         </section>
 
     </main>
-    <ModalDelete  :url='urlValue' />
-    <!-- <ModalDelete :itemId="itemId" :url="deleteUrl" ref="deleteModal" /> -->
+    <!-- <ModalDelete  :url='urlValue' /> -->
+
 
 </template>
 

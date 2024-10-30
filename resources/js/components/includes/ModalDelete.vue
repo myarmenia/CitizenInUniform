@@ -11,6 +11,12 @@ const props = defineProps({
 
 const ConfirmationBTN = ()=>{
     console.log(props.url)
+    //  axios.delete("props.url`)
+
+    let response =   axios.get('api/delete-item/f_a_q_sub_categories/2')
+        .then((response)=>{
+            console.log(response)
+        })
 
 }
 

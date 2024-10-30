@@ -60,18 +60,18 @@ const handleSave = () =>{
 
                <div>
                     <div class="row mb-3">
-                        <label for="inputText" class="col-sm-4 col-form-label">ՀՏՀ կատեգորիա</label>
-                        <div class="col-sm-8">
+                        <label for="inputText" class="col-sm-3 col-form-label">ՀՏՀ կատեգորիա</label>
+                        <div class="col-sm-9">
                             <input type="text" class="form-control" v-model="form.title">
                             <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
                         </div>
                     </div>
 
                 <div class="row mb-3">
-                  <label class="col-sm-4 col-form-label">
+                  <label class="col-sm-3 col-form-label">
 
                 </label>
-                  <div class="col-sm-8">
+                  <div class="col-sm-9">
                     <button class="btn btn-primary" @click="handleSave">Ստեղծել</button>
                   </div>
                 </div>

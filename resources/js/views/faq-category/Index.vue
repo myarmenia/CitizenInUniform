@@ -38,50 +38,54 @@ const changePage =(link) =>{
 
         router.push(`/faq-categories/${id}/edit`)
     }
-    const deleteItem = (id) =>{
+    // ===============delete section==============
+    const deleteItem = (id,tb_name) =>{
 
-            Swal.fire({
-            title: "Դուք համոզված եք?",
-            // text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            cancelButtonText:"Ոչ" ,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Այո"
-            })
-            .then((result) => {
-                if (result.isConfirmed) {
-                    axios.delete(`/api/faq-categories/${id}`)
-                        .then(()=>{
-                           Swal.fire({
-                                title: "Ջնջված է",
-                                text: "Ձեր գրառումը բարեհաջող ջնջվել է",
-                                icon: "success",
-                                confirmButtonText: "Լավ",
-                                //   // dont work css
-                                    customClass: {
-                                        icon: 'small-icon'  // Add custom class for the icon
-                                    }
-                                });
-                                // dont work css
-                                didRender: () => {
-                                const icon = document.querySelector('.small-icon .swal2-icon');
-                                console.log(icon)
-                                if (icon) {
-                                    icon.style.fontSize = '5px';
-                                    icon.style.width = '50px';
-                                    icon.style.height = '50px';
-                                }
-                                }
+    const newUrl  = `/api/delete-item/${tb_name}/${id}`
 
-                                getFaqCategories()
+    //   urlValue.value = newUrl;
 
-                        })
-                }
-            });
-    }
 
+
+    Swal.fire({
+    title: "Դուք համոզված եք?",
+    // text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    cancelButtonText:"Ոչ" ,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Այո"
+    })
+    .then((result) => {
+        if (result.isConfirmed) {
+            axios.get(newUrl)
+                .then((response)=>{
+                    if(response.data.result==1){
+
+                        Swal.fire({
+                        // title: "Ջնջված է",
+                        text: "Ձեր գրառումը բարեհաջող ջնջվել է",
+                        // icon: "success",
+                        confirmButtonText: "Լավ",
+                        //   // dont work css
+                            customClass: {
+                                icon: 'small-icon'  // Add custom class for the icon
+                            }
+                        });
+                            getFaqCategories()
+
+                    }
+
+                })
+        }
+    });
+}
+// ========
+const changeStatus = (checkedStatus,id,tb_name)=>{
+    console.log(checkedStatus, id,tb_name,'55555555555')
+
+}
 
 
 </script>
@@ -118,7 +122,7 @@ const changePage =(link) =>{
                                 <thead>
                                     <tr>
                                         <th>Հ/Հ</th>
-                                        <th>Վերնագիր</th>
+                                        <th>ՀՏՀ կատեգորիա</th>
                                         <th>Կարգավիճակ</th>
                                         <th width="10%">Գործողություն</th>
                                     </tr>
@@ -131,7 +135,7 @@ const changePage =(link) =>{
                                             <td>
 
 
-                                                <div class="dropdown action"  data-id="" data-tb-name="category">
+                                                <div class="dropdown action" >
                                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                         data-bs-toggle="dropdown">
                                                         <i class="bx bx-dots-vertical-rounded"></i>
@@ -139,8 +143,18 @@ const changePage =(link) =>{
                                                     <div class="dropdown-menu">
                                                         <a class="dropdown-item"   @click="onEdit(category.id)"><i
                                                                 class="bx bx-edit-alt me-1"></i>Խմբագրել</a>
+                                                                <a class="dropdown-item d-flex" href="javascript:void(0);">
+                                                                    <div class="form-check form-switch">
+                                                                        <input class="form-check-input change_status" type="checkbox"
+                                                                            role="switch" data-field-name="status"
+                                                                        :checked="category.status"
+                                                                        @change="changeStatus(event.target.checked,category.id,'f_a_q_categories')"
+                                                                        >
+                                                                    </div>Կարգավիճակ
+                                                                </a>
                                                         <button type="button" class="dropdown-item click_delete_item"
-                                                            data-bs-toggle="modal" data-bs-target="#smallModal" @click = "deleteItem(category.id)"><i
+
+                                                              @click = "deleteItem(category.id,'f_a_q_categories')"><i
                                                                 class="bx bx-trash me-1"></i>
                                                             Ջնջել</button>
                                                     </div>

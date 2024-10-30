@@ -17,15 +17,23 @@
             </li>
 
             <li class="nav-item">
-                <router-link class="nav-link"  to="/faq-categories">
-                    <i class="bi bi-grid"></i>
+
+                <router-link
+                class="nav-link"
+                :class="{ active: $route.path === '/faq-categories' }"
+                 to="/faq-categories"
+                 >
+                    <i class="bi bi-question-circle"></i>
                     <span>ՀՏՀ կատեգորիա</span>
 
                 </router-link>
+
             </li>
             <li class="nav-item">
-                <router-link class="nav-link"  to="/faq-category-subcategory">
-                    <i class="bi bi-grid"></i>
+                <router-link class="nav-link"
+                :class="{ active: $route.path === '/faq-category-subcategory' }"
+                to="/faq-category-subcategory">
+                    <i class="bi bi-question-circle"></i>
                     <span>ՀՏՀ  ենթակատեգորիա</span>
 
                 </router-link>

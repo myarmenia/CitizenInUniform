@@ -22,7 +22,7 @@ class FaqCategorySubcategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-           
+           'f_a_q_category_id'=>'required',
             'title'=>'required',
             'content'=>'required',
         ];
@@ -30,7 +30,7 @@ class FaqCategorySubcategoryRequest extends FormRequest
     public function messages()
     {
         return [
-
+            'f_a_q_category_id.required' => 'ՀՏՀ կատեգորիա դաշտը պարտադիր է',
             'title.required' => 'Հարցի տեքստ դաշտը պարտադիր է',
             'content.required' => 'Հարցի պատասխան դաշտը պարտադիր է',
         ];

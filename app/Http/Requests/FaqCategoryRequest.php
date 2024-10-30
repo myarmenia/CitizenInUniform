@@ -25,4 +25,12 @@ class FaqCategoryRequest extends FormRequest
             'title'=>'required',
         ];
     }
+    public function messages(){
+        return [
+
+            'title.required' => 'ՀՏՀ կատեգորիա դաշտը պարտադիր է',
+           
+        ];
+    }
+
 }

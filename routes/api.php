@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryContro
 
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
+use App\Http\Controllers\DeleteItemController;
 use App\Http\Controllers\FaqCategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,5 +42,7 @@ Route::put('/faq-categories/{id}',[FaqCategoryController::class,'update']);
 Route::delete('/faq-categories/{id}',[FaqCategoryController::class,'destroy']);
 
 Route::apiResource('faq-category-subcategory',FaqCategorySubcategoryController::class);
+
+Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
 
 
