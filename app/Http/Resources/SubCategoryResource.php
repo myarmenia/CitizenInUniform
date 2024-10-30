@@ -17,7 +17,7 @@ class SubCategoryResource extends JsonResource
         return [
 
             "category_id" => $this->category_id,
-            "title" => $this->tile,
+            "title" => $this->title,
             "content" => $this->content,
             "type" => $this->type,
             "files" => SubCategoryFilesResource::collection($this->files)

@@ -23,9 +23,9 @@ class SubCategoryRequest extends FormRequest
     {
 
         return [
-            'category_id' => 'required',
-            'title' => 'required',
-            'content' => 'required',
+            // 'category_id' => 'required',
+            // 'title' => 'required',
+            // 'content' => 'required',
         ];
     }
 }

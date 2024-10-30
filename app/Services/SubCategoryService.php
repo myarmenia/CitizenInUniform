@@ -17,7 +17,8 @@ class SubCategoryService
     ) {
     }
 
-    public function index(){
+    public function index()
+    {
         return $this->subCategorryRepository->index();
     }
 
@@ -32,24 +33,10 @@ class SubCategoryService
         $dataFile = [];
         $subCategory = $this->subCategorryRepository->store($data->toArray());
 
-        if($data->files != null && $subCategory != null){
-
+        if ($data->files != null && $subCategory != null) {
             $files = $data->files;
-            foreach ($files as $key => $value) {
 
-
-                $type = !$value->getError() ? explode('/', $value->getMimeType())[0] : null;
-
-                $path = FileUploadService::upload($value, "sub-categories/$subCategory->id/");
-                $dataFile['name'] = $value->getClientOriginalName();
-                $dataFile['path'] = $path;
-                $dataFile['type'] = $type;
-                $dataFile['sub_category_id'] = $subCategory->id;
-
-
-                $this->fileRepository->store($dataFile);
-            }
-
+            $this->addFiles($files, $subCategory->id);
 
         }
 
@@ -61,9 +48,44 @@ class SubCategoryService
         return $this->subCategorryRepository->edit($id);
     }
 
-    public function update($date, $id)
+    public function update($data, $id)
     {
-        return $this->subCategorryRepository->update($date->toArray(), $id);
+
+        $subCategory = $this->subCategorryRepository->update($data->toArray(), $id);
+
+        if ($data->files != null && $subCategory) {
+            $files = $data->files;
+
+            $this->addFiles($files, $id);
+
+        }
+
+        return $subCategory;
+    }
+
+    public function addFiles($files, $subCategoryId)
+    {
+
+        try {
+            foreach ($files as $key => $value) {
+
+                $type = !$value->getError() ? explode('/', $value->getMimeType())[0] : null;
+
+                $path = FileUploadService::upload($value, "sub-categories/$subCategoryId/");
+                $dataFile['name'] = $value->getClientOriginalName();
+                $dataFile['path'] = $path;
+                $dataFile['type'] = $type;
+                $dataFile['sub_category_id'] = $subCategoryId;
+
+
+                $this->fileRepository->store($dataFile);
+            }
+            return true;
+
+        } catch (\Throwable $th) {
+            return false;
+        }
+
     }
 
 

@@ -9,15 +9,15 @@ const route = useRoute()
 
 let errors = ref([])
 let allCategories = ref([])
-// const selectedCategory = ref('Ընտրել մենյուի կատեգորիան');
-
 
 const form = reactive({
     category_id: '',
     title: '',
     content: '',
     files: [],
-    dataFiles: []
+    dataFiles: [],
+    responseFiles: []
+
 })
 
 
@@ -45,46 +45,48 @@ const getSubCategy = async () => {
             form.category_id = result.category_id
             form.title = result.title
             form.content = result.content
-            form.files = result.files
+            form.responseFiles = result.files
 
-            console.log(form)
     })
 }
 
 
-// const handleSelectionChange = () => {
-//     form.category_id = selectedCategory.value
+const handleFileChange = (e) => {
+    const selectedFiles = e.target.files;
 
-// }
+    Array.from(selectedFiles).forEach((file) => {
+        // Сохраняем оригинальные объекты File
+        form.dataFiles.push(file);
+    });
 
+    Array.from(selectedFiles).forEach((file) => {
+        const reader = new FileReader();
 
-// const handleFileChange = (e) => {
-//     const selectedFiles = e.target.files;
+        reader.onload = () => {
+            form.files.push({ src: reader.result, type: file.type});
+        };
 
-//     Array.from(selectedFiles).forEach((file) => {
-//         // Сохраняем оригинальные объекты File
-//         form.dataFiles.push(file);
-//     });
+        reader.readAsDataURL(file);
+    });
+    console.log(form.dataFiles, form.files)
 
-//     Array.from(selectedFiles).forEach((file) => {
-//         const reader = new FileReader();
-
-//         reader.onload = () => {
-//             form.files.push({ src: reader.result, type: file.type});
-//         };
-
-//         reader.readAsDataURL(file);
-//     });
-
-// };
+};
 
 
-// const removeFile = (index) => {
-//   form.files.splice(index, 1); // Удаляем файл по индексу из массива files
-//   form.dataFiles.splice(index, 1);
+const removeFile = (index) => {
+  form.files.splice(index, 1); // Удаляем файл по индексу из массива files
+  form.dataFiles.splice(index, 1);
 
-//   console.log(files)
-// };
+};
+
+// const removeFileFromDB = (subCategoryId) => {
+//     let response = await axios.get ( `/api/delete-item/files/${subCategoryId}`)
+//         .then((response) => {
+//             this.parent.remove()
+//             element.parentNode.remove()
+//             toast.fire({icon: 'success', title: 'Գործողությունը կատարված է'})
+//         })
+//  }
 
 
 const dataEdit = async () => {
@@ -96,16 +98,21 @@ const dataEdit = async () => {
     formData.append('title', form.title);
     formData.append('content', form.content);
 
+    form.dataFiles.forEach((file) => {
+        formData.append('files[]', file); // Добавляем оригинальные объекты File
+    });
 
-    let response = await axios.put(`/api/sub-categories/${route.params.id}`, formData, {
+    formData.append('_method', 'PUT');
+
+    let response = await axios.post(`/api/sub-categories/${route.params.id}`, formData, {
              headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'multipart/form-data'
                 }
         })
         .then((response) => {
 
-        router.push('/sub-categories')
-        toast.fire({icon: 'success', title: 'soccess message'})
+            router.push('/sub-categories')
+            toast.fire({icon: 'success', title: 'soccess message'})
 
         })
         .catch((error) => {
@@ -190,20 +197,29 @@ const dataEdit = async () => {
                                     </div>
                                 </div>
 
-                                <!-- <div class="row mb-3">
+                                 <div class="row mb-3">
                                     <label for="files" class="col-sm-3 col-form-label"></label>
                                     <div class="d-flex justify-content-start col-sm-9 flex-wrap">
+                                        <div v-for="(file, index) in form.responseFiles" :key="index" class="files d-flex align-items-start">
+                                            <img v-if="file.type == 'image'" :src="file.path" alt="Изображение" class="image img-thumbnail mx-0 my-2" />
+                                            <video v-else-if="file.type == 'video'" :src="file.path" controls class="video img-thumbnail mx-0 my-2"></video>
+
+                                            <span class="deleteFile" @click="removeFileFromDB(file.id)">
+                                                <i class="bx bx-trash me-1"></i>
+                                            </span>
+                                        </div>
+
                                         <div v-for="(file, index) in form.files" :key="index" class="files d-flex align-items-start">
+
                                             <img v-if="file.type.startsWith('image/')" :src="file.src" alt="Изображение" class="image img-thumbnail mx-0 my-2" />
                                             <video v-else-if="file.type.startsWith('video/')" :src="file.src" controls class="video img-thumbnail mx-0 my-2"></video>
 
-                                            <span class="deleteFile" @click="removeFile(index)">
-                                            <i class="bx bx-trash me-1"></i>
-                                            </span>
+                                            <span class="deleteFile" @click="removeFile(index)"><i class="bx bx-trash me-1"></i></span>
                                         </div>
+
                                     </div>
                                     <div v-if="responseMessage" class="alert alert-success mt-3">{{ responseMessage }}</div>
-                                </div> -->
+                                </div>
 
                                 <div class="row mb-3">
                                     <label class="col-sm-3 col-form-label"></label>

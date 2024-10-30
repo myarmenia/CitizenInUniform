@@ -88,7 +88,7 @@ const dataSave = async () => {
         .then((response) => {
 
         router.push('/sub-categories')
-        toast.fire({icon: 'success', title: 'soccess message'})
+        toast.fire({icon: 'success', title: 'Գործողությունը կատարված է'})
 
         })
         .catch((error) => {
