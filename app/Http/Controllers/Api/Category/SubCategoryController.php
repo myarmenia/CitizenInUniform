@@ -6,6 +6,7 @@ use App\DTO\SubCategoryDto;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubCategoryRequest;
+use App\Http\Resources\SubCategoryResource;
 use App\Services\SubCategoryService;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class SubCategoryController extends BaseController
     {
         $data = $this->service->index();
 
-        return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
     }
 
@@ -41,29 +42,34 @@ class SubCategoryController extends BaseController
      */
     public function store(SubCategoryRequest $request)
     {
-        dd($request->all());
+
         $data = $this->service->store(SubCategoryDto::fromSubCategoryDto($request));
 
-        return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function show(string $id)
     {
         $data = $this->service->edit($id);
+        $data = $data != null ? SubCategoryResource::make($data) : null;
 
-        return view("sub-category.edit", compact('data'));
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(SubCategoryRequest $request, string $id)
     {
-        //
+
+        $data = $this->service->update(SubCategoryDto::fromSubCategoryDto($request), $id);
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 
     /**

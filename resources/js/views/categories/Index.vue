@@ -43,7 +43,7 @@ import { ref, onMounted } from  "vue"
                                 <div class = "d-flex justify-content-between">
                                     <h5 class="card-title">Մենյուի բաժիններ</h5>
                                     <div class="pull-right d-flex justify-content-end m-3" >
-                                        <router-link class="btn btn-primary  mb-2" to="/categories/create"><i class="fa fa-plus"></i> Ստեղծել նոր բաժին</router-link>
+                                        <router-link class="btn btn-primary  mb-2" to="/categories/create"><i class="fa fa-plus"></i> Ստեղծել</router-link>
                                     </div>
                                 </div>
                             </div>

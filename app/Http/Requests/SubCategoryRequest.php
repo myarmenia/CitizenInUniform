@@ -11,7 +11,7 @@ class SubCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return T_SR_EQUAL;
+        return true;
     }
 
     /**
@@ -21,9 +21,10 @@ class SubCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             // 'category_id' => 'required',
-            'title' => 'required',
+            // 'title' => 'required',
             // 'content' => 'required',
         ];
     }
