@@ -11,10 +11,11 @@ const form = reactive({
 })
 
 const handleSave = () =>{
+    errors.value = {}; 
     axios.post('/api/create-faq-category',form)
     .then((response)=>{
         router.push('/faq-categories')
-        toast.fire({icon:"success",title:"ՀՏՀ բարեհաջող ավելացվել է"})
+        toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
      .catch((error) => {
 
@@ -50,7 +51,7 @@ const handleSave = () =>{
 
     <section class="section">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-8">
 
           <div class="card">
             <div class="card-body">

@@ -7,6 +7,12 @@ use App\Models\FAQCategory;
 
 class FaqCategoryRepository implements FaqCategoryRepositoryInterface
 {
+
+    public function index(){
+        
+        return FAQCategory::all();
+
+    }
     public function store($data){
 
         return FaqCategory::create($data);
