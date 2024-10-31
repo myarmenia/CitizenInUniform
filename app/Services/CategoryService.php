@@ -17,4 +17,24 @@ class CategoryService
         return $this->categorryRepository->index();
     }
 
+    public function store($data)
+    {
+        return $this->categorryRepository->store($data->toArray());
+    }
+
+    public function edit($id)
+    {
+        return $this->categorryRepository->edit($id);
+    }
+
+    public function update($data, $id)
+    {
+        return $this->categorryRepository->update($data->toArray(), $id);
+    }
+    public function activeCategories()
+    {
+        return $this->categorryRepository->activeCategories();
+    }
+
+
 }

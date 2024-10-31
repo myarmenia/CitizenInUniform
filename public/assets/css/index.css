@@ -1,0 +1,11 @@
+.text-danger
+{
+    font-size: 12px !important;
+    margin-top: 6px;
+}
+.dropdown-toggle::after {
+    content: none;
+}
+.bx {
+    font-size: 22px;
+}

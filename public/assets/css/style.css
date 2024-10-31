@@ -1232,6 +1232,3 @@ h6 {
   color: #012970;
 }
 
-.dropdown-toggle::after {
-    content: none;
-}

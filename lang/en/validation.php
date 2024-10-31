@@ -215,11 +215,12 @@ return [
     'translate.*.name' => 'Վերնագիր',
     'max_quantity' => 'Առավելագույն քանակ',
     'min_quantity' => 'Նվազագույն քանակ',
-    'educational_program_id' => 'Ծրագրի տեսակ',
     'time' => 'Ժամ',
     'date' => 'Օր',
-    'client.name'=>'Գործատուի անուն',
-    'token'=>'Թոքեն'
+    'token'=>'Թոքեն',
+    'title'=>'Վերնագիր',
+    'content' => 'Բովանդակություն',
+    'category_id' => 'Կատեգորիա'
 
   ]
 

@@ -35,6 +35,8 @@
 
                 <!-- Template Main CSS File -->
             <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+            <link href="{{ asset('assets/css/index.css') }}" rel="stylesheet">
+
     {{-- added  template links end --}}
 
     @yield("page-script")
@@ -47,10 +49,10 @@
 </head>
 <body>
     <div id="app">
-        @if (Auth::user())
+        {{-- @if (Auth::user()) --}}
             @include('layouts.navbar')
-            @include('layouts.sidebar')
-        @endif
+            {{-- @include('layouts.sidebar') --}}
+        {{-- @endif --}}
 
 
         @yield('content')
