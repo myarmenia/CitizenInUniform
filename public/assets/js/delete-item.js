@@ -1,5 +1,6 @@
 $(function () {
     $('.click_delete_item').on('click', function () {
+ 
       let id = $(this).parents('.action').attr('data-id')
       let tb_name = $(this).parents('.action').attr('data-tb-name')
       let url = `/delete-item/${tb_name}/${id}`

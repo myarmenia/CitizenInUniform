@@ -16,7 +16,7 @@ class CategoryDto
     public static function fromCategoryDto(Request $request): CategoryDto
     {
         return new self(
-            title: $request->mac
+            title: $request->title
         );
     }
 
@@ -24,6 +24,7 @@ class CategoryDto
     {
         return [
             'title' => $this->title
+
         ];
     }
 

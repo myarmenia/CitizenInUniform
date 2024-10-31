@@ -29,10 +29,12 @@ class DeleteItemService
           $file_path = '';
           $item_db = $item->first();
 
-
-          if(isset($item_db->image)){
+          if(isset($item_db->image) || isset($item_db->files)){
             Storage::disk('public')->deleteDirectory("$tb_name/$id");
 
+          }
+          elseif(isset($item_db->files) && count($item_db->files) > 0){
+                Storage::disk('public')->deleteDirectory("$tb_name/$id");
           }
           else{
 
@@ -51,17 +53,9 @@ class DeleteItemService
           }
 
 
-        if($tb_name == 'people'){
-                  $item_db->activated_code_connected_person();
-                  if($item_db->activated_code_connected_person !=null){
-                    $item_db->activated_code_connected_person->status = 0;
-                    $item_db->activated_code_connected_person->save();
 
-                    $entry_code = self::entryCodeChangeStatus($item_db->activated_code_connected_person->entry_code_id);
-                  }
-              }
 
-          $delete = $item ? $item->delete() : false;
+          $delete = $item_db ? $item_db->delete() : false;
 
         //   $delete ? LogService::store(null, $id, $tb_name, 'delete') : '';
 
@@ -70,11 +64,5 @@ class DeleteItemService
       }
 
   }
-  public static function entryCodeChangeStatus($entryCodeId){
 
-    $entry_code = EntryCode::where('id',$entryCodeId)->first();
-    $entry_code->activation = 0;
-    $entry_code->save();
-
-  }
 }
