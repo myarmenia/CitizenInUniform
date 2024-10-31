@@ -25,7 +25,7 @@ const getFaqCategory = async () => {
 }
 
  const updateData = () =>{
-    errors.value = {}; 
+    errors.value = {};
 
         axios.put(`/api/faq-categories/${route.params.id}`,form)
             .then((response)=>{
@@ -64,7 +64,7 @@ const getFaqCategory = async () => {
 
     <section class="section">
       <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-8">
 
           <div class="card">
             <div class="card-body">
@@ -76,7 +76,7 @@ const getFaqCategory = async () => {
               <!-- <form> -->
                <div>
                     <div class="row mb-3">
-                    <label for="inputText" class="col-sm-3 col-form-label">ՀՏՀ կատեգորիա</label>
+                    <label for="inputText" class="col-sm-2 col-form-label">ՀՏՀ կատեգորիա</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" v-model="form.title">
                         <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
@@ -97,7 +97,7 @@ const getFaqCategory = async () => {
 
 
                     <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label"></label>
+                    <label class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-9">
                         <button class="btn btn-primary" @click="updateData">Պահպանել</button>
                     </div>

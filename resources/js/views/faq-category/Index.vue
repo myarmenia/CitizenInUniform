@@ -6,12 +6,14 @@ const router = useRouter()
 let faqCategories = ref([]);
 let links = ref([]);
 let  faqArray=ref([])
+let activePage = ref(1)
+
 
 onMounted(async () =>{
     getFaqCategories()
 })
 const getFaqCategories = async () => {
-    let response = await axios.get('/api/list-faq-categories')
+    let response = await axios.get('/api/list-faq-categories?page=${activePage.value}')
         .then((response)=>{
 
             faqCategories.value = response.data.result.data
@@ -29,6 +31,7 @@ const changePage =(link) =>{
     if(!link.url || link.active){
         return
     }
+    activePage.value = link.label
     axios.get(link.url)
         .then((response) =>{
            faqCategories.value = response.data.result.data
@@ -106,10 +109,11 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
 
     axios.post('/api/change-status',form)
     .then((response)=>{
-        getFaqCategories()
+        getFaqCategories(activePage.value)
 
         toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
+
 
 };
 
