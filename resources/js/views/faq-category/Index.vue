@@ -5,7 +5,7 @@ const router = useRouter()
 
 let faqCategories = ref([]);
 let links = ref([]);
-
+let  faqArray=ref([])
 
 onMounted(async () =>{
     getFaqCategories()
@@ -15,7 +15,7 @@ const getFaqCategories = async () => {
         .then((response)=>{
 
             faqCategories.value = response.data.result.data
-faqArray=response.data.result.data.map(category=>category.status)
+            faqArray.value = response.data.result.data.map(category => category.status);
 
             links.value =  response.data.result.links
 
@@ -93,15 +93,15 @@ const form = reactive({
 
 })
 
-const categoryStatus=ref();
 
+const changeStatus = (index, event, id, tb_name, field_name) => {
 
-const changeStatus = (id, tb_name,categoryStatus,field_name)=>{
-console.log(this)
-console.log(id, tb_name,categoryStatus,field_name)
+    let changedStatus = event.target.checked
+    faqArray.value[index] = changedStatus; // Update the checked state for the specific checkbox
+
     form.id = id
     form.tb_name = tb_name
-    form.status = categoryStatus
+    form.status = changedStatus
     form.field_name = field_name
 
     axios.post('/api/change-status',form)
@@ -110,24 +110,6 @@ console.log(id, tb_name,categoryStatus,field_name)
 
         toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
-     .catch((error) => {
-
-            if (error.response && error.response.status === 422) {
-
-
-                }
-
-        })
-
-}
-// ====================
-let  faqArray=''
-console.log(faqArray,"77777777777")
-const checkedStates = ref(faqArray); // Initialize checked states
-console.log(checkedStates)
-const handleChange = (index, event, id, tb_name, field_name) => {
-    console.log( checkedStates)
-  checkedStates.value[index] = event.target.checked; // Update the checked state for the specific checkbox
 
 };
 
@@ -201,10 +183,10 @@ const handleChange = (index, event, id, tb_name, field_name) => {
                                                                 <input class="form-check-input change_status" type="checkbox"
                                                                     role="switch"
 
-                                                                    :checked="checkedStates[index]"
-                                                                    @change="handleChange(index, $event, category.id,'f_a_q_categories','status')"
+                                                                    :checked="category.status"
+                                                                    @change="changeStatus(index, $event, category.id,'f_a_q_categories','status')"
                                                                 >
-                                                            </div> Կարգավիճակ {{ checkedStates[index] }}
+                                                            </div> Կարգավիճակ
 
                                                         </a>
                                                         <button type="button" class="dropdown-item click_delete_item"
