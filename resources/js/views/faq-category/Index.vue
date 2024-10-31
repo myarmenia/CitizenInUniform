@@ -14,23 +14,26 @@ const getFaqCategories = async () => {
     let response = await axios.get('/api/list-faq-categories')
         .then((response)=>{
 
-            faqCategories.value = response.data.faqCategories
-            // .data
-            // links.value =  response.data.faqCategories.links
+            faqCategories.value = response.data.result.data
+faqArray=response.data.result.data.map(category=>category.status)
+
+            links.value =  response.data.result.links
 
 
         })
 }
 
 const changePage =(link) =>{
-    console.log(link)
+    console.log(link,"")
+
     if(!link.url || link.active){
         return
     }
     axios.get(link.url)
         .then((response) =>{
-           faqCategories.value = response.data.faqCategories.data
-            links.value = response.data.faqCategories.link
+           faqCategories.value = response.data.result.data
+           links.value =  response.data.result.links
+
         })
 }
 
@@ -92,12 +95,14 @@ const form = reactive({
 
 const categoryStatus=ref();
 
-const changeStatus = ($id, $tb_name,$categoryStatus,$field_name)=>{
 
-    form.id = $id
-    form.tb_name = $tb_name
-    form.status = $categoryStatus
-    form.field_name = $field_name
+const changeStatus = (id, tb_name,categoryStatus,field_name)=>{
+console.log(this)
+console.log(id, tb_name,categoryStatus,field_name)
+    form.id = id
+    form.tb_name = tb_name
+    form.status = categoryStatus
+    form.field_name = field_name
 
     axios.post('/api/change-status',form)
     .then((response)=>{
@@ -115,6 +120,16 @@ const changeStatus = ($id, $tb_name,$categoryStatus,$field_name)=>{
         })
 
 }
+// ====================
+let  faqArray=''
+console.log(faqArray,"77777777777")
+const checkedStates = ref(faqArray); // Initialize checked states
+console.log(checkedStates)
+const handleChange = (index, event, id, tb_name, field_name) => {
+    console.log( checkedStates)
+  checkedStates.value[index] = event.target.checked; // Update the checked state for the specific checkbox
+
+};
 
 
 </script>
@@ -160,7 +175,7 @@ const changeStatus = ($id, $tb_name,$categoryStatus,$field_name)=>{
                                         <tr v-for ="(category,index) in faqCategories" :key="category.id">
                                             <td>{{++index}}</td>
                                             <td>{{category.title}}</td>
-                                            <td :style="{ color: category.status == 0 ? 'red' : 'green' }">
+                                            <td>
 
                                                 <button
                                                     type="button"
@@ -178,18 +193,20 @@ const changeStatus = ($id, $tb_name,$categoryStatus,$field_name)=>{
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item"   @click="onEdit(category.id)"><i
-                                                                class="bx bx-edit-alt me-1"></i>Խմբագրել</a>
-                                                                <a class="dropdown-item d-flex" href="javascript:void(0);">
-                                                                    <div class="form-check form-switch">
-                                                                        <input class="form-check-input change_status" type="checkbox"
-                                                                            role="switch"
-                                                                            v-model="categoryStatus"
-                                                                        :checked="category.status"
-                                                                        @change="changeStatus(category.id,'f_a_q_categories',categoryStatus,'status')"
-                                                                        >
-                                                                    </div>Կարգավիճակ
-                                                                </a>
+                                                        <a class="dropdown-item"   @click="onEdit(category.id)">
+                                                            <i class="bx bx-edit-alt me-1"></i>Խմբագրել
+                                                        </a>
+                                                        <a class="dropdown-item d-flex" href="javascript:void(0);">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input change_status" type="checkbox"
+                                                                    role="switch"
+
+                                                                    :checked="checkedStates[index]"
+                                                                    @change="handleChange(index, $event, category.id,'f_a_q_categories','status')"
+                                                                >
+                                                            </div> Կարգավիճակ {{ checkedStates[index] }}
+
+                                                        </a>
                                                         <button type="button" class="dropdown-item click_delete_item"
 
                                                               @click = "deleteItem(category.id,'f_a_q_categories')"><i
@@ -202,26 +219,42 @@ const changeStatus = ($id, $tb_name,$categoryStatus,$field_name)=>{
                                     </tbody>
 
                             </table>
-                            <div class="pagination">
-                                <a
-                                        href="#"
-                                        class="btn"
+
+                            <nav aria-label="" class="d-flex justify-content-end">
+                                <ul class="pagination">
+                                    <li class="page-item "
                                         v-for="(link,index) in links"
                                         :key="index"
-                                        v-html="link.label"
                                         :class="{active: link.active,disabled:!link.url }"
                                         @click="changePage(link)"
-                                            ></a>
-                            </div>
+                                    >
+                                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true" v-html="link.label"></a>
+                                    </li>
+
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
             </div>
 
-                <!-- <h4>categoryStatus:{{categoryStatus  }}</h4> -->
+
         </section>
     </main>
 
+    <!-- v-model="category.status"
+    @change = "changeStatus(category.id,'f_a_q_categories',category.status,'status')" -->
+    <!-- <div>
+    <div v-for="(item, index) in faqCategories" :key="item.id">
+      <input
+        type="checkbox"
+        :checked="checkedStates[index]"
+        @change="handleChange(index, $event)"
+      />
+      <label>{{ item.name }}</label>
+    </div>
+    <p>Checked States: {{ checkedStates }}</p>
+  </div> -->
 
 </template>
 

@@ -11,7 +11,7 @@ const form = reactive({
 })
 
 const handleSave = () =>{
-    errors.value = {}; 
+    errors.value = {};
     axios.post('/api/create-faq-category',form)
     .then((response)=>{
         router.push('/faq-categories')
@@ -61,14 +61,14 @@ const handleSave = () =>{
 
                <div>
                     <div class="row mb-3">
-                        <label for="inputText" class="col-sm-3 col-form-label">ՀՏՀ կատեգորիա</label>
+                        <label for="inputText" class="col-sm-2 col-form-label">ՀՏՀ կատեգորիա</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" v-model="form.title">
                             <small style = "color:red" v-if="errors.title">{{errors.title}}</small>
                         </div>
                     </div>
 
-                <div class="row mb-3">
+                <div class="row mb-2">
                   <label class="col-sm-3 col-form-label">
 
                 </label>
