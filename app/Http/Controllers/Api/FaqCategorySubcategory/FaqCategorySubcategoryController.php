@@ -33,6 +33,7 @@ class FaqCategorySubcategoryController extends BaseController
             $data = $this->service->index();
             $data = FaqCategorySubcategoryResource::collection($data );
             $data = $this->arrayPaginator($data, $request, $perPage);
+            
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
 

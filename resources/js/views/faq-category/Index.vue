@@ -7,20 +7,22 @@ let faqCategories = ref([]);
 let links = ref([]);
 let  faqArray=ref([])
 let activePage = ref(1)
+let lastPage = ref(1)
+
 
 
 onMounted(async () =>{
     getFaqCategories()
 })
 const getFaqCategories = async () => {
-    let response = await axios.get('/api/list-faq-categories?page=${activePage.value}')
+    let response = await axios.get(`/api/list-faq-categories?page=${activePage.value}`)
         .then((response)=>{
 
+
             faqCategories.value = response.data.result.data
-            faqArray.value = response.data.result.data.map(category => category.status);
-
             links.value =  response.data.result.links
-
+            faqArray.value = response.data.result.data.map(item => item.status);
+            lastPage.value = response.data.result.last_page
 
         })
 }
@@ -206,7 +208,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
 
                             </table>
 
-                            <nav aria-label="" class="d-flex justify-content-end">
+                            <nav aria-label="" v-if="lastPage > 1" class="d-flex justify-content-end">
                                 <ul class="pagination">
                                     <li class="page-item "
                                         v-for="(link,index) in links"

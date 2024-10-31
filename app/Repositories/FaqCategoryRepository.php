@@ -9,7 +9,7 @@ class FaqCategoryRepository implements FaqCategoryRepositoryInterface
 {
 
     public function index(){
-        
+
         return FAQCategory::all();
 
     }

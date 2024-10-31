@@ -1,5 +1,5 @@
 <script setup>
-import  { ref, onMounted } from "vue"
+import  {reactive, ref, onMounted } from "vue"
 import {useRouter } from "vue-router"
 
 
@@ -13,6 +13,9 @@ const router = useRouter()
 
  let allData = ref([])
  let links = ref([]);
+ let  faqArray=ref([])
+ let activePage = ref(1)
+ let lastPage = ref(1)
 
 
 onMounted(async () =>{
@@ -22,12 +25,14 @@ onMounted(async () =>{
 })
 
 const getAllData = async () => {
-    let response = await axios.get('/api/faq-category-subcategory')
+    let response = await axios.get(`/api/faq-category-subcategory?page=${activePage.value}`)
         .then((response)=>{
 console.log(response.data.result.data)
-            allData.value = response.data.result.data
 
+            allData.value = response.data.result.data
             links.value =  response.data.result.links
+            faqArray.value = response.data.result.data.map(item => item.status);
+            lastPage.value = response.data.result.last_page
 
 
 
@@ -79,6 +84,13 @@ const newUrl  = `/api/delete-item/${tb_name}/${id}`
         }
     });
 }
+const form = reactive({
+    id:'',
+    tb_name: '',
+    status:'',
+    field_name:'',
+
+})
 
 
 const changePage =(link) =>{
@@ -87,6 +99,7 @@ const changePage =(link) =>{
     if(!link.url || link.active){
         return
     }
+    activePage.value = link.label
     axios.get(link.url)
         .then((response) =>{
             allData.value = response.data.result.data
@@ -94,6 +107,26 @@ const changePage =(link) =>{
 
         })
 }
+
+const changeStatus = (index, event, id, tb_name, field_name) => {
+
+    let changedStatus = event.target.checked
+    faqArray.value[index] = changedStatus; // Update the checked state for the specific checkbox
+
+    form.id = id
+    form.tb_name = tb_name
+    form.status = changedStatus
+    form.field_name = field_name
+
+    axios.post('/api/change-status',form)
+    .then((response)=>{
+        getAllData(activePage.value)
+
+        toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
+    })
+
+
+};
 
 
 
@@ -139,6 +172,7 @@ const changePage =(link) =>{
                                         <th>Հ/Հ</th>
                                         <th>ՀՏՀ կատեգորիա</th>
                                         <th>Հարց</th>
+                                        <th>Կարգավիճակ</th>
                                         <th width="10%">Գործողություն</th>
                                     </tr>
                                     </thead>
@@ -148,6 +182,15 @@ const changePage =(link) =>{
                                              <td>{{++index}}</td>
                                             <td>{{ item.f_a_q_category_name }}</td>
                                             <td>{{item.title}}</td>
+                                            <td>
+
+                                                <button
+                                                    type="button"
+                                                    :class="item.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
+                                                    {{ item.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
+                                                </button>
+
+                                            </td>
 
                                             <td>
 
@@ -159,7 +202,19 @@ const changePage =(link) =>{
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         <a class="dropdown-item"   @click="onEdit(item.id)"><i
-                                                                class="bx bx-edit-alt me-1"></i>Խմբագրել</a>
+                                                                class="bx bx-edit-alt me-1"></i>Խմբագրել
+                                                        </a>
+                                                        <a class="dropdown-item d-flex" href="javascript:void(0);">
+                                                            <div class="form-check form-switch">
+                                                                <input class="form-check-input change_status" type="checkbox"
+                                                                    role="switch"
+
+                                                                    :checked="item.status"
+                                                                    @change="changeStatus(index, $event, item.id,'f_a_q_sub_categories','status')"
+                                                                >
+                                                            </div> Կարգավիճակ
+
+                                                        </a>
 
 
                                                         <button type="button" class="dropdown-item click_delete_item"
@@ -175,7 +230,7 @@ const changePage =(link) =>{
                                     </tbody>
 
                             </table>
-                            <nav aria-label="" class="d-flex justify-content-end">
+                            <nav aria-label=""  v-if="lastPage > 1" class="d-flex justify-content-end">
                                 <ul class="pagination">
                                     <li class="page-item "
                                         v-for="(link,index) in links"
