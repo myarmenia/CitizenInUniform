@@ -8,7 +8,7 @@ const route = useRoute()
 
 
 let errors = ref([])
-let allCategories = ref([])
+let activeCategories = ref([])
 
 const form = reactive({
     category_id: '',
@@ -24,16 +24,16 @@ const form = reactive({
 
 onMounted(async () => {
     initTinyMCE()
-    getAllCategies()
+    getActiveCategies()
     getSubCategy()
 })
 
 
-const getAllCategies = async () => {
-    let response = await axios.get ( `/api/categories`)
+const getActiveCategies = async () => {
+    let response = await axios.get ( `/api/active-categories`)
     .then((response) => {
-       allCategories.value = response.data.result
-       console.log(allCategories)
+       activeCategories.value = response.data.result
+       console.log(activeCategories)
     })
 }
 
@@ -188,7 +188,7 @@ const dataEdit = async () => {
 
                                         <select class="form-select"  v-model="form.category_id"  >
                                                 <option disabled >Ընտրել մենյուի կատեգորիան </option>
-                                                <option v-for="category in allCategories" :key="category.id" :value="category.id" > {{category.title}} </option>
+                                                <option v-for="category in activeCategories" :key="category.id" :value="category.id" > {{category.title}} </option>
                                         </select>
 
                                         <div class="mb-3 row " v-if="errors.category_id">

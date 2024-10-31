@@ -6,7 +6,7 @@ import { initTinyMCE } from '../../utils/tinymceConfig';
 const router = useRouter()
 
 let errors = ref([])
-let allCategories = ref([])
+let activeCategories = ref([])
 const selectedCategory = ref('Ընտրել մենյուի կատեգորիան');
 
 
@@ -21,14 +21,15 @@ const form = reactive({
 
 onMounted(async () => {
     initTinyMCE()
-    getAllCategies()
+    getActiveCategies()
 })
 
-const getAllCategies = async () => {
-    let response = await axios.get ( `/api/categories`)
+const getActiveCategies = async () => {
+    let response = await axios.get ( `/api/active-categories`)
     .then((response) => {
-       allCategories.value = response.data.result.data
-       console.log(allCategories)
+
+       activeCategories.value = response.data.result
+       
     })
 }
 
@@ -161,7 +162,7 @@ const dataSave = async () => {
 
                                         <select class="form-select"  v-model="selectedCategory"  @change="handleSelectionChange" >
                                                 <option disabled selected>Ընտրել մենյուի կատեգորիան </option>
-                                                <option v-for="category in allCategories" :key="category.id" :value="category.id">{{category.title}}</option>
+                                                <option v-for="category in activeCategories" :key="category.id" :value="category.id">{{category.title}}</option>
                                         </select>
 
                                         <div class="mb-3 row " v-if="errors.category_id">
