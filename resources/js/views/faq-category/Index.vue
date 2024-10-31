@@ -15,6 +15,7 @@ const getFaqCategories = async () => {
         .then((response)=>{
 
             faqCategories.value = response.data.result.data
+faqArray=response.data.result.data.map(category=>category.status)
 
             links.value =  response.data.result.links
 
@@ -94,7 +95,9 @@ const form = reactive({
 
 const categoryStatus=ref();
 
+
 const changeStatus = (id, tb_name,categoryStatus,field_name)=>{
+console.log(this)
 console.log(id, tb_name,categoryStatus,field_name)
     form.id = id
     form.tb_name = tb_name
@@ -117,6 +120,16 @@ console.log(id, tb_name,categoryStatus,field_name)
         })
 
 }
+// ====================
+let  faqArray=''
+console.log(faqArray,"77777777777")
+const checkedStates = ref(faqArray); // Initialize checked states
+console.log(checkedStates)
+const handleChange = (index, event, id, tb_name, field_name) => {
+    console.log( checkedStates)
+  checkedStates.value[index] = event.target.checked; // Update the checked state for the specific checkbox
+
+};
 
 
 </script>
@@ -187,12 +200,12 @@ console.log(id, tb_name,categoryStatus,field_name)
                                                             <div class="form-check form-switch">
                                                                 <input class="form-check-input change_status" type="checkbox"
                                                                     role="switch"
-                                                                    v-model="categoryStatus"
-                                                                :checked="category.status"
-                                                                @change="changeStatus(category.id,'f_a_q_categories',categoryStatus,'status')"
+
+                                                                    :checked="checkedStates[index]"
+                                                                    @change="handleChange(index, $event, category.id,'f_a_q_categories','status')"
                                                                 >
-                                                            </div>Կարգավիճակ
-                                                            <input type="checkbox" checked>
+                                                            </div> Կարգավիճակ {{ checkedStates[index] }}
+
                                                         </a>
                                                         <button type="button" class="dropdown-item click_delete_item"
 
@@ -229,6 +242,19 @@ console.log(id, tb_name,categoryStatus,field_name)
         </section>
     </main>
 
+    <!-- v-model="category.status"
+    @change = "changeStatus(category.id,'f_a_q_categories',category.status,'status')" -->
+    <!-- <div>
+    <div v-for="(item, index) in faqCategories" :key="item.id">
+      <input
+        type="checkbox"
+        :checked="checkedStates[index]"
+        @change="handleChange(index, $event)"
+      />
+      <label>{{ item.name }}</label>
+    </div>
+    <p>Checked States: {{ checkedStates }}</p>
+  </div> -->
 
 </template>
 
