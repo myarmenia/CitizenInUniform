@@ -27,8 +27,10 @@ class CategoryRepository implements CategoryInterface
     }
 
 
-    // public function destroy(string $id){
-    //     //
-    // }
+    public function activeCategories(){
+        
+        return Category::where('status',1)->get();
+
+    }
 
 }

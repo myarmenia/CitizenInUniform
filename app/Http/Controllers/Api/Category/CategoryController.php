@@ -74,11 +74,14 @@ class CategoryController extends BaseController
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+
+    public function activeCategories()
     {
-        //
+        $data = $this->service->activeCategories();
+
+        $data = CategoryResource::collection($data);
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
     }
 }

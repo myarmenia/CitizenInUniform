@@ -22,7 +22,9 @@ use Illuminate\Support\Facades\Route;
 // Route::put('/categories/{id}', [CategoryController::class, 'update']);
 
 Route::apiResource('categories', CategoryController::class);
+Route::get('active-categories', [CategoryController::class, 'activeCategories']);
 Route::apiResource('sub-categories', SubCategoryController::class);
+
 
 
 // ======================== turnstile Турникет ======================================
