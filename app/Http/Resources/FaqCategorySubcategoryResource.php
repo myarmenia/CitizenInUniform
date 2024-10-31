@@ -20,7 +20,8 @@ class FaqCategorySubcategoryResource extends JsonResource
             "f_a_q_category_id"=>$this->f_a_q_category_id ?? null,
             "f_a_q_category_name"=>$this->f_a_q_category->title ?? null,
             "title"=>$this->title ?? null,
-            "content"=>$this->content  ?? null
+            "content"=>$this->content  ?? null,
+            "status"=>$this->status ?? null
         ];
     }
 }
