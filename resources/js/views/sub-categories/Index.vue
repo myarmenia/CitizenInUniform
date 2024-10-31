@@ -1,36 +1,69 @@
 <script setup>
 import { useRouter } from "vue-router"
-import { ref, onMounted } from  "vue"
+import { ref, reactive, onMounted } from  "vue"
 
 const router = useRouter()
 
 let subCategories = ref([])
 let links = ref([])
+let activePage = ref(1)
+let lastPage = ref(1)
 
+
+const form = reactive({
+    id:'',
+    tb_name: '',
+    status:'',
+    field_name:'',
+
+})
 
 onMounted(async () => {
     getSubCategories()
 })
 
 const getSubCategories = async () => {
-    let response = await axios.get ( '/api/sub-categories')
+    let response = await axios.get ( `/api/sub-categories?page=${activePage.value}`)
     .then((response) => {
-        console.log(response)
-        subCategories.value = response.data.data.data
-        links.value = response.data.data.links
+
+        lastPage.value = response.data.result.last_page
+        subCategories.value = response.data.result.data
+        links.value = response.data.result.links
+
     })
 }
 
 const changePage =(link) =>{
-    console.log(link)
+
     if(!link.url || link.active){
         return
     }
+
+    activePage.value = link.label
+
     axios.get(link.url)
         .then((response) =>{
-           subCategories.value = response.data.data.data
-           links.value = response.data.data.links
+           subCategories.value = response.data.result.data
+           links.value = response.data.result.links
         })
+}
+
+const changeStatus = (id, tb_name, subCategoryStatus, field_name)=>{
+
+    form.id = id
+    form.tb_name = tb_name
+    form.status = subCategoryStatus
+    form.field_name = field_name
+
+    axios.post('/api/change-status',form)
+    .then((response)=>{
+
+        getSubCategories(activePage.value)
+
+        toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
+    })
+
+
 }
 
 const deleteItem = (id, tb_name) =>{
@@ -105,13 +138,25 @@ const deleteItem = (id, tb_name) =>{
                                     <tr>
                                     <th>Հ/Հ</th>
                                         <th>Վերնագիր</th>
+                                        <th>Մենյուի բաժին</th>
+                                        <th>Կարգավիճակ</th>
                                         <th width="10%">Գործողություն</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(subCategory, index) in subCategories">
-                                        <td>{{ index }}</td>
+                                        <td>{{ ++index }}</td>
                                         <td>{{ subCategory.title }}</td>
+                                        <td>{{ subCategory.category_name }}</td>
+                                        <td :style="{ color: subCategory.status == 0 ? 'red' : 'green' }">
+                                                <button
+                                                    type="button"
+                                                    :class="subCategory.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
+                                                    {{ subCategory.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
+                                                </button>
+
+                                            </td>
+                                        <td></td>
                                         <td>
                                             <div class="dropdown action" >
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
@@ -121,7 +166,16 @@ const deleteItem = (id, tb_name) =>{
                                                 <div class="dropdown-menu">
                                                     <router-link class="dropdown-item" :to="{name: 'subCategories.edit', params: { id: subCategory.id } }">
                                                         <i class="bx bx-edit-alt me-1"></i>Խմբագրել</router-link>
-
+                                                    <a class="dropdown-item d-flex" href="javascript:void(0);">
+                                                        <div class="form-check form-switch">
+                                                            <input class="form-check-input change_status" type="checkbox"
+                                                                role="switch"
+                                                                v-model="subCategoryStatus"
+                                                            :checked="subCategory.status"
+                                                            @change="changeStatus(subCategory.id, 'sub_categories', subCategoryStatus, 'status')"
+                                                            >
+                                                        </div>Կարգավիճակ
+                                                    </a>
                                                     <button type="button" class="dropdown-item click_delete_item" @click = "deleteItem(subCategory.id,'sub_categories')">
                                                         <i class="bx bx-trash me-1"></i>
                                                         Ջնջել</button>
@@ -133,7 +187,7 @@ const deleteItem = (id, tb_name) =>{
                             </table>
 
                             <!-- ==========links ================ -->
-                            <nav aria-label="" class="d-flex justify-content-end">
+                            <nav aria-label="" v-if="lastPage > 1" class="d-flex justify-content-end">
                                 <ul class="pagination">
                                     <li class="page-item "
                                         v-for="(link,index) in links"

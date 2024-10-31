@@ -4,13 +4,13 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <router-link class="nav-link"  to="/categories">
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('categories.'))}" :to="{name: 'categories.index'}">
                     <i class="bi bi-menu-app"></i>
                     <span>Մենյուի բաժիններ</span>
                 </router-link>
             </li>
             <li class="nav-item">
-                <router-link class="nav-link"  :to="{name: 'subCategories.index'}">
+                <router-link   :to="{name: 'subCategories.index'}"  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('subCategories.'))}">
                     <i class="bi bi-menu-app-fill"></i>
                     <span>Մենյուի ենթաբաժիններ</span>
                 </router-link>
@@ -19,9 +19,9 @@
             <li class="nav-item">
 
                 <router-link
-                class="nav-link"
-                :class="{ active: $route.path === '/faq-categories' }"
-                 to="/faq-categories"
+                    class="nav-link"
+                    :class="{'collapsed': !($route.name && $route.name.startsWith('faqcategory.'))}"
+                    :to="{name: 'faqcategory.index'}"
                  >
                     <i class="bi bi-question-circle"></i>
                     <span>ՀՏՀ կատեգորիա</span>
@@ -31,8 +31,8 @@
             </li>
             <li class="nav-item">
                 <router-link class="nav-link"
-                :class="{ active: $route.path === '/faq-category-subcategory' }"
-                to="/faq-category-subcategory">
+                    :class="{'collapsed': !($route.name && $route.name.startsWith('faqCategorySubcategory.'))}"
+                    :to="{name: 'faqCategorySubcategory.index'}">
                     <i class="bi bi-question-circle"></i>
                     <span>ՀՏՀ  ենթակատեգորիա</span>
 
@@ -41,3 +41,4 @@
         </ul>
     </aside>
 </template>
+
