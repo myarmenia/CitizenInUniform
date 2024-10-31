@@ -7,6 +7,8 @@ const router = useRouter()
 let subCategories = ref([])
 let links = ref([])
 let activePage = ref(1)
+let lastPage = ref(1)
+
 
 const form = reactive({
     id:'',
@@ -24,9 +26,10 @@ const getSubCategories = async () => {
     let response = await axios.get ( `/api/sub-categories?page=${activePage.value}`)
     .then((response) => {
 
+        lastPage.value = response.data.result.last_page
         subCategories.value = response.data.result.data
         links.value = response.data.result.links
-console.log(subCategories.value)
+
     })
 }
 
@@ -184,7 +187,7 @@ const deleteItem = (id, tb_name) =>{
                             </table>
 
                             <!-- ==========links ================ -->
-                            <nav aria-label="" class="d-flex justify-content-end">
+                            <nav aria-label="" v-if="lastPage > 1" class="d-flex justify-content-end">
                                 <ul class="pagination">
                                     <li class="page-item "
                                         v-for="(link,index) in links"

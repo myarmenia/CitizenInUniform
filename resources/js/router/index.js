@@ -20,17 +20,17 @@ import faqCategorySubcategoryEdit from '../views/faq-category-subcategory/Edit.v
     const faqCategoryRoutes = [
         {
             path: '/faq-categories',
-            name: 'faqcategory',
+            name: 'faqcategory.index',
             component: faqCategoriesIndex
         },
         {
             path: '/faq-categories/create',
-            name: 'faqcategorycreate',
+            name: 'faqcategory.create',
             component: faqCategoriesCreate
         },
         {
             path: '/faq-categories/:id/edit',
-            name: 'faqcategoryedit',
+            name: 'faqcategory.edit',
             component: faqCategoriesEdit
 
         },
