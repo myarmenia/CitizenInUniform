@@ -1,7 +1,6 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router"
-import { ref, reactive, onMounted, onUnmounted } from  "vue"
-import { initTinyMCE } from '../../utils/tinymceConfig';
+import { ref, reactive, onMounted, onUnmounted, watch } from  "vue"
 
 const router = useRouter()
 const route = useRoute()
@@ -23,16 +22,26 @@ const form = reactive({
 
 
 onMounted(async () => {
-    initTinyMCE()
-    getActiveCategies()
     getSubCategy()
+    getActiveCategies()
+
+    tinymce.init({
+        selector: '#tiny-editor'
+    });
 })
 
 onUnmounted(() => {
-    if (tinymce.get('tiny-editor')) {
-        tinymce.get('tiny-editor').remove();
-    }
+    tinymce.remove();
 });
+
+
+watch(() => form.content, (newContent) => {
+  const editor = tinymce.get('tiny-editor');
+  if (editor && editor.getContent() !== newContent) {
+    editor.setContent(newContent);
+  }
+});
+
 
 const getActiveCategies = async () => {
     let response = await axios.get ( `/api/active-categories`)
@@ -57,7 +66,6 @@ const getSubCategy = async () => {
 }
 
 
-const fileInput = ref(null); // Ссылка на элемент input
 const MAX_SIZE = 5 * 1024 * 1024; // Максимальный размер файла 5MB
 
 const formatSize = (size) => {
