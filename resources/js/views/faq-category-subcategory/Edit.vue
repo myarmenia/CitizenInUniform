@@ -1,8 +1,7 @@
 
 <script setup>
-import { onMounted, reactive, ref, onUnmounted } from "vue"
+import { onMounted, reactive, ref, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from "vue-router"
-import { initTinyMCE } from '../../utils/tinymceConfig';
 
 const router = useRouter()
 const route = useRoute()
@@ -17,14 +16,23 @@ const form = reactive({
 
 onMounted(async () =>{
     getFaqCategorySubcategory()
-    initTinyMCE()
 
-    })
+    tinymce.init({
+        selector: '#tiny-editor'
+    });
+
+})
 
 onUnmounted(() => {
-    if (tinymce.get('tiny-editor')) {
-        tinymce.get('tiny-editor').remove();
-    }
+    tinymce.remove();
+});
+
+
+watch(() => form.content, (newContent) => {
+  const editor = tinymce.get('tiny-editor');
+  if (editor && editor.getContent() !== newContent) {
+    editor.setContent(newContent);
+  }
 });
 
 const getFaqCategorySubcategory = async () => {
