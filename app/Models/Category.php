@@ -24,6 +24,15 @@ class Category extends Model
                 $subCategory->delete(); // Soft delete related subcategories
             });
         });
+
+        static::updated(function ($category) {
+            $newStatus = $category->status;
+
+            if($newStatus == 0){
+                $category->sub_categories()->update(['status' => $newStatus]);
+
+            }
+        });
     }
 
 }

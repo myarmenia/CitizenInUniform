@@ -22,11 +22,19 @@ class FAQCategory extends Model
     {
         static::deleting(function ($f_a_q_categories) {
 
-
             $f_a_q_categories->f_a_q_sub_categories()->each(function ($subCategory) {
                 $subCategory->delete(); // This will soft delete the subcategory
             });
 
+        });
+
+        static::updated(function ($f_a_q_category) {
+            $newStatus = $f_a_q_category->status;
+
+            if ($newStatus == 0) {
+                $f_a_q_category->f_a_q_sub_categories()->update(['status' => $newStatus]);
+
+            }
         });
     }
 
