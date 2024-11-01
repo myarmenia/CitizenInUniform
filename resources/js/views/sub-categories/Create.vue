@@ -1,7 +1,6 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted } from  "vue"
-import { initTinyMCE } from '../../utils/tinymceConfig';
 
 const router = useRouter()
 
@@ -20,20 +19,22 @@ const form = reactive({
 })
 
 onMounted(async () => {
-    initTinyMCE()
     getActiveCategies()
+    tinymce.init({
+        selector: '#tiny-editor'
+    });
 })
 
+
 onUnmounted(() => {
-    if (tinymce.get('tiny-editor')) {
-        tinymce.get('tiny-editor').remove();
-    }
+    tinymce.remove();
 });
+
 
 const getActiveCategies = async () => {
     let response = await axios.get ( '/api/active-categories')
     .then((response) => {
-      
+
        activeCategories.value = response.data.result
 
     })
