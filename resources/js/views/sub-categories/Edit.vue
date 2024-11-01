@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router"
-import { ref, reactive, onMounted } from  "vue"
+import { ref, reactive, onMounted, onUnmounted } from  "vue"
 import { initTinyMCE } from '../../utils/tinymceConfig';
 
 const router = useRouter()
@@ -28,12 +28,17 @@ onMounted(async () => {
     getSubCategy()
 })
 
+onUnmounted(() => {
+    if (tinymce.get('tiny-editor')) {
+        tinymce.get('tiny-editor').remove();
+    }
+});
 
 const getAllCategies = async () => {
     let response = await axios.get ( `/api/categories`)
     .then((response) => {
-       allCategories.value = response.data.result
-       console.log(allCategories)
+       allCategories.value = response.data.result.data
+
     })
 }
 
@@ -146,7 +151,7 @@ const dataEdit = async () => {
         .then((response) => {
 
             router.push('/sub-categories')
-            toast.fire({icon: 'success', title: 'soccess message'})
+            toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
 
         })
         .catch((error) => {

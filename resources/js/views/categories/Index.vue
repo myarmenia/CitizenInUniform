@@ -23,14 +23,14 @@ onMounted(async () => {
 })
 
 const getCategories = async () => {
-    let response = await axios.get ( `/api/categories?page=${activePage.value}`)
-    .then((response) => {
 
-        lastPage.value = response.data.result.last_page
-        categories.value = response.data.result.data
-        links.value = response.data.result.links
+    let {data} = await axios.get ( `/api/categories?page=${activePage.value}`)
 
-    })
+        lastPage.value = data.result.last_page
+        categories.value = data.result.data
+        links.value = data.result.links
+
+
 }
 
 const changePage =(link) =>{
