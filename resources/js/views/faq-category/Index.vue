@@ -181,9 +181,9 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item"   @click="onEdit(category.id)">
+                                                        <router-link class="dropdown-item"  :to="{name:'faqcategory.edit', params: { id: category.id } }">
                                                             <i class="bx bx-edit-alt me-1"></i>Խմբագրել
-                                                        </a>
+                                                        </router-link>
                                                         <a class="dropdown-item d-flex" href="javascript:void(0);">
                                                             <div class="form-check form-switch">
                                                                 <input class="form-check-input change_status" type="checkbox"
