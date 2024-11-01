@@ -16,6 +16,8 @@ onMounted(async () => {
     getCategy()
 })
 
+
+
 const getCategy = async () => {
     let response = await axios.get ( `/api/categories/${route.params.id}`)
     .then((response) => {
@@ -29,7 +31,7 @@ const categoryEdit = async () => {
     .then((response) => {
 
         router.push('/categories')
-        toast.fire({icon: 'success', title: 'Գործողությունը բարեհաջող կատարված է'})
+        toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
     })
     .catch((error) => {
         if(error.response.status === 422){
