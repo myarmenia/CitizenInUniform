@@ -1,8 +1,6 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted, watch } from  "vue"
-import { initTinyMCE } from '../../utils/tinymceConfig';
-
 
 const router = useRouter()
 const route = useRoute()
@@ -26,27 +24,16 @@ const form = reactive({
 onMounted(async () => {
     getSubCategy()
     getActiveCategies()
-    // initTinyMCE()
+
     tinymce.init({
-    selector: '#tiny-editor',
-    // setup(editor) {
-    //   editor.on('init', () => {
-    //     editor.setContent(form.content); // Установка начального значения
-    //   });
-
-    //   editor.on('input', () => {
-    //     form.content = editor.getContent(); // Обновление form.content при изменении
-    //   });
-    // }
-  });
-
-
+        selector: '#tiny-editor'
+    });
 })
 
 onUnmounted(() => {
-
     tinymce.remove();
 });
+
 
 watch(() => form.content, (newContent) => {
   const editor = tinymce.get('tiny-editor');
@@ -79,7 +66,6 @@ const getSubCategy = async () => {
 }
 
 
-const fileInput = ref(null); // Ссылка на элемент input
 const MAX_SIZE = 5 * 1024 * 1024; // Максимальный размер файла 5MB
 
 const formatSize = (size) => {

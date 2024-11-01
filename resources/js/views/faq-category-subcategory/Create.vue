@@ -2,7 +2,6 @@
 <script setup>
 import { onMounted, reactive, ref, onUnmounted } from "vue"
 import { useRouter } from "vue-router"
-import { initTinyMCE } from '../../utils/tinymceConfig';
 
 const router = useRouter()
 let errors = ref([])
@@ -43,15 +42,16 @@ let faqCategories = ref([]);
 
 onMounted( async () =>{
     getAllFaqCategory()
-    initTinyMCE()
+    tinymce.init({
+        selector: '#tiny-editor'
+    });
 
 })
 
 onUnmounted(() => {
-    if (tinymce.get('tiny-editor')) {
-        tinymce.get('tiny-editor').remove();
-    }
+    tinymce.remove();
 });
+
 
 const getAllFaqCategory = async () => {
     let response = await axios.get('/api/all-faq-categories')
