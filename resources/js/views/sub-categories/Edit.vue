@@ -1,7 +1,8 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router"
-import { ref, reactive, onMounted, onUnmounted } from  "vue"
+import { ref, reactive, onMounted, onUnmounted, watch } from  "vue"
 import { initTinyMCE } from '../../utils/tinymceConfig';
+
 
 const router = useRouter()
 const route = useRoute()
@@ -23,16 +24,37 @@ const form = reactive({
 
 
 onMounted(async () => {
-    initTinyMCE()
-    getActiveCategies()
     getSubCategy()
+    getActiveCategies()
+    // initTinyMCE()
+    tinymce.init({
+    selector: '#tiny-editor',
+    // setup(editor) {
+    //   editor.on('init', () => {
+    //     editor.setContent(form.content); // Установка начального значения
+    //   });
+
+    //   editor.on('input', () => {
+    //     form.content = editor.getContent(); // Обновление form.content при изменении
+    //   });
+    // }
+  });
+
+
 })
 
 onUnmounted(() => {
-    if (tinymce.get('tiny-editor')) {
-        tinymce.get('tiny-editor').remove();
-    }
+
+    tinymce.remove();
 });
+
+watch(() => form.content, (newContent) => {
+  const editor = tinymce.get('tiny-editor');
+  if (editor && editor.getContent() !== newContent) {
+    editor.setContent(newContent);
+  }
+});
+
 
 const getActiveCategies = async () => {
     let response = await axios.get ( `/api/active-categories`)
