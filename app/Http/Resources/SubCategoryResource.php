@@ -15,11 +15,10 @@ class SubCategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-
+            "id" => $this->id,
             "category_id" => $this->category_id,
             "title" => $this->title,
             "content" => $this->content,
-            "type" => $this->type,
             "files" => SubCategoryFilesResource::collection($this->files)
         ];
     }

@@ -43,9 +43,9 @@ class SubCategoryService
         return $subCategory;
     }
 
-    public function edit($id)
+    public function getItem($id)
     {
-        return $this->subCategorryRepository->edit($id);
+        return $this->subCategorryRepository->getItem($id);
     }
 
     public function update($data, $id)
@@ -71,7 +71,7 @@ class SubCategoryService
 
                 $type = !$value->getError() ? explode('/', $value->getMimeType())[0] : null;
 
-                $path = FileUploadService::upload($value, "sub_categories/$subCategoryId/");
+                $path = FileUploadService::upload($value, "sub_categories/$subCategoryId");
                 $dataFile['name'] = $value->getClientOriginalName();
                 $dataFile['path'] = $path;
                 $dataFile['type'] = $type;
@@ -86,6 +86,11 @@ class SubCategoryService
             return false;
         }
 
+    }
+
+    public function getActiveItem($id)
+    {
+        return $this->subCategorryRepository->getActiveItem($id);
     }
 
 
