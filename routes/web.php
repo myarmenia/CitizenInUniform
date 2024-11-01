@@ -26,23 +26,23 @@ Route::get('/{any}',function(){
 })->where('any',".*");
 
 
-Auth::routes();
+// Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
+// Route::group(['middleware' => ['auth']], function() {
+//     Route::resource('roles', RoleController::class);
+//     Route::resource('users', UserController::class);
 
-    // Route::resource('category', CategoryController::class);
-    // Route::resource('sub-category', SubCategoryController::class);
-
-
-
-    Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
-
-});
+//     // Route::resource('category', CategoryController::class);
+//     // Route::resource('sub-category', SubCategoryController::class);
 
 
-Route::get('get-file', [FileUploadService::class, 'get_file'])->name('get-file');
+
+//     Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
+
+// });
+
+
+// Route::get('get-file', [FileUploadService::class, 'get_file'])->name('get-file');
 
