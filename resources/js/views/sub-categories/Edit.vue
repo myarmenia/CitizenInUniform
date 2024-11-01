@@ -37,7 +37,7 @@ onUnmounted(() => {
 const getActiveCategies = async () => {
     let response = await axios.get ( `/api/active-categories`)
     .then((response) => {
-       allCategories.value = response.data.result.data
+       activeCategories.value = response.data.result
 
     })
 }
