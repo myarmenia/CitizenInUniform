@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryContro
 
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChangeStatusController;
 use App\Http\Controllers\DeleteItemController;
 use App\Http\Controllers\FaqCategoryController;
@@ -37,7 +38,7 @@ Route::group(['prefix' => 'turnstile'], function ($router) {
     // Route::post('qr-black-list', QrBlackListController::class);
 
 });
-Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
+
 Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
 Route::post('/create-faq-category',[FaqCategoryController::class,'store']);
 Route::get('/faq-categories/{id}/edit',[FaqCategoryController::class,'edit']);
@@ -50,3 +51,18 @@ Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])
 Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
 
 
+
+Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
+
+    Route::post('login', [AuthController::class,'login']);
+    Route::post('logout', 'AuthController@logout');
+    Route::post('refresh', [AuthController::class,'refresh']);
+    Route::post('me', [AuthController::class,'me']);
+
+    Route::group(['middleware'=>'auth:api'], function(){
+        Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
+
+
+    });
+
+});
