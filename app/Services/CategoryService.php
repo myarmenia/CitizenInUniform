@@ -31,6 +31,10 @@ class CategoryService
     {
         return $this->categorryRepository->update($data->toArray(), $id);
     }
+    public function activeCategories()
+    {
+        return $this->categorryRepository->activeCategories();
+    }
 
 
 }

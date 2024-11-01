@@ -54,7 +54,7 @@ onUnmounted(() => {
 });
 
 const getAllFaqCategory = async () => {
-    let response = await axios.get('/api/list-faq-categories')
+    let response = await axios.get('/api/all-faq-categories')
         .then((response)=>{
             console.log(response.data.faqCategories)
             faqCategories.value = response.data.faqCategories

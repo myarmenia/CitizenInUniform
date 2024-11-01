@@ -8,6 +8,7 @@ let categories = ref([])
 let links = ref([])
 let activePage = ref(1)
 let lastPage = ref(1)
+let statusArray=ref([])
 
 
 const form = reactive({
@@ -24,12 +25,13 @@ onMounted(async () => {
 
 const getCategories = async () => {
 
-    let {data} = await axios.get ( `/api/categories?page=${activePage.value}`)
+    let response = await axios.get ( `/api/categories?page=${activePage.value}`)
 
-        lastPage.value = data.result.last_page
-        categories.value = data.result.data
-        links.value = data.result.links
+        lastPage.value = response.data.result.last_page
+        categories.value = response.data.result.data
+        statusArray.value = response.data.result.data.map(item => item.status);
 
+        links.value = response.data.result.links
 
 }
 
@@ -48,23 +50,26 @@ const changePage =(link) =>{
         })
 }
 
-const changeStatus = (id, tb_name, categoryStatus, field_name)=>{
+
+const changeStatus = (index, event, id, tb_name, field_name) => {
+
+    let changedStatus = event.target.checked
+    statusArray.value[index] = changedStatus; // Update the checked state for the specific checkbox
 
     form.id = id
     form.tb_name = tb_name
-    form.status = categoryStatus
+    form.status = changedStatus
     form.field_name = field_name
 
     axios.post('/api/change-status',form)
     .then((response)=>{
-
         getCategories(activePage.value)
 
         toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
 
 
-}
+};
 
 const deleteItem = (id, tb_name) =>{
     const newUrl  = `/api/delete-item/${tb_name}/${id}`
@@ -165,9 +170,8 @@ const deleteItem = (id, tb_name) =>{
                                                         <div class="form-check form-switch">
                                                             <input class="form-check-input change_status" type="checkbox"
                                                                 role="switch"
-                                                                v-model="categoryStatus"
-                                                            :checked="category.status"
-                                                            @change="changeStatus(category.id, 'categories', categoryStatus, 'status')"
+                                                                :checked="category.status"
+                                                                @change="changeStatus(index, $event, category.id,'categories','status')"
                                                             >
                                                         </div>Կարգավիճակ
                                                     </a>

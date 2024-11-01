@@ -69,7 +69,7 @@ const handleSave = () =>{
                     </div>
 
                 <div class="row mb-2">
-                  <label class="col-sm-3 col-form-label">
+                  <label class="col-sm-2 col-form-label">
 
                 </label>
                   <div class="col-sm-9">

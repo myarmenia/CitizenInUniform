@@ -63,11 +63,11 @@ class FaqCategoryController extends BaseController
         $faqCategory->save();
     }
 
-    public function destroy($id){
+    public function all(){
 
-        $faq_category = FaqCategory::findOrFail($id);
-        $faq_category->delete();
+        $data = FAQCategory::where('status',1)->get();;
 
+        return response()->json(['faqCategories'=>$data],200);
 
     }
 }

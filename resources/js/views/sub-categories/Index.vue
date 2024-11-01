@@ -8,7 +8,7 @@ let subCategories = ref([])
 let links = ref([])
 let activePage = ref(1)
 let lastPage = ref(1)
-
+let  statusArray=ref([])
 
 const form = reactive({
     id:'',
@@ -28,6 +28,7 @@ const getSubCategories = async () => {
 
         lastPage.value = response.data.result.last_page
         subCategories.value = response.data.result.data
+        statusArray.value = response.data.result.data.map(item => item.status);
         links.value = response.data.result.links
 
     })
@@ -48,23 +49,27 @@ const changePage =(link) =>{
         })
 }
 
-const changeStatus = (id, tb_name, subCategoryStatus, field_name)=>{
+
+
+const changeStatus = (index, event, id, tb_name, field_name) => {
+
+    let changedStatus = event.target.checked
+    statusArray.value[index] = changedStatus; // Update the checked state for the specific checkbox
 
     form.id = id
     form.tb_name = tb_name
-    form.status = subCategoryStatus
+    form.status = changedStatus
     form.field_name = field_name
 
     axios.post('/api/change-status',form)
     .then((response)=>{
-
         getSubCategories(activePage.value)
 
         toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
 
 
-}
+};
 
 const deleteItem = (id, tb_name) =>{
     const newUrl  = `/api/delete-item/${tb_name}/${id}`
@@ -170,9 +175,8 @@ const deleteItem = (id, tb_name) =>{
                                                         <div class="form-check form-switch">
                                                             <input class="form-check-input change_status" type="checkbox"
                                                                 role="switch"
-                                                                v-model="subCategoryStatus"
-                                                            :checked="subCategory.status"
-                                                            @change="changeStatus(subCategory.id, 'sub_categories', subCategoryStatus, 'status')"
+                                                                :checked="subCategory.status"
+                                                                @change="changeStatus(index, $event, subCategory.id,'sub_categories','status')"
                                                             >
                                                         </div>Կարգավիճակ
                                                     </a>

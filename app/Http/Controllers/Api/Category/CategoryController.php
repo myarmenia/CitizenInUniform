@@ -75,13 +75,9 @@ class CategoryController extends BaseController
     }
 
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function mobileActivCategories(string $id)
+    public function activeCategories()
     {
-        $data = $this->service->index();
+        $data = $this->service->activeCategories();
 
         $data = CategoryResource::collection($data);
 
