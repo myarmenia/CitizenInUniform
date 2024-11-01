@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from "vue-router"
-import { ref, reactive, onMounted } from  "vue"
+import { ref, reactive, onMounted, onUnmounted } from  "vue"
 import { initTinyMCE } from '../../utils/tinymceConfig';
 
 const router = useRouter()
@@ -24,12 +24,18 @@ onMounted(async () => {
     getActiveCategies()
 })
 
-const getActiveCategies = async () => {
-    let response = await axios.get ( `/api/active-categories`)
-    .then((response) => {
+onUnmounted(() => {
+    if (tinymce.get('tiny-editor')) {
+        tinymce.get('tiny-editor').remove();
+    }
+});
 
+const getActiveCategies = async () => {
+    let response = await axios.get ( '/api/active-categories')
+    .then((response) => {
+      
        activeCategories.value = response.data.result
-       
+
     })
 }
 
@@ -120,7 +126,7 @@ const dataSave = async () => {
         .then((response) => {
 
         router.push('/sub-categories')
-        toast.fire({icon: 'success', title: 'Գործողությունը կատարված է'})
+        toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
 
         })
         .catch((error) => {

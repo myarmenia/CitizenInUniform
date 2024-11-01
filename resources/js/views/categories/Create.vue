@@ -12,19 +12,31 @@ const form = reactive({
 })
 
 const categorySave = async () => {
-    let response = await axios.post('/api/categories', form)
-    .then((response) => {
+    // let response = await axios.post('/api/categories', form)
+    // .then((response) => {
+
+    //     router.push('/categories')
+    //     toast.fire({icon: 'success', title: 'Գործողությունը բարեհաջող կատարված է'})
+
+    // })
+    // .catch((error) => {
+    //     if(error.response.status === 422){
+    //         errors.value = error.response.data.errors
+    //     }
+
+    // })
+
+
+    try {
+        await axios.post('/api/categories', form)
 
         router.push('/categories')
-        toast.fire({icon: 'success', title: 'Գործողությունը բարեհաջող կատարված է'})
-
-    })
-    .catch((error) => {
-        if(error.response.status === 422){
+        toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
+    } catch (error) {
             errors.value = error.response.data.errors
-        }
 
-    })
+    }
+
 }
 </script>
 

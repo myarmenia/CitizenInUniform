@@ -82,6 +82,5 @@ class CategoryController extends BaseController
         $data = CategoryResource::collection($data);
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
-
     }
 }

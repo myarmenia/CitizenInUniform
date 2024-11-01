@@ -33,7 +33,7 @@ class FaqCategorySubcategoryController extends BaseController
             $data = $this->service->index();
             $data = FaqCategorySubcategoryResource::collection($data );
             $data = $this->arrayPaginator($data, $request, $perPage);
-            
+
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
 
@@ -70,7 +70,7 @@ class FaqCategorySubcategoryController extends BaseController
         $faqCategorySubcategory = new FaqCategorySubcategoryResource($faqCategorySubcategory );
 
         $data['faqCategorySubcategory']=$faqCategorySubcategory;
-        $data['faqCategory']=FaqCategoryResource::collection(FAQCategory::all());
+        $data['faqCategory']=FaqCategoryResource::collection(FAQCategory::where('status',1)->get());
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
