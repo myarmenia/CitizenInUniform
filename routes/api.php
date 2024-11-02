@@ -39,7 +39,7 @@ Route::group(['prefix' => 'turnstile'], function ($router) {
 
 });
 
-Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
+
 Route::post('/create-faq-category',[FaqCategoryController::class,'store']);
 Route::get('/faq-categories/{id}/edit',[FaqCategoryController::class,'edit']);
 Route::put('/faq-categories/{id}',[FaqCategoryController::class,'update']);
@@ -59,10 +59,15 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
 
-    Route::group(['middleware'=>'auth:api'], function(){
-        Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
+    Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
+    Route::group(['middleware'=>'auth:api'],function(){
 
 
     });
+
+        Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
+
+
+
 
 });

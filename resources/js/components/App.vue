@@ -6,14 +6,15 @@ import {ref, onMounted} from 'vue';
 
     const isAuthenticated = ref(false);
     onMounted(() => {
-        isAuthenticated.value = !!localStorage.getItem('access_token'); // `auth` token indicates login status
+        console.log(!!localStorage.getItem('access_token'))
+        isAuthenticated.value = !!localStorage.getItem('access_token');
     });
 
 </script>
 <template>
 
-    <!-- <AdminLayout v-if="localStorage.getItem('auth')" /> -->
-    <Login  />
+    <AdminLayout v-if="isAuthenticated" />
+    <Login v-else  />
 
 
 </template>
