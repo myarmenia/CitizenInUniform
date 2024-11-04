@@ -59,9 +59,9 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
 
-    Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
-    Route::group(['middleware'=>'auth:api'],function(){
 
+    Route::group(['middleware'=>'auth:api'],function(){
+        Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
 
     });
 

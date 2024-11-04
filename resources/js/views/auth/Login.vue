@@ -15,7 +15,7 @@ const form = reactive({
 const login = () =>{
     axios.post('/api/auth/login',form)
     .then((response)=>{
-        console.log(response.data.access_token)
+      
         localStorage.setItem('access_token', response.data.access_token)
         router.push('/faq-categories')
 

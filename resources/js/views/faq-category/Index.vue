@@ -1,6 +1,7 @@
 <script setup>
-import { reactive,ref, onMounted } from "vue"
+import { reactive,ref, onMounted, watch } from "vue"
 import { useRouter } from "vue-router"
+import axios from "axios";
 const router = useRouter()
 
 let faqCategories = ref([]);
@@ -10,22 +11,74 @@ let activePage = ref(1)
 let lastPage = ref(1)
 
 
-
+const api = ref()
 onMounted(async () =>{
-    getFaqCategories()
+  initApi()
+//     if (localStorage.getItem('access_token')) {
+
+// } else {
+//     // The token does not exist, handle accordingly
+// }
+  getFaqCategories()
+
+
 })
 const getFaqCategories = async () => {
-    let response = await axios.get(`api/auth/list-faq-categories?page=${activePage.value}`)
-        .then((response)=>{
+    try{
 
 
-            faqCategories.value = response.data.result.data
-            links.value =  response.data.result.links
-            faqArray.value = response.data.result.data.map(item => item.status);
-            lastPage.value = response.data.result.last_page
+        let response = await api.value.get(`api/auth/list-faq-categories?page=${activePage.value}`,
+        // {
+        //         headers: {
+        //             'authorization': `Bearer ${localStorage.getItem('access_token')}`
+        //         }
+        //     }
+        )
+            .then((response)=>{
+                faqCategories.value = response.data.result.data
+                links.value =  response.data.result.links
+                lastPage.value = response.data.result.last_page
+                faqArray.value = response.data.result.data.map(item => item.status);
 
-        })
+
+            })
+        }catch(error){
+            console.error("Error fetching FAQ categories:", error);
+
+        }
+
 }
+watch(activePage, (newPage) => {
+    getFaqCategories(); // Fetch categories whenever the active page changes
+});
+const  initApi = () => {
+    const apiInstance = axios.create()
+    // console.log(apiInstance,55555)
+    apiInstance.interceptors.request.use(
+        config=>{
+            // config:headers={
+            //     'authorization': `Bearer ${localStorage.getItem('access_token')}`
+            // }
+            const token = localStorage.getItem('access_token');
+            if (token) {
+                // Ensure config.headers is initialized
+                config.headers = config.headers || {};
+                config.headers.Authorization = `Bearer ${token}`; // Set the Authorization header
+
+            }
+
+            return config
+        },
+        error=>{
+            console.log(777777777777777777)
+        }
+
+    )
+    api.value =apiInstance
+    console.log(api.value)
+
+}
+
 
 const changePage =(link) =>{
     console.log(link,"")
