@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Category\SubCategoryController;
 use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryController;
 
+use App\Http\Controllers\Api\Notifications\SendNotificationToUserController;
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
 use App\Http\Controllers\ChangeStatusController;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('categories', CategoryController::class);
 Route::get('active-categories', [CategoryController::class, 'activeCategories']);
 Route::apiResource('sub-categories', SubCategoryController::class);
+Route::post('send-notification', SendNotificationToUserController::class);
 
 
 
