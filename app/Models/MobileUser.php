@@ -11,9 +11,9 @@ class MobileUser extends Model
     use SoftDeletes, Notifiable;
     protected $guarded = [];
 
-    public function routeNotificationForFcm()
-    {
-        return $this->mobile_user_id; // Убедитесь, что у вас есть поле fcm_token
-    }
+    // public function routeNotificationForFcm()
+    // {
+    //     return $this->mobile_user_id; // Убедитесь, что у вас есть поле fcm_token
+    // }
 
 }
