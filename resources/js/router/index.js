@@ -17,6 +17,21 @@ import faqCategorySubcategoryIndex from '../views/faq-category-subcategory/Index
 import faqCategorySubcategoryCreate from '../views/faq-category-subcategory/Create.vue'
 import faqCategorySubcategoryEdit from '../views/faq-category-subcategory/Edit.vue'
 
+import LoginPage from '../views/auth/Login.vue'
+
+    const usersRoute = [
+        {
+            path: '/',
+            redirect: '/users/login'
+        },
+        {
+        path: '/users/login',
+        name: 'Login',
+        component: LoginPage
+        },
+
+    ]
+
     const faqCategoryRoutes = [
         {
             path: '/faq-categories',
@@ -101,7 +116,8 @@ import faqCategorySubcategoryEdit from '../views/faq-category-subcategory/Edit.v
                 ...faqCategoryRoutes,
                 ...categoriesRoutes,
                 ...subCategoriesRoutes,
-                ...faqCategorySubCategoryRoutes
+                ...faqCategorySubCategoryRoutes,
+                ...usersRoute
             ]
 
         }
