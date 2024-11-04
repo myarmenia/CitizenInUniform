@@ -7,10 +7,12 @@ const router = useRouter()
 const route = useRoute()
 let errors = ref([])
 let faqCategories = ref([]);
+let textAreaValue=ref([]);
 
 const form = reactive({
     title:"",
     content:"",
+    f_a_q_category_id:"",
 })
 
 
@@ -28,19 +30,25 @@ onUnmounted(() => {
 });
 
 
+
 watch(() => form.content, (newContent) => {
+    console.log(form.content,'999')
+    console.log(newContent,"888")
   const editor = tinymce.get('tiny-editor');
+  console.log(editor,'7777')
   if (editor && editor.getContent() !== newContent) {
     editor.setContent(newContent);
   }
 });
+
 
 const getFaqCategorySubcategory = async () => {
 
     let response =await axios.get(`/api/faq-category-subcategory/${route.params.id}`)
         .then((response)=>{
             let result=response.data.result
-                form.title = result.faqCategorySubcategory.title
+
+             form.title = result.faqCategorySubcategory.title
              form.content = result.faqCategorySubcategory.content
 
              form.f_a_q_category_id = result.faqCategorySubcategory.f_a_q_category_id
@@ -53,6 +61,7 @@ const getFaqCategorySubcategory = async () => {
 
  const updateData = () =>{
     errors.value = {};
+    form.content = tinymce.get('tiny-editor').getContent()
 
         axios.put(`/api/faq-category-subcategory/${route.params.id}`,form)
             .then((response)=>{
@@ -123,7 +132,8 @@ const getFaqCategorySubcategory = async () => {
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Հարցի պատասխան</label>
                   <div class="col-sm-9">
-                    <textarea class="tinymce-editor"  id="tiny-editor" v-model="form.content"></textarea>
+
+                    <textarea  v-model= form.content   id="tiny-editor"></textarea>
                     <br>
                     <small style = "color:red" v-if="errors.title">{{errors.content}}</small>
                   </div>
