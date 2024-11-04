@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from "vue-router"
-import { ref, reactive, onMounted, onUnmounted } from  "vue"
+import { ref, reactive, onMounted, onUnmounted, nextTick } from  "vue"
 
 const router = useRouter()
 
@@ -21,7 +21,18 @@ const form = reactive({
 onMounted(async () => {
     getActiveCategies()
     tinymce.init({
-        selector: '#tiny-editor'
+        selector: '#tiny-editor',
+        license_key: 'gpl', // Or replace with your actual license key
+        plugins: 'lists link', // Include your required plugins
+        // toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | link image',
+        toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link | table | lineheight outdent indent | forecolor backcolor removeformat | charmap emoticons | fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+
+        setup: (editor) => {
+            editor.on('init', () => {
+                editor.execCommand('mceFocus');
+                editor.getBody().style.display = 'block';
+            });
+        },
     });
 })
 
