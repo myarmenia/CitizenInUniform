@@ -2,12 +2,13 @@
 <script setup>
 import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
+import axios from "axios";
 
 
 const router =useRouter()
 const form = reactive({
-    email:"",
-    password:"",
+    email:null,
+    password:null,
 })
 
 
@@ -15,7 +16,7 @@ const form = reactive({
 const login = () =>{
     axios.post('/api/auth/login',form)
     .then((response)=>{
-      
+
         localStorage.setItem('access_token', response.data.access_token)
         router.push('/faq-categories')
 
