@@ -15,7 +15,7 @@ onMounted(async () =>{
     getFaqCategories()
 })
 const getFaqCategories = async () => {
-    let response = await axios.get(`/api/list-faq-categories?page=${activePage.value}`)
+    let response = await axios.get(`api/auth/list-faq-categories?page=${activePage.value}`)
         .then((response)=>{
 
 
