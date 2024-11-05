@@ -9,28 +9,28 @@ use Illuminate\Http\Request;
 
 class SendNotificationToUserController extends Controller
 {
+    public function __construct(protected FcmNotificationService $service)
+    {
 
-    public function __invoke(Request $request){
-        $title = $request->input('title');
-        $content = $request->input('content');
-        $mobile_user_id = $request->input('mobile_user_id');
+    }
 
-        // Находим всех мобильных пользователей
-        // $mobileUsers = MobileUser::all();
-        $mobileUsers = MobileUser::find(1);
+    public function __invoke(FcmNotificationRequest $request){
+        
+        $data = $this->service->store(FcmNotificationDto::fromFcmNotificationDto($request));
 
-
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+        $mobileUsers = MobileUser::all();
         // Отправляем уведомление каждому пользователю
-        // foreach ($mobileUsers as $user) {
+        foreach ($mobileUsers as $user) {
             // $user->notify(new PushNotification($mobile_user_id, $title, $content));
             try {
-                $mobileUsers->notify(new PushNotification($mobile_user_id, $title, $content));
+                $user->notify(new PushNotification( $title, $content));
             } catch (\Exception $e) {
-                dd('Notification error: ' . $e->getMessage());
+                dump('Notification error: ' . $e->getMessage());
             }
-        // }
+        }
 
-        return response()->json(['status' => 'success', 'message' => 'Уведомления отправлены всем мобильным пользователям']);
+        
     }
 
 }
