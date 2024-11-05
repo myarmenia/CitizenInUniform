@@ -2,8 +2,10 @@
 <script setup>
 import { onMounted, reactive, ref, onUnmounted } from "vue"
 import { useRouter } from "vue-router"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router);
 let errors = ref([])
 
 const form = reactive({
@@ -41,6 +43,7 @@ const handleSave = () =>{
 let faqCategories = ref([]);
 
 onMounted( async () =>{
+
     getAllFaqCategory()
     tinymce.init({
         selector: '#tiny-editor'
@@ -54,8 +57,9 @@ onUnmounted(() => {
 
 
 const getAllFaqCategory = async () => {
-    let response = await axios.get('/api/all-faq-categories')
+    let response = await api.value.get('/api/auth/all-faq-categories')
         .then((response)=>{
+            console.log(response.data)
             console.log(response.data.faqCategories)
             faqCategories.value = response.data.faqCategories
 

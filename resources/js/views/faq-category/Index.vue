@@ -2,7 +2,12 @@
 import { reactive,ref, onMounted, watch } from "vue"
 import { useRouter } from "vue-router"
 import axios from "axios";
+import api, { initApi } from "../../api";
+
+
 const router = useRouter()
+initApi(router); // Initialize the API with the router
+
 
 let faqCategories = ref([]);
 let links = ref([]);
@@ -11,17 +16,11 @@ let activePage = ref(1)
 let lastPage = ref(1)
 
 
-const api = ref()
+// const api = ref()
 onMounted(async () =>{
-  initApi()
-//     if (localStorage.getItem('access_token')) {
-
-// } else {
-//     // The token does not exist, handle accordingly
-// }
-  getFaqCategories()
-
-
+    initApi()
+    console.log(api.value,"api")
+    getFaqCategories()
 })
 const getFaqCategories = async () => {
     try{
@@ -43,6 +42,7 @@ const getFaqCategories = async () => {
 
             })
         }catch(error){
+            
             console.error("Error fetching FAQ categories:", error);
 
         }
@@ -51,33 +51,55 @@ const getFaqCategories = async () => {
 watch(activePage, (newPage) => {
     getFaqCategories(); // Fetch categories whenever the active page changes
 });
-const  initApi = () => {
-    const apiInstance = axios.create()
-    // console.log(apiInstance,55555)
-    apiInstance.interceptors.request.use(
-        config=>{
-            // config:headers={
-            //     'authorization': `Bearer ${localStorage.getItem('access_token')}`
-            // }
-            const token = localStorage.getItem('access_token');
-            if (token) {
-                // Ensure config.headers is initialized
-                config.headers = config.headers || {};
-                config.headers.Authorization = `Bearer ${token}`; // Set the Authorization header
+// const  initApi = () => {
+//     const apiInstance = axios.create()
+//     //start request
+//     apiInstance.interceptors.request.use(
+//         config=>{
 
-            }
+//             const token = localStorage.getItem('access_token');
+//             if (token) {
+//                 // Ensure config.headers is initialized
+//                 config.headers = config.headers || {};
+//                 config.headers.Authorization = `Bearer ${token}`; // Set the Authorization header
 
-            return config
-        },
-        error=>{
-            console.log(777777777777777777)
-        }
+//             }
 
-    )
-    api.value =apiInstance
-    console.log(api.value)
+//             return config
+//         },
+//         error=>{
 
-}
+//             console.log(error.response.status)
+//             if(error.response.status==401){
+//                  router.replace('/users/login');
+//             }
+//         }
+
+//     )
+//     // end request
+
+//     apiInstance.interceptors.response.use(
+//         config=>{
+
+//             const token = localStorage.getItem('access_token');
+//             if (token) {
+//                 console.log('8545')
+//                 config.headers = config.headers || {};
+//                 config.headers.Authorization = `Bearer ${token}`; // Set the Authorization header
+
+//             }
+
+//             return config
+//         },
+//         error=>{
+//             console.log("respons error")
+//         }
+
+//     )
+//     api.value =apiInstance
+
+
+// }
 
 
 const changePage =(link) =>{

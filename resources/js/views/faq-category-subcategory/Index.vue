@@ -25,7 +25,7 @@ onMounted(async () =>{
 })
 
 const getAllData = async () => {
-    let response = await axios.get(`/api/faq-category-subcategory?page=${activePage.value}`)
+    let response = await axios.get(`/api/auth/faq-category-subcategory?page=${activePage.value}`)
         .then((response)=>{
 console.log(response.data.result.data)
 
@@ -39,11 +39,7 @@ console.log(response.data.result.data)
         })
 }
 
-const  onEdit = (id) =>{
-    router.push(`/faq-category-subcategory/${id}/edit`)
-}
-// for modal
-// const urlValue = ref('');
+
 
 const deleteItem = (id,tb_name) =>{
 
