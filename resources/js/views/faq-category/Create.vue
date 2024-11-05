@@ -2,8 +2,10 @@
 <script setup>
 import { reactive, ref } from "vue"
 import { useRouter } from "vue-router"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router); // Initialize the API with the router
 let errors = ref([])
 
 const form = reactive({
@@ -12,12 +14,14 @@ const form = reactive({
 
 const handleSave = () =>{
     errors.value = {};
-    axios.post('/api/create-faq-category',form)
+    api.value.post('/api/auth/create-faq-category',form)
     .then((response)=>{
-        router.push('/faq-categories')
-        toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
+        console.log(response)
+        // router.push('/faq-categories')
+        // toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
      .catch((error) => {
+
 
             if (error.response && error.response.status === 422) {
 

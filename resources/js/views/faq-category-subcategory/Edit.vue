@@ -2,9 +2,12 @@
 <script setup>
 import { onMounted, reactive, ref, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from "vue-router"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+
 const route = useRoute()
+initApi(router);
 let errors = ref([])
 let faqCategories = ref([]);
 
@@ -37,7 +40,7 @@ watch(() => form.content, (newContent) => {
 
 const getFaqCategorySubcategory = async () => {
 
-    let response =await axios.get(`/api/faq-category-subcategory/${route.params.id}`)
+    let response =await api.value.get(`/api/auth/faq-category-subcategory/${route.params.id}`)
         .then((response)=>{
             let result=response.data.result
                 form.title = result.faqCategorySubcategory.title
@@ -54,7 +57,7 @@ const getFaqCategorySubcategory = async () => {
  const updateData = () =>{
     errors.value = {};
 
-        axios.put(`/api/faq-category-subcategory/${route.params.id}`,form)
+        api.value.put(`/api/auth/faq-category-subcategory/${route.params.id}`,form)
             .then((response)=>{
                 router.push('/faq-category-subcategory')
 

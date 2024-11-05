@@ -5,7 +5,7 @@ import { useRouter } from "vue-router"
 import api, { initApi } from "../../api";
 
 const router = useRouter()
-initApi(router);
+initApi(router); // Initialize the API with the router
 let errors = ref([])
 
 const form = reactive({
@@ -19,7 +19,7 @@ const handleSave = () =>{
     errors.value = {};
 
     form.content = tinymce.get('tiny-editor').getContent()
-    axios.post('/api/faq-category-subcategory',form)
+    api.value.post('/api/auth/faq-category-subcategory',form)
     .then((response)=>{
         router.push('/faq-category-subcategory')
         toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
@@ -43,6 +43,7 @@ const handleSave = () =>{
 let faqCategories = ref([]);
 
 onMounted( async () =>{
+    console.log(api.value,'api')
 
     getAllFaqCategory()
     tinymce.init({

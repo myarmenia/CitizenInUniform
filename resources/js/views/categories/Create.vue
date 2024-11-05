@@ -1,8 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { ref, reactive } from  "vue"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router); // Initialize the API with the router
 
 let category = ref([])
 let errors = ref([])
@@ -28,7 +30,7 @@ const categorySave = async () => {
 
 
     try {
-        await axios.post('/api/categories', form)
+        await api.value.post('/api/auth/categories', form)
 
         router.push('/categories')
         toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})

@@ -18,8 +18,8 @@ let lastPage = ref(1)
 
 // const api = ref()
 onMounted(async () =>{
-    initApi()
-    console.log(api.value,"api")
+    // initApi()
+    // console.log(api.value,"api")
     getFaqCategories()
 })
 const getFaqCategories = async () => {
@@ -27,13 +27,10 @@ const getFaqCategories = async () => {
 
 
         let response = await api.value.get(`api/auth/list-faq-categories?page=${activePage.value}`,
-        // {
-        //         headers: {
-        //             'authorization': `Bearer ${localStorage.getItem('access_token')}`
-        //         }
-        //     }
+
         )
             .then((response)=>{
+                console.log(response)
                 faqCategories.value = response.data.result.data
                 links.value =  response.data.result.links
                 lastPage.value = response.data.result.last_page
@@ -42,7 +39,7 @@ const getFaqCategories = async () => {
 
             })
         }catch(error){
-            
+
             console.error("Error fetching FAQ categories:", error);
 
         }
@@ -51,55 +48,7 @@ const getFaqCategories = async () => {
 watch(activePage, (newPage) => {
     getFaqCategories(); // Fetch categories whenever the active page changes
 });
-// const  initApi = () => {
-//     const apiInstance = axios.create()
-//     //start request
-//     apiInstance.interceptors.request.use(
-//         config=>{
 
-//             const token = localStorage.getItem('access_token');
-//             if (token) {
-//                 // Ensure config.headers is initialized
-//                 config.headers = config.headers || {};
-//                 config.headers.Authorization = `Bearer ${token}`; // Set the Authorization header
-
-//             }
-
-//             return config
-//         },
-//         error=>{
-
-//             console.log(error.response.status)
-//             if(error.response.status==401){
-//                  router.replace('/users/login');
-//             }
-//         }
-
-//     )
-//     // end request
-
-//     apiInstance.interceptors.response.use(
-//         config=>{
-
-//             const token = localStorage.getItem('access_token');
-//             if (token) {
-//                 console.log('8545')
-//                 config.headers = config.headers || {};
-//                 config.headers.Authorization = `Bearer ${token}`; // Set the Authorization header
-
-//             }
-
-//             return config
-//         },
-//         error=>{
-//             console.log("respons error")
-//         }
-
-//     )
-//     api.value =apiInstance
-
-
-// }
 
 
 const changePage =(link) =>{
@@ -109,7 +58,7 @@ const changePage =(link) =>{
         return
     }
     activePage.value = link.label
-    axios.get(link.url)
+    api.value.get(link.url)
         .then((response) =>{
            faqCategories.value = response.data.result.data
            links.value =  response.data.result.links
@@ -124,7 +73,7 @@ const changePage =(link) =>{
     // ===============delete section==============
     const deleteItem = (id,tb_name) =>{
 
-    const newUrl  = `/api/delete-item/${tb_name}/${id}`
+    const newUrl  = `/api/auth/delete-item/${tb_name}/${id}`
 
     //   urlValue.value = newUrl;
 
@@ -142,7 +91,7 @@ const changePage =(link) =>{
     })
     .then((result) => {
         if (result.isConfirmed) {
-            axios.get(newUrl)
+            api.value.get(newUrl)
                 .then((response)=>{
                     if(response.data.result==1){
 
@@ -184,7 +133,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
     form.status = changedStatus
     form.field_name = field_name
 
-    axios.post('/api/change-status',form)
+    api.value.post('/api/auth/change-status',form)
     .then((response)=>{
         getFaqCategories(activePage.value)
 

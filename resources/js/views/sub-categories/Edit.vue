@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted, watch } from  "vue"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
 const route = useRoute()
