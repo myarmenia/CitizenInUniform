@@ -45,7 +45,7 @@ Route::get('/faq-categories/{id}/edit',[FaqCategoryController::class,'edit']);
 Route::put('/faq-categories/{id}',[FaqCategoryController::class,'update']);
 Route::delete('/faq-categories/{id}',[FaqCategoryController::class,'destroy']);
 
-Route::apiResource('faq-category-subcategory',FaqCategorySubcategoryController::class);
+
 
 Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
 Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
@@ -62,10 +62,12 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
     Route::group(['middleware'=>'auth:api'],function(){
         Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
+        Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
+        Route::apiResource('faq-category-subcategory',FaqCategorySubcategoryController::class);
 
     });
 
-        Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
+
 
 
 

@@ -1,32 +1,41 @@
 
 <script setup>
-import { reactive, ref } from "vue"
+import { reactive, ref, nextTick } from "vue"
 import { useRouter } from "vue-router"
-import axios from "axios";
+// import { useAuthStore } from '@/stores/auth'; // Your auth store
 
 
 const router =useRouter()
 const form = reactive({
-    email:null,
-    password:null,
+    email:"",
+    password:"",
 })
 
-
-
-const login = () =>{
-    axios.post('/api/auth/login',form)
-    .then((response)=>{
-
-        localStorage.setItem('access_token', response.data.access_token)
-        router.push('/faq-categories')
-
-
-    })
+// const authStore = useAuthStore();
+// watch(() => authStore.isLoggedIn, (newValue) => {
+//   if (newValue) {
+//     router.replace('/faq-categories');
+//   }
+// });
 
 
 
-}
+const login = async () => {
+  try {
+    const response = await axios.post('/api/auth/login', form);
+    localStorage.setItem('access_token', response.data.access_token);
 
+    // Ensure the token is set before redirecting
+    if (localStorage.getItem('access_token')) {
+        console.log(555555)
+      router.replace('/faq-categories');
+    } else {
+      console.error("Token was not stored successfully");
+    }
+  } catch (error) {
+    errorMessage.value = "Invalid login credentials. Please try again.";
+  }
+};
 
 </script>
     <template>
@@ -93,4 +102,3 @@ const login = () =>{
         </section>
     </main>
 </template>
-

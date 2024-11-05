@@ -6,7 +6,7 @@ import {ref, onMounted} from 'vue';
 
     const isAuthenticated = ref(false);
     onMounted(() => {
-       
+
         isAuthenticated.value = !!localStorage.getItem('access_token');
     });
 
