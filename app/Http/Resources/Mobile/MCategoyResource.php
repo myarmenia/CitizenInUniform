@@ -5,7 +5,7 @@ namespace App\Http\Resources\Mobile;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SubCategoriesResource extends JsonResource
+class MCategoyResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +17,7 @@ class SubCategoriesResource extends JsonResource
         return [
             "id" => $this->id,
             "title" => $this->title,
-            "category_id" => $this->category_id,
-            "title" => $this->title,
-            "content" => $this->content,
-            "type" => $this->type,
-            "sub_categories" => SubCategoryResource::collection($this->sub_categories)
+            "sub_categories" => MSubCategoryResource::collection($this->acyive_sub_categories)
 
         ];
     }

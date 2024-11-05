@@ -19,6 +19,10 @@ import faqCategorySubcategoryEdit from '../views/faq-category-subcategory/Edit.v
 
 import LoginPage from '../views/auth/Login.vue'
 
+import Notification from '../views/notification/Index.vue'
+import NotificationCreate from '../views/notification/Create.vue'
+
+
     const usersRoute = [
         {
             path: '/',
@@ -108,6 +112,20 @@ import LoginPage from '../views/auth/Login.vue'
 
     ]
 
+    const notificationsRoutes = [
+        {
+
+            path: '/notifications',
+            name: 'notifications.index',
+            component: Notification
+        },
+        {
+            path: '/notifications/create',
+            name: 'notifications.create',
+            component: NotificationCreate
+        }
+    ]
+
     const routes = [
         {
             path: '/',
@@ -117,6 +135,7 @@ import LoginPage from '../views/auth/Login.vue'
                 ...categoriesRoutes,
                 ...subCategoriesRoutes,
                 ...faqCategorySubCategoryRoutes,
+                ...notificationsRoutes,
                 ...usersRoute
             ]
 

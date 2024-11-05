@@ -4,6 +4,11 @@ use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Category\SubCategoryController;
 use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryController;
 
+
+use App\Http\Controllers\Api\Notifications\NotificationController;
+use App\Http\Controllers\Api\Notifications\SendNotificationToUserController;
+use App\Http\Controllers\Api\Mobile\MobileUserController;
+use App\Http\Controllers\Api\Settings\SettingController;
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
 use App\Http\Controllers\AuthController;
@@ -17,29 +22,27 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 
-// Route::get('/categories', [CategoryController::class, 'index']);
-// Route::post('/categories/store', [CategoryController::class, 'store']);
-// Route::get('/categories/{id}/edit', [CategoryController::class, 'edit']);
-// Route::put('/categories/{id}', [CategoryController::class, 'update']);
-
 Route::apiResource('categories', CategoryController::class);
 Route::get('active-categories', [CategoryController::class, 'activeCategories']);
 Route::apiResource('sub-categories', SubCategoryController::class);
+// Route::post('send-notification', SendNotificationToUserController::class);
+Route::apiResource('notifications', NotificationController::class);
+Route::get('settings', SettingController::class);
 
 
+// ======================== Mobile ======================================
+Route::group(['prefix' => 'mobile'], function ($router) {
+    Route::post('user-device', [MobileUserController::class, 'mobileUserDeviceStore']);
 
-// ======================== turnstile Турникет ======================================
-Route::group(['prefix' => 'turnstile'], function ($router) {
+    Route::get('categories', [CategoryController::class, 'mobileCategories']);
+    Route::get('sub-category/{id}/show', [SubCategoryController::class, 'mobileSingleSubCategory']);
 
-    // Route::post('entry-code/store', [EntryCodeController::class, 'store']); // karogh e petq ga
-
-    // Route::post('ees', EntryExitSystemController::class);  //  Entry/Exit System
-    // Route::post('active-qrs', ActiveQrsController::class);
-    // Route::post('qr-black-list', QrBlackListController::class);
 
 });
 
 
+Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
+Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
 Route::post('/create-faq-category',[FaqCategoryController::class,'store']);
 Route::get('/faq-categories/{id}/edit',[FaqCategoryController::class,'edit']);
 Route::put('/faq-categories/{id}',[FaqCategoryController::class,'update']);

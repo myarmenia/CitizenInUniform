@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('mobile_users', function (Blueprint $table) {
             $table->id();
-            $table->string('devis_id');
+            $table->string('device_id');
             $table->string('type');
             $table->softDeletes();
             $table->timestamps();
