@@ -18,7 +18,7 @@ class SubCategoryFilesResource extends JsonResource
         return [
             "id" => $this->id,
             "name" => $this->name,
-            "path" => Storage::url($this->path),
+            "path" => url('') . Storage::url($this->path),
             "type" => $this->type
         ];
     }

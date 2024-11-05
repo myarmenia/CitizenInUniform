@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SubCategoryResource extends JsonResource
+class NotificationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +14,13 @@ class SubCategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             "id" => $this->id,
-            "category_id" => $this->category_id,
             "title" => $this->title,
             "content" => $this->content,
-            "files" => SubCategoryFilesResource::collection($this->files)
+            "setting" => new SettingResource($this->setting),
+            "created_at" => date('d-m-Y', strtotime($this->created_at))
         ];
     }
 }

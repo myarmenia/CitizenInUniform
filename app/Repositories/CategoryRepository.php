@@ -16,7 +16,7 @@ class CategoryRepository implements CategoryInterface
     {
         return Category::create($data);
     }
-    public function edit(string $id){
+    public function getItem(string $id){
         return Category::find($id);
     }
 
@@ -28,7 +28,7 @@ class CategoryRepository implements CategoryInterface
 
 
     public function activeCategories(){
-        
+
         return Category::where('status',1)->get();
 
     }

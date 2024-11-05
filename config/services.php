@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    // 'firebase' => [
+    //     'api_key' => env('FCM_SERVER_KEY'), // серверный ключ FCM
+    // ],
+
+    // 'fcm' => [
+    //     'key' => env('FCM_SERVER_KEY'), // Ключ сервера FCM
+    // ],
+
 ];

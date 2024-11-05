@@ -220,7 +220,8 @@ return [
     'token'=>'Թոքեն',
     'title'=>'Վերնագիր',
     'content' => 'Բովանդակություն',
-    'category_id' => 'Կատեգորիա'
+    'category_id' => 'Կատեգորիա',
+    'setting_id' => 'Տեսակ'
 
   ]
 

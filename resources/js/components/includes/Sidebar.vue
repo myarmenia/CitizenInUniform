@@ -38,6 +38,13 @@
 
                 </router-link>
             </li>
+
+            <li class="nav-item">
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('notifications.'))}" :to="{name: 'notifications.index'}">
+                    <i class="bi bi-bell"></i>
+                    <span>Ծանուցումներ</span>
+                </router-link>
+            </li>
         </ul>
     </aside>
 </template>
