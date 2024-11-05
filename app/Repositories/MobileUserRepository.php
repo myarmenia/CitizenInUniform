@@ -18,4 +18,9 @@ class MobileUserRepository implements MobileUserInterface
     {
         return MobileUser::create($data);
     }
+
+    public function getAllMobileUsersWithActiveSettings()
+    {
+        return MobileUser::whereHas('mobile_user_active_settings')->get();
+    }
 }

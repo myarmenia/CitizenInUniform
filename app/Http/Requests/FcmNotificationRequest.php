@@ -23,9 +23,7 @@ class FcmNotificationRequest extends FormRequest
     {
 
         return [
-            'setting_id' => 'required',
-            'title' => 'required',
-            'content' => 'required'
+            'setting_id' => 'required'
 
         ];
     }

@@ -17,6 +17,8 @@ class PushNotification extends Notification
 
     private $title;
     private $content;
+    // private $setting_name;
+
     private $data;
 
     /**
@@ -34,6 +36,8 @@ class PushNotification extends Notification
 
         $this->title = $data->title;
         $this->content = $data->content;
+        // $this->setting_name = $data->setting_name;
+
     }
 
     /**
@@ -84,6 +88,7 @@ class PushNotification extends Notification
                         'mobile_user_id' => (string) $notifiable->id,
                         'title' => $this->title,
                         'content' => $this->content,
+                        // 'setting_name' => $this->setting_name
                     ]);
 
     }

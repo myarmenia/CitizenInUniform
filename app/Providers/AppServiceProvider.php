@@ -9,6 +9,7 @@ use App\Interfaces\FaqCategorySubcategoryRepositoryInterface;
 use App\Interfaces\FcmNotificationInterface;
 use App\Interfaces\FileInterface;
 use App\Interfaces\MobileUserInterface;
+use App\Interfaces\SettingInterface;
 use App\Interfaces\SubCategoryInterface;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FaqCategoryRepository;
@@ -17,6 +18,7 @@ use App\Repositories\FcmNotificationRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\MobileUserRepository;
+use App\Repositories\SettingRepository;
 use App\Repositories\SubCategoryRepository;
 use App\Repositories\UserRepository;
 use App\Services\FaqCategorySubcategory;
@@ -35,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(FaqCategoryRepositoryInterface::class, FaqCategoryRepository::class);
         $this->app->bind(FaqCategorySubcategoryRepositoryInterface::class, FaqCategorySubcategoryRepository::class);
         $this->app->bind(FileInterface::class, FileRepository::class);
+        $this->app->bind(SettingInterface::class, SettingRepository::class);
 
         $this->app->bind(MobileUserInterface::class, MobileUserRepository::class);
         $this->app->bind(FcmNotificationInterface::class, FcmNotificationRepository::class);
