@@ -65,7 +65,7 @@ class FaqCategoryController extends BaseController
 
     public function all(){
 
-        $data = FAQCategory::where('status',1)->get();;
+        $data = FAQCategory::where('status',1)->get();
 
         return response()->json(['faqCategories'=>$data],200);
 

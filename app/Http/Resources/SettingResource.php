@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Api;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EntryExitSystemResource extends JsonResource
+class SettingResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,12 +15,9 @@ class EntryExitSystemResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-
             "id" => $this->id,
-            "date" => $this->date,
-            "local_ip" => $this->local_ip,
-            "type" => $this->type,
-            "people_id" => $this->people_id
+            "name" => $this->name
+
         ];
     }
 }

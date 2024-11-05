@@ -22,9 +22,9 @@ class CategoryService
         return $this->categorryRepository->store($data->toArray());
     }
 
-    public function edit($id)
+    public function getItem($id)
     {
-        return $this->categorryRepository->edit($id);
+        return $this->categorryRepository->getItem($id);
     }
 
     public function update($data, $id)

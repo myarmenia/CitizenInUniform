@@ -17,6 +17,25 @@ import faqCategorySubcategoryIndex from '../views/faq-category-subcategory/Index
 import faqCategorySubcategoryCreate from '../views/faq-category-subcategory/Create.vue'
 import faqCategorySubcategoryEdit from '../views/faq-category-subcategory/Edit.vue'
 
+import LoginPage from '../views/auth/Login.vue'
+
+import Notification from '../views/notification/Index.vue'
+import NotificationCreate from '../views/notification/Create.vue'
+
+
+    const usersRoute = [
+        {
+            path: '/',
+            redirect: '/users/login'
+        },
+        {
+        path: '/users/login',
+        name: 'Login',
+        component: LoginPage
+        },
+
+    ]
+
     const faqCategoryRoutes = [
         {
             path: '/faq-categories',
@@ -93,6 +112,20 @@ import faqCategorySubcategoryEdit from '../views/faq-category-subcategory/Edit.v
 
     ]
 
+    const notificationsRoutes = [
+        {
+
+            path: '/notifications',
+            name: 'notifications.index',
+            component: Notification
+        },
+        {
+            path: '/notifications/create',
+            name: 'notifications.create',
+            component: NotificationCreate
+        }
+    ]
+
     const routes = [
         {
             path: '/',
@@ -101,7 +134,9 @@ import faqCategorySubcategoryEdit from '../views/faq-category-subcategory/Edit.v
                 ...faqCategoryRoutes,
                 ...categoriesRoutes,
                 ...subCategoriesRoutes,
-                ...faqCategorySubCategoryRoutes
+                ...faqCategorySubCategoryRoutes,
+                ...notificationsRoutes,
+                ...usersRoute
             ]
 
         }

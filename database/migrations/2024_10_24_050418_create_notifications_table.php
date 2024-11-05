@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('setting_id')->unsigned()->nullable();
             $table->foreign('setting_id')->references('id')->on('settings')->onDelete('cascade');
-            $table->mediumText('title');
-            $table->longText('content');
+            $table->bigInteger('mobile_user_id')->unsigned();
+            $table->foreign('mobile_user_id')->references('id')->on('mobile_users')->onDelete('cascade');
+            $table->mediumText('title')->nullable();
+            $table->longText('content')->nullable();
+            $table->string('key');
+            $table->timestamp('read_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

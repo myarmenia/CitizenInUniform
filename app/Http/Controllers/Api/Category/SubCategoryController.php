@@ -51,7 +51,7 @@ class SubCategoryController extends BaseController
      */
     public function show(string $id)
     {
-        $data = $this->service->edit($id);
+        $data = $this->service->getItem($id);
         $data = $data != null ? SubCategoryResource::make($data) : null;
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
@@ -65,6 +65,14 @@ class SubCategoryController extends BaseController
     {
 
         $data = $this->service->update(SubCategoryDto::fromSubCategoryDto($request), $id);
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+    }
+
+    public function mobileSingleSubCategory($id){
+
+        $data = $this->service->getActiveItem($id);
+        $data = $data != null ? SubCategoryResource::make($data) : null;
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
