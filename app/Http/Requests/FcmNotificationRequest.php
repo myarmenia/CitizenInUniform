@@ -21,9 +21,12 @@ class FcmNotificationRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'setting_id' => 'required',
-            'title' => 'required'
+            'title' => 'required',
+            'content' => 'required'
+
         ];
     }
 }

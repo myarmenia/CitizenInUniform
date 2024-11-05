@@ -3,8 +3,9 @@
 namespace App\Services;
 
 
-use App\Interfaces\CategoryInterface;
 use App\Interfaces\FcmNotificationInterface;
+use App\Interfaces\MobileUserInterface;
+use App\Notifications\PushNotification;
 use Illuminate\Http\Request;
 
 class FcmNotificationService
@@ -20,10 +21,12 @@ class FcmNotificationService
     {
 
         $mobileUsers = $this->mobileUserRepository->getAll();
-        
+
         foreach ($mobileUsers as $user) {
-            
+
             try {
+
+                $data->mobile_user_id = $user->id;
 
                 $this->fcmNotificationRepository->store($data->toArray());
 
@@ -36,8 +39,7 @@ class FcmNotificationService
 
         return true;
 
-        // return $this->fcmNotificationRepository->store($data->toArray());
     }
 
-  
+
 }

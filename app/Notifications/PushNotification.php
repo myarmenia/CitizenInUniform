@@ -15,9 +15,8 @@ class PushNotification extends Notification
 {
     use Queueable;
 
-    // private $title;
-    // private $content;
-
+    private $title;
+    private $content;
     private $data;
 
     /**
@@ -75,20 +74,17 @@ class PushNotification extends Notification
 
         // FcmNotificationService::storeNotification();
 
-        $p = FcmMessage::create()
-            ->notification(
-                FcmNotification::create()
-                    ->title($this->title)
-                    ->body($this->content)
-            )
-            ->data([
-                'mobile_user_id' => (string) $notifiable->id,
-                'title' => $this->title,
-                'content' => $this->content,
-            ]);
-
-            dump($p);
-            return $p;
+        return FcmMessage::create()
+                    ->notification(
+                        FcmNotification::create()
+                            ->title($this->title)
+                            ->body($this->content)
+                    )
+                    ->data([
+                        'mobile_user_id' => (string) $notifiable->id,
+                        'title' => $this->title,
+                        'content' => $this->content,
+                    ]);
 
     }
 

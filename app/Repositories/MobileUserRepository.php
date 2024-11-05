@@ -8,7 +8,7 @@ use App\Models\MobileUser;
 
 class MobileUserRepository implements MobileUserInterface
 {
-    public function getAll(): MobileUser
+    public function getAll()
     {
         return MobileUser::all();
     }

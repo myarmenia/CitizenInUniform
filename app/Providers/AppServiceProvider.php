@@ -6,12 +6,14 @@ namespace App\Providers;
 use App\Interfaces\CategoryInterface;
 use App\Interfaces\FaqCategoryRepositoryInterface;
 use App\Interfaces\FaqCategorySubcategoryRepositoryInterface;
+use App\Interfaces\FcmNotificationInterface;
 use App\Interfaces\FileInterface;
 use App\Interfaces\MobileUserInterface;
 use App\Interfaces\SubCategoryInterface;
 use App\Repositories\CategoryRepository;
 use App\Repositories\FaqCategoryRepository;
 use App\Repositories\FaqCategorySubcategoryRepository;
+use App\Repositories\FcmNotificationRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use App\Repositories\MobileUserRepository;
@@ -35,6 +37,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(FileInterface::class, FileRepository::class);
 
         $this->app->bind(MobileUserInterface::class, MobileUserRepository::class);
+        $this->app->bind(FcmNotificationInterface::class, FcmNotificationRepository::class);
 
 
         // ====================== hiny ================================

@@ -3,16 +3,13 @@
 namespace App\Repositories;
 
 use App\Interfaces\FcmNotificationInterface;
-use App\Models\Category;
-
+use App\Models\Notification;
 
 class FcmNotificationRepository implements FcmNotificationInterface
 {
-
-    
-    public function store($data): Category
+    public function store($data): Notification
     {
-        return Category::create($data);
+        return Notification::create($data);
     }
 
 }
