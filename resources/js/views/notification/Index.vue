@@ -1,8 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router);
 
 let notifications = ref([])
 let links = ref([])
