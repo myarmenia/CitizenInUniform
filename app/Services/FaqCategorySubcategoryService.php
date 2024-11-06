@@ -26,7 +26,7 @@ class FaqCategorySubcategoryService{
 
     }
     public function update($data,$id){
-dd($data);
+
         return $this->faqCategorySubcategoryRepository->update($data->toArray(), $id);
     }
 

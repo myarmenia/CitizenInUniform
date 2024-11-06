@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 // Route::post('send-notification', SendNotificationToUserController::class);
-Route::apiResource('notifications', NotificationController::class);
 Route::get('settings', SettingController::class);
 
 
@@ -43,7 +42,7 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
-  
+
     Route::group(['middleware'=>'jwt.auth'],function(){
 
         Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
@@ -56,6 +55,9 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::apiResource('categories', CategoryController::class);
         Route::get('active-categories', [CategoryController::class, 'activeCategories']);
         Route::apiResource('sub-categories', SubCategoryController::class);
+
+        Route::apiResource('notifications', NotificationController::class);
+
 
         Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
         Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
