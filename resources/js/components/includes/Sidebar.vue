@@ -45,6 +45,13 @@
                     <span>Ծանուցումներ</span>
                 </router-link>
             </li>
+            <li class="nav-item">
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('users.index.'))}" :to="{name: 'users.index'}">
+                    <i class="bi bi-bell"></i>
+                    <span>Օգտատերեր</span>
+                </router-link>
+            </li>
+
         </ul>
     </aside>
 </template>

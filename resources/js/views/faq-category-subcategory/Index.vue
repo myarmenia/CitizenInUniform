@@ -22,7 +22,7 @@ onMounted(async () =>{
 })
 
 const getAllData = async () => {
-    let response = await api.value.get(`/api/auth/faq-category-subcategory?page=${activePage.value}`)
+    let response = api.value.get(`/api/auth/faq-category-subcategory?page=${activePage.value}`)
         .then((response)=>{
 console.log(response,"9999")
 

@@ -11,14 +11,6 @@ const form = reactive({
     password:"",
 })
 
-// const authStore = useAuthStore();
-// watch(() => authStore.isLoggedIn, (newValue) => {
-//   if (newValue) {
-//     router.replace('/faq-categories');
-//   }
-// });
-
-
 
 const login = async () => {
   try {

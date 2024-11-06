@@ -23,6 +23,10 @@ import Notification from '../views/notification/Index.vue'
 import NotificationCreate from '../views/notification/Create.vue'
 
 
+import UsersIndex from '../views/users/Index.vue'
+import UsersCreate from '../views/users/Create.vue'
+
+
     const usersRoute = [
         {
             path: '/',
@@ -33,6 +37,18 @@ import NotificationCreate from '../views/notification/Create.vue'
         name: 'Login',
         component: LoginPage
         },
+        {
+            path: '/users',
+            name: 'users.index',
+            component: UsersIndex
+        },
+        {
+            path: '/users/create',
+            name: 'users.create',
+            component: UsersCreate
+        },
+
+
 
     ]
 

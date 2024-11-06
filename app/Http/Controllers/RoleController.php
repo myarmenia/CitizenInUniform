@@ -146,4 +146,10 @@ class RoleController extends Controller
         return redirect()->route('roles.index')
                         ->with('success','Role deleted successfully');
     }
+    public function all(){
+        $data = Role::where('position_name','super_admin')->pluck('name', 'name')->all();
+
+        return response()->json(['roles'=>$data], 200);
+
+    }
 }

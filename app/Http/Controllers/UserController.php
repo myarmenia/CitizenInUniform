@@ -47,6 +47,7 @@ class UserController extends Controller
      */
     public function create(): View
     {
+        dd(Auth::user());
 
         if(Auth::user()->roles[0]->interface == 'client'){
             $roles = Role::where('position_name','client')->pluck('name', 'name')->all();
@@ -66,7 +67,7 @@ class UserController extends Controller
      */
        public function store(UserRequest $request): RedirectResponse
     {
-
+dd($request->all());
         $data = $request->all();
 
         $user = $this->userService->createUser($data);

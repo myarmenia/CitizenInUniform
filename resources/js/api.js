@@ -19,8 +19,9 @@ const initApi = (router) => {
             },
             error=>{
 
-                console.log(error.response.status)
+                console.log(error.response)
                 if(error.response.status==401){
+
                     router.replace('/users/login');
                 }
             }
