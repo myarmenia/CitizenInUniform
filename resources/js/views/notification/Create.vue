@@ -1,8 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted } from  "vue"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router);
 
 let errors = ref([])
 let settings = ref([])
@@ -24,7 +26,7 @@ onMounted(async () => {
 
 
 const getSettings = async () => {
-    let response = await axios.get ( '/api/settings')
+    let response = api.value.get ( '/api/auth/settings')
     .then((response) => {
 
        settings.value = response.data.result
@@ -41,7 +43,7 @@ const handleSelectionChange = () => {
 
 const dataSave = async () => {
     try {
-        await axios.post('/api/notifications', form)
+        await api.value.post('/api/auth/notifications', form)
 
         router.push('/notifications')
         toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})

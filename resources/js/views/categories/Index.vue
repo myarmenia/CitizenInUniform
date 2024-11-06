@@ -27,9 +27,9 @@ onMounted(async () => {
 
 const getCategories = async () => {
 
-    let response = await api.value.get ( `/api/auth/categories?page=${activePage.value}`)
+    let response = api.value.get ( `/api/auth/categories?page=${activePage.value}`)
     .then((response) => {
-
+console.log(response)
         lastPage.value = response.data.result.last_page
         categories.value = response.data.result.data
         statusArray.value = response.data.result.data.map(item => item.status);
