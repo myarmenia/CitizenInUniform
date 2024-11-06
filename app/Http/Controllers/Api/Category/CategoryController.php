@@ -25,7 +25,7 @@ class CategoryController extends BaseController
     public function index(Request $request)
     {
         $page = request()->page ?? 1;
-        $perPage = 2;
+        $perPage = 10;
 
         $data = $this->service->index();
 
@@ -55,8 +55,8 @@ class CategoryController extends BaseController
     public function show(string $id)
     {
 
-
         $data = $this->service->getItem($id);
+        $data = $data != null ? CategoryResource::make($data) : null;
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 

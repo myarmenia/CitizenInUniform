@@ -1,8 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router);
 
 let notifications = ref([])
 let links = ref([])
@@ -22,9 +24,9 @@ onMounted(async () => {
 
 const getNotifications = async () => {
 
-    let response = await axios.get ( `/api/notifications?page=${activePage.value}`)
+    let response = api.value.get ( `/api/auth/notifications?page=${activePage.value}`)
     .then((response) => {
-console.log(response)
+
         lastPage.value = response.data.result.last_page
         notifications.value = response.data.result.data
 
@@ -41,7 +43,7 @@ const changePage =(link) =>{
 
     activePage.value = link.label
 
-    axios.get(link.url)
+    api.value.get(link.url)
         .then((response) =>{
            notifications.value = response.data.result.data
             links.value = response.data.result.links

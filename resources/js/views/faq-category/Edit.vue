@@ -2,8 +2,10 @@
 <script setup>
 import { onMounted, reactive, ref } from "vue"
 import { useRouter, useRoute } from "vue-router"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router); // Initialize the API with the router
 const route = useRoute()
 let errors = ref([])
 
@@ -16,7 +18,7 @@ onMounted(async () =>{
 
     })
 const getFaqCategory = async () => {
-    let response =await axios.get(`/api/faq-categories/${route.params.id}/edit`)
+    let response =await api.value.get(`/api/auth/faq-categories/${route.params.id}/edit`)
         .then((response)=>{
             console.log(response.data.faqCategory)
             form.title = response.data.faqCategory.title
@@ -27,7 +29,7 @@ const getFaqCategory = async () => {
  const updateData = () =>{
     errors.value = {};
 
-        axios.put(`/api/faq-categories/${route.params.id}`,form)
+        api.value.put(`/api/auth/faq-categories/${route.params.id}`,form)
             .then((response)=>{
                 router.push('/faq-categories')
                 toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})

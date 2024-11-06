@@ -1,8 +1,12 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted } from  "vue"
+import api, { initApi } from "../../api";
+import { initTinyMCE } from '@/tinymce-init.js';
+
 
 const router = useRouter()
+initApi(router); // Initialize the API with the router
 
 let errors = ref([])
 let activeCategories = ref([])
@@ -20,9 +24,7 @@ const form = reactive({
 
 onMounted(async () => {
     getActiveCategies()
-    tinymce.init({
-        selector: '#tiny-editor'
-    });
+    initTinyMCE()
 })
 
 
@@ -32,7 +34,7 @@ onUnmounted(() => {
 
 
 const getActiveCategies = async () => {
-    let response = await axios.get ( '/api/active-categories')
+    let response =  api.value.get ( '/api/auth/active-categories')
     .then((response) => {
 
        activeCategories.value = response.data.result
@@ -47,7 +49,7 @@ const handleSelectionChange = () => {
 }
 
 const fileInput = ref(null); // Ссылка на элемент input
-const MAX_SIZE = 5 * 1024 * 1024; // Максимальный размер файла 5MB
+const MAX_SIZE = 50 * 1024 * 1024; // Максимальный размер файла 5MB
 
 const formatSize = (size) => {
   const units = ['Բ', 'ԿԲ', 'ՄԲ', 'ԳԲ'];
@@ -119,7 +121,7 @@ const dataSave = async () => {
         formData.append('files[]', file); // Добавляем оригинальные объекты File
     });
 
-    let response = await axios.post('/api/sub-categories', formData, {
+    let response =  api.value.post('/api/auth/sub-categories', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -253,6 +255,5 @@ const dataSave = async () => {
 .deleteFile{
     cursor: pointer;
 }
-
 
 </style>

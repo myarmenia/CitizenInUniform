@@ -1,15 +1,11 @@
 <script setup>
-import  {reactive, ref, onMounted } from "vue"
+import  {reactive, ref, onMounted, watch } from "vue"
 import {useRouter } from "vue-router"
-
-
-
-
-
-
+import api, { initApi } from "../../api";
 
 
 const router = useRouter()
+initApi(router); // Initialize the API with the router
 
  let allData = ref([])
  let links = ref([]);
@@ -19,15 +15,16 @@ const router = useRouter()
 
 
 onMounted(async () =>{
+    initApi()
     getAllData()
 
 
 })
 
 const getAllData = async () => {
-    let response = await axios.get(`/api/faq-category-subcategory?page=${activePage.value}`)
+    let response = await api.value.get(`/api/auth/faq-category-subcategory?page=${activePage.value}`)
         .then((response)=>{
-console.log(response.data.result.data)
+console.log(response,"9999")
 
             allData.value = response.data.result.data
             links.value =  response.data.result.links
@@ -38,16 +35,15 @@ console.log(response.data.result.data)
 
         })
 }
+watch(activePage, (newPage) => {
+    getAllData (); // Fetch allData whenever the active page changes
+});
 
-const  onEdit = (id) =>{
-    router.push(`/faq-category-subcategory/${id}/edit`)
-}
-// for modal
-// const urlValue = ref('');
+
 
 const deleteItem = (id,tb_name) =>{
 
-const newUrl  = `/api/delete-item/${tb_name}/${id}`
+const newUrl  = `/api/auth/delete-item/${tb_name}/${id}`
 
 
     Swal.fire({
@@ -62,7 +58,7 @@ const newUrl  = `/api/delete-item/${tb_name}/${id}`
     })
     .then((result) => {
         if (result.isConfirmed) {
-            axios.get(newUrl)
+            api.value.get(newUrl)
                 .then((response)=>{
                     if(response.data.result==1){
 
@@ -100,7 +96,7 @@ const changePage =(link) =>{
         return
     }
     activePage.value = link.label
-    axios.get(link.url)
+    api.value.get(link.url)
         .then((response) =>{
             allData.value = response.data.result.data
            links.value =  response.data.result.links
@@ -118,7 +114,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
     form.status = changedStatus
     form.field_name = field_name
 
-    axios.post('/api/change-status',form)
+    api.value.post('/api/auth/change-status',form)
     .then((response)=>{
         getAllData(activePage.value)
 
@@ -161,10 +157,6 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
                                     </div>
                                 </div>
                             </div>
-
-
-
-
 
                            <table class="table table-bordered">
                                 <thead>

@@ -21,8 +21,15 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'title' => 'required'
+     
+        $data = [
+            'title' => 'required',
         ];
+
+        if($this->method() == 'POST'){
+            $data['file'] = 'required|file|max:5012';
+        }
+
+        return $data;
     }
 }

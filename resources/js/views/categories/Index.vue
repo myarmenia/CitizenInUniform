@@ -1,8 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router); // Initialize the API with the router
 
 let categories = ref([])
 let links = ref([])
@@ -25,9 +27,9 @@ onMounted(async () => {
 
 const getCategories = async () => {
 
-    let response = await axios.get ( `/api/categories?page=${activePage.value}`)
+    let response = api.value.get ( `/api/auth/categories?page=${activePage.value}`)
     .then((response) => {
-
+console.log(response)
         lastPage.value = response.data.result.last_page
         categories.value = response.data.result.data
         statusArray.value = response.data.result.data.map(item => item.status);
@@ -45,7 +47,7 @@ const changePage =(link) =>{
 
     activePage.value = link.label
 
-    axios.get(link.url)
+    api.value.get(link.url)
         .then((response) =>{
            categories.value = response.data.result.data
             links.value = response.data.result.links
@@ -63,7 +65,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
     form.status = changedStatus
     form.field_name = field_name
 
-    axios.post('/api/change-status',form)
+    api.value.post('/api/auth/change-status',form)
     .then((response)=>{
         getCategories(activePage.value)
 
@@ -74,7 +76,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
 };
 
 const deleteItem = (id, tb_name) =>{
-    const newUrl  = `/api/delete-item/${tb_name}/${id}`
+    const newUrl  = `/api/auth/delete-item/${tb_name}/${id}`
 
     Swal.fire({
         title: "Դուք համոզված եք?",
@@ -88,7 +90,7 @@ const deleteItem = (id, tb_name) =>{
     })
     .then((result) => {
         if (result.isConfirmed) {
-            axios.get(newUrl)
+            api.value.get(newUrl)
                 .then((response)=>{
                     if(response.data.result==1){
 
