@@ -21,13 +21,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-
-Route::apiResource('categories', CategoryController::class);
-Route::get('active-categories', [CategoryController::class, 'activeCategories']);
-Route::apiResource('sub-categories', SubCategoryController::class);
 // Route::post('send-notification', SendNotificationToUserController::class);
 Route::apiResource('notifications', NotificationController::class);
 Route::get('settings', SettingController::class);
+
 
 
 // ======================== Mobile ======================================
@@ -40,37 +37,29 @@ Route::group(['prefix' => 'mobile'], function ($router) {
 
 });
 
-
-Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
-Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
-Route::post('/create-faq-category',[FaqCategoryController::class,'store']);
-Route::get('/faq-categories/{id}/edit',[FaqCategoryController::class,'edit']);
-Route::put('/faq-categories/{id}',[FaqCategoryController::class,'update']);
-Route::delete('/faq-categories/{id}',[FaqCategoryController::class,'destroy']);
-
-Route::apiResource('faq-category-subcategory',FaqCategorySubcategoryController::class);
-
-Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
-Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
-
-
-
 Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
     Route::post('login', [AuthController::class,'login']);
     Route::post('logout', 'AuthController@logout');
     Route::post('refresh', [AuthController::class,'refresh']);
     Route::post('me', [AuthController::class,'me']);
+  
+    Route::group(['middleware'=>'jwt.auth'],function(){
 
-    Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
-    Route::group(['middleware'=>'auth:api'],function(){
+        Route::get('/list-faq-categories',[FaqCategoryController::class,'index']);
+        Route::post('/create-faq-category',[FaqCategoryController::class,'store']);
+        Route::get('/faq-categories/{id}/edit',[FaqCategoryController::class,'edit']);
+        Route::put('/faq-categories/{id}',[FaqCategoryController::class,'update']);
+        Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
+        Route::apiResource('faq-category-subcategory',FaqCategorySubcategoryController::class);
 
+        Route::apiResource('categories', CategoryController::class);
+        Route::get('active-categories', [CategoryController::class, 'activeCategories']);
+        Route::apiResource('sub-categories', SubCategoryController::class);
+
+        Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
+        Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
 
     });
-
-        Route::get('/all-faq-categories',[FaqCategoryController::class,'all']);
-
-
-
 
 });

@@ -1,9 +1,11 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted, watch } from  "vue"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
 const route = useRoute()
+initApi(router); // Initialize the API with the router
 
 
 let errors = ref([])
@@ -44,7 +46,7 @@ watch(() => form.content, (newContent) => {
 
 
 const getActiveCategies = async () => {
-    let response = await axios.get ( `/api/active-categories`)
+    let response = api.value.get ( `/api/auth/active-categories`)
     .then((response) => {
        activeCategories.value = response.data.result
 
@@ -52,11 +54,11 @@ const getActiveCategies = async () => {
 }
 
 const getSubCategy = async () => {
-    let response = await axios.get ( `/api/sub-categories/${route.params.id}`)
+    let response = api.value.get ( `/api/auth/sub-categories/${route.params.id}`)
     .then((response) => {
 
         let result = response.data.result
-
+console.log(result)
             form.category_id = result.category_id
             form.title = result.title
             form.content = result.content
@@ -127,7 +129,7 @@ const removeFile = (index) => {
 
 const removeFileFromDB = async(index, subCategoryId) => {
 
-    let response = await axios.get(`/api/delete-item/files/${subCategoryId}`)
+    let response =  api.value.get(`/api/auth/delete-item/files/${subCategoryId}`)
         .then((response) => {
 
             form.responseFiles.splice(index, 1)
@@ -151,7 +153,7 @@ const dataEdit = async () => {
 
     formData.append('_method', 'PUT');
 
-    let response = await axios.post(`/api/sub-categories/${route.params.id}`, formData, {
+    let response = await api.value.post(`/api/auth/sub-categories/${route.params.id}`, formData, {
              headers: {
                     'Content-Type': 'multipart/form-data'
                 }

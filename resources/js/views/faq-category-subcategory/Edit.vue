@@ -2,9 +2,12 @@
 <script setup>
 import { onMounted, reactive, ref, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from "vue-router"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router); // Initialize the API with the router
 const route = useRoute()
+initApi(router);
 let errors = ref([])
 let faqCategories = ref([]);
 let textAreaValue=ref([]);
@@ -44,7 +47,7 @@ watch(() => form.content, (newContent) => {
 
 const getFaqCategorySubcategory = async () => {
 
-    let response =await axios.get(`/api/faq-category-subcategory/${route.params.id}`)
+    let response =await api.value.get(`/api/auth/faq-category-subcategory/${route.params.id}`)
         .then((response)=>{
             let result=response.data.result
 
@@ -63,7 +66,7 @@ const getFaqCategorySubcategory = async () => {
     errors.value = {};
     form.content = tinymce.get('tiny-editor').getContent()
 
-        axios.put(`/api/faq-category-subcategory/${route.params.id}`,form)
+        api.value.put(`/api/auth/faq-category-subcategory/${route.params.id}`,form)
             .then((response)=>{
                 router.push('/faq-category-subcategory')
 

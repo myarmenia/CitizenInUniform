@@ -1,8 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted } from  "vue"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
+initApi(router); // Initialize the API with the router
 
 let errors = ref([])
 let activeCategories = ref([])
@@ -32,7 +34,7 @@ onUnmounted(() => {
 
 
 const getActiveCategies = async () => {
-    let response = await axios.get ( '/api/active-categories')
+    let response =  api.value.get ( '/api/auth/active-categories')
     .then((response) => {
 
        activeCategories.value = response.data.result
@@ -119,7 +121,7 @@ const dataSave = async () => {
         formData.append('files[]', file); // Добавляем оригинальные объекты File
     });
 
-    let response = await axios.post('/api/sub-categories', formData, {
+    let response =  api.value.post('/api/auth/sub-categories', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

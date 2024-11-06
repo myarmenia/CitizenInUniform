@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
+import api, { initApi } from "../../api";
 
 const router = useRouter()
 const route = useRoute()
@@ -19,7 +20,7 @@ onMounted(async () => {
 
 
 const getCategy = async () => {
-    let response = await axios.get ( `/api/categories/${route.params.id}`)
+    let response = await api.value.get ( `/api/auth/categories/${route.params.id}`)
     .then((response) => {
 
        form.title = response.data.result.title
@@ -27,7 +28,7 @@ const getCategy = async () => {
 }
 
 const categoryEdit = async () => {
-    let response = await axios.put(`/api/categories/${route.params.id}`, form)
+    let response = await api.value.put(`/api/auth/categories/${route.params.id}`, form)
     .then((response) => {
 
         router.push('/categories')

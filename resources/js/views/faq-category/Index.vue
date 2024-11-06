@@ -1,7 +1,13 @@
 <script setup>
-import { reactive,ref, onMounted } from "vue"
+import { reactive,ref, onMounted, watch } from "vue"
 import { useRouter } from "vue-router"
+import axios from "axios";
+import api, { initApi } from "../../api";
+
+
 const router = useRouter()
+initApi(router); // Initialize the API with the router
+
 
 let faqCategories = ref([]);
 let links = ref([]);
@@ -10,22 +16,40 @@ let activePage = ref(1)
 let lastPage = ref(1)
 
 
-
+// const api = ref()
 onMounted(async () =>{
+    // initApi()
+    // console.log(api.value,"api")
     getFaqCategories()
 })
 const getFaqCategories = async () => {
-    let response = await axios.get(`api/auth/list-faq-categories?page=${activePage.value}`)
-        .then((response)=>{
+    try{
 
 
-            faqCategories.value = response.data.result.data
-            links.value =  response.data.result.links
-            faqArray.value = response.data.result.data.map(item => item.status);
-            lastPage.value = response.data.result.last_page
+        let response = await api.value.get(`api/auth/list-faq-categories?page=${activePage.value}`,
 
-        })
+        )
+            .then((response)=>{
+                console.log(response)
+                faqCategories.value = response.data.result.data
+                links.value =  response.data.result.links
+                lastPage.value = response.data.result.last_page
+                faqArray.value = response.data.result.data.map(item => item.status);
+
+
+            })
+        }catch(error){
+
+            console.error("Error fetching FAQ categories:", error);
+
+        }
+
 }
+watch(activePage, (newPage) => {
+    getFaqCategories(); // Fetch categories whenever the active page changes
+});
+
+
 
 const changePage =(link) =>{
     console.log(link,"")
@@ -34,7 +58,7 @@ const changePage =(link) =>{
         return
     }
     activePage.value = link.label
-    axios.get(link.url)
+    api.value.get(link.url)
         .then((response) =>{
            faqCategories.value = response.data.result.data
            links.value =  response.data.result.links
@@ -49,7 +73,7 @@ const changePage =(link) =>{
     // ===============delete section==============
     const deleteItem = (id,tb_name) =>{
 
-    const newUrl  = `/api/delete-item/${tb_name}/${id}`
+    const newUrl  = `/api/auth/delete-item/${tb_name}/${id}`
 
     //   urlValue.value = newUrl;
 
@@ -67,7 +91,7 @@ const changePage =(link) =>{
     })
     .then((result) => {
         if (result.isConfirmed) {
-            axios.get(newUrl)
+            api.value.get(newUrl)
                 .then((response)=>{
                     if(response.data.result==1){
 
@@ -109,7 +133,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
     form.status = changedStatus
     form.field_name = field_name
 
-    axios.post('/api/change-status',form)
+    api.value.post('/api/auth/change-status',form)
     .then((response)=>{
         getFaqCategories(activePage.value)
 
