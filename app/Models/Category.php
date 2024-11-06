@@ -15,6 +15,13 @@ class Category extends Model
     {
         return $this->hasMany(SubCategory::class);
     }
+
+    public function acyive_sub_categories(): HasMany
+    {
+        return $this->hasMany(SubCategory::class)->where('status', 1);
+    }
+
+
     protected static function boot()
     {
         parent::boot();

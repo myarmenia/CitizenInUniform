@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\Mobile\MCategoyResource;
 use App\Services\CategoryService;
 use App\Traits\Paginator;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class CategoryController extends BaseController
     {
 
 
-        $data = $this->service->edit($id);
+        $data = $this->service->getItem($id);
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
@@ -80,6 +81,15 @@ class CategoryController extends BaseController
         $data = $this->service->activeCategories();
 
         $data = CategoryResource::collection($data);
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+    }
+
+    public function mobileCategories()
+    {
+        $data = $this->service->activeCategories();
+
+        $data = MCategoyResource::collection($data);
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }

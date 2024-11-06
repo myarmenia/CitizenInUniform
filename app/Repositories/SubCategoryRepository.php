@@ -16,7 +16,7 @@ class SubCategoryRepository implements SubCategoryInterface
     {
         return SubCategory::create($data);
     }
-    public function edit(string $id){
+    public function getItem(string $id){
         return SubCategory::find($id);
     }
 
@@ -26,9 +26,11 @@ class SubCategoryRepository implements SubCategoryInterface
         return $category ? $category->update($data) : false;
     }
 
+    public function getActiveItem(string $id){
+        return SubCategory::where('id', $id)->where('status', 1)->first();
+    }
 
-    // public function destroy(string $id){
-    //     //
-    // }
+
+
 
 }
