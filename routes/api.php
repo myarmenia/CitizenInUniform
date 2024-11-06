@@ -22,7 +22,6 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');
 
 // Route::post('send-notification', SendNotificationToUserController::class);
-Route::get('settings', SettingController::class);
 
 
 
@@ -56,6 +55,7 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::get('active-categories', [CategoryController::class, 'activeCategories']);
         Route::apiResource('sub-categories', SubCategoryController::class);
 
+        Route::get('settings', SettingController::class);
         Route::apiResource('notifications', NotificationController::class);
 
 

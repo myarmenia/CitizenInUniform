@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Interfaces\CategoryInterface;
 use Illuminate\Http\Request;
+use Storage;
 
 class CategoryService
 {
@@ -19,7 +20,14 @@ class CategoryService
 
     public function store($data)
     {
-        return $this->categorryRepository->store($data->toArray());
+
+        $category = $this->categorryRepository->store($data->toArray());
+
+        $path = FileUploadService::upload($data->file, "categories/$category->id");
+        $data->path = $path;
+
+        return $this->categorryRepository->update($data->toArray(), $category->id);
+
     }
 
     public function getItem($id)
@@ -29,6 +37,13 @@ class CategoryService
 
     public function update($data, $id)
     {
+
+        if($data->file){
+
+            $path = $this->addFile($data->file, $id);
+            $data->path = $path;
+        }
+
         return $this->categorryRepository->update($data->toArray(), $id);
     }
     public function activeCategories()
@@ -36,5 +51,23 @@ class CategoryService
         return $this->categorryRepository->activeCategories();
     }
 
+
+    public function addFile($file, $categoryId)
+    {
+
+        try {
+
+            $old_path = $this->getItem($categoryId)->path;
+            Storage::delete($old_path);
+
+            $path = FileUploadService::upload($file, "categories/$categoryId");
+
+            return $path;
+
+        } catch (\Throwable $th) {
+            return false;
+        }
+
+    }
 
 }

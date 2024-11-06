@@ -5,12 +5,16 @@ import api, { initApi } from "../../api";
 
 const router = useRouter()
 const route = useRoute()
+initApi(router);
 
 let category = ref([])
 let errors = ref([])
 
 const form = reactive({
-    title: ''
+    title: '',
+    file: '',
+    dataFile: '',
+    responseFile: '',
 })
 
 onMounted(async () => {
@@ -18,28 +22,58 @@ onMounted(async () => {
 })
 
 
-
 const getCategy = async () => {
-    let response = await api.value.get ( `/api/auth/categories/${route.params.id}`)
+    let response = api.value.get( `/api/auth/categories/${route.params.id}`)
     .then((response) => {
 
        form.title = response.data.result.title
+       form.file = response.data.result.path
+
     })
 }
 
+const handleFileChange = (e) => {
+
+    const selectedFile = e.target.files[0];
+          form.dataFile = selectedFile
+
+    if (selectedFile) {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            form.file = reader.result
+        };
+
+        reader.readAsDataURL(selectedFile);
+    }
+};
+
 const categoryEdit = async () => {
-    let response = await api.value.put(`/api/auth/categories/${route.params.id}`, form)
-    .then((response) => {
+    const formData = new FormData();
 
-        router.push('/categories')
-        toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
-    })
-    .catch((error) => {
-        if(error.response.status === 422){
+    formData.append('title', form.title);
+    formData.append('file', form.dataFile)
 
-            errors.value = error.response.data.errors
-        }
-    })
+    formData.append('_method', 'PUT');
+
+    let response = api.value.post(`/api/auth/categories/${route.params.id}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        .then((response) => {
+
+            router.push('/categories')
+            toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
+
+        })
+        .catch((error) => {
+            errors.value = []
+            if(error.response.status === 422){
+                errors.value = error.response.data.errors
+            }
+        })
+
 }
 
 
@@ -81,6 +115,26 @@ const categoryEdit = async () => {
                                     </div>
                                 </div>
 
+                                 <div class="row mb-3">
+                                    <label for="files" class="col-sm-3 col-form-label">Ֆայլեր </label>
+                                    <div class="col-sm-9">
+                                        <input type="file" class="form-control" @change="handleFileChange" accept="image/*">
+
+                                        <div class="mb-3 row " v-if="errors.file">
+                                            <p class="col-sm-10 text-danger fs-6" v-for="error in errors.file">{{ error }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="files" class="col-sm-3 col-form-label"></label>
+                                    <div class="d-flex justify-content-start col-sm-9 flex-wrap">
+                                        <div class="files d-flex align-items-start">
+                                            <img :src="form.file" alt="Изображение" class="image img-thumbnail mx-0 my-2" />
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row mb-3">
                                     <label class="col-sm-3 col-form-label"></label>
                                     <div class="col-sm-9">
@@ -97,3 +151,17 @@ const categoryEdit = async () => {
     </main><!-- End #main -->
 
 </template>
+<style scoped>
+
+.image,
+.video {
+  max-width: 100px;
+  max-height: 100px;
+  margin-right: 10px;
+}
+
+.deleteFile{
+    cursor: pointer;
+}
+
+</style>

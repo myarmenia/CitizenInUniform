@@ -25,7 +25,7 @@ onMounted(async () => {
 })
 
 const getSubCategories = async () => {
-    let response = await api.value.get ( `/api/auth/sub-categories?page=${activePage.value}`)
+    let response = api.value.get ( `/api/auth/sub-categories?page=${activePage.value}`)
     .then((response) => {
 
         lastPage.value = response.data.result.last_page

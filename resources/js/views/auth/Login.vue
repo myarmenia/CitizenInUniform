@@ -28,7 +28,9 @@ const login = async () => {
     // Ensure the token is set before redirecting
     if (localStorage.getItem('access_token')) {
         console.log(555555)
-      router.replace('/faq-categories');
+
+        window.location.href = '/faq-categories';
+
     } else {
       console.error("Token was not stored successfully");
     }
