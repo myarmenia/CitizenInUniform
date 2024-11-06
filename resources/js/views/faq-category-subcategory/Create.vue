@@ -3,6 +3,7 @@
 import { onMounted, reactive, ref, onUnmounted } from "vue"
 import { useRouter } from "vue-router"
 import api, { initApi } from "../../api";
+import { initTinyMCE } from '@/tinymce-init.js';
 
 const router = useRouter()
 initApi(router); // Initialize the API with the router
@@ -46,10 +47,7 @@ onMounted( async () =>{
     console.log(api.value,'api')
 
     getAllFaqCategory()
-    tinymce.init({
-        selector: '#tiny-editor'
-    });
-
+    initTinyMCE()
 })
 
 onUnmounted(() => {

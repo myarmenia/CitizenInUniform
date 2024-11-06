@@ -2,6 +2,7 @@
 import { useRouter, useRoute } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted, watch } from  "vue"
 import api, { initApi } from "../../api";
+import { initTinyMCE } from '@/tinymce-init.js';
 
 const router = useRouter()
 const route = useRoute()
@@ -26,14 +27,14 @@ const form = reactive({
 onMounted(async () => {
     getSubCategy()
     getActiveCategies()
+    initTinyMCE();
 
-    tinymce.init({
-        selector: '#tiny-editor'
-    });
+
 })
 
 onUnmounted(() => {
     tinymce.remove();
+
 });
 
 
@@ -58,7 +59,7 @@ const getSubCategy = async () => {
     .then((response) => {
 
         let result = response.data.result
-console.log(result)
+
             form.category_id = result.category_id
             form.title = result.title
             form.content = result.content
@@ -68,7 +69,7 @@ console.log(result)
 }
 
 
-const MAX_SIZE = 5 * 1024 * 1024; // Максимальный размер файла 5MB
+const MAX_SIZE = 50 * 1024 * 1024; // Максимальный размер файла 5MB
 
 const formatSize = (size) => {
   const units = ['Բ', 'ԿԲ', 'ՄԲ', 'ԳԲ'];
@@ -153,7 +154,7 @@ const dataEdit = async () => {
 
     formData.append('_method', 'PUT');
 
-    let response = await api.value.post(`/api/auth/sub-categories/${route.params.id}`, formData, {
+    let response = api.value.post(`/api/auth/sub-categories/${route.params.id}`, formData, {
              headers: {
                     'Content-Type': 'multipart/form-data'
                 }
