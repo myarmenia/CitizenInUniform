@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
@@ -17,13 +18,30 @@ class MobileUser extends Model
         return $this->device_id; // Убедитесь, что у вас есть поле fcm_token
     }
 
-    public function mobile_user_settings(): HasMany
+    public function mobile_user_setting(): HasOne
     {
-        return $this->hasMany(MobileUserSetting::class);
+        return $this->HasOne(MobileUserSetting::class);
     }
 
-    public function mobile_user_active_settings(): HasMany
+    public function mobile_user_active_setting(): HasOne
     {
-        return $this->hasMany(MobileUserSetting::class)->where('status', 1);
+        return $this->HasOne(MobileUserSetting::class)->where('status', 1);
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($m_user) {
+            $m_user->mobile_user_setting()->delete();
+        });
+
+        static::created(function ($m_user) {
+
+            $m_user->mobile_user_setting()->create();
+        });
+
+
     }
 }
