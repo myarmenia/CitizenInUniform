@@ -16,7 +16,12 @@ class MobileUserService
 
     public function store($data)
     {
-       
+        $mobile_user = $this->mobileUserRepository->getSingle($data->device_id);
+
+        if($mobile_user){
+            $this->mobileUserRepository->destroy($data->device_id);
+        }
+
         return $this->mobileUserRepository->store($data->toArray());
     }
 
