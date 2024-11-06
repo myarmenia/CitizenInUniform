@@ -13,15 +13,15 @@ const form = reactive({
 })
 
 const handleSave = () =>{
+
     errors.value = {};
     api.value.post('/api/auth/create-faq-category',form)
     .then((response)=>{
-        console.log(response)
-        // router.push('/faq-categories')
-        // toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
+
+        router.push('/faq-categories')
+        toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
      .catch((error) => {
-
 
             if (error.response && error.response.status === 422) {
 

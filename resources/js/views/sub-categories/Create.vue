@@ -34,7 +34,7 @@ onUnmounted(() => {
 
 
 const getActiveCategies = async () => {
-    let response = await api.value.get ( '/api/auth/active-categories')
+    let response =  api.value.get ( '/api/auth/active-categories')
     .then((response) => {
 
        activeCategories.value = response.data.result
@@ -121,7 +121,7 @@ const dataSave = async () => {
         formData.append('files[]', file); // Добавляем оригинальные объекты File
     });
 
-    let response = await api.value.post('/api/auth/sub-categories', formData, {
+    let response =  api.value.post('/api/auth/sub-categories', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }

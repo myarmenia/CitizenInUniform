@@ -5,7 +5,7 @@ import { useRouter, useRoute } from "vue-router"
 import api, { initApi } from "../../api";
 
 const router = useRouter()
-
+initApi(router); // Initialize the API with the router
 const route = useRoute()
 initApi(router);
 let errors = ref([])

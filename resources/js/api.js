@@ -43,7 +43,12 @@ const initApi = (router) => {
                 return config
             },
             error=>{
+
+                if (error.response.status === 401) {
+                    router.replace('/users/login');
+                }
                 console.log("respons error")
+                return Promise.reject(error);
             }
 
         )
