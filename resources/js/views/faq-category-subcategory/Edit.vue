@@ -2,9 +2,13 @@
 <script setup>
 import { onMounted, reactive, ref, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from "vue-router"
+import api, { initApi } from "../../api";
+import { initTinyMCE } from '@/tinymce-init.js';
 
 const router = useRouter()
+initApi(router); // Initialize the API with the router
 const route = useRoute()
+initApi(router);
 let errors = ref([])
 let faqCategories = ref([]);
 let textAreaValue=ref([]);
@@ -18,10 +22,7 @@ const form = reactive({
 
 onMounted(async () =>{
     getFaqCategorySubcategory()
-
-    tinymce.init({
-        selector: '#tiny-editor'
-    });
+    initTinyMCE();
 
 })
 
@@ -31,11 +32,9 @@ onUnmounted(() => {
 
 
 
+
 watch(() => form.content, (newContent) => {
-    console.log(form.content,'999')
-    console.log(newContent,"888")
   const editor = tinymce.get('tiny-editor');
-  console.log(editor,'7777')
   if (editor && editor.getContent() !== newContent) {
     editor.setContent(newContent);
   }
@@ -44,7 +43,7 @@ watch(() => form.content, (newContent) => {
 
 const getFaqCategorySubcategory = async () => {
 
-    let response =await axios.get(`/api/faq-category-subcategory/${route.params.id}`)
+    let response =await api.value.get(`/api/auth/faq-category-subcategory/${route.params.id}`)
         .then((response)=>{
             let result=response.data.result
 
@@ -63,7 +62,7 @@ const getFaqCategorySubcategory = async () => {
     errors.value = {};
     form.content = tinymce.get('tiny-editor').getContent()
 
-        axios.put(`/api/faq-category-subcategory/${route.params.id}`,form)
+        api.value.put(`/api/auth/faq-category-subcategory/${route.params.id}`,form)
             .then((response)=>{
                 router.push('/faq-category-subcategory')
 
@@ -133,7 +132,8 @@ const getFaqCategorySubcategory = async () => {
                   <label for="inputText" class="col-sm-2 col-form-label">Հարցի պատասխան</label>
                   <div class="col-sm-9">
 
-                    <textarea  v-model= form.content   id="tiny-editor"></textarea>
+                    <textarea  class="tinymce-editor" v-model= form.content   id="tiny-editor"></textarea>
+
                     <br>
                     <small style = "color:red" v-if="errors.title">{{errors.content}}</small>
                   </div>

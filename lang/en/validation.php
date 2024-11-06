@@ -221,7 +221,8 @@ return [
     'title'=>'Վերնագիր',
     'content' => 'Բովանդակություն',
     'category_id' => 'Կատեգորիա',
-    'setting_id' => 'Տեսակ'
+    'setting_id' => 'Տեսակ',
+    'file' => 'Ֆայլ'
 
   ]
 

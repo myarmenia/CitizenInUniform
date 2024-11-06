@@ -21,6 +21,17 @@ class MobileUserRepository implements MobileUserInterface
 
     public function getAllMobileUsersWithActiveSettings()
     {
-        return MobileUser::whereHas('mobile_user_active_settings')->get();
+        return MobileUser::whereHas('mobile_user_active_setting')->get();
+    }
+
+    public function getSingle($device_id)
+    {
+        return MobileUser::where('device_id', $device_id)->first();
+    }
+
+    public function destroy($device_id)
+    {
+        
+        return MobileUser::where('device_id', $device_id)->first()->delete();
     }
 }

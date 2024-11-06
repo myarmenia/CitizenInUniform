@@ -90,7 +90,6 @@ class FaqCategorySubcategoryController extends BaseController
     public function update(FaqCategorySubcategoryRequest $request, string $id)
     {
 
-
         $data = $this->service->update(FaqCategorySubcategoryDto::fromRequestDto($request), $id);
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
