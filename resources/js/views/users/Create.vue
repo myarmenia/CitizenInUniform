@@ -6,11 +6,19 @@ import api, { initApi } from "../../api";
 
 const router = useRouter()
 initApi(router); // Initialize the API with the router
+
+const allRoles = ref(false);
+const selectedRoles=ref([])
+
 let errors = ref([])
+
+
 
 const form = reactive({
     name:"",
+    surname:"",
     email:"",
+    phone:"",
     password:"",
     confirmPassword:""
 
@@ -18,17 +26,19 @@ const form = reactive({
 onMounted(async () =>{
     getAllRoles()
 })
-const allRoles = ref(false);
+
 const getAllRoles = () =>{
 
     let response =  api.value.get('/api/auth/all-roles')
         .then((response)=>{
-            console.log(response.data)
-            console.log(response.data.faqCategories)
-            allRoles.value = response.data.faqCategories
-
+            allRoles.value = response.data.roles
 
         })
+}
+const changeSelectedRole = ()=>{
+    form.roles = selectedRoles.value
+    console.log(form)
+
 }
 
 const handleSave = () =>{
@@ -47,7 +57,7 @@ const handleSave = () =>{
             const allErrors = error.response.data.errors;
             for (const field in allErrors) {
                 if (allErrors.hasOwnProperty(field)) {
-                    errors.value[field] = allErrors[field][0]; // Get only the first error message
+                    errors.value[field] = allErrors[field][0];
                 }
             }
         }
@@ -90,19 +100,48 @@ const handleSave = () =>{
                         <input type="text"
                                class="form-control"
                                v-model="form.name"
-                               placeholder="Աշխատակցի անունը"
+                               placeholder="Օգտատիրոջ անունը"
                                 >
 
                         <div  v-if="errors.name" class="mb-3 row justify-content-start">
                             <div class="col-sm-9 text-danger fts-14">{{ errors.name }}
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputText" class="col-sm-3 col-form-label">Ազգանուն</label>
+                    <div class="col-sm-9">
+                        <input type="text"
+                            class="form-control"
+                            v-model="form.surname"
+                            placeholder="Օգտատիրոջ ազգանունը"
+                                >
+
+                        <div  v-if="errors.surname" class="mb-3 row justify-content-start">
+                            <div class="col-sm-9 text-danger fts-14">{{ errors.surname }}
+                            </div>
+                        </div>
 
 
                     </div>
 
+                </div>
+                <div class="row mb-3">
+                    <label for="inputText" class="col-sm-3 col-form-label">Հեռախոսահամար</label>
+                    <div class="col-sm-9">
+                        <input type="text"
+                            class="form-control"
+                            v-model="form.phone"
+                            placeholder="+374980000"
+                            >
+                        <div  v-if="errors.phone" class="mb-3 row justify-content-start">
+                            <div class="col-sm-9 text-danger fts-14">{{ errors.phone }}
+                            </div>
+                        </div>
                     </div>
-                    <div class="row mb-3">
+                </div>
+                <div class="row mb-3">
                     <label for="inputEmail" class="col-sm-3 col-form-label">Էլ.հասցե</label>
                     <div class="col-sm-9">
                         <input type="email"
@@ -115,8 +154,7 @@ const handleSave = () =>{
                             </div>
                         </div>
                     </div>
-                    </div>
-
+                </div>
                     <div class="row mb-3">
                     <label for="inputEmail"  class="col-sm-3 col-form-label">Գաղտնաբառ</label>
                     <div class="col-sm-9">
@@ -125,33 +163,33 @@ const handleSave = () =>{
                                placeholder="Password"
                                v-model="form.password"
                                >
-                        <div v-if="errors.passwor" class="mb-3 row justify-content-start">
-                            <div class="col-sm-9 text-danger fts-14">{{ errors.passwor}}
+                        <div v-if="errors.password" class="mb-3 row justify-content-start">
+                            <div class="col-sm-9 text-danger fts-14">{{ errors.password}}
                             </div>
                         </div>
                     </div>
                     </div>
                     <div class="row mb-3">
-                    <label for="inputEmail" class="col-sm-3 col-form-label">Հաստատել գաղտնաբառը</label>
-                    <div class="col-sm-9">
-                        <input type="password"
-                             v-model="form.confirmPassword" class="form-control" placeholder="Confirm Password">
-                    </div>
+                        <label for="inputEmail" class="col-sm-3 col-form-label">Հաստատել գաղտնաբառը</label>
+                        <div class="col-sm-9">
+                            <input type="password"
+                                v-model="form.confirmPassword" class="form-control" placeholder="Confirm Password">
+                        </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputEmail" class="col-sm-3 col-form-label">Դերեր</label>
                         <div class="col-sm-9">
-                            <select name = "roles[]" class="form-control" id="selectedRole" multiple="multiple">
-                                <!-- @foreach ($roles as $value => $label)
-
-                                    <option v-for ="" value = "{{ $value }}" {{ in_array($value, old('roles', [])) ? 'selected' : '' }} >
-                                        {{ $label }}
-                                    </option>
-                                @endforeach -->
+                            <select v-model="selectedRoles" class="form-control" id="selectedRole" multiple="multiple" @change="changeSelectedRole" >
+                                <option v-for ="(label,value) in allRoles"
+                                        :value = "value"
+                                        :key = "value"
+                                        :selected="selectedRoles.includes(value)" >
+                                        {{ label }}
+                                </option>
                             </select>
 
                             <div  v-if="errors.roles"class="mb-3 row justify-content-start">
-                                <div class="col-sm-9 text-danger fts-14">{{ $message }}
+                                <div class="col-sm-9 text-danger fts-14">{{ errors.roles }}
                                 </div>
                             </div>
 
@@ -159,12 +197,11 @@ const handleSave = () =>{
 
                     </div>
                     <div class="row mb-3" id="loginBtn">
-                            <label class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-10">
+                            <label class="col-sm-3 col-form-label"></label>
+                            <div class="col-sm-9">
                             <button type="submit" class="btn btn-primary" @click="handleSave">Ստեղծել</button>
                             </div>
                     </div>
-
                </div>
 
 

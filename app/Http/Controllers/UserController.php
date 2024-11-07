@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Api\BaseController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\Client;
 use App\Models\Staff;
 use App\Models\User;
 use App\Services\UserService;
+use App\Traits\Paginator;
 use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
@@ -17,8 +20,9 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
+    use Paginator;
     protected $userService;
     public function __construct(UserService $userService)
     {
@@ -29,15 +33,19 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
+        $page = request()->page ?? 1;
+        $perPage = 2;
 
-        $data = User::latest()->paginate(5);
+        $user = $this->userService->getIndex();
+// dd($user);
+        $data = UserResource::collection($user);
 
+        $data = $this->arrayPaginator($data, $request, $perPage);
 
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -45,18 +53,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(): View
+    public function create()
     {
-        dd(Auth::user());
-
-        if(Auth::user()->roles[0]->interface == 'client'){
-            $roles = Role::where('position_name','client')->pluck('name', 'name')->all();
-        }else{
-            $roles = Role::where('position_name','admin')->pluck('name', 'name')->all();
-        }
 
 
-        return view('users.create',compact('roles'));
+
     }
 
     /**
@@ -65,15 +66,14 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-       public function store(UserRequest $request): RedirectResponse
+       public function store(UserRequest $request)
     {
-dd($request->all());
+
         $data = $request->all();
 
         $user = $this->userService->createUser($data);
 
-        return redirect()->route('users.index')
-                        ->with('success','User created successfully');
+       return response()->json("success");
     }
 
 
@@ -83,11 +83,12 @@ dd($request->all());
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id): View
+    public function show($id)
     {
         $user = User::find($id);
+        $data = new UserResource($user);
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
-        return view('users.show',compact('user'));
     }
 
     /**
@@ -112,30 +113,16 @@ dd($request->all());
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(UserRequest $request, string $id)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
-        ]);
 
-        $input = $request->all();
-        if(!empty($input['password'])){
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));
+
+        $data = $this->userService->updateUser( $id,$request->all());
+
+        if($data) {
+            return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
         }
-
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
-
-        $user->assignRole($request->input('roles'));
-
-        return redirect()->route('users.index')
-                        ->with('success','User updated successfully');
     }
 
     /**

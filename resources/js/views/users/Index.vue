@@ -24,10 +24,12 @@ onMounted(async () => {
     getAllData()
 })
 
+
 const getAllData = async () => {
     let response = api.value.get ( `/api/auth/users?page=${activePage.value}`)
     .then((response) => {
         let result = response.data.result
+        // console.log(result)
         lastPage.value = result.last_page
         allData.value = result.data
         statusArray.value = result.data.map(item => item.status);
@@ -46,7 +48,7 @@ const changePage =(link) =>{
 
     api.value.get(link.url)
         .then((response) =>{
-           subCategories.value = response.data.result.data
+            allData.value = response.data.result.data
            links.value = response.data.result.links
         })
 }
@@ -62,10 +64,10 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
     form.tb_name = tb_name
     form.status = changedStatus
     form.field_name = field_name
-
+// console.log(form)
     api.value.post('/api/auth/change-status',form)
     .then((response)=>{
-        getSubCategories(activePage.value)
+        getAllData(activePage.value)
 
         toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
@@ -102,7 +104,7 @@ const deleteItem = (id, tb_name) =>{
                                 icon: 'small-icon'  // Add custom class for the icon
                             }
                         });
-                           getSubCategories()
+                        getAllData()
                     }
 
                 })
@@ -141,40 +143,71 @@ const deleteItem = (id, tb_name) =>{
                             </div>
 
                             <table class="table table-bordered">
-                                <!-- <tr>
+                                <tr>
                                     <th>Հ/Հ</th>
                                     <th>Անուն</th>
+                                    <th>Ազգանուն</th>
                                     <th>Էլ․հասցե</th>
                                     <th>Դերեր</th>
+                                    <th>Կարգավիճակ</th>
                                     <th width="280px">Գործողություն</th>
-                                </tr> -->
+                                </tr>
                               <tr v-for="(user, index) in allData" :key="user.id">
 
                                     <td>{{ ++index }}</td>
                                     <td>{{ user.name }}</td>
+                                    <td>{{ user.surname }}</td>
                                     <td>{{ user.email }}</td>
-                                    <!-- <td> -->
-                                    <!-- @if(!empty($user->getRoleNames()))
-                                        @foreach($user->getRoleNames() as $v)
-                                        <label class="badge bg-primary">{{ $v }}</label>
-                                        @endforeach
-                                    @endif -->
-                                    <!-- </td> -->
-                                    <!-- <td>
-                                        <a class="btn btn-info btn-sm" href="{{ route('users.show',$user->id) }}"><i class="fa-solid fa-list"></i> Show</a>
-                                        <a class="btn btn-primary btn-sm" href="{{ route('users.edit',$user->id) }}"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
-                                        <form method="POST" action="{{ route('users.destroy', $user->id) }}" style="display:inline">
-                                            @csrf
-                                            @method('DELETE')
+                                    <td>
+                                     <label v-for="role in user.roles" class="badge bg-primary">{{ role }}</label>
 
-                                            <button type="submit" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i> Delete</button>
-                                        </form>
-                                    </td> -->
+                                    </td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            :class="user.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
+                                            {{ user.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown action" >
+
+                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                data-bs-toggle="dropdown">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <router-link class="dropdown-item"   :to="{name:'users.edit', params: { id: user.id } }"><i
+                                                        class="bx bx-edit-alt me-1"></i>Խմբագրել
+                                                </router-link>
+                                                <a class="dropdown-item d-flex" href="javascript:void(0);">
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input change_status" type="checkbox"
+                                                            role="switch"
+
+                                                            :checked="user.status"
+                                                            @change="changeStatus(index, $event, user.id,'users','status')"
+                                                        >
+                                                    </div> Կարգավիճակ
+
+                                                </a>
+
+
+                                                <button type="button" class="dropdown-item click_delete_item"
+                                                        @click = "deleteItem(user.id,'users')"
+                                                    >
+                                                    <i
+                                                        class="bx bx-trash me-1"></i>
+                                                    Ջնջել</button>
+                                            </div>
+                                        </div>
+                                    </td>
+
                                 </tr>
                             </table>
 
                             <!-- ==========links ================ -->
-                            <!-- <nav aria-label="" v-if="lastPage > 1" class="d-flex justify-content-end">
+                            <nav aria-label="" v-if="lastPage > 1" class="d-flex justify-content-end">
                                 <ul class="pagination">
                                     <li class="page-item "
                                         v-for="(link,index) in links"
@@ -186,7 +219,7 @@ const deleteItem = (id, tb_name) =>{
                                     </li>
 
                                 </ul>
-                            </nav> -->
+                            </nav>
 
                         </div>
                     </div>

@@ -5,11 +5,28 @@ namespace App\Repositories;
 use App\Models\Client;
 use App\Models\Staff;
 use App\Models\User;
-use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
 use Auth;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 
 class UserRepository implements UserRepositoryInterface
 {
+    public function index(){
+$user='';
+
+        $authUser = Auth::user();
+        $query = User::query();
+
+        if ($authUser->hasRole('super_admin') ) {
+
+            $query->where('id', '!=', $authUser->id)->get();
+        } else {
+
+            $users = User::all();
+        }
+        return $query->get();
+
+    }
     public function store(array $data): User
     {
 
@@ -17,36 +34,16 @@ class UserRepository implements UserRepositoryInterface
 
         $user->assignRole($data['roles']);
 
-
-
-            if(isset($data['client']['name']) && $data['client']['name']!=null){
-                $client=new Client();
-
-                $client->user_id = $user->id;
-                $client->name = $data['client']['name'];
-                $client->email = $data['client']['email'];
-                $client->address = $data['client']['address'];
-                $client->save();
-
-            }
-            if (Auth::user()->hasRole('client_admin')){
-
-                $client_admin_id = Client::where('user_id',Auth::id())->first()->id;
-
-                $staff_user = [
-                    'user_id' =>  $user->id,
-                    'client_admin_id' => $client_admin_id
-                  ];
-
-                  Staff::create($staff_user);
-
-            }
-
-
-
-
         return $user;
 
+    }
+    public function update($id, $data){
+
+        $user=User::findOrFail($id);
+
+        $user->update($data);
+
+        return $user;
     }
 
     public function findByEmail(string $email): ?User

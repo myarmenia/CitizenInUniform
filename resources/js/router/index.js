@@ -25,6 +25,7 @@ import NotificationCreate from '../views/notification/Create.vue'
 
 import UsersIndex from '../views/users/Index.vue'
 import UsersCreate from '../views/users/Create.vue'
+import UsersEdit from '../views/users/Edit.vue'
 
 
     const usersRoute = [
@@ -47,6 +48,11 @@ import UsersCreate from '../views/users/Create.vue'
             name: 'users.create',
             component: UsersCreate
         },
+        {
+            path: '/users/:id/edit',
+            name: 'users.edit',
+            component: UsersEdit
+        }
 
 
 

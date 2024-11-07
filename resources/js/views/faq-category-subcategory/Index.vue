@@ -1,5 +1,5 @@
 <script setup>
-import  {reactive, ref, onMounted, watch } from "vue"
+import  {reactive, ref, onMounted} from "vue"
 import {useRouter } from "vue-router"
 import api, { initApi } from "../../api";
 
@@ -35,9 +35,7 @@ console.log(response,"9999")
 
         })
 }
-watch(activePage, (newPage) => {
-    getAllData (); // Fetch allData whenever the active page changes
-});
+
 
 
 

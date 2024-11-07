@@ -2,7 +2,6 @@
 <script setup>
 import { reactive, ref, nextTick } from "vue"
 import { useRouter } from "vue-router"
-// import { useAuthStore } from '@/stores/auth'; // Your auth store
 
 
 const router =useRouter()
@@ -10,7 +9,7 @@ const form = reactive({
     email:"",
     password:"",
 })
-
+const  errorMessage=ref(false);
 
 const login = async () => {
   try {

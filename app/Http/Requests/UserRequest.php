@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Route;
 
 class UserRequest extends FormRequest
 {
@@ -21,20 +22,38 @@ class UserRequest extends FormRequest
      */
     public function rules(): array
     {
-// dd(request()->all());
+        $currentRoute = Route::currentRouteName();
+
         $rules = [
             'name' => 'required',
+            'surname' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
+            'password' => 'required|min:8|same:confirmPassword',
             'roles' => 'required',
         ];
-        if(request()->has('client')){
 
-            $rules['client.name'] = 'required';
-            
+        if($this->phone!=null){
+            $rules['phone'] =  'regex:/^\+\d{1,3}\d{9,11}$/';
+        }
+        if($currentRoute == 'users.update'){
+
+            $userId = $this->route('user');
+
+            $rules['email']='required|email|unique:users,email,'.$userId;
+            if($this->password !=null){
+
+                $rules['password'] = 'required|min:8|same:confirmPassword';
+            }
         }
 
         return $rules;
 
+    }
+    public function messages()
+    {
+        return [
+
+            'phone.regex' => 'Հեռախոսահամարը պետք է սկսվի  "+"նշանով, որին հաջորդում է երկրի կոդը  (1-3 նիշ) և առավելագույնը  11 թվային նիշ',
+        ];
     }
 }
