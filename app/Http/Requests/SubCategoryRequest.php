@@ -28,7 +28,7 @@ class SubCategoryRequest extends FormRequest
             'content' => 'required',
         ];
 
-        if(isset($this->files)){
+        if($this['files'] != null){
             $data['files.*'] = 'required|file';
         }
 
@@ -37,7 +37,8 @@ class SubCategoryRequest extends FormRequest
 
     public function withValidator($validator)
     {
-        if(isset($this->files)){
+        
+        if($this['files'] != null){
             $validator->after(function ($validator) {
                 // Преобразуем FileBag в массив файлов
                 $files = $this->file('files'); // Используем метод 'file' для получения файлов
