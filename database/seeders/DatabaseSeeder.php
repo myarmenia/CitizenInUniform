@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             CreateAdminUserSeeder::class,
             CreateRolesSeeder::class,
             SettingSeeder::class,
-            CategoriesSeeder::class,
+            // CategoriesSeeder::class,
             PasswordBlackListSeeder::class
         ]);
     }
