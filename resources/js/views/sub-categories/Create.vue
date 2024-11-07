@@ -49,7 +49,7 @@ const handleSelectionChange = () => {
 }
 
 const fileInput = ref(null); // Ссылка на элемент input
-const MAX_SIZE = 50 * 1024 * 1024; // Максимальный размер файла 5MB
+const MAX_SIZE = 50 * 1024 * 1024; // Максимальный размер файла 50MB
 
 const formatSize = (size) => {
   const units = ['Բ', 'ԿԲ', 'ՄԲ', 'ԳԲ'];
@@ -211,7 +211,7 @@ const dataSave = async () => {
                                     <div class="col-sm-9">
                                         <input type="file" class="form-control" id="files" @change="handleFileChange" multiple ref="fileInput">
                                         <p class="col-sm-10 text-danger fs-6 mt-2" v-if="form.errorMessage">{{ form.errorMessage }} </p>
-
+                                        <p class="col-sm-10 text-danger fs-6" v-for="errorFile in errors.files">{{ errorFile }} </p>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
