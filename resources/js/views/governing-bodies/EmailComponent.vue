@@ -6,16 +6,16 @@ const props = defineProps({
     type: String,
     required: true,
   },
-//   initialPhoneList: {
-//     type: Array,
-//     required: true,
-//   }
+
 });
 
-// const emit = defineEmits();
+
 const emit = defineEmits()
 const email = ref(props.initialEmail);
-// const phones = ref(props.initialPhoneList);
+
+function onStatusChange(event) {
+  email.value.status = event.target.checked; // Update email.status based on checkbox
+}
 
 function saveData() {
     emit('save', email.value);
@@ -35,14 +35,13 @@ function saveData() {
 
                             <div class="row mb-3">
                                 <label for="email" class="col-sm-3 col-form-label">Էլ․ փոստ </label>
-                                <div class="col-sm-9">
-                                    <input type="email" class="form-control" v-model="email">
-                                    <input type="checkbox" class="form-control" v-model="checkrd">
+                                <div class="col-sm-9 d-flex justify-content-between">
+                                    <input type="email" class="form-control" v-model="email.text">
 
-                                    <!-- <div class="mb-3 row " v-if="errors.email">
-                                        <p class="col-sm-10 text-danger fs-6" v-for="error in errors.email">{{ error }}
-                                        </p>
-                                    </div> -->
+                                    <div class="form-check form-switch mx-2">
+                                        <input class="form-check-input change_status" type="checkbox" role="switch" :checked="email.status"  @change="onStatusChange" >
+                                    </div>
+
                                 </div>
                             </div>
 

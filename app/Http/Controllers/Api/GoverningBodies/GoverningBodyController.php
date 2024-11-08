@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\GoverningBodies;
 
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GoverningBodyInfoRequest;
 use App\Http\Resources\GoverningBodyResource;
 use App\Http\Resources\GoverningBodyWithInfoResource;
 use App\Services\GoverningBodyService;
@@ -65,9 +66,12 @@ class GoverningBodyController extends BaseController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(GoverningBodyInfoRequest $request, string $id)
     {
-        dd($request->all());
+        // $data = $this->service->update(CategoryDto::fromCategoryDto($request), $id);
+        $data = $request->all();
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 
     /**

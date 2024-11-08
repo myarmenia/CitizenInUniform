@@ -8,7 +8,7 @@ import PhoneComponent from './PhoneComponent.vue';
 const router = useRouter()
 const route = useRoute()
 const selectedComponent = ref(null);
-const email = ref('');
+const email = ref({ text: '', status: false });
 const phones = ref([]);
 
 let governingBody = ref([])
@@ -34,15 +34,15 @@ const getGoverningBody = async () => {
     let response = api.value.get( `/api/auth/governing-bodies/${route.params.id}`)
     .then((response) => {
         let result =  response.data.result
-console.log('result', result)
+
         governingBody.value = result
 
         result.infos.forEach(info => {
             if (info.type === 'email') {
-                email.value = info
+                email.value = { text: info.text, status: info.status || false };
             }
             else{
-                phones.value.push(info.text);
+                phones.value.push({ text: info.text, status: info.status || false });
             }
         });
 
@@ -61,19 +61,20 @@ function updatePhoneList(newPhoneList) {
 
 
 function handleSave(type, updatedValue) {
-  console.log('Type:', type);  // Выводит 'email'
-  console.log('Updated Value:', updatedValue);  // Выводит обновленное значение email
+
+  console.log('Type:', type);
+  console.log('Updated Value:', updatedValue);
+
   const data = {
-      governing_body_id: route.params.id, // ID Governing Body
-      type: type,  // Тип данных (phone или email)
-      data: updatedValue,
-      status: true // Можно добавить логику статуса
+        governing_body_id: route.params.id,
+        type: type,
+        data: updatedValue,
+
     };
 
     api.value.put(`/api/auth/governing-bodies/${route.params.id}`, data)
       .then((response) => {
 
-            // router.push('/sub-categories')
             toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
 
         })
@@ -127,7 +128,7 @@ function handleSave(type, updatedValue) {
 
                                 <h3 >Էլ․ փոստ</h3>
                                  <p ></p>
-                                 <p v-if="email">{{ email }}</p>
+                                 <p v-if="email">{{ email.text }}</p>
                                  <p v-else>-----</p>
                             </div>
                         </div>
@@ -138,7 +139,7 @@ function handleSave(type, updatedValue) {
                                     <i class="bi bi-pencil" @click="showComponent('phoneComponent')"></i>
                                 </div>
                                 <h3 >Հեռախոս</h3>
-                                <p v-if="phones.length > 0" v-for="phone in phones">{{phone}}</p>
+                                <p v-if="phones.length > 0" v-for="phone in phones">{{phone.text}}</p>
                                 <p v-else>-----</p>
                             </div>
                         </div>
