@@ -222,7 +222,8 @@ return [
     'content' => 'Բովանդակություն',
     'category_id' => 'Կատեգորիա',
     'setting_id' => 'Տեսակ',
-    'file' => 'Ֆայլ'
+    'file' => 'Ֆայլ',
+    'confirmPassword' => 'Կրկնել գաղտնաբառ',
 
   ]
 

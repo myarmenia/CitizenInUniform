@@ -8,10 +8,6 @@ const {userMe} = me(router)
 
 initApi(router);
 const errorMessage = ref(false);
-onMounted( async () =>{
-        me()
-
-    })
 
 const logout = async () => {
   try {
@@ -23,19 +19,6 @@ const logout = async () => {
   }
 };
 
-// const me = async () => {
-//         try {
-//         let response = await api.value.post('/api/auth/me');
-//         let result = response.data
-
-//         userMe.value = result
-
-
-//         } catch (error) {
-//         errorMessage.value = error
-
-//         }
-//     }
 
 
 
@@ -106,10 +89,10 @@ const logout = async () => {
         </li>
 
         <li>
-          <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+          <router-link class="dropdown-item d-flex align-items-center" :to="{name:'change-password.index'}">
             <i class="bi bi-gear"></i>
             <span>Account Settings</span>
-          </a>
+          </router-link>
         </li>
         <li>
           <hr class="dropdown-divider">
@@ -132,8 +115,7 @@ const logout = async () => {
                 <span> Sign Out</span>
             </button>
 
-            <form id="logout-form" action="https://entrysystem.trigger.ltd/logout" method="POST" class="d-none">
-                <input type="hidden" name="_token" value="rzwSlsK1qT3JGPAzbDe51pvJRisQghwiqcWzas4q" autocomplete="off">                </form>
+
         </li>
 
       </ul><!-- End Profile Dropdown Items -->
