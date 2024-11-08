@@ -22,6 +22,8 @@ import LoginPage from '../views/auth/Login.vue'
 import Notification from '../views/notification/Index.vue'
 import NotificationCreate from '../views/notification/Create.vue'
 
+import GoverningBodyEdit from '../views/governing-bodies/Edit.vue'
+
 
     const usersRoute = [
         {
@@ -126,6 +128,21 @@ import NotificationCreate from '../views/notification/Create.vue'
         }
     ]
 
+    const governingBodiesRoutes = [
+        {
+
+            path: '/governing-bodies',
+            name: 'governing-bodies.index',
+            component: GoverningBodyEdit
+        },
+
+        {
+            path: '/governing-bodies/:id/edit',
+            name: 'governing-bodies.edit',
+            component: GoverningBodyEdit
+        }
+    ]
+
     const routes = [
         {
             path: '/',
@@ -136,7 +153,8 @@ import NotificationCreate from '../views/notification/Create.vue'
                 ...subCategoriesRoutes,
                 ...faqCategorySubCategoryRoutes,
                 ...notificationsRoutes,
-                ...usersRoute
+                ...usersRoute,
+                ...governingBodiesRoutes
             ]
 
         }
