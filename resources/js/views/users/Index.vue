@@ -64,7 +64,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
     form.tb_name = tb_name
     form.status = changedStatus
     form.field_name = field_name
-// console.log(form)
+
     api.value.post('/api/auth/change-status',form)
     .then((response)=>{
         getAllData(activePage.value)
@@ -142,68 +142,72 @@ const deleteItem = (id, tb_name) =>{
                                 </div>
                             </div>
 
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th>Հ/Հ</th>
-                                    <th>Անուն</th>
-                                    <th>Ազգանուն</th>
-                                    <th>Էլ․հասցե</th>
-                                    <th>Դերեր</th>
-                                    <th>Կարգավիճակ</th>
-                                    <th width="280px">Գործողություն</th>
-                                </tr>
-                              <tr v-for="(user, index) in allData" :key="user.id">
+                            <table class="table table-bordered" >
+                                <thead>
+                                    <tr>
+                                        <th>Հ/Հ</th>
+                                        <th>Անուն</th>
+                                        <th>Ազգանուն</th>
+                                        <th>Էլ․հասցե</th>
+                                        <th>Դերեր</th>
+                                        <th>Կարգավիճակ</th>
+                                        <th width="280px">Գործողություն</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(user, index) in allData" :key="user.id">
 
-                                    <td>{{ ++index }}</td>
-                                    <td>{{ user.name }}</td>
-                                    <td>{{ user.surname }}</td>
-                                    <td>{{ user.email }}</td>
-                                    <td>
-                                     <label v-for="role in user.roles" class="badge bg-primary">{{ role }}</label>
+                                                <td>{{ ++index }}</td>
+                                                <td>{{ user.name }}</td>
+                                                <td>{{ user.surname }}</td>
+                                                <td>{{ user.email }}</td>
+                                                <td>
+                                                <label v-for="role in user.roles" class="badge bg-primary mx-2" :key="role">{{ role }}</label>
 
-                                    </td>
-                                    <td>
-                                        <button
-                                            type="button"
-                                            :class="user.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
-                                            {{ user.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <div class="dropdown action" >
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        type="button"
+                                                        :class="user.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
+                                                        {{ user.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <div class="dropdown action" >
 
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <router-link class="dropdown-item"   :to="{name:'users.edit', params: { id: user.id } }"><i
-                                                        class="bx bx-edit-alt me-1"></i>Խմբագրել
-                                                </router-link>
-                                                <a class="dropdown-item d-flex" href="javascript:void(0);">
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input change_status" type="checkbox"
-                                                            role="switch"
+                                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                            data-bs-toggle="dropdown">
+                                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <router-link class="dropdown-item"   :to="{name:'users.edit', params: { id: user.id } }"><i
+                                                                    class="bx bx-edit-alt me-1"></i>Խմբագրել
+                                                            </router-link>
+                                                            <a class="dropdown-item d-flex" href="javascript:void(0);">
+                                                                <div class="form-check form-switch">
+                                                                    <input class="form-check-input change_status" type="checkbox"
+                                                                        role="switch"
 
-                                                            :checked="user.status"
-                                                            @change="changeStatus(index, $event, user.id,'users','status')"
-                                                        >
-                                                    </div> Կարգավիճակ
+                                                                        :checked="user.status"
+                                                                        @change="changeStatus(index, $event, user.id,'users','status')"
+                                                                    >
+                                                                </div> Կարգավիճակ
 
-                                                </a>
+                                                            </a>
 
 
-                                                <button type="button" class="dropdown-item click_delete_item"
-                                                        @click = "deleteItem(user.id,'users')"
-                                                    >
-                                                    <i
-                                                        class="bx bx-trash me-1"></i>
-                                                    Ջնջել</button>
-                                            </div>
-                                        </div>
-                                    </td>
+                                                            <button type="button" class="dropdown-item click_delete_item"
+                                                                    @click = "deleteItem(user.id,'users')"
+                                                                >
+                                                                <i
+                                                                    class="bx bx-trash me-1"></i>
+                                                                Ջնջել</button>
+                                                        </div>
+                                                    </div>
+                                                </td>
 
-                                </tr>
+                                            </tr>
+                                            </tbody>
                             </table>
 
                             <!-- ==========links ================ -->

@@ -1,3 +1,52 @@
+<script setup>
+import { ref, onMounted, reactive } from 'vue';
+import { useRouter } from 'vue-router';
+import api, { initApi } from "../../api";
+
+const router = useRouter();
+initApi(router);
+const errorMessage=ref(false);
+
+const form = reactive({
+    name:"",
+    surname:'',
+})
+
+
+
+const logout = async () => {
+  try {
+    await api.value.post('/api/auth/logout');
+    localStorage.removeItem('access_token');
+      window.location.href = '/users/login';
+  } catch (error) {
+    errorMessage.value = error
+  }
+};
+onMounted( async () =>{
+    me()
+})
+
+
+
+const me = async () => {
+  try {
+    let response = await api.value.post('/api/auth/me');
+    let result = response.data
+    form.name = response.data.name
+    form.surname = response.data.surname
+
+  } catch (error) {
+    errorMessage.value = error
+
+  }
+};
+
+
+
+
+</script>
+
 <template>
 
 <header id="header" class="header fixed-top d-flex align-items-center">
@@ -40,8 +89,8 @@
     <li class="nav-item dropdown pe-3">
 
       <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-        <img src="https://entrysystem.trigger.ltd/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-        <span class="d-none d-md-block dropdown-toggle ps-2">Admin Adminyan</span>
+        <!-- <img src="https://entrysystem.trigger.ltd/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
+        <span class="d-none d-md-block dropdown-toggle ps-2">{{form.name}} {{form.surname}}</span>
       </a><!-- End Profile Iamge Icon -->
 
       <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -85,11 +134,10 @@
 
         <li>
 
-            <a class="dropdown-item d-flex align-items-center" href="https://entrysystem.trigger.ltd/logout" onclick="event.preventDefault();
-                            document.getElementById('logout-form').submit();">
+            <button class="dropdown-item d-flex align-items-center"  @click.prevent="logout">
                              <i class="bi bi-box-arrow-right"></i>
                 <span> Sign Out</span>
-            </a>
+            </button>
 
             <form id="logout-form" action="https://entrysystem.trigger.ltd/logout" method="POST" class="d-none">
                 <input type="hidden" name="_token" value="rzwSlsK1qT3JGPAzbDe51pvJRisQghwiqcWzas4q" autocomplete="off">                </form>

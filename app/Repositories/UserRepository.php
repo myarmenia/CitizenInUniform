@@ -12,19 +12,24 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 class UserRepository implements UserRepositoryInterface
 {
     public function index(){
-$user='';
 
         $authUser = Auth::user();
-        $query = User::query();
-
+        $query = User::query()
+                ->where('users.id', '!=', $authUser->id);
+                
         if ($authUser->hasRole('super_admin') ) {
 
-            $query->where('id', '!=', $authUser->id)->get();
-        } else {
-
-            $users = User::all();
+            $query->whereHas('roles', function ($query) {
+                $query->where('position_name', '=', 'super_admin');
+            });
         }
-        return $query->get();
+        elseif($authUser->hasRole('admin')){
+
+            $query->whereHas('roles', function ($query) {
+                $query->where('position_name', '=', 'admin');
+            });
+        }
+        return  $query->orderBy('id','desc')->get();
 
     }
     public function store(array $data): User
