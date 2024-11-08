@@ -1,3 +1,12 @@
+
+<script setup>
+import {me} from "../../me";
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+const {userMe} = me(router)
+
+</script>
 <template>
     <aside id="sidebar" class="sidebar">
 
@@ -45,7 +54,17 @@
                     <span>Ծանուցումներ</span>
                 </router-link>
             </li>
+
+            <li v-for = "role in userMe.roles" :key="role.id" class="nav-item">
+                <router-link v-if="role.name=='super_admin' || role.name=='admin'"  class="nav-link" :class="{'collapsed': !($route.name && $route.name.startsWith('users.index.'))}" :to="{name: 'users.index'}">
+                    <i class="bi bi-bell"></i>
+                    <span>Օգտատերեր </span>
+
+                </router-link>
+            </li>
+
         </ul>
+        <!-- {{ userMe.roles }} -->
     </aside>
 </template>
 

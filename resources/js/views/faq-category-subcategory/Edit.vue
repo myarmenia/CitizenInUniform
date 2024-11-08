@@ -3,12 +3,11 @@
 import { onMounted, reactive, ref, onUnmounted, watch } from "vue"
 import { useRouter, useRoute } from "vue-router"
 import api, { initApi } from "../../api";
-import { initTinyMCE } from '@/tinymce-init.js';
+
 
 const router = useRouter()
 initApi(router); // Initialize the API with the router
 const route = useRoute()
-initApi(router);
 let errors = ref([])
 let faqCategories = ref([]);
 let textAreaValue=ref([]);
@@ -22,23 +21,9 @@ const form = reactive({
 
 onMounted(async () =>{
     getFaqCategorySubcategory()
-    initTinyMCE();
-
 })
 
-onUnmounted(() => {
-    tinymce.remove();
-});
 
-
-
-
-watch(() => form.content, (newContent) => {
-  const editor = tinymce.get('tiny-editor');
-  if (editor && editor.getContent() !== newContent) {
-    editor.setContent(newContent);
-  }
-});
 
 
 const getFaqCategorySubcategory = async () => {
@@ -52,15 +37,14 @@ const getFaqCategorySubcategory = async () => {
 
              form.f_a_q_category_id = result.faqCategorySubcategory.f_a_q_category_id
              faqCategories.value = result.faqCategory
-             console.log(faqCategories)
-             console.log(form,'form')
+
 
         })
 }
 
  const updateData = () =>{
     errors.value = {};
-    form.content = tinymce.get('tiny-editor').getContent()
+
 
         api.value.put(`/api/auth/faq-category-subcategory/${route.params.id}`,form)
             .then((response)=>{
@@ -132,7 +116,7 @@ const getFaqCategorySubcategory = async () => {
                   <label for="inputText" class="col-sm-2 col-form-label">Հարցի պատասխան</label>
                   <div class="col-sm-9">
 
-                    <textarea  class="tinymce-editor" v-model= form.content   id="tiny-editor"></textarea>
+                    <textarea  class="form-control" cols=60 rows=10 v-model= form.content></textarea>
 
                     <br>
                     <small style = "color:red" v-if="errors.title">{{errors.content}}</small>

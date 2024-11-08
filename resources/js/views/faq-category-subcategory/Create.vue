@@ -3,7 +3,7 @@
 import { onMounted, reactive, ref, onUnmounted } from "vue"
 import { useRouter } from "vue-router"
 import api, { initApi } from "../../api";
-import { initTinyMCE } from '@/tinymce-init.js';
+
 
 const router = useRouter()
 initApi(router); // Initialize the API with the router
@@ -18,8 +18,6 @@ const form = reactive({
 
 const handleSave = () =>{
     errors.value = {};
-
-    form.content = tinymce.get('tiny-editor').getContent()
     api.value.post('/api/auth/faq-category-subcategory',form)
     .then((response)=>{
         router.push('/faq-category-subcategory')
@@ -44,19 +42,11 @@ const handleSave = () =>{
 let faqCategories = ref([]);
 
 onMounted( async () =>{
-    console.log(api.value,'api')
-
     getAllFaqCategory()
-    initTinyMCE()
+
 })
-
-onUnmounted(() => {
-    tinymce.remove();
-});
-
-
 const getAllFaqCategory = async () => {
-    let response = await api.value.get('/api/auth/all-faq-categories')
+    let response = api.value.get('/api/auth/all-faq-categories')
         .then((response)=>{
             console.log(response.data)
             console.log(response.data.faqCategories)
@@ -120,7 +110,7 @@ const handleSelectionChange = () => {
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">Հարցի պատասխան</label>
                   <div class="col-sm-9">
-                    <textarea class="tinymce-editor"  id="tiny-editor" v-model="form.content"></textarea>
+                    <textarea  class="form-control"  cols=60 rows=10 v-model="form.content"></textarea>
 
                     <small style = "color:red" v-if="errors.content">{{errors.content}}</small>
                   </div>
