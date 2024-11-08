@@ -1,9 +1,13 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useGoverningBodies } from "../../sidebar";
+import {me} from "../../me";
 
 const router = useRouter();
+
 const { governingBodies } = useGoverningBodies(router);
+const {userMe} = me(router)
+
 </script>
 
 <template>
@@ -70,7 +74,17 @@ const { governingBodies } = useGoverningBodies(router);
                     <span>Ծանուցումներ</span>
                 </router-link>
             </li>
+
+            <li v-for = "role in userMe.roles" :key="role.id" class="nav-item">
+                <router-link v-if="role.name=='super_admin' || role.name=='admin'"  class="nav-link" :class="{'collapsed': !($route.name && $route.name.startsWith('users.index.'))}" :to="{name: 'users.index'}">
+                    <i class="bi bi-bell"></i>
+                    <span>Օգտատերեր </span>
+
+                </router-link>
+            </li>
+
         </ul>
+        <!-- {{ userMe.roles }} -->
     </aside>
 </template>
 
