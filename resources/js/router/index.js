@@ -22,6 +22,8 @@ import LoginPage from '../views/auth/Login.vue'
 import Notification from '../views/notification/Index.vue'
 import NotificationCreate from '../views/notification/Create.vue'
 
+import GoverningBodyEdit from '../views/governing-bodies/Edit.vue'
+
 
 import UsersIndex from '../views/users/Index.vue'
 import UsersCreate from '../views/users/Create.vue'
@@ -156,6 +158,21 @@ import PermissionIndex from  '../views/permission/Index.vue/'
         }
     ]
 
+    const governingBodiesRoutes = [
+        {
+
+            path: '/governing-bodies',
+            name: 'governing-bodies.index',
+            component: GoverningBodyEdit
+        },
+
+        {
+            path: '/governing-bodies/:id/edit',
+            name: 'governing-bodies.edit',
+            component: GoverningBodyEdit
+        }
+    ]
+
     const routes = [
         {
             path: '/',
@@ -166,7 +183,8 @@ import PermissionIndex from  '../views/permission/Index.vue/'
                 ...subCategoriesRoutes,
                 ...faqCategorySubCategoryRoutes,
                 ...notificationsRoutes,
-                ...usersRoute
+                ...usersRoute,
+                ...governingBodiesRoutes
             ]
 
         }

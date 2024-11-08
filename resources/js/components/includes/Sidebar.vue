@@ -1,12 +1,15 @@
-
 <script setup>
+import { useRouter } from "vue-router";
+import { useGoverningBodies } from "../../sidebar";
 import {me} from "../../me";
-import { useRouter } from 'vue-router';
 
 const router = useRouter();
+
+const { governingBodies } = useGoverningBodies(router);
 const {userMe} = me(router)
 
 </script>
+
 <template>
     <aside id="sidebar" class="sidebar">
 
@@ -47,6 +50,23 @@ const {userMe} = me(router)
 
                 </router-link>
             </li>
+
+            <li class="nav-item">
+                <router-link class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" aria-expanded="false" :class="{'collapsed': !($route.name && $route.name.startsWith('governing-bodies.'))}">
+                <i class="bi bi-bank"></i><span>Պետական կառավարման մարմիններ</span><i class="bi bi-chevron-down ms-auto"></i>
+                </router-link>
+
+                <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+                    <li v-for="governingBody in governingBodies">
+                        <router-link
+                                :class="{'active': $route.name === 'governing-bodies.edit' && $route.params.id && $route.params.id == governingBody.id}"
+                                :to="{name: 'governing-bodies.edit', params: { id: governingBody.id }}">
+                            <i class="bi bi-circle"></i><span>{{governingBody.name}}</span>
+                        </router-link>
+                    </li>
+                </ul>
+            </li>
+
 
             <li class="nav-item">
                 <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('notifications.'))}" :to="{name: 'notifications.index'}">

@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Category\SubCategoryController;
 use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryController;
 
 
+use App\Http\Controllers\Api\GoverningBodies\GoverningBodyController;
 use App\Http\Controllers\Api\Notifications\NotificationController;
 use App\Http\Controllers\Api\Notifications\SendNotificationToUserController;
 use App\Http\Controllers\Api\Mobile\MobileUserController;
@@ -56,6 +57,9 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::apiResource('categories', CategoryController::class);
         Route::get('active-categories', [CategoryController::class, 'activeCategories']);
         Route::apiResource('sub-categories', SubCategoryController::class);
+
+        Route::apiResource('governing-bodies', GoverningBodyController::class);
+
 
         Route::get('settings', SettingController::class);
         Route::apiResource('notifications', NotificationController::class);
