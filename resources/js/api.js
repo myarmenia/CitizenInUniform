@@ -46,7 +46,11 @@ const initApi = (router) => {
             error=>{
 
                 if (error.response.status === 401) {
-                    router.replace('/users/login');
+
+                    window.location.href ='/users/login'
+                }
+                else if (error.response.status === 403) {
+                    window.location.href ='/permission';
                 }
                 console.log("respons error")
                 return Promise.reject(error);

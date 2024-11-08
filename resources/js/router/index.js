@@ -26,6 +26,7 @@ import NotificationCreate from '../views/notification/Create.vue'
 import UsersIndex from '../views/users/Index.vue'
 import UsersCreate from '../views/users/Create.vue'
 import UsersEdit from '../views/users/Edit.vue'
+import PermissionIndex from  '../views/permission/Index.vue/'
 
 
     const usersRoute = [
@@ -52,7 +53,14 @@ import UsersEdit from '../views/users/Edit.vue'
             path: '/users/:id/edit',
             name: 'users.edit',
             component: UsersEdit
+        },
+        {
+            path: '/permission',
+            name: 'permission.index',
+            component: PermissionIndex
         }
+
+
 
 
 

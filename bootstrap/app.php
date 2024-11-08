@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\UserMiddleware;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -25,9 +26,11 @@ return Application::configure(basePath: dirname(__DIR__))
 
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
 
+            'user' => UserMiddleware::class,
+
         ]);
         $middleware->validateCsrfTokens(except: [
-            'https://entrysystem.trigger.ltd/*',
+            'https://citizen.trigger.ltd/*',
             'http://127.0.0.1:8000/*',
             'http://localhost:8000/*',
 

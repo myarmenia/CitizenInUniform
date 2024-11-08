@@ -18,9 +18,8 @@ const login = async () => {
 
 
     if (localStorage.getItem('access_token')) {
-        console.log(555555)
 
-        window.location.href = '/users';
+        window.location.href = '/categories';
 
     } else {
       console.error("Token was not stored successfully");
@@ -57,7 +56,7 @@ const login = async () => {
                                 <div class="invalid-feedback">Մուտքագրեք Ձեր գաղտնաբառը</div>
                                 </div>
                                 <div class="col-12">
-                                <button class="btn btn-primary w-100" type="submit" @click.prevent = "login">Մուտք</button>
+                                <button class="btn btn-primary w-100" @click.prevent = "login">Մուտք</button>
 
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         Մոռացել եք գաղտնաբառը?

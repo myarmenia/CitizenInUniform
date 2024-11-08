@@ -11,6 +11,7 @@ let links = ref([])
 let activePage = ref(1)
 let lastPage = ref(1)
 let  statusArray=ref([])
+const errorMessage=ref("")
 
 const form = reactive({
     id:'',
@@ -26,16 +27,28 @@ onMounted(async () => {
 
 
 const getAllData = async () => {
-    let response = api.value.get ( `/api/auth/users?page=${activePage.value}`)
+
+    try
+    {
+        let response =  await api.value.get ( `/api/auth/users?page=${activePage.value}`)
     .then((response) => {
         let result = response.data.result
-        // console.log(result)
+        console.log(result)
         lastPage.value = result.last_page
         allData.value = result.data
         statusArray.value = result.data.map(item => item.status);
         links.value = result.links
 
     })
+
+    }catch(error){
+        console.log(error)
+        if(error.response.status==403){
+            window.location.href='/permission'
+        }
+
+
+    }
 }
 
 const changePage =(link) =>{

@@ -2,17 +2,16 @@
 import { ref, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import api, { initApi } from "../../api";
-
+import {me} from "../../me";
 const router = useRouter();
+const {userMe} = me(router)
+
 initApi(router);
-const errorMessage=ref(false);
+const errorMessage = ref(false);
+onMounted( async () =>{
+        me()
 
-const form = reactive({
-    name:"",
-    surname:'',
-})
-
-
+    })
 
 const logout = async () => {
   try {
@@ -23,24 +22,22 @@ const logout = async () => {
     errorMessage.value = error
   }
 };
-onMounted( async () =>{
-    me()
-})
+
+// const me = async () => {
+//         try {
+//         let response = await api.value.post('/api/auth/me');
+//         let result = response.data
+
+//         userMe.value = result
 
 
+//         } catch (error) {
+//         errorMessage.value = error
 
-const me = async () => {
-  try {
-    let response = await api.value.post('/api/auth/me');
-    let result = response.data
-    form.name = response.data.name
-    form.surname = response.data.surname
+//         }
+//     }
 
-  } catch (error) {
-    errorMessage.value = error
 
-  }
-};
 
 
 
@@ -61,12 +58,6 @@ const me = async () => {
 
 
 <!-- End Search Bar -->
-
-
-
-
-
-
 
 <nav class="header-nav ms-auto">
   <ul class="d-flex align-items-center">
@@ -90,7 +81,9 @@ const me = async () => {
 
       <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
         <!-- <img src="https://entrysystem.trigger.ltd/assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
-        <span class="d-none d-md-block dropdown-toggle ps-2">{{form.name}} {{form.surname}}</span>
+        <span class="d-none d-md-block dropdown-toggle ps-2">
+            {{userMe.name}} {{userMe.surname}}
+        </span>
       </a><!-- End Profile Iamge Icon -->
 
       <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -151,6 +144,5 @@ const me = async () => {
 </nav><!-- End Icons Navigation -->
 
 </header>
-
 
 </template>

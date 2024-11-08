@@ -27,6 +27,7 @@ class UserController extends BaseController
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
+        $this->middleware('user');
     }
     /**
      * Display a listing of the resource.
@@ -35,11 +36,12 @@ class UserController extends BaseController
      */
     public function index(Request $request)
     {
+
         $page = request()->page ?? 1;
         $perPage = 2;
 
         $user = $this->userService->getIndex();
-// dd($user);
+
         $data = UserResource::collection($user);
 
         $data = $this->arrayPaginator($data, $request, $perPage);
