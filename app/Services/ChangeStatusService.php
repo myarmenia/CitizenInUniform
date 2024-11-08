@@ -12,6 +12,7 @@ class ChangeStatusService
         $status = filter_var($request->status, FILTER_VALIDATE_BOOLEAN);
 
         $className = 'App\Models\\' . Str::studly(Str::singular($request->tb_name));
+      
 
         $model = '';
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('governing_body_id')->references('id')->on('governing_bodies')->onDelete('cascade');
             $table->enum('type', ['email', 'phone']);
             $table->string('text');
+            $table->boolean('status');
             $table->softDeletes();
             $table->timestamps();
         });
