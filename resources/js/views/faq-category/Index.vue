@@ -146,8 +146,6 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
 
 </script>
 <template>
-
-
     <main id="main" class="main">
         <div class="pagetitle">
             <h1>ՀՏՀ կատեգորիա</h1>
@@ -253,20 +251,5 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
 
         </section>
     </main>
-
-    <!-- v-model="category.status"
-    @change = "changeStatus(category.id,'f_a_q_categories',category.status,'status')" -->
-    <!-- <div>
-    <div v-for="(item, index) in faqCategories" :key="item.id">
-      <input
-        type="checkbox"
-        :checked="checkedStates[index]"
-        @change="handleChange(index, $event)"
-      />
-      <label>{{ item.name }}</label>
-    </div>
-    <p>Checked States: {{ checkedStates }}</p>
-  </div> -->
-
 </template>
 
