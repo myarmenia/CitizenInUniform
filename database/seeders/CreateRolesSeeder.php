@@ -30,10 +30,15 @@ class CreateRolesSeeder extends Seeder
                 'interface' => 'admin'
             ],
             [
-                'name' => 'operator',
+                'name' => 'operatorMIP',
                 'position_name' => 'admin',
                 'interface' => 'admin'
-            ]
+            ],
+            [
+                'name' => 'operatorPN',
+                'position_name' => 'admin',
+                'interface' => 'admin'
+            ],
 
 
         ];

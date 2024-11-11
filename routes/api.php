@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Category\SubCategoryController;
+use App\Http\Controllers\Api\ChangePasswordController;
 use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryController;
 
 
@@ -67,6 +68,8 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
         Route::get('all-roles',[RoleController::class,'all']);
+
+        Route::post('change-password',[ChangePasswordController::class,'index']);
 
 
         Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');

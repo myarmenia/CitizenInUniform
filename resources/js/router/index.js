@@ -28,8 +28,10 @@ import GoverningBodyEdit from '../views/governing-bodies/Edit.vue'
 import UsersIndex from '../views/users/Index.vue'
 import UsersCreate from '../views/users/Create.vue'
 import UsersEdit from '../views/users/Edit.vue'
+
 import PermissionIndex from  '../views/permission/Index.vue/'
 
+import ChangePasswordIndex from '../views/change-password/Index.vue'
 
     const usersRoute = [
         {
@@ -61,11 +63,6 @@ import PermissionIndex from  '../views/permission/Index.vue/'
             name: 'permission.index',
             component: PermissionIndex
         }
-
-
-
-
-
     ]
 
     const faqCategoryRoutes = [
@@ -172,6 +169,15 @@ import PermissionIndex from  '../views/permission/Index.vue/'
             component: GoverningBodyEdit
         }
     ]
+    const changePasswordRoutes = [
+        {
+
+            path: '/change-password',
+            name: 'change-password.index',
+            component: ChangePasswordIndex
+        }
+
+    ]
 
     const routes = [
         {
@@ -184,7 +190,8 @@ import PermissionIndex from  '../views/permission/Index.vue/'
                 ...faqCategorySubCategoryRoutes,
                 ...notificationsRoutes,
                 ...usersRoute,
-                ...governingBodiesRoutes
+                ...governingBodiesRoutes,
+                ...changePasswordRoutes
             ]
 
         }
