@@ -101,8 +101,8 @@ return [
     |
     */
 
-    'ttl' => env('JWT_TTL', 60),// Token will be valid for 60 minutes
-    // 'ttl' => env('JWT_TTL', 1/6),
+    // 'ttl' => env('JWT_TTL', 60),// Token will be valid for 60 minutes
+    'ttl' => env('JWT_TTL', 1/6),
 
     /*
     |--------------------------------------------------------------------------
