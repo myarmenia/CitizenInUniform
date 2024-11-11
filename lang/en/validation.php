@@ -224,7 +224,9 @@ return [
     'setting_id' => 'Տեսակ',
     'file' => 'Ֆայլ',
     'data.text' => 'տվյալ',
-    'data.*.phone' => 'տվյալ'
+    'data.*.phone' => 'տվյալ',
+    'confirmPassword' => 'Կրկնել գաղտնաբառ',
+
 
 
     ]
