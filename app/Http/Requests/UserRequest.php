@@ -28,12 +28,21 @@ class UserRequest extends FormRequest
             'name' => 'required',
             'surname' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|same:confirmPassword',
+            // 'password' => 'required|min:8|same:confirmPassword',
             'roles' => 'required',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'same:confirmPassword',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+            ],
         ];
 
         if($this->phone!=null){
-            $rules['phone'] =  'regex:/^\+\d{1,3}\d{9,11}$/';
+            $rules['phone'] = 'regex:/^\\+\\d{1,3}\\d{9,11}$/';
         }
         if($currentRoute == 'users.update'){
 
@@ -52,7 +61,8 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-
+            'password.min'=>'Գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
+            'password.regex'=>"Գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
             'phone.regex' => 'Հեռախոսահամարը պետք է սկսվի  "+"նշանով, որին հաջորդում է երկրի կոդը  (1-3 նիշ) և առավելագույնը  11 թվային նիշ',
         ];
     }
