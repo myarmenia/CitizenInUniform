@@ -12,7 +12,7 @@ export function useGoverningBodies(router) {
 
         try {
             const response = await api.value.get('/api/auth/governing-bodies');
-            console.log(response.data)
+           
             governingBodies.value = response.data.result;
         } catch (error) {
             console.error("Error fetching governing bodies:", error);
