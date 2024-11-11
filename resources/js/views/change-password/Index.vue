@@ -8,7 +8,7 @@ initApi(router);
 const errorMessage=ref("")
 
 const form = reactive({
-    oldPassword:'',
+    currentPassword:'',
     newPassword:'',
     confirmNewPassword: '',
 })
@@ -49,9 +49,9 @@ const changePassword = async () => {
                                 <div class="col-md-8 col-lg-9">
                                     <input  type = "password"
                                             class = "form-control"
-                                            v-model = "form.oldPassword"
+                                            v-model = "form.currentPassword"
                                             >
-                                        <!-- <small style = "color:red" v-if="errors.oldPassword">{{ errors.oldPassword }}</small> -->
+                                        <!-- <small style = "color:red" v-if="errors.currentPassword">{{ errors.currentPassword }}</small> -->
                                 </div>
                                 </div>
 

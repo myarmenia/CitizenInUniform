@@ -24,7 +24,7 @@ class ChangePasswordRequest extends FormRequest
         $rules = [
 
 
-            'oldPassword' => [
+            'currentPassword' => [
                 'required',
                 'string',
                 'min:8',
@@ -48,8 +48,8 @@ class ChangePasswordRequest extends FormRequest
     public function messages()
     {
         return [
-            'oldPassword.min'=>'Գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
-            'oldPassword.regex'=>"Գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
+            'currentPassword.min'=>'Գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
+            'currentPassword.regex'=>"Գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
             // 'confirmNewPassword.min'=>'Նոր գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
             // 'confirmNewPassword.regex'=>"Նոր գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
         ];
