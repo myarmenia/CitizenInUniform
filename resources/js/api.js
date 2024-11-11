@@ -63,6 +63,7 @@ const initApi = (router) => {
 
                         accessToken.value = newToken; // Update the reactive variable
                         fetchUser();
+                        return  apiInstance.request()
 
 
 
