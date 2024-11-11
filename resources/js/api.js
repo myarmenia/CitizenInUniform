@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ref,  watchEffect } from "vue"
+import { ref } from "vue"
 
 
 
@@ -56,16 +56,16 @@ const initApi = (router) => {
                             'authorization': `Bearer ${localStorage.getItem('access_token')}`
                         }
                     })
-                    .then(refreshResponse => {
-                        console.log(refreshResponse,'99999')
-                        const newToken = refreshResponse.data.access_token;
+                    .then(res => {
+                        console.log(res,'99999')
+                        const newToken = res.data.access_token;
                         localStorage.setItem('access_token', newToken);
 
                         accessToken.value = newToken; // Update the reactive variable
-                        fetchUser();
 
-
-
+                        error.config.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`
+                        console.log(error.config.headers)
+                        return  apiInstance.request(error.config.headers)
 
                     })
 
@@ -88,46 +88,7 @@ const initApi = (router) => {
 }
 
 
-// Watch for changes in localStorage
-// watch(
-//     () => localStorage.getItem('access_token'), // Watch the access_token in localStorage
-//     (newToken, oldToken) => {
-//         console.log(newToken,33333333)
-//         if (newToken !== oldToken) {
-//             console.log("Access token changed:", newToken);
-//             accessToken.value = newToken; // Update the reactive variable when localStorage changes
-//         }
-//     },
-//     { immediate: true } // Run immediately on setup
-// );
-const fetchUser = () => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-        console.log(4444444444)
-        console.log(22)
-        return axios.post('/api/auth/me',{},{
-            headers:{
-                'authorization': `Bearer ${localStorage.getItem('access_token')}`
-            }
-        })
-        .then(res => {
-            console.log(res,'33333')
-            userMe.value=res.data
-        })
-
-    }
-  };
-  watchEffect(() => {
-    const token = localStorage.getItem("access_token");
-    if (token) {
-        fetchUser(); // Fetch user data whenever token changes
-    } else {
-        userMe.value = ""; // Clear user data if no token is present
-    }
-});
 export default api;
-export { initApi,
-    //  userMe
-      };
+export { initApi};
 
 
