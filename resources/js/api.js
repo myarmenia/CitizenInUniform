@@ -38,7 +38,6 @@ const initApi = (router) => {
                 const token = localStorage.getItem('access_token');
                 if (token) {
                     console.log('8545')
-
                     config.headers = config.headers || {};
                     config.headers.Authorization = `Bearer ${token}`; // Set the Authorization header
 
