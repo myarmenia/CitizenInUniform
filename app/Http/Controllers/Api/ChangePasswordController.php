@@ -9,6 +9,6 @@ use Illuminate\Http\Request;
 class ChangePasswordController extends Controller
 {
     public function index(ChangePasswordRequest $request){
-        dd($request->all());
+        // dd($request->all());
     }
 }
