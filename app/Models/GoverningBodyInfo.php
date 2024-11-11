@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class GoverningBodyInfo extends Model
 {
     use SoftDeletes;
-    protected $guarded = [];
+    protected $guarded = ['data'];
 
 }

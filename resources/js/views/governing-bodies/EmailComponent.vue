@@ -1,17 +1,29 @@
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits, watch } from 'vue';
 
 const props = defineProps({
   initialEmail: {
     type: String,
     required: true,
   },
+  errors: {
+    type: Array,
+    required: true,
+  }
 
 });
 
 
 const emit = defineEmits()
 const email = ref(props.initialEmail);
+
+
+watch(() => props.initialEmail,
+  (newEmail) => {
+    email.value = newEmail;
+  }
+);
+
 
 function onStatusChange(event) {
   email.value.status = event.target.checked; // Update email.status based on checkbox
@@ -36,13 +48,18 @@ function saveData() {
                             <div class="row mb-3">
                                 <label for="email" class="col-sm-3 col-form-label">Էլ․ փոստ </label>
                                 <div class="col-sm-9 d-flex justify-content-between">
-                                    <input type="email" class="form-control" v-model="email.text">
-
+                                    <div class="w-100">
+                                        <input type="email" class="form-control" v-model="email.text">
+                                        <div class="mb-3 " v-if="props.errors">
+                                            <p class="col-sm-10 text-danger fs-6" v-for="error in props.errors['data.text']" :key="error">{{ error }} </p>
+                                        </div>
+                                    </div>
                                     <div class="form-check form-switch mx-2">
                                         <input class="form-check-input change_status" type="checkbox" role="switch" :checked="email.status"  @change="onStatusChange" >
                                     </div>
 
                                 </div>
+
                             </div>
 
 

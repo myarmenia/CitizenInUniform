@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router"
-import { ref, onMounted } from  "vue"
+import { ref, onMounted, watch } from  "vue"
 import api, { initApi } from "../../api";
 import EmailComponent from './EmailComponent.vue';
 import PhoneComponent from './PhoneComponent.vue';
@@ -17,6 +17,7 @@ let errors = ref([])
 initApi(router);
 
 function showComponent(componentName) {
+    errors.value = [];
   selectedComponent.value = componentName;
 }
 
@@ -30,9 +31,16 @@ onMounted(async () => {
 })
 
 
+
 const getGoverningBody = async () => {
     let response = api.value.get( `/api/auth/governing-bodies/${route.params.id}`)
     .then((response) => {
+
+        errors.value = [];
+        governingBody.value = [];
+        email.value = { text: '', status: false };
+        phones.value = [];
+
         let result =  response.data.result
 
         governingBody.value = result
@@ -49,16 +57,15 @@ const getGoverningBody = async () => {
     })
 }
 
-function updateEmail(newEmail) {
-    email.value = newEmail; // обновляем email
-    hideComponent();
-}
 
-function updatePhoneList(newPhoneList) {
-    phones.value = newPhoneList;
-    hideComponent();
-}
-
+watch(() => route.params.id,  // Отслеживаем изменение параметра ID в маршруте
+    (newId) => {
+        if (newId) {
+            getGoverningBody();  // Вызов функции при изменении ID
+        }
+    },
+    { immediate: true }  // Это обеспечит вызов функции при монтировании компонента
+);
 
 function handleSave(type, updatedValue) {
 
@@ -75,20 +82,20 @@ function handleSave(type, updatedValue) {
     api.value.put(`/api/auth/governing-bodies/${route.params.id}`, data)
       .then((response) => {
 
+            getGoverningBody();
             toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
 
         })
         .catch((error) => {
             errors.value = []
+
             if(error.response.status === 422){
                 errors.value = error.response.data.errors
             }
+
         })
-    console.log(data)
 
 }
-
-
 
 
 </script>
@@ -101,9 +108,7 @@ function handleSave(type, updatedValue) {
             <h1>Պետական կառավարման մարմիններ</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <!-- <li class="breadcrumb-item ">
-                        <router-link class="dropdown-item" :to="{name: 'categories.index' }"> Ցանկ</router-link>
-                    </li> -->
+
                     <li class="breadcrumb-item active">Խմբագրել</li>
                 </ol>
             </nav>
@@ -128,7 +133,7 @@ function handleSave(type, updatedValue) {
 
                                 <h3 >Էլ․ փոստ</h3>
                                  <p ></p>
-                                 <p v-if="email">{{ email.text }}</p>
+                                 <p v-if="email.text && email.status"><span v-if="email.status"> {{email.text}}</span></p>
                                  <p v-else>-----</p>
                             </div>
                         </div>
@@ -139,58 +144,22 @@ function handleSave(type, updatedValue) {
                                     <i class="bi bi-pencil" @click="showComponent('phoneComponent')"></i>
                                 </div>
                                 <h3 >Հեռախոս</h3>
-                                <p v-if="phones.length > 0" v-for="phone in phones">{{phone.text}}</p>
+                                <p v-if="phones.length > 0 && phones.some(phone => phone.status)" v-for="phone in phones"><span v-if="phone.status"> {{phone.text}}</span> </p>
                                 <p v-else>-----</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
-                <!-- <div class="col-xl-6">
-                <div class="card p-4">
-                    <form action="forms/contact.php" method="post" class="php-email-form">
-                    <div class="row gy-4">
-
-                        <div class="col-md-6">
-                        <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
-                        </div>
-
-                        <div class="col-md-6 ">
-                        <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
-                        </div>
-
-                        <div class="col-md-12">
-                        <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
-                        </div>
-
-                        <div class="col-md-12">
-                        <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
-                        </div>
-
-                        <div class="col-md-12 text-center">
-                        <div class="loading">Loading</div>
-                        <div class="error-message"></div>
-                        <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                        <button type="submit">Send Message</button>
-                        </div>
-
-                    </div>
-                    </form>
-                </div>
-
-                </div> -->
 
             </div>
 
         </section>
 
         <div v-if="selectedComponent === 'emailComponent'">
-            <EmailComponent :initialEmail="email" @save="(updatedValue) => handleSave('email', updatedValue)" @cancel="hideComponent" />
+            <EmailComponent :initialEmail="email" :errors="errors"  @save="(updatedValue) => handleSave('email', updatedValue)" @cancel="hideComponent" />
         </div>
         <div v-else-if="selectedComponent === 'phoneComponent'" >
-            <PhoneComponent :initialPhoneList="phones"@save="(updatedValue) => handleSave('phone', updatedValue)" @cancel="hideComponent" />
+            <PhoneComponent :initialPhoneList="phones" :errors="errors" @save="(updatedValue) => handleSave('phone', updatedValue)" @cancel="hideComponent" />
         </div>
 
     </main><!-- End #main -->

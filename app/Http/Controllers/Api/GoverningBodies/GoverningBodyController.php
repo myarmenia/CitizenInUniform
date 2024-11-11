@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\GoverningBodies;
 
+use App\DTO\GoverningBodyInfoDto;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GoverningBodyInfoRequest;
@@ -30,7 +31,7 @@ class GoverningBodyController extends BaseController
 
     /**
      * Show the form for creating a new resource.
-     */
+    */
     public function create()
     {
         //
@@ -68,8 +69,8 @@ class GoverningBodyController extends BaseController
      */
     public function update(GoverningBodyInfoRequest $request, string $id)
     {
-        // $data = $this->service->update(CategoryDto::fromCategoryDto($request), $id);
-        $data = $request->all();
+
+        $data = $this->service->update(GoverningBodyInfoDto::fromGoverningBodyDto($request), $id);
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }

@@ -25,13 +25,13 @@ class GoverningBodyInfoRequest extends FormRequest
         $data = [];
 
         if ($this['type'] == 'email') {
-            $data['text'] = 'required';
+            $data['data.text'] = 'required';
         }
 
         if ($this['type'] == 'phone') {
             $data['data.*.phone'] = 'required';
         }
-// dd( $data);
+
         return $data;
     }
 }
