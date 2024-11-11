@@ -24,5 +24,11 @@ class GoverningBodyService
         return $this->governingBodyRepository->getItem($id);
     }
 
+    public function update($data, $id)
+    {
+       
+        return $this->governingBodyRepository->update($data->toArray(), $id);
+    }
+
 
 }

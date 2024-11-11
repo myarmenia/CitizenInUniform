@@ -1,47 +1,62 @@
 <script setup>
-import { ref, watch, toRef } from 'vue';
+import { ref, watch } from 'vue';
 
-const props = defineProps(['initialPhoneList']);
+const props = defineProps({
+    initialPhoneList: {
+        type: Array,
+        required: true,
+    },
+    errors: {
+        type: Object,
+        required: true,
+    },
+});
+
 const emit = defineEmits(['save', 'cancel']);
+
+
+function createPhoneObject(phone) {
+  return {
+    phone: phone.text,
+    isRemovable: phone.isRemovable || false,
+    status: !!phone.status
+  };
+}
+
 
 const phoneList = ref(
   Array.isArray(props.initialPhoneList)
-    ? props.initialPhoneList.map(phone => ({
-        phone: phone.number,      // предполагается, что данные содержат `number`
-        isRemovable: phone.isRemovable || false,
-        isChecked: phone.isChecked || false // добавляем `isChecked`
-      }))
+    ? props.initialPhoneList.map(createPhoneObject)
     : []
 );
 
+
 watch(() => props.initialPhoneList, (newVal) => {
-  phoneList.value = Array.isArray(newVal)
-    ? newVal.map(phone => ({
-        phone: phone.number,
-        isRemovable: phone.isRemovable || false,
-        isChecked: phone.isChecked || false
-      }))
-    : [];
+  phoneList.value = Array.isArray(newVal) ? newVal.map(createPhoneObject) : [];
 });
 
-// Добавление нового телефона с флагом isRemovable: true
+
 function addPhone() {
-    phoneList.value.push({ phone: '', isRemovable: true });
+  phoneList.value.push({ phone: '', isRemovable: true, status: false }); // используем status
 }
 
-// Удаление телефона только если он добавлен пользователем
+const getPhoneErrors = (phoneIndex) => {
+  if (props.errors && props.errors[`data.${phoneIndex}.phone`]) {
+    return props.errors[`data.${phoneIndex}.phone`];
+  }
+  return [];
+};
+
+
 function removePhone(index) {
-    if (phoneList.value[index].isRemovable) {
-        phoneList.value.splice(index, 1);
-    }
+  if (phoneList.value[index].isRemovable) {
+    phoneList.value.splice(index, 1);
+  }
 }
 
-// Сохранение списка телефонов
+
 function save() {
-  const phonesToSave = phoneList.value.map(item => ({
-    phone: item.phone,
-    isChecked: item.isChecked
-  })); // Сохраняем номера телефонов и состояния чекбоксов
+  const phonesToSave = phoneList.value.map(({ phone, status }) => ({ phone, status }));
   emit('save', phonesToSave);
 }
 </script>
@@ -52,49 +67,44 @@ function save() {
                 <div class="card">
 
                     <div class="card-body">
-                        <h5 class="card-title">Խմբագրել</h5>
-
-                            <!-- <div class="row mb-3">
-                                <label for="phone" class="col-sm-3 col-form-label">Էլ․ փոստ </label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control"  id="phone"
-                                        placeholder="Վերնագիր" value="form.phone">
-                                    <div class="mb-3 row " v-if="errors.phone">
-                                        <p class="col-sm-10 text-danger fs-6" v-for="error in errors.phone">{{ error }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div> -->
-
-                            <div v-for="(phoneItem, index) in phoneList" :key="index" class="mb-2">
-                                <div class="row mb-3">
-                                    <label for="phone" class="col-sm-3 col-form-label"> </label>
-                                    <div class="col-sm-9 d-flex justify-content-between">
-                                        <input type="text" class="form-control"  v-model="phoneItem.phone">
-<input
-            type="checkbox"
-            v-model="phoneItem.isChecked"
-            class="form-check-input ml-2"
-          />
-                                        <span class="deleteFile" @click="removePhone(index)" v-if="phoneItem && phoneItem.isRemovable"><i class="bx bx-trash me-1 ml-2"></i></span>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <button @click="addPhone" class="btn btn-primary btn-sm mt-2">Добавить номер</button>
-
-                            <!-- <div class="mt-3">
-                                <button @click="save" class="btn btn-success">Сохранить</button>
-
-                            </div> -->
-
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title">Խմբագրել</h5>
+                            <button type="button" class="btn btn-primary" @click="addPhone">Ավելացնել համար</button>
+                        </div>
+                        <div v-for="(phoneItem, index) in phoneList" :key="index" class="mb-2">
                             <div class="row mb-3">
-                                <label class="col-sm-3 col-form-label"></label>
+                                <label for="phone" class="col-sm-3 col-form-label"> Հեռախեսահամար</label>
                                 <div class="col-sm-9 d-flex justify-content-between">
-                                    <button type="submit" class="btn btn-primary" @click="save">Պահպանել</button>
-                                    <button @click="$emit('cancel')" class="btn btn-secondary">Չեղարկել</button>
+                                    <div class="w-100">
+                                        <input type="text" class="form-control" v-model="phoneItem.phone">
+
+                                        <div class="mb-3 " v-if="getPhoneErrors(index).length > 0">
+                                            <p class="col-sm-10 text-danger fs-6" v-for="(error, errorIndex) in getPhoneErrors(index)" :key="errorIndex">{{ error }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-check form-switch mx-2">
+                                        <!-- Использование v-model для двусторонней привязки -->
+                                        <input
+                                        class="form-check-input change_status"
+                                        type="checkbox"
+                                        v-model="phoneItem.status"
+                                            :checked="phoneItem.status"
+                                        />
+                                    </div>
+                                    <span class="deleteFile" @click="removePhone(index)" v-if="phoneItem && phoneItem.isRemovable">
+                                        <i class="bx bx-trash me-1 ml-2"></i>
+                                    </span>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label"></label>
+                            <div class="col-sm-9 d-flex justify-content-between">
+                                <button type="submit" class="btn btn-primary" @click="save">Պահպանել</button>
+                                <button @click="$emit('cancel')" class="btn btn-secondary">Չեղարկել</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

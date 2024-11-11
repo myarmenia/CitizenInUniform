@@ -223,8 +223,12 @@ return [
     'category_id' => 'Կատեգորիա',
     'setting_id' => 'Տեսակ',
     'file' => 'Ֆայլ',
+    'data.text' => 'տվյալ',
+    'data.*.phone' => 'տվյալ',
     'confirmPassword' => 'Կրկնել գաղտնաբառ',
 
-  ]
+
+
+    ]
 
 ];
