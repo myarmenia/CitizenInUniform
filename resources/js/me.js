@@ -16,8 +16,17 @@ export function me (router){
         try {
         let response = await api.value.post('/api/auth/me');
         let result = response.data
-
         userMe.value = result
+        if(result.message!=null){
+
+            toast.fire({icon:"error",title:result.message,
+                showCloseButton: true,
+                timer: 7000, // Optional: duration of the toast on screen (in ms)
+                timerProgressBar: true, // Show progress bar
+
+            } )
+
+        }
 
 
         } catch (error) {
@@ -32,4 +41,4 @@ export function me (router){
     })
     return {userMe}
   };
-  
+
