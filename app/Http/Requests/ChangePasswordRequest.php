@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\PasswordBlackList;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 
@@ -22,9 +23,10 @@ class ChangePasswordRequest extends FormRequest
      */
     public function rules(): array
     {
+        $strongness = PasswordBlackList::all()->pluck('password')->toArray();
 
         $rules = [
-            'currentPassword' => [
+            'old_password' => [
                 'required',
                 'string',
                 'min:8',
@@ -32,31 +34,39 @@ class ChangePasswordRequest extends FormRequest
                 'regex:/[A-Z]/',
                 'regex:/[0-9]/',
             ],
-            'newPassword' => [
+            'new_password' => [
                 'required',
+                'confirmed',
                 'string',
                 'min:8',
-                'same:confirmNewPassword',
                 'regex:/[a-z]/',
                 'regex:/[A-Z]/',
                 'regex:/[0-9]/',
+                function ($attribute, $value, $fail) use ($strongness) {
+                    if (in_array($value, $strongness)) {
+                        $fail('Գաղտնաբառը չափազանց տարածված է: Խնդրում ենք ստեղծել ավելի ուժեղ գաղտնաբառ:');
+                    }
+                },
             ],
         ];
-// dd( auth()->user()->password,$this->currentPassword);
-        if (!Hash::check($this->currentPassword, auth()->user()->password)) {
-            dd(4444);
-           $rules['password']="Password is incorrect";
-        }
+
+        $rules[ 'old_password'] = ['required', function ($attribute, $value, $fail) {
+                if (!Hash::check($value, auth()->user()->password)) {
+                    $fail('Ընթացիկ գատնաբառը սխալ է');
+                }
+            }];
+
         return $rules;
 
     }
     public function messages()
     {
         return [
-            'currentPassword.min'=>'Գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
-            'currentPassword.regex'=>"Գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
-            'newPassword.min'=>'Նոր գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
-            'newPassword.regex'=>"Նոր գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
+            'old_password.min'=>'Գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
+            'old_password.regex'=>"Գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
+            'new_password.min'=>'Նոր գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
+            'new_password.regex'=>"Նոր գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
+            'new_password.confirmed' => 'Նոր գաղտնաբառի հաստատումը չի համընկնում հաստատել նոր գաղտնաբառի հետ',
         ];
     }
 }

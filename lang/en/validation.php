@@ -227,7 +227,8 @@ return [
     'data.*.phone' => 'տվյալ',
     'currentPassword'=> 'Ընթացիկ գաղտնաբառ',
     'newPassword'=>'Նոր գաղտնաբառ',
-    'confirmNewPassword'=>'Հաստատել նոր գաղտնաբառ'
+    'confirmNewPassword'=>'Հաստատել նոր գաղտնաբառ',
+    'confirmPassword'=>'Հաստատել գաղտնաբառ'
 
 
 
