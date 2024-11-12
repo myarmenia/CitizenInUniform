@@ -20,9 +20,14 @@ const changePassword = async () => {
    let response = await api.value.post('/api/auth/change-password', form);
     console.log(response)
 
+    localStorage.removeItem('access_token');
+    window.location.href='users/login'
+
+
   } catch (error) {
         if (error.response && error.response.status === 422) {
             const allErrors = error.response.data.errors;
+            console.log(allErrors)
             for (const field in allErrors) {
                 if (allErrors.hasOwnProperty(field)) {
                     errors.value[field] = allErrors[field][0]; // Get only the first error message
@@ -58,7 +63,7 @@ const changePassword = async () => {
                                 <div class="col-md-8 col-lg-9">
                                     <input  type = "password"
                                             class = "form-control"
-                                            v-model = "form.old_password"
+                                            v-model ="form.old_password"
                                             >
                                         <small style = "color:red" v-if="errors.old_password">{{ errors.old_password }}</small>
                                 </div>
@@ -85,7 +90,7 @@ const changePassword = async () => {
                                 </div>
                                 </div>
                                 <div class="text-center">
-                                <button type="submit" class="btn btn-primary" @click.prevent="changePassword" >Փոփոխել գաղտնաբառը</button>
+                                <button type="submit" class="btn btn-primary" @click.prevent="changePassword">Պահպանել</button>
                                 </div>
                             </div>
                         </div>

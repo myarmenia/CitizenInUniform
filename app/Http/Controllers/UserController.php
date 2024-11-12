@@ -38,7 +38,7 @@ class UserController extends BaseController
     {
 
         $page = request()->page ?? 1;
-        $perPage = 2;
+        $perPage = 10;
 
         $user = $this->userService->getIndex();
 

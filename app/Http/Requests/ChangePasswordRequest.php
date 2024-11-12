@@ -35,18 +35,18 @@ class ChangePasswordRequest extends FormRequest
                 'regex:/[0-9]/',
             ],
             'new_password' => [
+                function ($attribute, $value, $fail) use ($strongness) {
+                    if (in_array($value, $strongness)) {
+                        $fail('Գաղտնաբառը թույլ է: Խնդրում ենք ստեղծել ավելի բարդ գաղտնաբառ:');
+                    }
+                },
                 'required',
                 'confirmed',
                 'string',
                 'min:8',
                 'regex:/[a-z]/',
                 'regex:/[A-Z]/',
-                'regex:/[0-9]/',
-                function ($attribute, $value, $fail) use ($strongness) {
-                    if (in_array($value, $strongness)) {
-                        $fail('Գաղտնաբառը չափազանց տարածված է: Խնդրում ենք ստեղծել ավելի ուժեղ գաղտնաբառ:');
-                    }
-                },
+                'regex:/[0-9]/'
             ],
         ];
 
