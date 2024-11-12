@@ -225,8 +225,8 @@ return [
     'file' => 'Ֆայլ',
     'data.text' => 'տվյալ',
     'data.*.phone' => 'տվյալ',
-    'currentPassword'=> 'Ընթացիկ գաղտնաբառ',
-    'newPassword'=>'Նոր գաղտնաբառ',
+    'old_password'=> 'Ընթացիկ գաղտնաբառ',
+    'new_password'=>'Նոր գաղտնաբառ',
     'confirmNewPassword'=>'Հաստատել նոր գաղտնաբառ',
     'confirmPassword'=>'Հաստատել գաղտնաբառ'
 
