@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Interfaces\UserRepositoryInterface;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 class UserService
 {
@@ -28,7 +29,7 @@ class UserService
     }
     public function updateUser($id,  $data){
 
-
+// dd( $data);
         if(!empty($data['password'])){
             $data['password'] = Hash::make($data['password']);
         }else{

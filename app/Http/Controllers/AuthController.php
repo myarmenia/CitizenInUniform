@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Models\PasswordPolicy;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+
 
 
 
@@ -44,7 +47,26 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(Auth::user()->load('roles'));
+        $message='';
+        $currentDate = Carbon::now();
+        $user =  auth()->user();
+
+        $password_polici = PasswordPolicy::where('id',1)->first();
+
+        $passwordChangedAt = $user->password_changes_at ? Carbon::parse($user->password_changes_at) : null;
+
+        if ($passwordChangedAt && $passwordChangedAt->diffInDays($currentDate) >= 180) {
+
+                $message = 'Ձեր գաղտնաբառի վավերականության ժամկետը սպառվել է, խնդրում ենք փոփոխել այն:';
+
+        }
+
+        $data=Auth::user()->load('roles');
+        $data['message']=$message;
+
+        return response()->json($data);
+       
+
     }
 
     /**
@@ -54,6 +76,7 @@ class AuthController extends Controller
      */
     public function logout()
     {
+
         auth()->logout();
 
         return response()->json(['message' => 'Successfully logged out']);
@@ -79,11 +102,13 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            // 'me'=>$this->me($token),
+
         ]);
 
 

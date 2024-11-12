@@ -24,7 +24,7 @@ class FaqCategoryController extends BaseController
     }
     public function index(Request $request){
         $page = request()->page ?? 1;
-        $perPage = 2;
+        $perPage = 10;
 
 
         $data = $this->faqCategoryService->index();

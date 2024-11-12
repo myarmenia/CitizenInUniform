@@ -16,7 +16,7 @@ class UserRepository implements UserRepositoryInterface
         $authUser = Auth::user();
         $query = User::query()
                 ->where('users.id', '!=', $authUser->id);
-                
+
         if ($authUser->hasRole('super_admin') ) {
 
             $query->whereHas('roles', function ($query) {
@@ -36,6 +36,8 @@ class UserRepository implements UserRepositoryInterface
     {
 
         $user = User::create($data);
+        $user->password_changes_at = $user->created_at;
+        $user->save();
 
         $user->assignRole($data['roles']);
 
@@ -44,10 +46,14 @@ class UserRepository implements UserRepositoryInterface
     }
     public function update($id, $data){
 
-        $user=User::findOrFail($id);
+        // $user=User::findOrFail($id);
 
+        // $user->update($data);
+        $user=User::where('id',$id)->first();
+   
         $user->update($data);
-
+        $user->password_changes_at = $user->updated_at;
+        $user->save();
         return $user;
     }
 
