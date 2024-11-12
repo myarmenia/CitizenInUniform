@@ -51,7 +51,15 @@ class UserRequest extends FormRequest
             $rules['email']='required|email|unique:users,email,'.$userId;
             if($this->password !=null){
 
-                $rules['password'] = 'required|min:8|same:confirmPassword';
+                $rules['password'] = [
+                    'required',
+                    'string',
+                    'min:8',
+                    'same:confirmPassword',
+                    'regex:/[a-z]/',
+                    'regex:/[A-Z]/',
+                    'regex:/[0-9]/',
+                ];
             }
         }
 
