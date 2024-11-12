@@ -225,7 +225,10 @@ return [
     'file' => 'Ֆայլ',
     'data.text' => 'տվյալ',
     'data.*.phone' => 'տվյալ',
-    'confirmPassword' => 'Կրկնել գաղտնաբառ',
+    'currentPassword'=> 'Ընթացիկ գաղտնաբառ',
+    'newPassword'=>'Նոր գաղտնաբառ',
+    'confirmNewPassword'=>'Հաստատել նոր գաղտնաբառ',
+    'confirmPassword'=>'Հաստատել գաղտնաբառ'
 
 
 
