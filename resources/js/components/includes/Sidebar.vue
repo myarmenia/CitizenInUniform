@@ -83,6 +83,13 @@ const {userMe} = me(router)
                 </router-link>
             </li>
 
+            <li class="nav-item">
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('categories.'))}" :to="{name: 'categories.index'}">
+                    <i class="bi bi-menu-app"></i>
+                    <span>Messages</span>
+                </router-link>
+            </li>
+
         </ul>
         <!-- {{ userMe.roles }} -->
     </aside>

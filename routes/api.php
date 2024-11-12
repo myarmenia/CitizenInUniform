@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Category\SubCategoryController;
 use App\Http\Controllers\Api\ChangePasswordController;
+use App\Http\Controllers\Api\EmailMessagies\EmailMessgeController;
 use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryController;
 
 
@@ -60,7 +61,7 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::apiResource('sub-categories', SubCategoryController::class);
 
         Route::apiResource('governing-bodies', GoverningBodyController::class);
-
+        Route::apiResource('email-messages', EmailMessgeController::class);
 
         Route::get('settings', SettingController::class);
         Route::apiResource('notifications', NotificationController::class);
