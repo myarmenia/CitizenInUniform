@@ -6,20 +6,29 @@ import api, { initApi } from "../../api";
 const router =useRouter()
 initApi(router);
 const errorMessage=ref("")
+let errors = ref([])
 
 const form = reactive({
-    currentPassword:'',
-    newPassword:'',
-    confirmNewPassword: '',
+    old_password:'',
+    new_password:'',
+    new_password_confirmation: '',
 })
 
 const changePassword = async () => {
+  errors.value = {};
   try {
    let response = await api.value.post('/api/auth/change-password', form);
     console.log(response)
 
   } catch (error) {
-    errorMessage.value = error
+        if (error.response && error.response.status === 422) {
+            const allErrors = error.response.data.errors;
+            for (const field in allErrors) {
+                if (allErrors.hasOwnProperty(field)) {
+                    errors.value[field] = allErrors[field][0]; // Get only the first error message
+                }
+            }
+        }
   }
 };
 
@@ -45,13 +54,13 @@ const changePassword = async () => {
                             <div>
 
                                 <div class="row mb-3">
-                                <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Ընթացիկ գաղտնաբառ</label>
+                                <label for="old_password" class="col-md-4 col-lg-3 col-form-label">Ընթացիկ գաղտնաբառ</label>
                                 <div class="col-md-8 col-lg-9">
                                     <input  type = "password"
                                             class = "form-control"
-                                            v-model = "form.currentPassword"
+                                            v-model = "form.old_password"
                                             >
-                                        <!-- <small style = "color:red" v-if="errors.currentPassword">{{ errors.currentPassword }}</small> -->
+                                        <small style = "color:red" v-if="errors.old_password">{{ errors.old_password }}</small>
                                 </div>
                                 </div>
 
@@ -60,8 +69,8 @@ const changePassword = async () => {
                                 <div class="col-md-8 col-lg-9">
                                     <input type="password"
                                         class="form-control"
-                                        v-model="form.newPassword">
-                                    <!-- <small style = "color:red" v-if="errors.newPassword">{{errors.newPassword}}</small> -->
+                                        v-model="form.new_password">
+                                    <small style = "color:red" v-if="errors.new_password">{{errors.new_password}}</small>
                                 </div>
                                 </div>
 
@@ -70,9 +79,9 @@ const changePassword = async () => {
                                 <div class="col-md-8 col-lg-9">
                                     <input type = "password"
                                            class = "form-control"
-                                           v-model = "confirmNewPassword"
+                                           v-model = "form.new_password_confirmation"
                                             >
-                                 <!-- <small style = "color:red" v-if="errors.confirmNewPassword">{{errors.confirmNewPassword}}</small> -->
+                                 <small style = "color:red" v-if="errors.new_password_confirmation">{{errors.new_password_confirmation}}</small>
                                 </div>
                                 </div>
                                 <div class="text-center">
