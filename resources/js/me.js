@@ -17,12 +17,13 @@ export function me (router){
         let response = await api.value.post('/api/auth/me');
         let result = response.data
         userMe.value = result
-        if(result.message=='Successfully logged out'){
-
+        console.log(123)
+        console.log(result)
+        if(result.message!='') {
             toast.fire({icon:"error",title:result.message,
                 showCloseButton: true,
-                timer: 7000, // Optional: duration of the toast on screen (in ms)
-                timerProgressBar: true, // Show progress bar
+                timer: 7000,
+                timerProgressBar: true,
 
             } )
 
