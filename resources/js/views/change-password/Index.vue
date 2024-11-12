@@ -18,10 +18,11 @@ const changePassword = async () => {
   errors.value = {};
   try {
    let response = await api.value.post('/api/auth/change-password', form);
-    console.log(response)
-
-    localStorage.removeItem('access_token');
+   if(response.data.message=="Successfully logged out"){
+     localStorage.removeItem('access_token');
     window.location.href='users/login'
+
+}
 
 
   } catch (error) {
