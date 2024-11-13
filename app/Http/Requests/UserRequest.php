@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\PasswordBlackList;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 class UserRequest extends FormRequest
@@ -43,6 +44,7 @@ class UserRequest extends FormRequest
                         if (in_array($value, $strongness)) {
                             $fail('Գաղտնաբառը թույլ է: Խնդրում ենք ստեղծել ավելի բարդ գաղտնաբառ:');
                         }
+
                     },
                     'required',
                     'string',
@@ -71,10 +73,12 @@ class UserRequest extends FormRequest
 
                 $rules['password'] = [
                     function ($attribute, $value, $fail) use ($strongness) {
-
+                        // dd($attribute, $value, $fail);
+                      
                         if (in_array($value, $strongness)) {
                             $fail('Գաղտնաբառը թույլ է: Խնդրում ենք ստեղծել ավելի բարդ գաղտնաբառ:');
                         }
+
                     },
 
                     'string',
