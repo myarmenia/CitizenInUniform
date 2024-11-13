@@ -4,9 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Storage;
 
-class GoverningBodyResource extends JsonResource
+class EmailMessageResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,9 +16,10 @@ class GoverningBodyResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "name" => $this->name,
-            "named" => $this->named,
-            "path" => url('') . Storage::url($this->path)
+            "fullname" => $this->fullname,
+            "email" => $this->email,
+            "msg_category_name" => $this->message_category->title,
+            "date" => date('d-m-Y', strtotime($this->created_at))
         ];
     }
 }

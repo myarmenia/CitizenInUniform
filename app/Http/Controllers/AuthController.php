@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthLoginRequest;
 use App\Models\PasswordPolicy;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,14 +29,21 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login(Request $request)
+    public function login(AuthLoginRequest $request)
     {
 
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $token = auth()->attempt($credentials);
+        $user = auth()->user();
+
+
+        // Check if the user's status is 1
+        if ($user->status != 1) {
+
+            return response()->json(['errors'=>['password'=>[0 => 'Գաղտնաբառը կամ մուտքանունը սխալ է']]], 422);
         }
+
 
         return $this->respondWithToken($token);
     }
@@ -65,7 +73,7 @@ class AuthController extends Controller
         $data['message']=$message;
 
         return response()->json($data);
-       
+
 
     }
 
