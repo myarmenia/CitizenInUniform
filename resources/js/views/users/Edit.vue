@@ -114,10 +114,10 @@ const changeSelectedRole = ()=>{
     <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>ՀՏՀ  ենթակատեգորիա</h1>
+      <h1>Օգտատերեր</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><router-link :to="{name:'faqCategorySubcategory.index'}">Ցանկ</router-link></li>
+          <li class="breadcrumb-item"><router-link :to="{name:'users.index'}">Ցանկ</router-link></li>
           <li class="breadcrumb-item active">Խմբագրել</li>
         </ol>
       </nav>
