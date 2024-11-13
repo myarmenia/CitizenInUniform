@@ -20,6 +20,7 @@ class GoverningBodySeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'Պաշտպանության նախարարություն',
+                'named' => 'PN',
                 'path' => 'governing_bodies/pn.png'
 
 
@@ -27,6 +28,7 @@ class GoverningBodySeeder extends Seeder
             [
                 'id' => 2,
                 'name' => 'ՄԻՊ գրասենյակ',
+                'named' => 'MIP',
                 'path' => 'governing_bodies/mip.png'
 
             ]
@@ -37,7 +39,7 @@ class GoverningBodySeeder extends Seeder
         foreach ($governing_bodies as $body) {
             $path =  $body['path'];
             $body['path'] = "public/$body[path]";
-            
+
             GoverningBody::updateOrCreate($body);
 
             $this->copyFile($path);

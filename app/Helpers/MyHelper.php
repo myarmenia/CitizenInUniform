@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Auth;
+
 class MyHelper
 {
     public static function binaryToDecimal($binaryString)
@@ -12,6 +14,15 @@ class MyHelper
         $decimal = bindec($substring);
 
         return $decimal;
+    }
+
+    public static function getGoverningBodyIdFromOperator()
+    {
+        $user = Auth::user();
+
+        $governingBodyId = $user->governing_body_user ? $user->governing_body_user->governing_body_id : null;
+
+        return $governingBodyId;
     }
 
 

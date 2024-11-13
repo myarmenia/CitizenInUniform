@@ -33,8 +33,13 @@ import PermissionIndex from  '../views/permission/Index.vue/'
 
 import ChangePasswordIndex from '../views/change-password/Index.vue'
 
+<<<<<<< HEAD
+import EmailMessage from '../views/email-messages/Index.vue'
+import EmailMessageEdit from '../views/email-messages/Edit.vue'
+=======
 import PasswordResetIndex from '../views/change-password/Index.vue'
 
+>>>>>>> 8fe5aeb57683e6cfb23a96ab993a8cbadde407d4
 
     const usersRoute = [
         {
@@ -188,6 +193,20 @@ import PasswordResetIndex from '../views/change-password/Index.vue'
 
     ]
 
+    const emailMessagesRoutes = [
+        {
+
+            path: '/email-messages',
+            name: 'email-messages.index',
+            component: EmailMessage
+        },
+        {
+            path: '/email-messages/:id/edit',
+            name: 'email-messages.edit',
+            component: EmailMessageEdit
+        }
+    ]
+
     const routes = [
         {
             path: '/',
@@ -200,7 +219,8 @@ import PasswordResetIndex from '../views/change-password/Index.vue'
                 ...notificationsRoutes,
                 ...usersRoute,
                 ...governingBodiesRoutes,
-                ...changePasswordRoutes
+                ...changePasswordRoutes,
+                ...emailMessagesRoutes,
             ]
 
         }

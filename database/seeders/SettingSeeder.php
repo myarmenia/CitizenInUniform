@@ -21,7 +21,7 @@ class SettingSeeder extends Seeder
             ],
             [
                 'id' => 2,
-                'name' => 'Բեվանդակության փոփոխություն'
+                'name' => 'Բովանդակության փոփոխություն'
             ],
             [
                 'id' => 3,
