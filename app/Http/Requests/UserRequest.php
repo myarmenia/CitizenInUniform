@@ -74,7 +74,7 @@ class UserRequest extends FormRequest
                 $rules['password'] = [
                     function ($attribute, $value, $fail) use ($strongness) {
                         // dd($attribute, $value, $fail);
-                      
+
                         if (in_array($value, $strongness)) {
                             $fail('Գաղտնաբառը թույլ է: Խնդրում ենք ստեղծել ավելի բարդ գաղտնաբառ:');
                         }

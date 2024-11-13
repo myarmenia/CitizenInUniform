@@ -5,6 +5,7 @@ import { useRouter } from "vue-router"
 
 
 const router =useRouter()
+let errors = ref([])
 const form = reactive({
     email:"",
     password:"",
@@ -12,6 +13,7 @@ const form = reactive({
 const  errorMessage=ref(false);
 
 const login = async () => {
+    errors.value={}
   try {
     const response = await axios.post('/api/auth/login', form);
     localStorage.setItem('access_token', response.data.access_token);
@@ -25,8 +27,17 @@ const login = async () => {
       console.error("Token was not stored successfully");
     }
   } catch (error) {
-    errorMessage.value = "Invalid login credentials. Please try again.";
-  }
+
+        if (error.response && error.response.status === 422) {
+
+            const allErrors = error.response.data.errors;
+            for (const field in allErrors) {
+                if (allErrors.hasOwnProperty(field)) {
+                    errors.value[field] = allErrors[field][0];
+                }
+            }
+        }
+    }
 };
 
 </script>
@@ -43,17 +54,26 @@ const login = async () => {
                             </div>
                             <div  class="row g-3 needs-validation"  novalidate>
                                 <div class="col-12">
-                                <label for="yourUsername" class="form-label">Էլ․հասցե</label>
-                                <div class="input-group has-validation">
-                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                    <input type="email" v-model="form.email" class="form-control"   required autocomplete="email" autofocus>
-                                    <div class="invalid-feedback">Մուտքագրեք Ձեր Էլ․հասցեն</div>
-                                </div>
+                                    <label for="yourUsername" class="form-label">Էլ․հասցե</label>
+                                    <div class="input-group has-validation">
+                                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                        <input type="email" v-model="form.email" class="form-control"   required autocomplete="email" autofocus>
+                                    </div>
+                                    <div  v-if="errors.email" class="mb-3 row justify-content-start">
+                                        <div class="col-sm-9 text-danger fts-14">{{ errors.email }}</div>
+                                    </div>
                                 </div>
                                 <div class="col-12">
-                                <label for="yourPassword" class="form-label">Գաղտնաբառ</label>
-                                <input type="password" v-model="form.password" class="form-control" id="yourPassword" required>
-                                <div class="invalid-feedback">Մուտքագրեք Ձեր գաղտնաբառը</div>
+                                    <label for="yourPassword" class="form-label">Գաղտնաբառ</label>
+                                    <div class="input-group has-validation">
+
+                                        <input type="password" v-model="form.password" class="form-control" id="yourPassword" required>
+                                    </div>
+                                    <div  v-if="errors.password" class="mb-3 row justify-content-start">
+                                        <div class="col-sm-9 text-danger fts-14">{{ errors.password }}</div>
+                                    </div>
+
+
                                 </div>
                                 <div class="col-12">
                                 <button class="btn btn-primary w-100" @click.prevent = "login">Մուտք</button>
