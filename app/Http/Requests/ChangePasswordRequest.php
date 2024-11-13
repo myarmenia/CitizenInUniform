@@ -35,6 +35,14 @@ class ChangePasswordRequest extends FormRequest
                 'regex:/[0-9]/',
             ],
             'new_password' => [
+                function ($attribute, $value, $fail) use ($strongness) {
+                    if (in_array($value, $strongness)) {
+                        $fail('Գաղտնաբառը թույլ է: Խնդրում ենք ստեղծել ավելի բարդ գաղտնաբառ:');
+                    }
+                    if (Hash::check($value, auth()->user()->password)) {
+                        $fail('Նոր գաղտնաբառը չի կարող լինել ընթացիկ գաղտնաբառը');
+                    }
+                },
                 'required',
                 'confirmed',
                 'string',
@@ -42,11 +50,7 @@ class ChangePasswordRequest extends FormRequest
                 'regex:/[a-z]/',
                 'regex:/[A-Z]/',
                 'regex:/[0-9]/',
-                function ($attribute, $value, $fail) use ($strongness) {
-                    if (in_array($value, $strongness)) {
-                        $fail('Գաղտնաբառը չափազանց տարածված է: Խնդրում ենք ստեղծել ավելի ուժեղ գաղտնաբառ:');
-                    }
-                },
+
             ],
         ];
 
@@ -66,7 +70,7 @@ class ChangePasswordRequest extends FormRequest
             'old_password.regex'=>"Գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
             'new_password.min'=>'Նոր գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
             'new_password.regex'=>"Նոր գաղտնաբառը պետք է պարունակի առնվազն մեկ մեծատառ, մեկ փոքրատառ և մեկ թիվ",
-            'new_password.confirmed' => 'Նոր գաղտնաբառի հաստատումը չի համընկնում հաստատել նոր գաղտնաբառի հետ',
+            'new_password.confirmed' => 'Գաղտնաբառերը չեն համընկնում:',
         ];
     }
 }

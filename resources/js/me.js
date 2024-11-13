@@ -16,8 +16,18 @@ export function me (router){
         try {
         let response = await api.value.post('/api/auth/me');
         let result = response.data
-
         userMe.value = result
+        console.log(123)
+        console.log(result)
+        if(result.message!='') {
+            toast.fire({icon:"error",title:result.message,
+                showCloseButton: true,
+                timer: 7000,
+                timerProgressBar: true,
+
+            } )
+
+        }
 
 
         } catch (error) {
@@ -32,4 +42,4 @@ export function me (router){
     })
     return {userMe}
   };
-  
+
