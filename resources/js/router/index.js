@@ -33,6 +33,9 @@ import PermissionIndex from  '../views/permission/Index.vue/'
 
 import ChangePasswordIndex from '../views/change-password/Index.vue'
 
+import PasswordResetIndex from '../views/change-password/Index.vue'
+
+
     const usersRoute = [
         {
             path: '/',
@@ -175,7 +178,13 @@ import ChangePasswordIndex from '../views/change-password/Index.vue'
             path: '/change-password',
             name: 'change-password.index',
             component: ChangePasswordIndex
-        }
+        },
+        {
+
+            path: '/password/reset',
+            name: 'password-reset.index',
+            component: PasswordResetIndex
+        },
 
     ]
 
