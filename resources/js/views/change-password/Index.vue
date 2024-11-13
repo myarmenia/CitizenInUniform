@@ -87,7 +87,7 @@ const changePassword = async () => {
                                            class = "form-control"
                                            v-model = "form.new_password_confirmation"
                                             >
-                                 <small style = "color:red" v-if="errors.new_password_confirmation">{{errors.new_password_confirmation}}</small>
+                                 <small style = "color:red" v-if="errors.new_password">{{errors.new_password}}</small>
                                 </div>
                                 </div>
                                 <div class="text-center">
