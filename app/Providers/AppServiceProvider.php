@@ -4,6 +4,7 @@ namespace App\Providers;
 
 
 use App\Interfaces\CategoryInterface;
+use App\Interfaces\EmailMessageInterface;
 use App\Interfaces\FaqCategoryRepositoryInterface;
 use App\Interfaces\FaqCategorySubcategoryRepositoryInterface;
 use App\Interfaces\FcmNotificationInterface;
@@ -14,6 +15,7 @@ use App\Interfaces\SettingInterface;
 use App\Interfaces\SubCategoryInterface;
 use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\CategoryRepository;
+use App\Repositories\EmailMessageRepository;
 use App\Repositories\FaqCategoryRepository;
 use App\Repositories\FaqCategorySubcategoryRepository;
 use App\Repositories\FcmNotificationRepository;
@@ -44,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MobileUserInterface::class, MobileUserRepository::class);
         $this->app->bind(FcmNotificationInterface::class, FcmNotificationRepository::class);
         $this->app->bind(GoverningBodyInterface::class, GoverningBoryRepository::class);
-
+        $this->app->bind(EmailMessageInterface::class, EmailMessageRepository::class);
 
 
         // ====================== hiny ================================

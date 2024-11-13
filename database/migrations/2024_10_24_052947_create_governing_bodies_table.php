@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('governing_bodies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('named');
             $table->string('path');
             $table->softDeletes();
             $table->timestamps();

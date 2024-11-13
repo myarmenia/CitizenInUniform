@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Api\EmailMessagies;
+namespace App\Http\Controllers\Api\MessageCategories;
 
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Mobile\MMessageCategoryResource;
+use App\Models\MessageCategory;
 use Illuminate\Http\Request;
 
-class EmailMessgeController extends Controller
+class MessageCategoryController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -61,5 +64,14 @@ class EmailMessgeController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function mobileIndex()
+    {
+        $data = MessageCategory::all();
+
+        $data = MMessageCategoryResource::collection($data);
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 }

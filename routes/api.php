@@ -3,11 +3,12 @@
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Category\SubCategoryController;
 use App\Http\Controllers\Api\ChangePasswordController;
-use App\Http\Controllers\Api\EmailMessagies\EmailMessgeController;
+use App\Http\Controllers\Api\EmailMessages\EmailMessgeController;
 use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryController;
 
 
 use App\Http\Controllers\Api\GoverningBodies\GoverningBodyController;
+use App\Http\Controllers\Api\MessageCategories\MessageCategoryController;
 use App\Http\Controllers\Api\Notifications\NotificationController;
 use App\Http\Controllers\Api\Notifications\SendNotificationToUserController;
 use App\Http\Controllers\Api\Mobile\MobileUserController;
@@ -35,8 +36,11 @@ Route::group(['prefix' => 'mobile'], function ($router) {
     Route::post('user-device', [MobileUserController::class, 'mobileUserDeviceStore']);
 
     Route::get('categories', [CategoryController::class, 'mobileCategories']);
-    Route::get('sub-category/{id}/show', [SubCategoryController::class, 'mobileSingleSubCategory']);
+    Route::get('governing-bodies', [GoverningBodyController::class, 'mobileIndex']);
+    Route::get('message-categories', [MessageCategoryController::class, 'mobileIndex']);
 
+    Route::get('sub-category/{id}/show', [SubCategoryController::class, 'mobileSingleSubCategory']);
+    Route::post('email-messages/store', [EmailMessgeController::class, 'store']);
 
 });
 

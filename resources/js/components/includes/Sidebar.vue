@@ -84,9 +84,9 @@ const {userMe} = me(router)
             </li>
 
             <li class="nav-item">
-                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('categories.'))}" :to="{name: 'categories.index'}">
-                    <i class="bi bi-menu-app"></i>
-                    <span>Messages</span>
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('email-messages.'))}" :to="{name: 'email-messages.index'}">
+                    <i class="ri-mail-line"></i>
+                    <span>Նամակագրություն</span>
                 </router-link>
             </li>
 
