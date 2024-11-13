@@ -228,7 +228,6 @@ const changeSelectedRole = ()=>{
                                 <option v-for ="(label,value) in allRoles"
                                         :value = "value"
                                         :key = "value"
-
                                          >
                                         {{ label }}
                                 </option>
