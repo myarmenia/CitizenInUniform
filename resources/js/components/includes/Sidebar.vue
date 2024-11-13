@@ -83,6 +83,13 @@ const {userMe} = me(router)
                 </router-link>
             </li>
 
+            <li class="nav-item">
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('email-messages.'))}" :to="{name: 'email-messages.index'}">
+                    <i class="ri-mail-line"></i>
+                    <span>Նամակագրություն</span>
+                </router-link>
+            </li>
+
         </ul>
         <!-- {{ userMe.roles }} -->
     </aside>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\GoverningBodyInfoRequest;
 use App\Http\Resources\GoverningBodyResource;
 use App\Http\Resources\GoverningBodyWithInfoResource;
+use App\Http\Resources\Mobile\MGoverningBodyResource;
 use App\Services\GoverningBodyService;
 use Illuminate\Http\Request;
 
@@ -81,5 +82,14 @@ class GoverningBodyController extends BaseController
     public function destroy(string $id)
     {
         //
+    }
+
+    public function mobileIndex()
+    {
+        $data = $this->service->index();
+
+        $data = MGoverningBodyResource::collection($data);
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 }

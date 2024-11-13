@@ -8,7 +8,7 @@ initApi(router);
 
 let errors = ref([])
 let settings = ref([])
-const selectedSetting = ref('Ընտրել ծանուցման տեսկը');
+const selectedSetting = ref('Ընտրել ծանուցման տեսակը');
 
 
 const form = reactive({

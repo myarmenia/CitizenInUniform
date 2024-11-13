@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Mobile;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Storage;
 
-class GoverningBodyResource extends JsonResource
+class MGoverningBodyResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,7 +19,7 @@ class GoverningBodyResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "named" => $this->named,
-            "path" => url('') . Storage::url($this->path)
+            "phone_numbers" => $this->governing_body_phone_numbers->pluck('text'),
         ];
     }
 }
