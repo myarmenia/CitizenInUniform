@@ -19,7 +19,7 @@ class EmailMessageResource extends JsonResource
             "fullname" => $this->fullname,
             "email" => $this->email,
             "msg_category_name" => $this->message_category->title,
-            "date" => date('d-m-Y', strtotime($this->created_at))
+            "date" => date('d-m-Y H:i', strtotime($this->created_at))
         ];
     }
 }

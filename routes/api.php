@@ -68,6 +68,8 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::apiResource('governing-bodies', GoverningBodyController::class);
         Route::apiResource('email-messages', EmailMessgeController::class);
         Route::post('email-messages-answer/store', EmailMessgeAnswerController::class);
+        Route::post('email-messages/search', [EmailMessgeController::class, 'search']);
+        Route::post('email-messages/filter', [EmailMessgeController::class, 'filter']);
 
 
         Route::get('settings', SettingController::class);

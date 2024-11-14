@@ -75,7 +75,7 @@ const dataSave = async () => {
                                     <!-- <h5 class="card-title">Հաղորդագրության տվյալներ</h5> -->
 
                                     <div class="row">
-                                        <div class="col-lg-3 col-md-4 label ">Հարցի տեսակը</div>
+                                        <div class="col-lg-3 col-md-4 label ">Հարցի կատեգորիա</div>
                                         <div class="col-lg-9 col-md-8">{{message.msg_category_name}}</div>
                                     </div>
 
