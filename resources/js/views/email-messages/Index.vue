@@ -78,6 +78,7 @@ watch(
         activePage.value = 1; // сбрасываем страницу на первую при изменении фильтра
         form.answered = route.query.answered
         getMessages();
+        serachMessages()
     }
 );
 
@@ -94,7 +95,7 @@ const changePage =(link) =>{
     }
 
     activePage.value = link.label
-
+console.log('888888888888888888', link.url)
     api.value.get(link.url)
         .then((response) =>{
            messages.value = response.data.result.data
