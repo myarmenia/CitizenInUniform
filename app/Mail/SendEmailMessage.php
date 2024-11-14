@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 class SendEmailMessage extends Mailable
 {
     use Queueable, SerializesModels;
-    public $messageContent;
+    public $message;
     public $subject;
     public $email;
 
@@ -20,9 +20,9 @@ class SendEmailMessage extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct($messageContent, $subject, $email)
+    public function __construct($message, $subject, $email)
     {
-        $this->messageContent = $messageContent;
+        $this->message = $message;
         $this->subject = $subject;
         $this->email = $email;
 
@@ -34,7 +34,8 @@ class SendEmailMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: $this->subject,
+            subject: $this->subject
+
         );
     }
 
@@ -56,7 +57,7 @@ class SendEmailMessage extends Mailable
     public function build()
     {
         $mail = $this->with([
-            'messageContent' => $this->messageContent,
+            'data' => $this->message,
         ])->to($this->email);
 
 
