@@ -17,6 +17,11 @@ class EmailMessages extends Model
         return $this->belongsTo(MessageCategory::class);
     }
 
+    public function governing_body(): BelongsTo
+    {
+        return $this->belongsTo(GoverningBody::class);
+    }
+
     public function answers(): HasMany
     {
         return $this->hasMany(EmailMessageAnswer::class, 'email_message_id');

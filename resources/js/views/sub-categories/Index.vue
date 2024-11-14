@@ -156,14 +156,14 @@ const deleteItem = (id, tb_name) =>{
                                         <td>{{ subCategory.title }}</td>
                                         <td>{{ subCategory.category_name }}</td>
                                         <td :style="{ color: subCategory.status == 0 ? 'red' : 'green' }">
-                                                <button
-                                                    type="button"
-                                                    :class="subCategory.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
-                                                    {{ subCategory.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
-                                                </button>
+                                            <button
+                                                type="button"
+                                                :class="subCategory.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
+                                                {{ subCategory.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
+                                            </button>
 
-                                            </td>
-                                        <td></td>
+                                        </td>
+
                                         <td>
                                             <div class="dropdown action" >
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

@@ -18,7 +18,7 @@ class EmailMessageAnswerResource extends JsonResource
             "id" => $this->id,
             "content" => $this->content,
             "user_name" => $this->user->name . ' ' . $this->user->surname,
-            "date" => date('d-m-Y', strtotime($this->created_at))
+            "date" => date('d-m-Y H:1', strtotime($this->created_at))
         ];
     }
 }
