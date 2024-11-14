@@ -19,6 +19,17 @@ class EmailMessageRepository implements EmailMessageInterface
             $query->where('governing_body_id', $governing_id);
         }
 
+        if (request()->action == 'search') {
+            $searchText = request()->search; 
+            if ($searchText) {
+                $query->where(function ($q) use ($searchText) {
+                    $q->where('email', 'like', '%' . $searchText . '%')
+                        ->orWhere('content', 'like', '%' . $searchText . '%');
+                });
+            }
+        }
+
+
         return  $query->get();
     }
 
