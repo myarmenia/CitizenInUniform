@@ -126,7 +126,7 @@ const changePage =(link) =>{
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <router-link class="dropdown-item" :to="{name: 'email-messages.edit', params: { id: message.id } }">
-                                                        <i class="bx bx-edit-alt me-1"></i>Պատասխանել</router-link>
+                                                        <i class="bx bx-edit-alt me-1"></i>Դիտել</router-link>
                                                 </div>
                                             </div>
                                         </td>

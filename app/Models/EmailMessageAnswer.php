@@ -15,4 +15,9 @@ class EmailMessageAnswer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function email_message(): BelongsTo
+    {
+        return $this->belongsTo(EmailMessages::class);
+    }
+
 }

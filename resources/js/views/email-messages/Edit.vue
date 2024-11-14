@@ -11,10 +11,9 @@ let message = ref([])
 let errors = ref([])
 
 const form = reactive({
-    title: '',
-    file: '',
-    dataFile: '',
-    responseFile: '',
+    content: '',
+    email_message_id : ''
+
 })
 
 onMounted(async () => {
@@ -26,14 +25,25 @@ const getMessage = async () => {
     let response = api.value.get( `/api/auth/email-messages/${route.params.id}`)
     .then((response) => {
         console.log(response.data.result)
-        message.value = response.data.result
-    //    form.title = response.data.result.title
-    //    form.file = response.data.result.path
+
+        let result = response.data.result
+            message.value = result
+            form.email_message_id = result.id
 
     })
 }
 
+const dataSave = async () => {
+    try {
+        await api.value.post('/api/auth/email-messages-answer/store', form)
 
+        // router.push('/email-messages')
+        toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
+    } catch (error) {
+            errors.value = error.response.data.errors
+
+    }
+}
 
 </script>
 
@@ -119,8 +129,8 @@ const getMessage = async () => {
                                     <textarea class="form-control"  v-model="form.content"></textarea>
                                     <!-- <input type="text" class="form-control" v-model="form.title" id="title"
                                         placeholder="Վերնագիր" value="form.title"> -->
-                                    <div class="mb-3 row " v-if="errors.title">
-                                        <p class="col-sm-10 text-danger fs-6" v-for="error in errors.title">{{ error }}
+                                    <div class="mb-3 row " v-if="errors.content">
+                                        <p class="col-sm-10 text-danger fs-6" v-for="error in errors.content">{{ error }}
                                         </p>
                                     </div>
                                 </div>
@@ -131,7 +141,7 @@ const getMessage = async () => {
                                 <div class="row mb-3">
                                     <label class="col-sm-3 col-form-label"></label>
                                     <div class="col-sm-9">
-                                        <button type="submit" class="btn btn-primary" @click="categoryEdit">Ուղարկել</button>
+                                        <button type="submit" class="btn btn-primary" @click="dataSave">Ուղարկել</button>
                                     </div>
                                 </div>
 
