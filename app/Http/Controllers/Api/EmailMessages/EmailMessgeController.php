@@ -26,7 +26,7 @@ class EmailMessgeController extends BaseController
     {
 
         $page = request()->page ?? 1;
-        $perPage = 10;
+        $perPage = 3;
 
         $data = $this->service->index();
 
@@ -96,17 +96,4 @@ class EmailMessgeController extends BaseController
         //
     }
 
-
-    public function search(Request $request){
-        // dd($request->all());
-        $page = request()->page ?? 1;
-        $perPage = 10;
-
-        $data = $this->service->index();
-
-        $data = EmailMessageResource::collection($data);
-        $data = $this->arrayPaginator($data, $request, $perPage);
-
-        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
-    }
 }

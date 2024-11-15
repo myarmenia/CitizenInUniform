@@ -16,12 +16,12 @@ let statusArray=ref([])
 let emailCategories = ref([])
 
 const form = reactive({
-    answered: 0,
-    category_id: '',
-    search: '',
+    has_answer: 0,
+    message_category_id: '',
+    searchText: '',
     from_created_at: '',
     to_created_at: '',
-    action: ''
+    action: null
 })
 
 const getEmailCategies = async () => {
@@ -33,34 +33,44 @@ const getEmailCategies = async () => {
 }
 
 const handleSelectionChange = () => {
-    form.category_id = selectedCategory.value
+    form.message_category_id = selectedCategory.value
 
 }
 
-const getMessages = async () => {
-    try {
+const changeTypeMessages = (has_answer) =>{
 
-        const answered = route.query.answered || 0;
+    form.has_answer = has_answer
+    sendRequest()
+}
 
-        const response = await api.value.get(`/api/auth/email-messages?answered=${answered}&page=${activePage.value}`);
 
-        lastPage.value = response.data.result.last_page;
-        messages.value = response.data.result.data;
-        statusArray.value = response.data.result.data.map(item => item.status);
-        links.value = response.data.result.links;
-
-    } catch (error) {
-        console.error("Error fetching messages:", error);
-    }
-};
 
 const serachMessages = async () => {
+
+    form.action = 'search_text'
+    form.message_category_id = ''
+    selectedCategory.value = 'Ընտրել հարցի կատեգորիան',
+    form.from_created_at = '',
+    form.to_created_at = '',
+    sendRequest()
+
+};
+
+const filerMessages = () => {
+    form.action = 'filter'
+    form.searchText = '',
+    sendRequest()
+}
+
+
+const sendRequest = async () => {
     try {
 
-        const answered = route.query.answered || 0;
-        form.action = 'search'
-        const response = await api.value.post(`/api/auth/email-messages/search?answered=${answered}&page=${activePage.value}`, form);
-console.log(response)
+        activePage.value = 1
+        const response = await api.value.post(`/api/auth/email-messages?page=${activePage.value}`, form);
+
+// console.log(response)
+
         lastPage.value = response.data.result.last_page;
         messages.value = response.data.result.data;
         statusArray.value = response.data.result.data.map(item => item.status);
@@ -73,17 +83,19 @@ console.log(response)
 
 
 watch(
-    () => route.query.answered,
+    () => form.has_answer,
     () => {
+
         activePage.value = 1; // сбрасываем страницу на первую при изменении фильтра
-        form.answered = route.query.answered
-        getMessages();
+
+        sendRequest()
     }
 );
 
+
 onMounted(() => {
     getEmailCategies()
-    getMessages();
+    sendRequest()
 });
 
 
@@ -94,15 +106,13 @@ const changePage =(link) =>{
     }
 
     activePage.value = link.label
-
-    api.value.get(link.url)
+console.log('888888888888888888', link.url)
+    api.value.post(link.url, form)
         .then((response) =>{
            messages.value = response.data.result.data
             links.value = response.data.result.links
         })
 }
-
-
 
 
 </script>
@@ -130,13 +140,25 @@ const changePage =(link) =>{
                                 <div class = "d-flex justify-content-between">
                                     <h5 class="card-title">Նամակագրություն</h5>
                                     <div class="pull-right d-flex justify-content-end my-3" >
-                                        <router-link class="btn btn-primary  mb-2 mx-2"
-                                            :to="{name: 'email-messages.index', query: { answered: 0 } }"
-                                            :class="{ 'btn-secondary': $route.query.answered == '0' || $route.query.answered == null }"> Նոր</router-link>
+                                        <!-- <router-link class="btn btn-primary  mb-2 mx-2"
+                                            :to="{name: 'email-messages.index', query: { has_answer: 0 } }"
+                                            :class="{ 'btn-secondary': $route.query.has_answer == '0' || $route.query.has_answer == null }"> Նոր</router-link>
 
                                         <router-link class="btn btn-primary  mb-2"
-                                            :to="{name: 'email-messages.index', query: { answered: 1 } }"
-                                            :class="{ 'btn-secondary': $route.query.answered == '1' }"> Պատասխանված</router-link>
+                                            :to="{name: 'email-messages.index', query: { has_answer: 1 } }"
+                                            :class="{ 'btn-secondary': $route.query.has_answer == '1' }"> Պատասխանված</router-link> -->
+                                            <button
+                                                class="btn btn-primary mb-2 mx-2"
+                                                :class="{ 'btn-secondary': form.has_answer == '0' || form.has_answer == null }"
+                                                @click="changeTypeMessages(0)">
+                                                Նոր
+                                            </button>
+                                            <button
+                                                class="btn btn-primary mb-2 mx-2"
+                                                :class="{ 'btn-secondary': form.has_answer == '1'}"
+                                                @click="changeTypeMessages(1)">
+                                                Պատասխանված
+                                            </button>
                                     </div>
                                 </div>
                             </div>
@@ -145,7 +167,7 @@ const changePage =(link) =>{
                                     <div class="mb-3 d-flex justify-content-end ">
                                         <div class="col-6">
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" v-model="form.search" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+                                                <input type="text" class="form-control" v-model="form.searchText" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
                                                 <span class="input-group-text" id="basic-addon2" @click="serachMessages"><i class="bi bi-search"></i></span>
                                             </div>
                                         </div>
@@ -174,7 +196,7 @@ const changePage =(link) =>{
                                         </div>
 
                                         <div class=" d-flex justify-content-end ">
-                                            <button class="btn btn-primary search mx-2 py-1 ">Ֆիլտրացիա</button>
+                                            <button class="btn btn-primary search mx-2 py-1 " @click="filerMessages">Ֆիլտրացիա</button>
                                             <button class="btn btn-primary search  ">Չեղարկել</button>
                                             <!-- <a class="btn btn-primary" href="{{ route('museum_event_reports') }}">Չեղարկել</a> -->
                                         </div>

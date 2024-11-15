@@ -73,7 +73,7 @@ function save() {
                         </div>
                         <div v-for="(phoneItem, index) in phoneList" :key="index" class="mb-2">
                             <div class="row mb-3">
-                                <label for="phone" class="col-sm-3 col-form-label"> Հեռախեսահամար</label>
+                                <label for="phone" class="col-sm-3 col-form-label"> Հեռախոսահամար</label>
                                 <div class="col-sm-9 d-flex justify-content-between">
                                     <div class="w-100">
                                         <input type="text" class="form-control" v-model="phoneItem.phone">
