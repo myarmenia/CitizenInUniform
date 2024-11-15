@@ -81,6 +81,8 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
         Route::post('change-password',[ChangePasswordController::class,'index']);
 
+        Route::apiResource('messages-categories',MessageCategoryController::class);
+
 
         Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
         Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');

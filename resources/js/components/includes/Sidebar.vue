@@ -89,6 +89,13 @@ const {userMe} = me(router)
                     <span>Նամակագրություն</span>
                 </router-link>
             </li>
+            <li class="nav-item">
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('message_categories.'))}" :to="{name: 'message_categories.index'}">
+                    <i class="ri-mail-line"></i>
+                    <span>Նամակագրության կատեգորիաներ</span>
+                </router-link>
+            </li>
+
 
         </ul>
         <!-- {{ userMe.roles }} -->
