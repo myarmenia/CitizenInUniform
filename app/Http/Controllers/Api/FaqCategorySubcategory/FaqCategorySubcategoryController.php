@@ -56,7 +56,7 @@ class FaqCategorySubcategoryController extends BaseController
 
 
         $data = $this->service->store(FaqCategorySubcategoryDto::fromRequestDto($request));
-        return $data != null ? $this->sendResponse($data, 'cuccess') : $this->sendError('error');
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
     }
 
