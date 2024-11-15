@@ -56,9 +56,18 @@ const serachMessages = async () => {
 
 };
 
-const filerMessages = () => {
+const filterMessages = () => {
     form.action = 'filter'
     form.searchText = '',
+    sendRequest()
+}
+
+const cancelFilter = () => {
+    form.action = null
+    form.message_category_id = ''
+    selectedCategory.value = 'Ընտրել հարցի կատեգորիան',
+    form.from_created_at = '',
+    form.to_created_at = '',
     sendRequest()
 }
 
@@ -68,8 +77,6 @@ const sendRequest = async () => {
 
         activePage.value = 1
         const response = await api.value.post(`/api/auth/email-messages?page=${activePage.value}`, form);
-
-// console.log(response)
 
         lastPage.value = response.data.result.last_page;
         messages.value = response.data.result.data;
@@ -106,7 +113,7 @@ const changePage =(link) =>{
     }
 
     activePage.value = link.label
-console.log('888888888888888888', link.url)
+
     api.value.post(link.url, form)
         .then((response) =>{
            messages.value = response.data.result.data
@@ -196,8 +203,8 @@ console.log('888888888888888888', link.url)
                                         </div>
 
                                         <div class=" d-flex justify-content-end ">
-                                            <button class="btn btn-primary search mx-2 py-1 " @click="filerMessages">Ֆիլտրացիա</button>
-                                            <button class="btn btn-primary search  ">Չեղարկել</button>
+                                            <button class="btn btn-primary search mx-2 py-1 " @click="filterMessages">Ֆիլտրացիա</button>
+                                            <button class="btn btn-primary search " @click="cancelFilter">Չեղարկել</button>
                                             <!-- <a class="btn btn-primary" href="{{ route('museum_event_reports') }}">Չեղարկել</a> -->
                                         </div>
 
