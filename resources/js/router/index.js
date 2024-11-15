@@ -247,11 +247,7 @@ import MessageCategoriesEdit from '../views/message_categories/Edit.vue'
                 ...governingBodiesRoutes,
                 ...changePasswordRoutes,
                 ...emailMessagesRoutes,
-<<<<<<< HEAD
                 ...messageCategoriesRoutes
-=======
-           
->>>>>>> 32206bf7558c294b20272a36184abee29eb8129c
             ]
 
         }
