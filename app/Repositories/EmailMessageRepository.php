@@ -10,27 +10,20 @@ use App\Models\EmailMessages;
 class EmailMessageRepository implements EmailMessageInterface
 {
     public function index(){
-
+        $request = request();
         $governing_id = MyHelper::getGoverningBodyIdFromOperator();
-        $answered = request()->answered;
-        $query = EmailMessages::where('has_answer', $answered);
+
+        $request = array_filter($request->all(), fn($value) => $value !== null);
+
+        $query = EmailMessages::query();
 
         if($governing_id != null){
             $query->where('governing_body_id', $governing_id);
         }
 
-        if (request()->action == 'search') {
-            $searchText = request()->search; 
-            if ($searchText) {
-                $query->where(function ($q) use ($searchText) {
-                    $q->where('email', 'like', '%' . $searchText . '%')
-                        ->orWhere('content', 'like', '%' . $searchText . '%');
-                });
-            }
-        }
+        $query = $query->filter($request)->get();
 
-
-        return  $query->get();
+        return  $query;
     }
 
     public function store($data): EmailMessages
@@ -42,17 +35,6 @@ class EmailMessageRepository implements EmailMessageInterface
         return EmailMessages::find($id);
     }
 
-    // public function update($data, string $id){
-
-    //     $category = Category::find($id);
-    //     return $category ? $category->update($data) : false;
-    // }
-
-
-    // public function activeCategories(){
-
-    //     return Category::where('status',1)->get();
-
-    // }
+    
 
 }

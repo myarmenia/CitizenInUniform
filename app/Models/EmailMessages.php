@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\FilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,8 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EmailMessages extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, FilterTrait;
     protected $guarded = [];
+    protected $defaultFillableFields = ['message_category_id'];
+    protected $boolFilterFields = ['has_answer'];
+    protected $multiLikeFilterFields = ['email', 'content']; // mek dashtov search-i field-er
+    protected $multiLikeField = ['searchText']; // mek dashtov search
 
     public function message_category(): BelongsTo
     {
