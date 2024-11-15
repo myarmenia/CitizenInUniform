@@ -41,6 +41,10 @@ import PasswordResetIndex from '../views/change-password/Index.vue'
 
 
 
+
+
+
+
     const usersRoute = [
         {
             path: '/',
@@ -207,6 +211,7 @@ import PasswordResetIndex from '../views/change-password/Index.vue'
         }
     ]
 
+
     const routes = [
         {
             path: '/',
@@ -221,6 +226,7 @@ import PasswordResetIndex from '../views/change-password/Index.vue'
                 ...governingBodiesRoutes,
                 ...changePasswordRoutes,
                 ...emailMessagesRoutes,
+           
             ]
 
         }
