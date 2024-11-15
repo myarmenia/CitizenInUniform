@@ -39,6 +39,9 @@ import EmailMessageEdit from '../views/email-messages/Edit.vue'
 
 import PasswordResetIndex from '../views/change-password/Index.vue'
 
+import MessageCategoriesIndex from '../views/message_categories/Index.vue'
+import MessageCategoriesCreate from '../views/message_categories/Create.vue'
+import MessageCategoriesEdit from '../views/message_categories/Edit.vue'
 
 
 
@@ -210,6 +213,24 @@ import PasswordResetIndex from '../views/change-password/Index.vue'
             component: EmailMessageEdit
         }
     ]
+    const messageCategoriesRoutes = [
+        {
+
+            path: '/message_categories',
+            name: 'message_categories.index',
+            component: MessageCategoriesIndex
+        },
+        {
+            path: '/message_categories/cteate',
+            name: 'message_categories.cteate',
+            component: MessageCategoriesCreate
+        },
+        {
+            path: '/message_categories/:id/edit',
+            name: 'message_categories.edit',
+            component: MessageCategoriesEdit
+        }
+    ]
 
 
     const routes = [
@@ -226,7 +247,11 @@ import PasswordResetIndex from '../views/change-password/Index.vue'
                 ...governingBodiesRoutes,
                 ...changePasswordRoutes,
                 ...emailMessagesRoutes,
+<<<<<<< HEAD
+                ...messageCategoriesRoutes
+=======
            
+>>>>>>> 32206bf7558c294b20272a36184abee29eb8129c
             ]
 
         }
