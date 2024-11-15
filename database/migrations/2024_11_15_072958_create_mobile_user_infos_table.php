@@ -11,30 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('mobile_user_infos', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('mobile_user_id')->unsigned();
-            $table->foreign('mobile_user_id')->references('id')->on('mobile_users')->onDelete('cascade');
-
+            $table->string('name')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->string('email')->nullable();
             $table->bigInteger('message_category_id')->unsigned();
             $table->foreign('message_category_id')->references('id')->on('message_categories')->onDelete('cascade');
-
+            $table->boolean('activ')->default(1);
             $table->bigInteger('governing_body_id')->unsigned();
             $table->foreign('governing_body_id')->references('id')->on('governing_bodies')->onDelete('cascade');
-
-            $table->boolean('status')->default(0);
-
-            $table->string('mobile_user_name')->nullable();
-
-            $table->bigInteger('operator_id')->unsigned();
-            $table->foreign('operator_id')->references('id')->on('users')->onDelete('cascade');
-
-
-            $table->boolean('activ')->default(1);
-
-            $table->string('email')->nullable();
-
-            $table->softDeletes();
+            $table->string('socket_id')->nullable();
             $table->timestamps();
         });
     }
@@ -44,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('mobile_user_infos');
     }
 };
