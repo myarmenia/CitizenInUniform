@@ -90,11 +90,20 @@ const {userMe} = me(router)
                 </router-link>
             </li>
             <li class="nav-item">
+<<<<<<< HEAD
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('message_categories.'))}" :to="{name: 'message_categories.index'}">
+                    <i class="ri-mail-line"></i>
+                    <span>Նամակագրության կատեգորիաներ</span>
+                </router-link>
+            </li>
+
+=======
                 <a class="nav-link collapsed"  href="https://citizenw.trigger.ltd/chatpage" target="_blank" rel="noopener noreferrer">
                     <i class="bi bi-chat-left-dots"></i>
                     <span>Կենդանի զրույց</span>
                 </a>
             </li>
+>>>>>>> 32206bf7558c294b20272a36184abee29eb8129c
 
         </ul>
         <!-- {{ userMe.roles }} -->
