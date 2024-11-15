@@ -199,11 +199,11 @@ const dataEdit = async () => {
                             <h5 class="card-title">Խմբագրել ենթաբաժինը </h5>
 
                                 <div class="row mb-3">
-                                    <label for="title" class="col-sm-3 col-form-label">Կատեգորիա </label>
+                                    <label for="title" class="col-sm-3 col-form-label">Բաժին </label>
                                     <div class="col-sm-9">
 
                                         <select class="form-select"  v-model="form.category_id"  >
-                                                <option disabled >Ընտրել մենյուի կատեգորիան </option>
+                                                <option disabled >Ընտրել բաժինը </option>
                                                 <option v-for="category in activeCategories" :key="category.id" :value="category.id" > {{category.title}} </option>
                                         </select>
 

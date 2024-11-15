@@ -166,11 +166,11 @@ const dataSave = async () => {
                             <h5 class="card-title">Ստեղծել նոր ենթաբաժին </h5>
 
                                 <div class="row mb-3">
-                                    <label for="title" class="col-sm-3 col-form-label">Կատեգորիա </label>
+                                    <label for="title" class="col-sm-3 col-form-label">Բաժին </label>
                                     <div class="col-sm-9">
 
                                         <select class="form-select"  v-model="selectedCategory"  @change="handleSelectionChange" >
-                                                <option disabled selected>Ընտրել մենյուի կատեգորիան </option>
+                                                <option disabled selected>Ընտրել բաժինը </option>
                                                 <option v-for="category in activeCategories" :key="category.id" :value="category.id">{{category.title}}</option>
                                         </select>
 
