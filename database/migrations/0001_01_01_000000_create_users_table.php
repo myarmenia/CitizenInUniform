@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone')->nullable();
             $table->boolean('status')->default(1);
+            $table->string('socket_id')->nullable();
+            $table->boolean('online')->default(0);
             $table->string('password_changes_at')->nullable();
             $table->rememberToken();
             $table->softDeletes();
