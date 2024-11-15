@@ -53,7 +53,7 @@ class EmailMessageService
 
             $message['message_title'] = $governing_body->name;
             $message['content'] = $data['content'];
-            
+
             $mailer_name = $governing_body->named;
             $mailer = "smtp_$mailer_name";
 
@@ -68,39 +68,6 @@ class EmailMessageService
 
     }
 
-    // public function update($data, $id)
-    // {
-
-    //     if($data->file){
-
-    //         $path = $this->addFile($data->file, $id);
-    //         $data->path = $path;
-    //     }
-
-    //     return $this->categorryRepository->update($data->toArray(), $id);
-    // }
-    // public function activeCategories()
-    // {
-    //     return $this->categorryRepository->activeCategories();
-    // }
-
-
-    // public function addFile($file, $categoryId)
-    // {
-
-    //     try {
-
-    //         $old_path = $this->getItem($categoryId)->path;
-    //         Storage::delete($old_path);
-
-    //         $path = FileUploadService::upload($file, "categories/$categoryId");
-
-    //         return $path;
-
-    //     } catch (\Throwable $th) {
-    //         return false;
-    //     }
-
-    // }
+    
 
 }
