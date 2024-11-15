@@ -15,12 +15,14 @@ class GoverningBodyWithInfoResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-       
+
         return [
             "id" => $this->id,
             "name" => $this->name,
             "path" => url('') . Storage::url($this->path),
-            "infos" => $this->governing_body_infos
+            "infos" => $this->governing_body_infos,
+            "email" => $this->email,
+            "phone" => $this->phone
         ];
     }
 }
