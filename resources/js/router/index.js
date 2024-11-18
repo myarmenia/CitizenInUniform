@@ -39,9 +39,9 @@ import EmailMessageEdit from '../views/email-messages/Edit.vue'
 
 import PasswordResetIndex from '../views/change-password/Index.vue'
 
-import MessageCategoriesIndex from '../views/message_categories/Index.vue'
-import MessageCategoriesCreate from '../views/message_categories/Create.vue'
-import MessageCategoriesEdit from '../views/message_categories/Edit.vue'
+import MessageCategoriesIndex from '../views/messages-categories/Index.vue'
+import MessageCategoriesCreate from '../views/messages-categories/Create.vue'
+import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
 
 
 
@@ -216,18 +216,19 @@ import MessageCategoriesEdit from '../views/message_categories/Edit.vue'
     const messageCategoriesRoutes = [
         {
 
-            path: '/message_categories',
-            name: 'message_categories.index',
+            path: '/messages-categories',
+            name: 'messages-categories.index',
             component: MessageCategoriesIndex
         },
         {
-            path: '/message_categories/cteate',
-            name: 'message_categories.cteate',
+            path: '/messages-categories/create',
+            name: 'messages-categories.create',
             component: MessageCategoriesCreate
         },
+
         {
-            path: '/message_categories/:id/edit',
-            name: 'message_categories.edit',
+            path: '/messages-categories/:id/edit',
+            name: 'messages-categories.edit',
             component: MessageCategoriesEdit
         }
     ]
@@ -254,8 +255,8 @@ import MessageCategoriesEdit from '../views/message_categories/Edit.vue'
     ]
 
 const router = createRouter({
-history: createWebHistory(),
-routes
+    history: createWebHistory(),
+    routes
 })
 
 export default router

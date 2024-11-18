@@ -3,14 +3,13 @@
 namespace App\DTO;
 use Illuminate\Http\Request;
 
-class SubCategoryDto
+class MessageCategoryDto
 {
 
     public function __construct(
-        public string $category_id,
+
         public string $title,
-        public string $content,
-        public ?array $files = null
+       
 
     ) {
     }

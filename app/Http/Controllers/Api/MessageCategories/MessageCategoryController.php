@@ -2,20 +2,43 @@
 
 namespace App\Http\Controllers\Api\MessageCategories;
 
+use App\DTO\MessageCategoryDto;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MessageCategoryRequest;
+use App\Http\Resources\MessageCategoryResource;
 use App\Http\Resources\Mobile\MMessageCategoryResource;
 use App\Models\MessageCategory;
+use App\Services\MessageCategoryService;
+use App\Traits\Paginator;
 use Illuminate\Http\Request;
 
 class MessageCategoryController extends BaseController
 {
+    use Paginator;
     /**
      * Display a listing of the resource.
+     *
      */
+    public function __construct(protected MessageCategoryService $service){
+
+
+    }
     public function index(Request $request)
     {
-        dd($request->all());
+
+
+        $page = request()->page ?? 1;
+        $perPage = 2;
+
+            $data = $this->service->index();
+            $data = MessageCategoryResource::collection($data);
+
+            $data = $this->arrayPaginator($data, $request, $perPage);
+
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
     }
 
     /**
@@ -29,9 +52,12 @@ class MessageCategoryController extends BaseController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(MessageCategoryRequest $request)
     {
-        //
+        
+        $data = $this->service->store(MessageCategoryDto::fromMessageCategoryDto($request));
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
     }
 
     /**

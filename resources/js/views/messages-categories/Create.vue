@@ -15,10 +15,10 @@ const form = reactive({
 const handleSave = () =>{
 
     errors.value = {};
-    api.value.post('/api/auth/create-faq-category',form)
+    api.value.post('/api/auth/messages-categories',form)
     .then((response)=>{
 
-        router.push('/faq-categories')
+        router.push('/messages-categories')
         toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
      .catch((error) => {
@@ -46,7 +46,7 @@ const handleSave = () =>{
       <h1>Նամակագրության կատեգորիա</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><router-link  :to="{name:'message_categories.index'}">Ցանկ</router-link></li>
+          <li class="breadcrumb-item"><router-link  :to="{name:'messages-categories.index'}">Ցանկ</router-link></li>
 
           <li class="breadcrumb-item active">Ստեղծել</li>
         </ol>
