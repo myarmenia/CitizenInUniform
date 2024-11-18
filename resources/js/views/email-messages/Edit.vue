@@ -22,26 +22,38 @@ onMounted(async () => {
 
 
 const getMessage = async () => {
+
     let response = api.value.get( `/api/auth/email-messages/${route.params.id}`)
     .then((response) => {
-        console.log(response.data.result)
+        console.log(888888888,response.data.result)
 
         let result = response.data.result
             message.value = result
             form.email_message_id = result.id
 
+            console.log('--------- ',  message.value.msg_category['title'])
+
     })
 }
 
 const dataSave = async () => {
+    const toastInstance = toast.fire({
+        title: 'Պատասխանը ուղարկվում է',
+        didOpen: () => {
+            Swal.showLoading();
+        },
+    });
     try {
         await api.value.post('/api/auth/email-messages-answer/store', form)
 
-        // router.push('/email-messages')
+        router.push('/email-messages')
         toast.fire({icon: 'success', title: 'Գործողությունը հաջողությամբ կատարված է'})
+
     } catch (error) {
             errors.value = error.response.data.errors
-
+    }
+    finally {
+        setTimeout(() => Swal.close(), 2000);
     }
 }
 
@@ -76,7 +88,13 @@ const dataSave = async () => {
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">Հարցի կատեգորիա</div>
-                                        <div class="col-lg-9 col-md-8">{{message.msg_category_name}}</div>
+                                        <div class="col-lg-9 col-md-8" v-if="message.msg_category && message.msg_category.deleted != null">
+                                            {{ message.msg_category.title }}
+                                            <span class="text-danger mx-5">կատեգորիան այլևս ջնջված է</span>
+                                        </div>
+                                        <div class="col-lg-9 col-md-8" v-else>
+                                            {{ message.msg_category ? message.msg_category.title : '' }}
+                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -113,9 +131,6 @@ const dataSave = async () => {
                                         <div class="col-lg-12 label mt-2 text-end">{{ answer.user_name }}</div>
 
                                     </div>
-
-                                    <p class="small fst-italic">{{message.content}}</p>
-
                                 </div>
                             </div>
 

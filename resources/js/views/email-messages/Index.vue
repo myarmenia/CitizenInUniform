@@ -107,7 +107,7 @@ onMounted(() => {
 
 
 const changePage =(link) =>{
-    console.log(link)
+
     if(!link.url || link.active){
         return
     }
@@ -205,7 +205,7 @@ const changePage =(link) =>{
                                         <div class=" d-flex justify-content-end ">
                                             <button class="btn btn-primary search mx-2 py-1 " @click="filterMessages">Ֆիլտրացիա</button>
                                             <button class="btn btn-primary search " @click="cancelFilter">Չեղարկել</button>
-                                            <!-- <a class="btn btn-primary" href="{{ route('museum_event_reports') }}">Չեղարկել</a> -->
+                                          
                                         </div>
 
                                     </div>

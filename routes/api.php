@@ -66,9 +66,12 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::apiResource('sub-categories', SubCategoryController::class);
 
         Route::apiResource('governing-bodies', GoverningBodyController::class);
-        Route::apiResource('email-messages', EmailMessgeController::class);
-        Route::post('email-messages-answer/store', EmailMessgeAnswerController::class);
-        Route::post('email-messages', [EmailMessgeController::class, 'index']);
+
+        Route::group(['middleware' => ['role:super_admin|operatorPN|operatorMIP']],function(){
+            Route::apiResource('email-messages', EmailMessgeController::class);
+            Route::post('email-messages-answer/store', EmailMessgeAnswerController::class);
+            Route::post('email-messages', [EmailMessgeController::class, 'index']);
+        });
 
 
         Route::get('settings', SettingController::class);

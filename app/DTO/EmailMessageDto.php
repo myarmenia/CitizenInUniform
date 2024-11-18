@@ -9,7 +9,7 @@ class EmailMessageDto
 {
 
     public function __construct(
-        public int $governing_body_id,
+        public int|array $governing_body_id,
         public string $fullname,
         public string $email,
         public string $phone,

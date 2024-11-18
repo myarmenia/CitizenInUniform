@@ -83,7 +83,7 @@ const dataSave = async () => {
                                     <div class="col-sm-9">
 
                                         <select class="form-select"  v-model="selectedSetting"  @change="handleSelectionChange" >
-                                                <option disabled selected>Ընտրել ծանուցման տեսկը </option>
+                                                <option disabled selected>Ընտրել ծանուցման տեսակը </option>
                                                 <option v-for="setting in settings" :key="setting.id" :value="setting.id">{{setting.name}}</option>
                                         </select>
 
