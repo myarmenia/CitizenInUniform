@@ -11,17 +11,10 @@
         color: black
       }
       .cont{
-        width: 50%;
+        width: 70%;
         margin: 0 auto
       }
-      #logo{
-        width: 18%;
-      }
-      .ticket-card{
-        margin-top: 30px;
-        color: black
 
-      }
       .card-div{
         display: flex;
         background-color: white;
@@ -32,47 +25,9 @@
       }
 
       .card-div-first-child{
-        width: 60%;
+        width: 90%;
         padding: 20px;
       }
-
-      .card-div-last-child{
-        width: 40%;
-        -webkit-align-items: center;
-        -ms-align-items: center;
-        align-items: center !important;
-        border-left: dashed 2px #4b4747;
-      }
-
-
-
-
-      @media (max-width: 1024px) {
-        .cont {
-          width: 100%;
-        }
-        .card-div{
-          display: ruby-text !important;
-          background-color: white !important;
-          -webkit-align-items: center;
-          -ms-align-items: center;
-          flex-direction: column-reverse !important;
-          justify-content: center !important;
-        }
-        .card-div-first-child{
-          width: 90%;
-        }
-        .card-div-last-child {
-          width: 100%;
-          border-top: dashed 1px #aaa;
-          border-left: unset;
-          align-items: center;
-        }
-
-
-      }
-
-
 
     </style>
 </head>
@@ -80,18 +35,28 @@
 <body >
 
     <div class="cont" >
-        <section style="background: #e3e2e059; padding: 30px 40px">
-            {{-- <img src="{{$message->embed('assets/img/logos/museum-logo.png')}}" alt="museum-log" id="logo"> --}}
-
+        <section style="background: #e3e2e059; padding: 30px 40px; text-align: center">
+            <img src="{{$message->embed('assets/img/logo.png')}}" alt="log" id="logo" style="width: 64px">
+                <h6 style="color:black; margin-top: 0">Համազգեստով քաղաքացի</h6>
             <div style="text-align: center; align-item: center">
-                <p style="margin: 12px auto; font-weight: 600; text-align: center; width: 60%">{{$data['message_title']}}</p>
+                <p style="margin: 12px auto; font-weight: 600; width: 60%; color:black">{{$data['message_title']}}</p>
             </div>
+            <div style="text-align: start">
+                <div class="card-div" >
+                    <div class="card-div-first-child">
+                        <h5 style="text: 60px">Ձեր նամակը․</h5>
+                        <div style="display: flex; align-items: center;">
+                            <p>{{$data['mobile_user_content']}}<p>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="card-div" >
-                <div class="card-div-first-child">
-                    <div style="display: flex; align-items: center;">
-                        <p>{{$data['content']}}<p>
-                        <p style="text-transform: uppercase; font-size: 12px; font-weight: 600; line-height: 13.6px; border-bottom: 1px solid black; padding-bottom: 5px;">{{$data['content']}}</p>
+                <div class="card-div" >
+                    <div class="card-div-first-child">
+                        <h5>Նամակի պատասխանը․</h5>
+                        <div style="display: flex; align-items: center;">
+                            <p>{{$data['content']}}<p>
+                        </div>
                     </div>
                 </div>
             </div>

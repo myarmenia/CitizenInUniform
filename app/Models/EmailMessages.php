@@ -22,6 +22,11 @@ class EmailMessages extends Model
         return $this->belongsTo(MessageCategory::class);
     }
 
+    public function message_category_withTrashed(): BelongsTo
+    {
+        return $this->belongsTo(MessageCategory::class, 'message_category_id')->withTrashed();
+    }
+
     public function governing_body(): BelongsTo
     {
         return $this->belongsTo(GoverningBody::class);

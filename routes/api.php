@@ -69,10 +69,13 @@ use Illuminate\Support\Facades\Route;
 //         Route::get('active-categories', [CategoryController::class, 'activeCategories']);
 //         Route::apiResource('sub-categories', SubCategoryController::class);
 
-//         Route::apiResource('governing-bodies', GoverningBodyController::class);
-//         Route::apiResource('email-messages', EmailMessgeController::class);
-//         Route::post('email-messages-answer/store', EmailMessgeAnswerController::class);
-//         Route::post('email-messages', [EmailMessgeController::class, 'index']);
+        Route::apiResource('governing-bodies', GoverningBodyController::class);
+
+        Route::group(['middleware' => ['role:super_admin|operatorPN|operatorMIP']],function(){
+            Route::apiResource('email-messages', EmailMessgeController::class);
+            Route::post('email-messages-answer/store', EmailMessgeAnswerController::class);
+            Route::post('email-messages', [EmailMessgeController::class, 'index']);
+        });
 
 
 //         Route::get('settings', SettingController::class);
