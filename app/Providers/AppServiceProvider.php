@@ -11,10 +11,12 @@ use App\Interfaces\FaqCategorySubcategoryRepositoryInterface;
 use App\Interfaces\FcmNotificationInterface;
 use App\Interfaces\FileInterface;
 use App\Interfaces\GoverningBodyInterface;
+use App\Interfaces\MessageCategoryInterface;
 use App\Interfaces\MobileUserInterface;
 use App\Interfaces\SettingInterface;
 use App\Interfaces\SubCategoryInterface;
 use App\Interfaces\UserRepositoryInterface;
+use App\Models\MessageCategory;
 use App\Repositories\CategoryRepository;
 use App\Repositories\EmailMessageAnswerRepository;
 use App\Repositories\EmailMessageRepository;
@@ -23,6 +25,7 @@ use App\Repositories\FaqCategorySubcategoryRepository;
 use App\Repositories\FcmNotificationRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\GoverningBoryRepository;
+use App\Repositories\MessageCategoryRepository;
 use App\Repositories\MobileUserRepository;
 use App\Repositories\SettingRepository;
 use App\Repositories\SubCategoryRepository;
@@ -50,6 +53,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(GoverningBodyInterface::class, GoverningBoryRepository::class);
         $this->app->bind(EmailMessageInterface::class, EmailMessageRepository::class);
         $this->app->bind(EmailMessageAnswerInterface::class, EmailMessageAnswerRepository::class);
+        $this->app->bind( MessageCategoryInterface::class, MessageCategoryRepository::class);
 
 
         // ====================== hiny ================================

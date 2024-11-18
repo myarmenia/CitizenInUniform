@@ -19,7 +19,9 @@ class MGoverningBodyResource extends JsonResource
             "id" => $this->id,
             "name" => $this->name,
             "named" => $this->named,
-            "phone_numbers" => $this->governing_body_phone_numbers->pluck('text'),
+             "email" => $this->email,
+            "phone" => $this->phone,
+            "phone_numbers" => $this->governing_body_phone_numbers->where('status',1)->pluck('text'),
         ];
     }
 }
