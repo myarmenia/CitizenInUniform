@@ -20,4 +20,16 @@ class EmailMessageAnswer extends Model
         return $this->belongsTo(EmailMessages::class);
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($answer) {
+
+            $answer->email_message->update(['has_answer' => 1]);
+        });
+
+
+    }
+
 }

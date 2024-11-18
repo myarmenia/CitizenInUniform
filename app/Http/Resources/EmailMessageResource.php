@@ -14,11 +14,12 @@ class EmailMessageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+       
         return [
             "id" => $this->id,
             "fullname" => $this->fullname,
             "email" => $this->email,
-            "msg_category_name" => $this->message_category->title,
+            "msg_category_name" => $this->message_category_withTrashed->title,
             "date" => date('d-m-Y H:i', strtotime($this->created_at))
         ];
     }

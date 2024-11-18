@@ -65,6 +65,7 @@ class EmailMessgeController extends BaseController
     {
 
         $data = $this->service->getItem($id);
+
         $data = $data != null ? EmailSingleMessageResource::make($data) : null;
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
