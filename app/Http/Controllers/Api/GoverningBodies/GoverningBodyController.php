@@ -64,6 +64,7 @@ class GoverningBodyController extends BaseController
     {
         //
     }
+    
 
     /**
      * Update the specified resource in storage.
