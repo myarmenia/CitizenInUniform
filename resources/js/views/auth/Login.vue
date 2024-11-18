@@ -78,9 +78,9 @@ const login = async () => {
                                 <div class="col-12">
                                 <button class="btn btn-primary w-100" @click.prevent = "login">Մուտք</button>
 
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <!-- <router-link class="btn btn-link" :to="{ name:'password.reset' }">
                                         Մոռացել եք գաղտնաբառը?
-                                    </a>
+                                    </router-link> -->
 
                                 </div>
                             </div>
