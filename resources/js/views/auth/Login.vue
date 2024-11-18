@@ -81,7 +81,6 @@ const login = async () => {
                                     <!-- <router-link class="btn btn-link" :to="{ name:'password.reset' }">
                                         Մոռացել եք գաղտնաբառը?
                                     </router-link> -->
-
                                 </div>
                             </div>
                         </div>
