@@ -24,7 +24,12 @@ class GoverningBoryRepository implements GoverningBodyInterface
 
         $governing_body = $this->getItem($id);
 
-        if($data['type'] == 'email'){
+        if($data['type'] == 'globalSettings'){
+
+            $update = $governing_body->update($data['data']);
+        }
+
+        else if($data['type'] == 'email'){
             $data['text'] = $data['data']['text'];
             $data['status'] = $data['data']['status'];
 

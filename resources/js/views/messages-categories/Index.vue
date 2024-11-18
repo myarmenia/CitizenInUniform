@@ -28,17 +28,17 @@ const getAllData = async () => {
 
         )
             .then((response)=>{
-                console.log(response)
-                allData.value = response.data.result.data
-                links.value =  response.data.result.links
-                lastPage.value = response.data.result.last_page
-                faqArray.value = response.data.result.data.map(item => item.status);
+                let result=response.data.result
+                allData.value = result.data
+                links.value = result.links
+                lastPage.value = result.last_page
+                faqArray.value = result.data.map(item => item.status);
 
 
             })
         }catch(error){
 
-            console.error("Error fetching FAQ categories:", error);
+            console.error("Error fetching", error);
 
         }
 
@@ -64,10 +64,7 @@ const changePage =(link) =>{
         })
 }
 
-    const  onEdit = (id) =>{
 
-        router.push(`/faq-categories/${id}/edit`)
-    }
     // ===============delete section==============
     const deleteItem = (id,tb_name) =>{
 
@@ -99,7 +96,7 @@ const changePage =(link) =>{
                                     icon: 'small-icon'  // Add custom class for the icon
                                 }
                             });
-                                getFaqCategories()
+                            getAllData()
 
                         }
 
@@ -160,7 +157,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
                                         <!-- ՀՏՀ կատեգորիա -->
                                     </h5>
                                     <div class="pull-right d-flex justify-content-end m-3" >
-                                        <router-link class="btn btn-primary  mb-2" :to="{name:'message_categories.cteate'}"><i class="fa fa-plus"></i> Ստեղծել</router-link>
+                                        <router-link class="btn btn-primary  mb-2" :to="{name:'messages-categories.create'}"><i class="fa fa-plus"></i> Ստեղծել</router-link>
                                     </div>
                                 </div>
                             </div>
@@ -171,49 +168,28 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
                                     <tr>
                                         <th>Հ/Հ</th>
                                         <th>Նամակագրության կատեգորիա</th>
-                                        <th>Կարգավիճակ</th>
                                         <th width="10%">Գործողություն</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for ="(category,index) in faqCategories" :key="category.id">
+                                        <tr v-for ="(item,index) in allData" :key="item.id">
                                             <td>{{++index}}</td>
-                                            <td>{{category.title}}</td>
+                                            <td>{{item.title}}</td>
+
                                             <td>
-
-                                                <button
-                                                    type="button"
-                                                    :class="category.status == 1 ? 'btn btn-success' : 'btn btn-danger '">
-                                                    {{ category.status == 1 ? 'Ակտիվ' : 'Պասիվ' }}
-                                                </button>
-
-                                            </td>
-                                            <td>
-
-
                                                 <div class="dropdown action" >
                                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                         data-bs-toggle="dropdown">
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <router-link class="dropdown-item"  :to="{name:'faqcategory.edit', params: { id: category.id } }">
+                                                        <router-link class="dropdown-item"  :to="{name:'messages-categories.edit', params: { id: item.id } }">
                                                             <i class="bx bx-edit-alt me-1"></i>Խմբագրել
                                                         </router-link>
-                                                        <a class="dropdown-item d-flex" href="javascript:void(0);">
-                                                            <div class="form-check form-switch">
-                                                                <input class="form-check-input change_status" type="checkbox"
-                                                                    role="switch"
 
-                                                                    :checked="category.status"
-                                                                    @change="changeStatus(index, $event, category.id,'f_a_q_categories','status')"
-                                                                >
-                                                            </div> Կարգավիճակ
-
-                                                        </a>
                                                         <button type="button" class="dropdown-item click_delete_item"
 
-                                                              @click = "deleteItem(category.id,'f_a_q_categories')"><i
+                                                              @click = "deleteItem(item.id,'message-categories')"><i
                                                                 class="bx bx-trash me-1"></i>
                                                             Ջնջել</button>
                                                     </div>
