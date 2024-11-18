@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('named');
             $table->string('path');
+            $table->boolean('email')->default(0);
+            $table->boolean('phone')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
