@@ -29,7 +29,7 @@ class MessageCategoryController extends BaseController
 
 
         $page = request()->page ?? 1;
-        $perPage = 2;
+        $perPage = 10;
 
             $data = $this->service->index();
             $data = MessageCategoryResource::collection($data);
