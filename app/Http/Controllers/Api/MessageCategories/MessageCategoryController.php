@@ -54,7 +54,7 @@ class MessageCategoryController extends BaseController
      */
     public function store(MessageCategoryRequest $request)
     {
-        
+
         $data = $this->service->store(MessageCategoryDto::fromMessageCategoryDto($request));
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
@@ -65,7 +65,10 @@ class MessageCategoryController extends BaseController
      */
     public function show(string $id)
     {
-        //
+        $data = $this->service->show($id);
+
+        $faqCategorySubcategory = new MessageCategoryResource($data );
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 
     /**
@@ -73,15 +76,19 @@ class MessageCategoryController extends BaseController
      */
     public function edit(string $id)
     {
-        //
+
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(MessageCategoryRequest $request, string $id)
     {
-        //
+
+            $data = $this->service->update(MessageCategoryDto::fromMessageCategoryDto($request), $id);
+
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 
     /**
