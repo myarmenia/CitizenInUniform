@@ -47,12 +47,13 @@ class EmailMessageService
             $messageAnswer = $this->emailMessageAnswerRepo->store($data);
             $email_message = $messageAnswer->email_message;
             $email = $email_message->email;
-            $subject = $email_message->message_category->title;
+            $subject = $email_message->message_category_withTrashed->title;
 
             $governing_body = $email_message->governing_body;
 
             $message['message_title'] = $governing_body->name;
             $message['content'] = $data['content'];
+            $message['mobile_user_content'] = $email_message->content;
 
             $mailer_name = $governing_body->named;
             $mailer = "smtp_$mailer_name";
@@ -64,10 +65,10 @@ class EmailMessageService
             throw $th;
         }
 
-        return $this->emailMessageAnswerRepo->store($data);
+        return $messageAnswer;
 
     }
 
-    
+
 
 }
