@@ -43,6 +43,10 @@ import MessageCategoriesIndex from '../views/messages-categories/Index.vue'
 import MessageCategoriesCreate from '../views/messages-categories/Create.vue'
 import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
 
+import resetPasswordEmail from '../views/auth/password/Email.vue'
+
+
+
 
 
 
@@ -232,6 +236,16 @@ import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
             component: MessageCategoriesEdit
         }
     ]
+    const forgetPasswordRoutes = [
+        {
+
+            path: '/password/reset',
+            name: 'password.reset',
+            component: resetPasswordEmail
+        }
+
+    ]
+
 
 
     const routes = [
@@ -248,7 +262,8 @@ import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
                 ...governingBodiesRoutes,
                 ...changePasswordRoutes,
                 ...emailMessagesRoutes,
-                ...messageCategoriesRoutes
+                ...messageCategoriesRoutes,
+                ...forgetPasswordRoutes
             ]
 
         }

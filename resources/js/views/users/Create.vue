@@ -184,7 +184,10 @@ const handleSave = () =>{
                                         :value = "value"
                                         :key = "value"
                                         :selected="selectedRoles.includes(value)" >
-                                        {{ label }}
+                                        {{ label=="admin" ? "Ադմինիստրատոր":(label=="content_manager" ? "Բովանդակության կառավարիչ":(label=="operatorMIP" ? "Օպերատոր /ՄԻՊ/":(label=="operatorPN" ? "Օպերատոր /ՊՆ/" :null)))
+
+                                        }}
+
                                 </option>
                             </select>
 
