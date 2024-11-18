@@ -37,7 +37,7 @@ import ChangePasswordIndex from '../views/change-password/Index.vue'
 import EmailMessage from '../views/email-messages/Index.vue'
 import EmailMessageEdit from '../views/email-messages/Edit.vue'
 
-import PasswordResetIndex from '../views/change-password/Index.vue'
+// import PasswordResetIndex from '../views/change-password/Index.vue'
 
 import MessageCategoriesIndex from '../views/messages-categories/Index.vue'
 import MessageCategoriesCreate from '../views/messages-categories/Create.vue'

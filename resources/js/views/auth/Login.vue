@@ -80,12 +80,8 @@ const login = async () => {
 
                                     <router-link class="btn btn-link" to="password/reset">
                                         Մոռացել եք գաղտնաբառը?
-<<<<<<< HEAD
                                     </router-link>
 
-=======
-                                    </router-link> -->
->>>>>>> d43425cfc34252a1ad421bc370f51b4144432adb
                                 </div>
 
                             </div>
