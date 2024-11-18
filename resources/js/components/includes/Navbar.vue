@@ -72,7 +72,11 @@ const logout = async () => {
       <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
         <li class="dropdown-header">
           <h6>{{userMe.name}} {{userMe.surname}}</h6>
-          <span v-for="role in userMe.roles" :key="role.id">{{role.name}}</span>
+          <span v-for="role in userMe.roles" :key="role.id">
+            <!-- {{role.name}} -->
+            {{ role.name=="admin" ? "Ադմինիստրատոր":(role.name=="content_manager" ? "Բովանդակության կառավարիչ":(role.name=="operatorMIP" ? "Օպերատոր /ՄԻՊ/":(role.name=="operatorPN" ? "Օպերատոր /ՊՆ/" : (role.name=="super_admin" ? "Գլխավոր ադմինիստրատոր": null))))}}
+
+          </span>
         </li>
         <li>
           <hr class="dropdown-divider">

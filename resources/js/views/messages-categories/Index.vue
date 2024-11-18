@@ -43,11 +43,6 @@ const getAllData = async () => {
         }
 
 }
-watch(activePage, (newPage) => {
-    getAllData(); // Fetch categories whenever the active page changes
-});
-
-
 
 const changePage =(link) =>{
     console.log(link,"")
@@ -126,7 +121,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
 
     api.value.post('/api/auth/change-status',form)
     .then((response)=>{
-        getFaqCategories(activePage.value)
+        getAllData(activePage.value)
 
         toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
@@ -167,7 +162,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
                                 <thead>
                                     <tr>
                                         <th>Հ/Հ</th>
-                                        <th>Նամակագրության կատեգորիա</th>
+                                        <th>Կատեգորիա</th>
                                         <th width="10%">Գործողություն</th>
                                     </tr>
                                     </thead>
