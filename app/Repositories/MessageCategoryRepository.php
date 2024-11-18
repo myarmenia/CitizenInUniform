@@ -12,8 +12,21 @@ class MessageCategoryRepository implements MessageCategoryInterface{
 
     }
     public  function store($data){
-        
+
+
         return MessageCategory::create($data);
+
+
+    }
+    public function show($id){
+        return MessageCategory::findOrFail($id);
+    }
+    public function update($data,$id){
+
+
+        $messageCategory = MessageCategory::find($id);
+
+        return  $messageCategory ? $messageCategory->update($data) : false;
 
     }
 

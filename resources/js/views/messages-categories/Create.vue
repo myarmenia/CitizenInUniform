@@ -65,7 +65,7 @@ const handleSave = () =>{
 
                <div>
                     <div class="row mb-3">
-                        <label for="inputText" class="col-sm-2 col-form-label">Նամակագրության կատեգորիա</label>
+                        <label for="inputText" class="col-sm-2 col-form-label">Անվանում</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" v-model="form.title">
                             <small style = "color:red" v-if="errors.title">{{errors.title}}</small>

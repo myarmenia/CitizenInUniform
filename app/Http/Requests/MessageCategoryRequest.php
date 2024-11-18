@@ -29,7 +29,7 @@ class MessageCategoryRequest extends FormRequest
 
         return [
 
-            'title.required' => 'Նամակագրության կատեգորիա դաշտը պարտադիր է',
+            'title.required' => 'Անվանում դաշտը պարտադիր է',
 
         ];
     }

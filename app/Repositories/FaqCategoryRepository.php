@@ -16,7 +16,7 @@ class FaqCategoryRepository implements FaqCategoryRepositoryInterface
     public function store($data){
 
         return FaqCategory::create($data);
-
+        
     }
     public function update(){
 
