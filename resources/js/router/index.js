@@ -55,10 +55,10 @@ import resetPasswordEmail from '../views/auth/password/Email.vue'
     const usersRoute = [
         {
             path: '/',
-            redirect: '/users/login'
+            redirect: '/login'
         },
         {
-        path: '/users/login',
+        path: '/login',
         name: 'Login',
         component: LoginPage
         },
@@ -195,12 +195,12 @@ import resetPasswordEmail from '../views/auth/password/Email.vue'
             name: 'change-password.index',
             component: ChangePasswordIndex
         },
-        {
+        // {
 
-            path: '/password/reset',
-            name: 'password-reset.index',
-            component: PasswordResetIndex
-        },
+        //     path: '/password/reset',
+        //     name: 'password-reset.index',
+        //     component: PasswordResetIndex
+        // },
 
     ]
 

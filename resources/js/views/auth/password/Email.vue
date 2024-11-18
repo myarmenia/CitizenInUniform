@@ -1,5 +1,48 @@
-<template>
 
+<script setup>
+import { ref  } from 'vue';
+import { useRouter } from "vue-router"
+import axios from 'axios';
+// method post
+// password/email name email
+// Auth\ForgotPasswordController@sendResetLinkEmail
+
+const email= ref('')
+let errors = ref([])
+
+
+
+const sendResetLink = () =>{
+
+    errors.value = {};
+    console.log(email.value)
+    axios.post('api/password/forgot',email.value)
+    .then((response)=>{
+        console.log(response)
+        // router.push('/faq-category-subcategory')
+        // toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
+    })
+     .catch((error) => {
+
+                if (error.response && error.response.status === 422) {
+
+                    const allErrors = error.response.data.errors;
+                    for (const field in allErrors) {
+                        if (allErrors.hasOwnProperty(field)) {
+                            errors.value[field] = allErrors[field][0]; // Get only the first error message
+                        }
+                    }
+                }
+
+            })
+
+}
+
+</script>
+<template>
+     <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
@@ -25,20 +68,21 @@
                   <!-- <form  class="row g-3 needs-validation" method="POST" action="" novalidate> -->
 
                     <div class="col-12">
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
-                      <!-- <div class="input-group has-validation">
+                      <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                         placeholder="Մուտքագրեք Ձեր էլ․ հասցեն"
-                         name="email"
-                          value="{{ old('email') }}" required autocomplete="email" >
+                        <input type="email"  class="form-control"
+                               placeholder="Մուտքագրեք Ձեր էլ․ հասցեն"
+                               value="" required autocomplete="email"
+                               v-model="email"
+
+                               >
                         <div class="invalid-feedback">Մուտքագրեք Ձեր Էլ․հասցեն</div>
-                      </div> -->
+                      </div>
                     </div>
                     <div class="col-12 d-flex justify-content-center">
 
-                                <button type="submit" class="btn btn-primary">
+                                <button  @click.prevent="sendResetLink"class="btn btn-primary">
                                     Ուղարկեք վերականգնման հղումը
                                 </button>
 
@@ -48,6 +92,8 @@
                 </div>
               </div>
             </div>
-
+          </div>
+        </div>
+    </section>
 
 </template>

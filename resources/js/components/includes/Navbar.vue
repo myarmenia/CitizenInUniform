@@ -13,7 +13,7 @@ const logout = async () => {
   try {
     await api.value.post('/api/auth/logout');
     localStorage.removeItem('access_token');
-      window.location.href = '/users/login';
+      window.location.href = '/login';
   } catch (error) {
     errorMessage.value = error
   }
