@@ -45,7 +45,9 @@ import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
 
 import resetPasswordEmail from '../views/auth/password/Email.vue'
 
+
 import ResetPasswordReset from '../views/auth/password/Reset.vue'
+
 
 
 import Welcome from '../views/welcome/Index.vue'
