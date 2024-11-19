@@ -5,11 +5,10 @@
   },
   "resources/js/app.js": {
 
- 
 
-    "file": "assets/app-bBokqQmb.js",
 
     "file": "assets/app-B6hOxJlf.js",
+
 
     "name": "app",
     "src": "resources/js/app.js",
@@ -19,8 +18,10 @@
       "assets/app-REpI0-3u.css"
 
     ],
+
     "assets": [
       "assets/logo-C4R9DgcX.png"
+
 
     ]
   },
