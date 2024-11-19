@@ -8,6 +8,18 @@ const router = useRouter();
 const { governingBodies } = useGoverningBodies(router);
 const {userMe} = me(router)
 
+
+
+const realChat = () =>{
+    const accessToken = localStorage.getItem('access_token'); // Replace with actual token
+  
+    const url = `https://citizenw.trigger.ltd/auth?token=${accessToken}`;
+    // Open the URL in a new tab
+    window.open(url, '_blank');
+
+}
+
+
 </script>
 
 <template>
@@ -97,10 +109,12 @@ const {userMe} = me(router)
                 </router-link>
             </li>
             <li>
-                <a class="nav-link collapsed"  href="https://citizenw.trigger.ltd/chatpage" target="_blank" rel="noopener noreferrer">
+                <div class="nav-link collapsed" @click.prevent="realChat"
+
+                  target="_blank" rel="noopener noreferrer">
                     <i class="bi bi-chat-left-dots"></i>
                     <span>Կենդանի զրույց</span>
-                </a>
+                </div>
             </li>
 
         </ul>

@@ -37,7 +37,7 @@ import ChangePasswordIndex from '../views/change-password/Index.vue'
 import EmailMessage from '../views/email-messages/Index.vue'
 import EmailMessageEdit from '../views/email-messages/Edit.vue'
 
-import PasswordResetIndex from '../views/change-password/Index.vue'
+// import PasswordResetIndex from '../views/change-password/Index.vue'
 
 import MessageCategoriesIndex from '../views/messages-categories/Index.vue'
 import MessageCategoriesCreate from '../views/messages-categories/Create.vue'
@@ -45,7 +45,11 @@ import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
 
 import resetPasswordEmail from '../views/auth/password/Email.vue'
 
+import ResetPasswordReset from '../views/auth/password/Reset.vue'
+
+
 import Welcome from '../views/welcome/Index.vue'
+
 
 
 
@@ -53,10 +57,10 @@ import Welcome from '../views/welcome/Index.vue'
     const usersRoute = [
         {
             path: '/',
-            redirect: '/users/login'
+            redirect: '/login'
         },
         {
-        path: '/users/login',
+        path: '/login',
         name: 'Login',
         component: LoginPage
         },
@@ -193,12 +197,12 @@ import Welcome from '../views/welcome/Index.vue'
             name: 'change-password.index',
             component: ChangePasswordIndex
         },
-        {
+        // {
 
-            path: '/password/reset',
-            name: 'password-reset.index',
-            component: PasswordResetIndex
-        },
+        //     path: '/password/reset',
+        //     name: 'password-reset.index',
+        //     component: PasswordResetIndex
+        // },
 
     ]
 
@@ -240,6 +244,11 @@ import Welcome from '../views/welcome/Index.vue'
             path: '/password/reset',
             name: 'password.reset',
             component: resetPasswordEmail
+        },
+        {
+            path: 'api/password/reset',
+            name: 'reset.password.reset',
+            component: ResetPasswordReset,
         }
 
     ]
