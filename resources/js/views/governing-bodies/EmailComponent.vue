@@ -14,19 +14,25 @@ const props = defineProps({
 });
 
 
-const emit = defineEmits()
-const email = ref(props.initialEmail);
+const emit = defineEmits(['save', 'cancel']);
+const email = ref({ ...props.initialEmail });
 
 
-watch(() => props.initialEmail,
+watch(
+  () => props.initialEmail,
   (newEmail) => {
-    email.value = newEmail;
+    email.value = { ...newEmail };
   }
 );
 
+function cancelChanges() {
+  email.value = { ...props.initialEmail };
+  emit('cancel');
+}
 
 function onStatusChange(event) {
-  email.value.status = event.target.checked; // Update email.status based on checkbox
+ email.value.status = event.target.checked; // Update email.status based on checkbox
+
 }
 
 function saveData() {
@@ -55,7 +61,9 @@ function saveData() {
                                         </div>
                                     </div>
                                     <div class="form-check form-switch mx-2">
-                                        <input class="form-check-input change_status" type="checkbox" role="switch" :checked="email.status"  @change="onStatusChange" >
+                                        <input class="form-check-input change_status" type="checkbox" role="switch"
+                                            :checked="email.status"
+                                            @change="onStatusChange" >
                                     </div>
 
                                 </div>
@@ -68,7 +76,7 @@ function saveData() {
                                 <div class="col-sm-9 d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary" @click="saveData">Պահպանել</button>
 
-                                    <button @click="$emit('cancel')" class="btn btn-secondary">Չեղարկել</button>
+                                    <button @click="cancelChanges" class="btn btn-secondary">Չեղարկել</button>
                                 </div>
                             </div>
                     </div>
