@@ -44,15 +44,17 @@ import MessageCategoriesCreate from '../views/messages-categories/Create.vue'
 import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
 
 import resetPasswordEmail from '../views/auth/password/Email.vue'
-<<<<<<< HEAD
+
+
 import ResetPasswordReset from '../views/auth/password/Reset.vue'
-=======
+
+
 
 import Welcome from '../views/welcome/Index.vue'
 
 
 
->>>>>>> d6b05c186c329005c7bfb8b4f42ae56dea7710df
+
 
     const usersRoute = [
         {
