@@ -45,9 +45,7 @@ import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
 
 import resetPasswordEmail from '../views/auth/password/Email.vue'
 
-
-
-
+import Welcome from '../views/welcome/Index.vue'
 
 
 
@@ -246,6 +244,15 @@ import resetPasswordEmail from '../views/auth/password/Email.vue'
 
     ]
 
+    const welcomeRoutes = [
+        {
+
+            path: '/welcome',
+            name: 'welcome.index',
+            component: Welcome
+        }
+    ]
+
 
 
     const routes = [
@@ -263,7 +270,8 @@ import resetPasswordEmail from '../views/auth/password/Email.vue'
                 ...changePasswordRoutes,
                 ...emailMessagesRoutes,
                 ...messageCategoriesRoutes,
-                ...forgetPasswordRoutes
+                ...forgetPasswordRoutes,
+                ...welcomeRoutes
             ]
 
         }
