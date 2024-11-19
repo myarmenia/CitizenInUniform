@@ -17,8 +17,9 @@ const form = reactive({
 
 const sendResetLink = () =>{
 
+console.log(form)
     errors.value = {};
-    console.log(email.value)
+    
     axios.post('/api/password/forgot',form)
     .then((response)=>{
         console.log(response.data.message)

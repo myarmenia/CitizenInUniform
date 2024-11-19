@@ -44,13 +44,7 @@ import MessageCategoriesCreate from '../views/messages-categories/Create.vue'
 import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
 
 import resetPasswordEmail from '../views/auth/password/Email.vue'
-
-
-
-
-
-
-
+import ResetPasswordReset from '../views/auth/password/Reset.vue'
 
     const usersRoute = [
         {
@@ -242,6 +236,11 @@ import resetPasswordEmail from '../views/auth/password/Email.vue'
             path: '/password/reset',
             name: 'password.reset',
             component: resetPasswordEmail
+        },
+        {
+            path: 'api/password/reset',
+            name: 'reset.password.reset',
+            component: ResetPasswordReset,
         }
 
     ]
