@@ -21,7 +21,7 @@ const login = async () => {
 
     if (localStorage.getItem('access_token')) {
 
-        window.location.href = '/categories';
+        window.location.href = '/welcome';
 
     } else {
       console.error("Token was not stored successfully");
