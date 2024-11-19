@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 
 // Route::apiResource('password',ForgotPasswordController::class);
 // Route::group(['prefix' => 'api'], function ($router) {
-    Route::post('/api/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+    Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 // })
 
 // ======================== Mobile ======================================
@@ -49,12 +49,12 @@ use Illuminate\Support\Facades\Route;
 
 // });
 
-// Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
+Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
-//     Route::post('login', [AuthController::class,'login']);
-//     Route::post('logout', [AuthController::class,'logout'])->name('logout');
-//     Route::post('refresh', [AuthController::class,'refresh']);
-//     Route::post('me', [AuthController::class,'me']);
+    Route::post('login', [AuthController::class,'login']);
+    Route::post('logout', [AuthController::class,'logout'])->name('logout');
+    Route::post('refresh', [AuthController::class,'refresh']);
+    Route::post('me', [AuthController::class,'me']);
 
 //     Route::group(['middleware'=>'jwt.auth'],function(){
 
@@ -85,7 +85,7 @@ use Illuminate\Support\Facades\Route;
 //         Route::resource('roles', RoleController::class);
 //         Route::get('all-roles',[RoleController::class,'all']); Route::get('all-roles',[RoleController::class,'all']);
 
-//         Route::post('change-password',[ChangePasswordController::class,'index']);
+        Route::post('change-password',[ChangePasswordController::class,'index']);
 
 //         Route::apiResource('messages-categories',MessageCategoryController::class);
 
@@ -98,4 +98,4 @@ use Illuminate\Support\Facades\Route;
 //     // ====================
 //     // ======================
 
-// });
+});

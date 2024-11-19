@@ -1,14 +1,17 @@
 
 <script setup>
-import { ref  } from 'vue';
+import { ref, reactive  } from 'vue';
 import { useRouter } from "vue-router"
 import axios from 'axios';
 // method post
 // password/email name email
 // Auth\ForgotPasswordController@sendResetLinkEmail
 
-const email= ref('')
+const messages= ref('')
 let errors = ref([])
+const form = reactive({
+    email:"",
+})
 
 
 
@@ -16,9 +19,11 @@ const sendResetLink = () =>{
 
     errors.value = {};
     console.log(email.value)
-    axios.post('api/password/forgot',email.value)
+    axios.post('/api/password/forgot',form)
     .then((response)=>{
-        console.log(response)
+        console.log(response.data.message)
+        messages.value=response.data.message
+
         // router.push('/faq-category-subcategory')
         // toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
     })
@@ -55,11 +60,11 @@ const sendResetLink = () =>{
               <div class="card mb-3">
 
                 <div class="card-body">
-                    <!-- @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+
+                        <div v-if="messages" class="alert alert-success" role="alert">
+                            {{ messages }}
                         </div>
-                    @endif -->
+
 
                   <div class="pt-4 pb-2">
                     <h6 class="card-title text-center pb-0 fs-5">Գաղտնաբառի վերականգնում </h6>
@@ -73,16 +78,19 @@ const sendResetLink = () =>{
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                         <input type="email"  class="form-control"
                                placeholder="Մուտքագրեք Ձեր էլ․ հասցեն"
-                               value="" required autocomplete="email"
-                               v-model="email"
+
+                               v-model="form.email"
 
                                >
                         <div class="invalid-feedback">Մուտքագրեք Ձեր Էլ․հասցեն</div>
                       </div>
                     </div>
+                    <div  v-if="errors.email" class="mb-3 row justify-content-start">
+                        <div class="col-sm-9 text-danger fts-14">{{ errors.email }}</div>
+                                        </div>
                     <div class="col-12 d-flex justify-content-center">
 
-                                <button  @click.prevent="sendResetLink"class="btn btn-primary">
+                                <button  @click.prevent="sendResetLink" class="btn btn-primary mt-3">
                                     Ուղարկեք վերականգնման հղումը
                                 </button>
 
