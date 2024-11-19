@@ -17,8 +17,10 @@ use App\Http\Controllers\Api\Settings\SettingController;
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChangeStatusController;
+use App\Http\Controllers\ConfirmPasswordChangesController;
 use App\Http\Controllers\DeleteItemController;
 use App\Http\Controllers\FaqCategoryController;
 use App\Http\Controllers\RoleController;
@@ -31,10 +33,12 @@ use Illuminate\Support\Facades\Route;
 
 // Route::post('send-notification', SendNotificationToUserController::class);
 
-// Route::apiResource('password',ForgotPasswordController::class);
-// Route::group(['prefix' => 'api'], function ($router) {
+
     Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
-// })
+    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
+    // Route::put('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::post('/confirm-password-changes', ConfirmPasswordChangesController::class);
+
 
 // ======================== Mobile ======================================
 Route::group(['prefix' => 'mobile'], function ($router) {
@@ -88,8 +92,6 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::post('change-password',[ChangePasswordController::class,'index']);
 
         Route::apiResource('messages-categories',MessageCategoryController::class);
-
-
 
         Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
         Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');

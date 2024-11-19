@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ChangePasswordController extends BaseController
+
 {
+    
     public function index(ChangePasswordRequest $request){
 
         $data = User::where('id',Auth::id())->first();
