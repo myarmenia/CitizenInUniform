@@ -68,6 +68,7 @@ const cancelFilter = () => {
     selectedCategory.value = 'Ընտրել հարցի կատեգորիան',
     form.from_created_at = '',
     form.to_created_at = '',
+    form.searchText = ''
     sendRequest()
 }
 
@@ -205,7 +206,7 @@ const changePage =(link) =>{
                                         <div class=" d-flex justify-content-end ">
                                             <button class="btn btn-primary search mx-2 py-1 " @click="filterMessages">Ֆիլտրացիա</button>
                                             <button class="btn btn-primary search " @click="cancelFilter">Չեղարկել</button>
-                                          
+
                                         </div>
 
                                     </div>
