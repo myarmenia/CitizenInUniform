@@ -228,7 +228,8 @@ return [
     'old_password'=> 'Ընթացիկ գաղտնաբառ',
     'new_password'=>'Նոր գաղտնաբառ',
     'confirmNewPassword'=>'Հաստատել նոր գաղտնաբառ',
-    'confirmPassword'=>'Հաստատել գաղտնաբառ'
+    'confirmPassword'=>'Հաստատել գաղտնաբառ',
+    'new_password_confirmation'=>'Գատնաբառի հաստատում'
 
 
 
