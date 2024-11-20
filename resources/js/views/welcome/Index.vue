@@ -18,13 +18,17 @@ initApi(router);
                     <div class="card">
                         <div class="card-body">
                             <div class="card-title text-center">
-                                <h3 >Համազգեստով քաղաքացի</h3>
+                                <img src="../../../../public/assets/img/logo.png" alt="log" id="logo" style="width: 120px;">
+                                <h6>Համազգեստով քաղաքացի</h6>
                             </div>
-                            <h5 class="card-title">Բարիգալուստ {{userMe.name}} {{userMe.surname}}</h5>
+                            <h5 class="card-title text-center">Բարի գալուստ {{userMe.name}} {{userMe.surname}}</h5>
                         </div>
                     </div><!-- End Default Card -->
                 </div>
             </div>
         </section>
+
+
+
     </main>
 </template>
