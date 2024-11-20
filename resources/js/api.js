@@ -75,17 +75,17 @@ const initApi = (router) => {
                 // else if (error.response.status === 403) {
                 //     window.location.href ='/permission';
                 // }
-                if (error.response) {
-                    if (error.response.status === 403) {
+                // if (error.response) {
+                //     if (error.response.status === 403) {
 
-                        toast.fire({ icon: 'error', title: 'Դուք չունեք բավարար թույլատվությունը' });
-                        router.push('/permission');
-                    } else if (error.response.data.errors) {
-                        errors.value = error.response.data.errors;
-                    }
-                } else {
-                    console.error('Unexpected error:', error);
-                }
+                //         toast.fire({ icon: 'error', title: 'Դուք չունեք բավարար թույլատվությունը' });
+                //         router.push('/permission');
+                //     } else if (error.response.data.errors) {
+                //         errors.value = error.response.data.errors;
+                //     }
+                // } else {
+                //     console.error('Unexpected error:', error);
+                // }
 
                 console.log("respons error")
                 return Promise.reject(error);
