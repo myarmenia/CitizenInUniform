@@ -5,13 +5,16 @@
     <title>Բարի գալուստ Մուտքի համակարգեր</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f9f9f9;">
+    <img src="{{$message->embed('assets/img/logo.png')}}" alt="log" id="logo" style="width: 64px">
+    <h6 style="color:black; margin-top: 0">Համազգեստով քաղաքացի</h6>
     <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
             <td align="center" style="padding: 20px;">
                 <table width="600px" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; background-color: white;">
                     <tr>
                         <td style="padding: 20px; text-align: left;">
-                            {{-- <img src="https://manage.museumsarmenia.am/assets/img/mail-img/mobile-museum-logo.png" alt="Museum Logo" style="width: 130px; height: auto;"> --}}
+                            <img src="{{$message->embed('assets/img/logo.png')}}" alt="log" id="logo" style="width: 64px">
+                            <h6 style="color:black; margin-top: 0">Համազգեստով քաղաքացի</h6>
                         </td>
                     </tr>
                     <tr>

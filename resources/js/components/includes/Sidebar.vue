@@ -1,12 +1,38 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 import { useGoverningBodies } from "../../sidebar";
+import api, { initApi } from "../../api";
 import {me} from "../../me";
 
 const router = useRouter();
 
 const { governingBodies } = useGoverningBodies(router);
 const {userMe} = me(router)
+const emailMessageCount = ref()
+const chatMessageCount = ref()
+
+onMounted(async () => {
+    getUnAmsweredEmailMessages()
+})
+
+const getUnAmsweredEmailMessages = async () => {
+
+    let response = api.value.get ( '/api/auth/get-messages-counts')
+    .then((response) => {
+
+        let result = response.data.result
+
+        emailMessageCount.value = result.email_messages_count
+        chatMessageCount.value = result.chat_messages_count
+
+    })
+}
+
+window.Echo.channel('messages-count').listen('MessagesEvent', (e) => {
+    console.log(e)
+     e.type == 'email_message' ? emailMessageCount.value = e.count : chatMessageCount.value = e.count
+});
 
 </script>
 
@@ -87,6 +113,7 @@ const {userMe} = me(router)
                 <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('email-messages.'))}" :to="{name: 'email-messages.index'}">
                     <i class="ri-mail-line"></i>
                     <span>Նամակագրություն</span>
+                    <span class="badge badge-number mx-4" :class="emailMessageCount < 3  ?  'bg-primary' : (emailMessageCount > 2 && emailMessageCount < 5 ? 'bg-warning' : 'bg-danger')">{{ emailMessageCount }}</span>
                 </router-link>
             </li>
             <li class="nav-item">
@@ -100,6 +127,7 @@ const {userMe} = me(router)
                 <a class="nav-link collapsed"  href="https://citizenw.trigger.ltd/chatpage" target="_blank" rel="noopener noreferrer">
                     <i class="bi bi-chat-left-dots"></i>
                     <span>Կենդանի զրույց</span>
+                    <span class="badge  badge-number mx-4" :class="chatMessageCount < 3  ?  'bg-primary' : (chatMessageCount > 2 && chatMessageCount < 5 ? 'bg-warning' : 'bg-danger')">{{ chatMessageCount }}</span>
                 </a>
             </li>
 
