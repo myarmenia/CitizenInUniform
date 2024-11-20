@@ -30,7 +30,7 @@ const getUnAmsweredEmailMessages = async () => {
 }
 
 window.Echo.channel('messages-count').listen('MessagesEvent', (e) => {
-    console.log(e)
+    // console.log(e)
      e.type == 'email_message' ? emailMessageCount.value = e.count : chatMessageCount.value = e.count
 });
 
