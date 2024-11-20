@@ -19,14 +19,14 @@ const sendResetLink = () =>{
 
 console.log(form)
     errors.value = {};
-    
+
     axios.post('/api/password/forgot',form)
     .then((response)=>{
         console.log(response.data.message)
         messages.value=response.data.message
 
-        // router.push('/faq-category-subcategory')
-        // toast.fire({icon:"success",title:"Գործողությունը հաջողությամբ կատարված է"})
+        
+        toast.fire({icon:"success",title:messages.value})
     })
      .catch((error) => {
 
@@ -46,63 +46,41 @@ console.log(form)
 
 </script>
 <template>
-     <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-
-              <div class="d-flex justify-content-center py-4">
-                <!-- <a href="index.html" class="logo d-flex align-items-center w-auto">
-                  <img src="{{ asset('assets/img/logo.png') }}" alt="">
-                  <span class="d-none d-lg-block">NiceAdmin</span>
-                </a> -->
-              </div><!-- End Logo -->
-
-              <div class="card mb-3">
-
-                <div class="card-body">
-
-                        <div v-if="messages" class="alert alert-success" role="alert">
-                            {{ messages }}
-                        </div>
-
-
-                  <div class="pt-4 pb-2">
-                    <h6 class="card-title text-center pb-0 fs-5">Գաղտնաբառի վերականգնում </h6>
-
-                  </div>
-                  <!-- <form  class="row g-3 needs-validation" method="POST" action="" novalidate> -->
-
-                    <div class="col-12">
-
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="email"  class="form-control"
-                               placeholder="Մուտքագրեք Ձեր էլ․ հասցեն"
-
-                               v-model="form.email"
-
-                               >
-                        <div class="invalid-feedback">Մուտքագրեք Ձեր Էլ․հասցեն</div>
-                      </div>
-                    </div>
-                    <div  v-if="errors.email" class="mb-3 row justify-content-start">
-                        <div class="col-sm-9 text-danger fts-14">{{ errors.email }}</div>
+    <main id="main" class="main">
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+                <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Գաղտնաբառի վերականգնում</h5>
+                                </div>
+                                <div  class="row g-3 needs-validation"  novalidate>
+                                    <div class="col-12">
+                                        <label for="yourUsername" class="form-label">Էլ․հասցե</label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                            <input type="email" v-model="form.email" class="form-control"   required autocomplete="email" autofocus>
                                         </div>
-                    <div class="col-12 d-flex justify-content-center">
+                                        <div  v-if="errors.email" class="mb-3 row justify-content-start">
+                                            <div class="col-sm-9 text-danger fts-14">{{ errors.email }}</div>
+                                        </div>
+                                    </div>
 
-                                <button  @click.prevent="sendResetLink" class="btn btn-primary mt-3">
-                                    Ուղարկեք վերականգնման հղումը
-                                </button>
+                                    <div class="col-12 justify-content-center" >
+                                        <button  @click.prevent="sendResetLink" class="btn btn-primary mt-3">
+                                            Ուղարկեք վերականգնման հղումը
+                                        </button>
+                                    </div>
 
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  <!-- </form> -->
-
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-    </section>
+                </div>
+            </section>
+    </main>
 
 </template>

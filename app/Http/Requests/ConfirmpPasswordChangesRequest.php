@@ -24,13 +24,18 @@ class ConfirmpPasswordChangesRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd($this->new_password);
+
         $strongness = PasswordBlackList::all()->pluck('password')->toArray();
         $user = User::where('email',$this->email)->first();
+
 
         $rules = [
             'new_password' => [
                 function ($attribute, $value, $fail) use ($strongness,$user) {
+                    if (!$user) {
+                        $fail('Օգտատերը չի գտնվել');
+                        return;
+                    }
 
                     if (in_array($value, $strongness)) {
                         $fail('Գաղտնաբառը թույլ է: Խնդրում ենք ստեղծել ավելի բարդ գաղտնաբառ:');
@@ -48,6 +53,16 @@ class ConfirmpPasswordChangesRequest extends FormRequest
                 'regex:/[0-9]/',
 
             ],
+            'new_password_confirmation' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+
+            ],
+
         ];
 
 
