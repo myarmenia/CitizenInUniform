@@ -10,16 +10,22 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class ActionEvent implements ShouldBroadcast
+class MessagesEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(public string $buttonId, public string $emoji)
+    public $count;
+    public $type;
+
+    public function __construct(int $count, string $type)
     {
-        //
+
+        $this->count = $count;
+        $this->type = $type;
+
     }
 
     /**
@@ -30,7 +36,7 @@ class ActionEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('action'),
+            new Channel('messages-count'),
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 
+use App\Interfaces\AllMessageInterface;
 use App\Interfaces\CategoryInterface;
 use App\Interfaces\EmailMessageAnswerInterface;
 use App\Interfaces\EmailMessageInterface;
@@ -16,7 +17,12 @@ use App\Interfaces\MobileUserInterface;
 use App\Interfaces\SettingInterface;
 use App\Interfaces\SubCategoryInterface;
 use App\Interfaces\UserRepositoryInterface;
+use App\Models\EmailMessages;
+use App\Models\Message;
 use App\Models\MessageCategory;
+use App\Observers\ChatMessageObserver;
+use App\Observers\EmailMessagesObserver;
+use App\Repositories\AllMessageRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\EmailMessageAnswerRepository;
 use App\Repositories\EmailMessageRepository;
@@ -54,6 +60,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EmailMessageInterface::class, EmailMessageRepository::class);
         $this->app->bind(EmailMessageAnswerInterface::class, EmailMessageAnswerRepository::class);
         $this->app->bind( MessageCategoryInterface::class, MessageCategoryRepository::class);
+        $this->app->bind( AllMessageInterface::class, AllMessageRepository::class);
 
 
         // ====================== hiny ================================
@@ -70,5 +77,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+        EmailMessages::observe(EmailMessagesObserver::class);
+        Message::observe(ChatMessageObserver::class);
+
     }
 }
