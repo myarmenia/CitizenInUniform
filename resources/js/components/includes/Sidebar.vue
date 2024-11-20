@@ -34,6 +34,18 @@ window.Echo.channel('messages-count').listen('MessagesEvent', (e) => {
      e.type == 'email_message' ? emailMessageCount.value = e.count : chatMessageCount.value = e.count
 });
 
+
+
+const realChat = () =>{
+    const accessToken = localStorage.getItem('access_token'); // Replace with actual token
+
+    const url = `https://citizenw.trigger.ltd/auth?token=${accessToken}`;
+    // Open the URL in a new tab
+    window.open(url, '_blank');
+
+}
+
+
 </script>
 
 <template>
@@ -102,7 +114,7 @@ window.Echo.channel('messages-count').listen('MessagesEvent', (e) => {
             </li>
 
             <li v-for = "role in userMe.roles" :key="role.id" class="nav-item">
-                <router-link v-if="role.name=='super_admin' || role.name=='admin'"  class="nav-link" :class="{'collapsed': !($route.name && $route.name.startsWith('users.index.'))}" :to="{name: 'users.index'}">
+                <router-link v-if="role.name=='super_admin' || role.name=='admin'"  class="nav-link" :class="{'collapsed': !($route.name && $route.name.startsWith('users.index'))}" :to="{name: 'users.index'}">
                     <i class="bi bi-person"></i>
                     <span>Օգտատերեր </span>
 
@@ -124,11 +136,12 @@ window.Echo.channel('messages-count').listen('MessagesEvent', (e) => {
                 </router-link>
             </li>
             <li>
-                <a class="nav-link collapsed"  href="https://citizenw.trigger.ltd/chatpage" target="_blank" rel="noopener noreferrer">
+                <div class="nav-link collapsed" @click.prevent="realChat"
+                  target="_blank" rel="noopener noreferrer">
                     <i class="bi bi-chat-left-dots"></i>
                     <span>Կենդանի զրույց</span>
                     <span class="badge  badge-number mx-4" :class="chatMessageCount < 3  ?  'bg-primary' : (chatMessageCount > 2 && chatMessageCount < 5 ? 'bg-warning' : 'bg-danger')">{{ chatMessageCount }}</span>
-                </a>
+                </div>
             </li>
 
         </ul>

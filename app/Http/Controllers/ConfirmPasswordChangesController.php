@@ -1,30 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\ConfirmpPasswordChangesRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class ChangePasswordController extends BaseController
-
+class ConfirmPasswordChangesController extends Controller
 {
-    
-    public function index(ChangePasswordRequest $request){
+    public function __invoke(ConfirmpPasswordChangesRequest $request){
 
-        $data = User::where('id',Auth::id())->first();
+        $data = User::where('email',$request->email)->first();
 
         $data->password = $request->new_password;
         $data->save();
         $user=User::findOrFail($data->id);
         $user->password_changes_at = $data->updated_at;
         $user->save();
-
-
-
         return response()->json(['message' => 'Successfully logged out'],200);
-
     }
 }

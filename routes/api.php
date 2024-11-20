@@ -17,8 +17,11 @@ use App\Http\Controllers\Api\Mobile\MobileUserController;
 use App\Http\Controllers\Api\Settings\SettingController;
 use App\Http\Controllers\Api\Turnstile\EntryCodeController;
 use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChangeStatusController;
+use App\Http\Controllers\ConfirmPasswordChangesController;
 use App\Http\Controllers\DeleteItemController;
 use App\Http\Controllers\FaqCategoryController;
 use App\Http\Controllers\RoleController;
@@ -31,6 +34,11 @@ use Illuminate\Support\Facades\Route;
 
 // Route::post('send-notification', SendNotificationToUserController::class);
 
+
+    Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
+    // Route::put('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::post('/confirm-password-changes', ConfirmPasswordChangesController::class);
 
 
 // ======================== Mobile ======================================

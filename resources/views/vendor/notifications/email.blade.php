@@ -5,15 +5,13 @@
     <title>Բարի գալուստ Մուտքի համակարգեր</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f9f9f9;">
-    <img src="{{$message->embed('assets/img/logo.png')}}" alt="log" id="logo" style="width: 64px">
-    <h6 style="color:black; margin-top: 0">Համազգեստով քաղաքացի</h6>
     <table width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr>
             <td align="center" style="padding: 20px;">
                 <table width="600px" cellpadding="0" cellspacing="0" border="0" style="max-width: 600px; background-color: white;">
                     <tr>
-                        <td style="padding: 20px; text-align: left;">
-                            <img src="{{$message->embed('assets/img/logo.png')}}" alt="log" id="logo" style="width: 64px">
+                        <td style="padding: 20px; text-align: center;">
+                            <img src="https://citizen.trigger.ltd/assets/img/logo.png" alt="log" id="logo" style="width: 64px">
                             <h6 style="color:black; margin-top: 0">Համազգեստով քաղաքացի</h6>
                         </td>
                     </tr>
