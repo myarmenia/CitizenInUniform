@@ -60,6 +60,7 @@ const login = async () => {
                                         <input type="email" v-model="form.email" class="form-control"   required autocomplete="email" autofocus>
                                     </div>
                                     <div  v-if="errors.email" class="mb-3 row justify-content-start">
+
                                         <div class="col-sm-9 text-danger fts-14">{{ errors.email }}</div>
                                     </div>
                                 </div>
@@ -78,9 +79,9 @@ const login = async () => {
                                 <div class="col-12">
                                 <button class="btn btn-primary w-100" @click.prevent = "login">Մուտք</button>
 
-                                    <!-- <router-link class="btn btn-link" to="password/reset">
+                                    <router-link class="btn btn-link" to="password/reset">
                                         Մոռացել եք գաղտնաբառը?
-                                    </router-link> -->
+                                    </router-link>
 
                                 </div>
 

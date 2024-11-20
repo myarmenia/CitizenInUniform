@@ -17,5 +17,6 @@ class ConfirmPasswordChangesController extends Controller
         $user=User::findOrFail($data->id);
         $user->password_changes_at = $data->updated_at;
         $user->save();
+        return response()->json(['message' => 'Successfully logged out'],200);
     }
 }

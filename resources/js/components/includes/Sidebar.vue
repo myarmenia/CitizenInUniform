@@ -12,7 +12,7 @@ const {userMe} = me(router)
 
 const realChat = () =>{
     const accessToken = localStorage.getItem('access_token'); // Replace with actual token
-  
+
     const url = `https://citizenw.trigger.ltd/auth?token=${accessToken}`;
     // Open the URL in a new tab
     window.open(url, '_blank');
@@ -88,7 +88,7 @@ const realChat = () =>{
             </li>
 
             <li v-for = "role in userMe.roles" :key="role.id" class="nav-item">
-                <router-link v-if="role.name=='super_admin' || role.name=='admin'"  class="nav-link" :class="{'collapsed': !($route.name && $route.name.startsWith('users.index.'))}" :to="{name: 'users.index'}">
+                <router-link v-if="role.name=='super_admin' || role.name=='admin'"  class="nav-link" :class="{'collapsed': !($route.name && $route.name.startsWith('users.index'))}" :to="{name: 'users.index'}">
                     <i class="bi bi-person"></i>
                     <span>Օգտատերեր </span>
 
