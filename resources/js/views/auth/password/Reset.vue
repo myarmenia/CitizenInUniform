@@ -72,9 +72,11 @@ console.log(form)
 
                 <div class="card-body">
 
-                    <div v-for="(error, index) in errors" class="alert alert-danger" role="alert">
+                    <!-- <div v-for="(error, index) in errors" class="alert alert-danger" role="alert">
+
                         {{ error }}
-                    </div>
+                    </div> -->
+                   
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Գաղտնաբառի փոփոխում</h5>
