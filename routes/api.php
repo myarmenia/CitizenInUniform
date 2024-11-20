@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AllMessages\AllMessagesController;
 use App\Http\Controllers\Api\Category\CategoryController;
 use App\Http\Controllers\Api\Category\SubCategoryController;
 use App\Http\Controllers\Api\ChangePasswordController;
@@ -92,6 +93,8 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::post('change-password',[ChangePasswordController::class,'index']);
 
         Route::apiResource('messages-categories',MessageCategoryController::class);
+        Route::get('get-messages-counts', AllMessagesController::class);
+
 
         Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
         Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
