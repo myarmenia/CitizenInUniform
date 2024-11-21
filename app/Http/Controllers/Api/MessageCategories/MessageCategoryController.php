@@ -107,4 +107,11 @@ class MessageCategoryController extends BaseController
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
+
+    public function categoryWithTrashed(){
+
+        $data = $this->service->withTrashed();
+     
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+    }
 }

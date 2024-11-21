@@ -144,6 +144,13 @@ const realChat = () =>{
                 </div>
             </li>
 
+            <li class="nav-item">
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('reports.'))}" :to="{name: 'reports.index'}">
+                    <i class="bi bi-bar-chart"></i>
+                    <span>Հաշվետվություն</span>
+                </router-link>
+            </li>
+
         </ul>
         <!-- {{ userMe.roles }} -->
     </aside>
