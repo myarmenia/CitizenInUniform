@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('phone_calls', function (Blueprint $table) {
             $table->id();
+            $table->string('phone_number')->nullable();
+
             $table->bigInteger('mobile_user_id')->unsigned();
             $table->foreign('mobile_user_id')->references('id')->on('mobile_users')->onDelete('cascade');
+
+            $table->bigInteger('governing_body_id')->unsigned();
+            $table->foreign('governing_body_id')->references('id')->on('governing_bodies')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
