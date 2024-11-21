@@ -14,6 +14,7 @@ use App\Interfaces\FileInterface;
 use App\Interfaces\GoverningBodyInterface;
 use App\Interfaces\MessageCategoryInterface;
 use App\Interfaces\MobileUserInterface;
+use App\Interfaces\PhoneCallInterface;
 use App\Interfaces\SettingInterface;
 use App\Interfaces\SubCategoryInterface;
 use App\Interfaces\UserRepositoryInterface;
@@ -33,6 +34,7 @@ use App\Repositories\FileRepository;
 use App\Repositories\GoverningBoryRepository;
 use App\Repositories\MessageCategoryRepository;
 use App\Repositories\MobileUserRepository;
+use App\Repositories\PhoneCallRepository;
 use App\Repositories\SettingRepository;
 use App\Repositories\SubCategoryRepository;
 use App\Repositories\UserRepository;
@@ -61,6 +63,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EmailMessageAnswerInterface::class, EmailMessageAnswerRepository::class);
         $this->app->bind( MessageCategoryInterface::class, MessageCategoryRepository::class);
         $this->app->bind( AllMessageInterface::class, AllMessageRepository::class);
+        $this->app->bind(PhoneCallInterface::class, PhoneCallRepository::class);
 
 
         // ====================== hiny ================================
