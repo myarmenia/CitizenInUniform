@@ -11,12 +11,11 @@ use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryContro
 
 use App\Http\Controllers\Api\GoverningBodies\GoverningBodyController;
 use App\Http\Controllers\Api\MessageCategories\MessageCategoryController;
+use App\Http\Controllers\Api\Mobile\PhoneCallController;
 use App\Http\Controllers\Api\Notifications\NotificationController;
 use App\Http\Controllers\Api\Notifications\SendNotificationToUserController;
 use App\Http\Controllers\Api\Mobile\MobileUserController;
 use App\Http\Controllers\Api\Settings\SettingController;
-use App\Http\Controllers\Api\Turnstile\EntryCodeController;
-use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
@@ -51,6 +50,7 @@ Route::group(['prefix' => 'mobile'], function ($router) {
 
     Route::get('sub-category/{id}/show', [SubCategoryController::class, 'mobileSingleSubCategory']);
     Route::post('email-messages/store', [EmailMessgeController::class, 'store']);
+    Route::post('phone-call/store', [PhoneCallController::class, 'store']);
 
 });
 
