@@ -28,4 +28,8 @@ class MessageCategoryService
         return $this->messageCategoryRepository->update($data->toArray(),$id);
 
     }
+
+    public function withTrashed(){
+        return $this->messageCategoryRepository->withTrashed();
+    }
 }
