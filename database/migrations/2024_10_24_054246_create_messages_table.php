@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('room_id')->unsigned();
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
-            $table->bigInteger('writer_id');
-            $table->enum('type', ['mobile', 'web']);
+            $table->enum('writer', ['user', 'operator', 'closed']);
             $table->mediumText('content');
             $table->boolean('read');
             $table->softDeletes();
