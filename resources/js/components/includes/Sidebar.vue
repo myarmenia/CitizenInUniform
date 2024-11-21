@@ -41,8 +41,7 @@ const realChat = () =>{
 
     const url = `https://citizenw.trigger.ltd/auth?token=${accessToken}`;
     // Open the URL in a new tab
-    window.open(url, '_blank');
-
+    window.location.href = url
 }
 
 

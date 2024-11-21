@@ -23,7 +23,7 @@ const initApi = (router) => {
                 console.log(error.response)
                 if(error.response.status==401){
                     console.log('status')
-                    router.replace('/users/login');
+                    router.replace('/login');
                 }
                 console.log(66666)
                 console.log(error.response.data.message)
@@ -78,7 +78,7 @@ const initApi = (router) => {
 
                         toast.fire({ icon: 'error', title: 'Դուք չունեք բավարար թույլատվությունը' });
                         router.push('/permission');
-                    } 
+                    }
                 } else {
                     console.error('Unexpected error:', error);
                 }
