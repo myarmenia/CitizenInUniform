@@ -23,16 +23,16 @@ class ReportService
     }
 
 
-    public function emailMessages($data){
+    // public function emailMessages($data){
 
-        if(isset)
+    //     if(isset)
 
-    }
+    // }
 
-    public function chatMessages($data)
-    {
+    // public function chatMessages($data)
+    // {
 
-    }
+    // }
 
 
 
