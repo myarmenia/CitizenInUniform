@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('mobile_user_id')->unsigned();
-            $table->foreign('mobile_user_id')->references('id')->on('mobile_users')->onDelete('cascade');
+            $table->foreign('mobile_user_id')->references('id')->on('mobile_user_infos')->onDelete('cascade');
 
             $table->bigInteger('message_category_id')->unsigned();
             $table->foreign('message_category_id')->references('id')->on('message_categories')->onDelete('cascade');

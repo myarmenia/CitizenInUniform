@@ -31,5 +31,11 @@ class MessageCategoryRepository implements MessageCategoryInterface{
     }
 
 
+    public function withTrashed(){
+
+        return MessageCategory::withTrashed()->get();
+    }
+
+
 
 }

@@ -11,12 +11,12 @@ use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryContro
 
 use App\Http\Controllers\Api\GoverningBodies\GoverningBodyController;
 use App\Http\Controllers\Api\MessageCategories\MessageCategoryController;
+use App\Http\Controllers\Api\Mobile\PhoneCallController;
 use App\Http\Controllers\Api\Notifications\NotificationController;
 use App\Http\Controllers\Api\Notifications\SendNotificationToUserController;
 use App\Http\Controllers\Api\Mobile\MobileUserController;
+use App\Http\Controllers\Api\Reports\ReportController;
 use App\Http\Controllers\Api\Settings\SettingController;
-use App\Http\Controllers\Api\Turnstile\EntryCodeController;
-use App\Http\Controllers\Api\Turnstile\EntryExitSystemController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
@@ -48,9 +48,11 @@ Route::group(['prefix' => 'mobile'], function ($router) {
     Route::get('categories', [CategoryController::class, 'mobileCategories']);
     Route::get('governing-bodies', [GoverningBodyController::class, 'mobileIndex']);
     Route::get('message-categories', [MessageCategoryController::class, 'mobileIndex']);
+    Route::get('message-categories-with-trashed', [MessageCategoryController::class, 'categoryWithTrashed']);
 
     Route::get('sub-category/{id}/show', [SubCategoryController::class, 'mobileSingleSubCategory']);
     Route::post('email-messages/store', [EmailMessgeController::class, 'store']);
+    Route::post('phone-call/store', [PhoneCallController::class, 'store']);
 
 });
 
@@ -94,6 +96,8 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
         Route::apiResource('messages-categories',MessageCategoryController::class);
         Route::get('get-messages-counts', AllMessagesController::class);
+        Route::post('reports', [ReportController::class, 'report']);
+
 
 
         Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
