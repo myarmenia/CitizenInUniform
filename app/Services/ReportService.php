@@ -23,5 +23,17 @@ class ReportService
     }
 
 
+    public function emailMessages($data){
+
+        if(isset)
+
+    }
+
+    public function chatMessages($data)
+    {
+
+    }
+
+
 
 }
