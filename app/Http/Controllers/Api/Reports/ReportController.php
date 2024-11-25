@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Api\Reports;
 
 use App\DTO\ReportDto;
+use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Services\ReportService;
 use Illuminate\Http\Request;
 
-class ReportController extends Controller
+class ReportController extends BaseController
 {
     public function __construct(protected ReportService $service)
     {
