@@ -12,7 +12,7 @@ class EmailMessages extends Model
 {
     use SoftDeletes, FilterTrait;
     protected $guarded = [];
-    protected $defaultFillableFields = ['message_category_id'];
+    protected $defaultFillableFields = ['message_category_id', 'governing_body_id'];
     protected $boolFilterFields = ['has_answer'];
     protected $multiLikeFilterFields = ['email', 'content']; // mek dashtov search-i field-er
     protected $multiLikeField = ['searchText']; // mek dashtov search
