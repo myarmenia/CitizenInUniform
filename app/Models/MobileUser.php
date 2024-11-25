@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\FilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -10,8 +11,9 @@ use Illuminate\Notifications\Notifiable;
 
 class MobileUser extends Model
 {
-    use SoftDeletes, Notifiable;
+    use SoftDeletes, Notifiable, FilterTrait;
     protected $guarded = [];
+    protected $defaultFillableFields = ['type'];
 
     public function routeNotificationForFcm()
     {
