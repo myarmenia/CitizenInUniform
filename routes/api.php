@@ -90,7 +90,7 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
-        Route::get('all-roles',[RoleController::class,'all']); Route::get('all-roles',[RoleController::class,'all']);
+        Route::get('all-roles',[RoleController::class,'all']);
 
         Route::post('change-password',[ChangePasswordController::class,'index']);
 
