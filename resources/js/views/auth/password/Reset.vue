@@ -12,8 +12,8 @@ const route=useRoute()
 const form = reactive({
     email:'',
     token:'',
-    new_password:'',
-    new_password_confirmation: '',
+    password:'',
+    password_confirmation: '',
 
 
 
@@ -30,7 +30,7 @@ console.log(form)
     errors.value = {};
 
 
-    axios.post('/api/confirm-password-changes',form)
+    axios.put('/api/password/reset',form)
     .then((response)=>{
         console.log(response.data.message)
         messages.value=response.data.message
@@ -56,7 +56,7 @@ console.log(form)
 </script>
 <template>
 
-     <main id="main" class="main">
+     <main>
        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
             <div class="container">
             <div class="row justify-content-center">
@@ -81,10 +81,10 @@ console.log(form)
                                     <label for="yourPassword" class="form-label">Գաղտնաբառ</label>
                                     <div class="input-group has-validation">
 
-                                        <input type="password" v-model="form.new_password" class="form-control" id="yourPassword" required>
+                                        <input type="password" v-model="form.password" class="form-control" id="yourPassword" required>
                                     </div>
-                                    <div  v-if="errors.new_password" class="mb-3 row justify-content-start">
-                                        <div class="col-sm-9 text-danger fts-14">{{ errors.new_password }}</div>
+                                    <div  v-if="errors.password" class="mb-3 row justify-content-start">
+                                        <div class="col-sm-9 text-danger fts-14">{{ errors.password }}</div>
                                     </div>
 
 
@@ -93,10 +93,10 @@ console.log(form)
                                     <label for="yourPassword" class="form-label">Գաղտնաբառի հաստատում</label>
                                     <div class="input-group has-validation">
 
-                                        <input type="password" v-model="form.new_password_confirmation" class="form-control" id="yourPassword" required>
+                                        <input type="password" v-model="form.password_confirmation" class="form-control" id="yourPassword" required>
                                     </div>
-                                    <div  v-if="errors.new_password" class="mb-3 row justify-content-start">
-                                        <div class="col-sm-9 text-danger fts-14">{{ errors.new_password}}</div>
+                                    <div  v-if="errors.password" class="mb-3 row justify-content-start">
+                                        <div class="col-sm-9 text-danger fts-14">{{ errors.password}}</div>
                                     </div>
 
 

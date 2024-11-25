@@ -37,7 +37,7 @@ use Illuminate\Support\Facades\Route;
 
     Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
     Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
-    // Route::put('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+    Route::put('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
     Route::post('/confirm-password-changes', ConfirmPasswordChangesController::class);
 
 
