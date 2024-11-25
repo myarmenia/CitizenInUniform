@@ -10,6 +10,7 @@ const route = useRoute()
 initApi(router); // Initialize the API with the router
 
 let report = ref([])
+let allMessage = ref('-')
 let emailCategories = ref([])
 const selectedCategory = ref('Նամակի կատեգորիան');
 const messageType = ref('Հաղորթագրության տեսակ')
@@ -51,7 +52,7 @@ function handleSelectionChange(selectionKey) {
 
 
 const filterMessages = () => {
-    console.log(form)
+
     sendRequest()
 }
 
@@ -59,9 +60,9 @@ const cancelFilter = () => {
     form.message_category_id = ''
     form.message_type = ''
     form.governing_body_id = '',
-    selectedCategory.value = 'Ընտրել հարցի կատեգորիան'
-    messageType = 'Հաղորթագրության տեսակ'
-    governingBody = 'Պետական մարմին'
+    selectedCategory.value = 'Նամակի կատեգորիան'
+    messageType.value = 'Հաղորթագրության տեսակ'
+    governingBody.value = 'Պետական մարմին'
     form.from_created_at = ''
     form.to_created_at = ''
 
@@ -73,11 +74,13 @@ const sendRequest = async () => {
     try {
 
         const response = await api.value.post('/api/auth/reports', form);
+        let result = response.data.result
+        console.log(result)
+            report.value = result
+            allMessage.value = (!isNaN(result.message_count) ? result.message_count : 0) +
+            (!isNaN(result.chat_count) ? result.chat_count : 0) +
+            (!isNaN(result.call_count) ? result.call_count : 0)
 
-        lastPage.value = response.data.result.last_page;
-        messages.value = response.data.result.data;
-        statusArray.value = response.data.result.data.map(item => item.status);
-        links.value = response.data.result.links;
 
     } catch (error) {
         console.error("Error fetching messages:", error);
@@ -85,19 +88,10 @@ const sendRequest = async () => {
 };
 
 
-// watch(
-//     () => form.has_answer,
-//     () => {
-
-
-//         sendRequest()
-//     }
-// );
-
 
 onMounted(() => {
     getEmailCategies()
-    // sendRequest()
+    sendRequest()
 });
 
 
@@ -178,36 +172,33 @@ onMounted(() => {
 
 
                             </div>
-                            <!-- <table class="table table-bordered">
+                            <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Հ/Հ</th>
                                         <th>Նամակներ</th>
                                         <th>Չատ</th>
                                         <th>Զանգեր</th>
-                                        <th>Ընդ․ ներբեռնում</th>
                                         <th>IOS ներբեռնում</th>
                                         <th>Android ներբեռնում</th>
-                                        <th width="10%">Ընդամենը</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(item, index) in report">
-                                        <td>{{ ++index }}</td>
-                                        <td>{{ item.email }}</td>
-                                        <td>{{ item.chat }}</td>
-                                        <td>{{ item.call }}</td>
-                                        <td>{{ item.download_all }}</td>
-                                        <td>{{ item.download_ios }}</td>
-                                        <td>{{ item.download_android }}</td>
-                                        <td>{{ item.sum }}</td>
+                                    <tr >
+                                        <td>{{ report.message_count }}</td>
+                                        <td>{{ report.chat_count }}</td>
+                                        <td>{{ report.call_count }}</td>
+                                        <td>{{ report.ios_download_count }}</td>
+                                        <td>{{ report.android_download_count }}</td>
+                                    </tr>
+                                    <tr >
+                                        <td colspan="3"> Ընդամենը <span class="fw-bold mx-2">{{allMessage}} </span></td>
 
+                                        <td colspan="2">Ընդամենը <span class="fw-bold mx-2">{{ report.all_download_count }} </span></td>
                                     </tr>
                                 </tbody>
-                            </table> -->
+                            </table>
 
                             <!-- End Bordered Table -->
-
 
                         </div>
                     </div>
