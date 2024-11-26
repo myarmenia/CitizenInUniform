@@ -36,7 +36,7 @@ class AllMessageRepository implements AllMessageInterface
     {
         $governing_id = MyHelper::getGoverningBodyIdFromOperator();
 
-        $query = Message::where('read', 0)->where('writer', 'user');
+        $query = Message::where('readed', 0)->where('writer', 'user');
 
         if ($governing_id != null) {
             $query->whereHas('room', function ($query) use ($governing_id) {
