@@ -156,9 +156,9 @@ onMounted(() => {
                                             <select class="form-select"  v-model="actionType"  @change="handleSelectionChange('action_type')" >
                                                 <option disabled selected>Գործողության տեսակ</option>
                                                 <option value="">Բոլորը </option>
-                                                <option value="created">Ստողծել </option>
-                                                <option value="updated">Փոփոխել </option>
-                                                <option value="deleted">Ջնջել </option>
+                                                <option value="created">Ստեղծված </option>
+                                                <option value="updated">Փոփոխված </option>
+                                                <option value="deleted">Ջնջված </option>
                                             </select>
                                         </div>
 
