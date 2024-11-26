@@ -60,7 +60,7 @@ const realChat = () =>{
 
                   class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('categories.'))}" :to="{name: 'categories.index'}">
                     <i class="bi bi-menu-app"></i>
-                    <span>Մենյուի բաժիններ</span>
+                    <span>Մենյուի բաժին</span>
                 </router-link>
             </li>
             <li class="nav-item" >
@@ -69,7 +69,7 @@ const realChat = () =>{
 
                     :to="{name: 'subCategories.index'}"  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('subCategories.'))}">
                     <i class="bi bi-menu-app-fill"></i>
-                    <span>Մենյուի ենթաբաժիններ</span>
+                    <span>Մենյուի ենթաբաժին</span>
                 </router-link>
             </li>
 
@@ -103,7 +103,7 @@ const realChat = () =>{
                 <router-link
                   v-if="userMe.roles?.some(role => role.name === 'super_admin' ||  role.name === 'admin' ||  role.name === 'content_manager' )"
                  :to="{name: 'governing-bodies.index'}" class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" aria-expanded="false" :class="{'collapsed': !($route.name && $route.name.startsWith('governing-bodies.'))}">
-                <i class="bi bi-bank"></i><span>Պետական կառավարման մարմիններ</span><i class="bi bi-chevron-down ms-auto"></i>
+                <i class="bi bi-bank"></i><span>Պետական մարմիններ</span><i class="bi bi-chevron-down ms-auto"></i>
                 </router-link>
 
                 <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
@@ -140,7 +140,7 @@ const realChat = () =>{
 
             <li v-for = "role in userMe.roles" :key="role.id" class="nav-item">
                 <router-link
-                  v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorMIP')"
+                  v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorPN')"
                   class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('email-messages.'))}" :to="{name: 'email-messages.index'}">
                     <i class="ri-mail-line"></i>
                     <span>Նամակագրություն</span>
@@ -153,7 +153,7 @@ const realChat = () =>{
 
                     class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('messages-categories.'))}" :to="{name: 'messages-categories.index'}">
                     <i class="ri-mail-line"></i>
-                    <span>Նամակագրության կատեգորիաներ</span>
+                    <span>Նամակագրության կատեգորիա</span>
                 </router-link>
             </li>
             <li v-for = "role in userMe.roles" :key="role.id">
@@ -176,7 +176,9 @@ const realChat = () =>{
             </li>
 
             <li class="nav-item">
-                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('log'))}" :to="{name: 'log'}">
+                <router-link
+                  v-if="userMe.roles?.some(role => role.name === 'super_admin' ||  role.name === 'admin' )"
+                 class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('log'))}" :to="{name: 'log'}">
                     <i class="bx bx-data"></i>
                     <span>Լոգավորում</span>
                 </router-link>
