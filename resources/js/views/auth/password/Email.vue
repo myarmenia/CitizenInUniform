@@ -25,7 +25,7 @@ console.log(form)
         console.log(response.data.message)
         messages.value=response.data.message
 
-        
+
         toast.fire({icon:"success",title:messages.value})
     })
      .catch((error) => {
@@ -46,7 +46,7 @@ console.log(form)
 
 </script>
 <template>
-    <main id="main" class="main">
+    <main>
         <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                 <div class="row justify-content-center">
@@ -56,7 +56,7 @@ console.log(form)
                                 <div class="pt-4 pb-2">
                                     <h5 class="card-title text-center pb-0 fs-4">Գաղտնաբառի վերականգնում</h5>
                                 </div>
-                                <div  class="row g-3 needs-validation"  novalidate>
+                                <div  class="row g-3 needs-validation d-flex justify-content-center"  novalidate>
                                     <div class="col-12">
                                         <label for="yourUsername" class="form-label">Էլ․հասցե</label>
                                         <div class="input-group has-validation">
@@ -68,7 +68,7 @@ console.log(form)
                                         </div>
                                     </div>
 
-                                    <div class="col-12 justify-content-center" >
+                                    <div >
                                         <button  @click.prevent="sendResetLink" class="btn btn-primary mt-3">
                                             Ուղարկեք վերականգնման հղումը
                                         </button>
