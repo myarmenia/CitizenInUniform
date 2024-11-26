@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\FaqCategorySubcategory\FaqCategorySubcategoryContro
 
 
 use App\Http\Controllers\Api\GoverningBodies\GoverningBodyController;
+use App\Http\Controllers\Api\Logs\LogController;
 use App\Http\Controllers\Api\MessageCategories\MessageCategoryController;
 use App\Http\Controllers\Api\Mobile\PhoneCallController;
 use App\Http\Controllers\Api\Notifications\NotificationController;
@@ -90,7 +91,9 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
         Route::resource('users', UserController::class);
         Route::resource('roles', RoleController::class);
-        Route::get('all-roles',[RoleController::class,'all']); Route::get('all-roles',[RoleController::class,'all']);
+        Route::get('all-roles', [RoleController::class, 'all']);
+        Route::get('all-roles-list', [RoleController::class, 'allRoleList']);
+
 
         Route::post('change-password',[ChangePasswordController::class,'index']);
 
@@ -98,7 +101,9 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
         Route::get('get-messages-counts', AllMessagesController::class);
         Route::post('reports', [ReportController::class, 'report']);
 
-
+        Route::group(['middleware' => ['role:super_admin|admin']], function () {
+            Route::post('logs', LogController::class);
+        });
 
         Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
         Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');

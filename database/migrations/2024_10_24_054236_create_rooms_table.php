@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
+
+            $table->bigInteger('m_user_id')->unsigned();
+            $table->foreign('m_user_id')->references('id')->on('mobile_users')->onDelete('cascade');
+
             $table->bigInteger('mobile_user_id')->unsigned();
             $table->foreign('mobile_user_id')->references('id')->on('mobile_user_infos')->onDelete('cascade');
 
