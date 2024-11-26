@@ -48,7 +48,7 @@ import {useRouter,  useRoute } from 'vue-router';
 
 </script>
 <template>
-    {{ route.name }}
+
 
     <ResetPasswordEmail v-if="route.name === 'password.reset'" />
     <ResetPasswordReset v-if=" !isAuthenticated && route.name === 'reset.password.reset'" />

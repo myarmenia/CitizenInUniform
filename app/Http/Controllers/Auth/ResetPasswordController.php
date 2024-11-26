@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ResetPasswordRequest;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
@@ -53,10 +54,10 @@ class ResetPasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function reset(Request $request)
+    public function reset(ResetPasswordRequest $request)
     {
 
-        $request->validate($this->rules(), $this->validationErrorMessages());
+        // $request->validate($this->rules(), $this->validationErrorMessages());
 
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -126,13 +127,11 @@ class ResetPasswordController extends Controller
         $this->setUserPassword($user, $password);
 
         $user->setRememberToken(Str::random(60));
+        $user->password_changes_at = now();
 
         $user->save();
 
-        //  $us=User::where('id',$user->id)->first();
-        //  $us->password_changes_at=$user->updated_at;
-        //  $us->save();
-        //  dd($user);
+       
         event(new PasswordReset($user));
 
         $this->guard()->login($user);
@@ -148,7 +147,7 @@ class ResetPasswordController extends Controller
     protected function setUserPassword($user, $password)
     {
         $user->password = Hash::make($password);
-        // $user->password_changes_at=$user->updated_at;
+
 
     }
 
