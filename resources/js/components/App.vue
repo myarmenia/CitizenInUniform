@@ -31,6 +31,7 @@ import {useRouter,  useRoute } from 'vue-router';
             // Allow unauthenticated access to reset password
             return;
         }
+
         if (!isAuthenticated.value && newRoute ==='Login') {
             console.log(1111111112)
             // Redirect unauthenticated users to login
@@ -41,11 +42,13 @@ import {useRouter,  useRoute } from 'vue-router';
 
             window.location.href='/welcome'
         }
+
     }
 );
 
 </script>
 <template>
+
 
     <ResetPasswordEmail v-if="route.name === 'password.reset'" />
     <ResetPasswordReset v-if=" !isAuthenticated && route.name === 'reset.password.reset'" />
