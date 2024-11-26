@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\BaseModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -40,6 +41,8 @@ class Category extends Model
 
             }
         });
+
+        static::observe(BaseModelObserver::class);
     }
 
 }
