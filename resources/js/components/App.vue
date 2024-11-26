@@ -12,7 +12,7 @@ import {useRouter,  useRoute } from 'vue-router';
 
     const isAuthenticated = ref(false);
     onMounted(() => {
-       
+
 
         isAuthenticated.value = !!localStorage.getItem('access_token');
     });
@@ -36,6 +36,11 @@ import {useRouter,  useRoute } from 'vue-router';
             // Redirect unauthenticated users to login
             router.push('/login' );
         }
+        if (isAuthenticated.value && newRoute ==='Login') {
+            // localStorage.removeItem('access_token');
+
+            window.location.href='/welcome'
+        }
     }
 );
 
@@ -44,7 +49,7 @@ import {useRouter,  useRoute } from 'vue-router';
 
     <ResetPasswordEmail v-if="route.name === 'password.reset'" />
     <ResetPasswordReset v-if=" !isAuthenticated && route.name === 'reset.password.reset'" />
-    <AdminLayout v-if="isAuthenticated && route.name !== 'password.reset'" />
+    <AdminLayout v-if="isAuthenticated && route.name !== 'password.reset' && route.name !== 'Login'" />
     <Login  v-if="!isAuthenticated && route.name === 'Login'" />
 
 

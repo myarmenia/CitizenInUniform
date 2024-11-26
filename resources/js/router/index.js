@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from  "vue-router";
 import AdminLayout from '../components/AdminLayout.vue'
+import notFound from '../components/notFound.vue'
 
 import Categories from '../views/categories/Index.vue'
 import CategoriesCreate from '../views/categories/Create.vue'
@@ -37,15 +38,11 @@ import ChangePasswordIndex from '../views/change-password/Index.vue'
 import EmailMessage from '../views/email-messages/Index.vue'
 import EmailMessageEdit from '../views/email-messages/Edit.vue'
 
-// import PasswordResetIndex from '../views/change-password/Index.vue'
-
 import MessageCategoriesIndex from '../views/messages-categories/Index.vue'
 import MessageCategoriesCreate from '../views/messages-categories/Create.vue'
 import MessageCategoriesEdit from '../views/messages-categories/Edit.vue'
 
 import resetPasswordEmail from '../views/auth/password/Email.vue'
-
-
 import ResetPasswordReset from '../views/auth/password/Reset.vue'
 
 
@@ -53,6 +50,9 @@ import ResetPasswordReset from '../views/auth/password/Reset.vue'
 import Welcome from '../views/welcome/Index.vue'
 import Report from '../views/reports/Index.vue'
 import Log from '../views/logs/Index.vue'
+
+
+
 
 
     const usersRoute = [
@@ -84,6 +84,11 @@ import Log from '../views/logs/Index.vue'
             path: '/permission',
             name: 'permission.index',
             component: PermissionIndex
+        },
+        {
+            path:'/:any(.*)*',
+            name:'notfound',
+            component: notFound
         }
     ]
 
@@ -282,7 +287,6 @@ import Log from '../views/logs/Index.vue'
     ]
 
 
-
     const routes = [
         {
             path: '/',
@@ -302,14 +306,26 @@ import Log from '../views/logs/Index.vue'
                 ...welcomeRoutes,
                 ...reportRoutes,
                 ...logRoutes
+
+
             ]
 
         }
     ]
 
+
 const router = createRouter({
     history: createWebHistory(),
     routes
 })
+
+// router.beforeEach((to, from, next) => {
+//     const token = localStorage.getItem('access_token');
+//     if (!token && to.path !== '/login') {
+//         next('/login');
+//     } else {
+//         next();
+//     }
+// });
 
 export default router
