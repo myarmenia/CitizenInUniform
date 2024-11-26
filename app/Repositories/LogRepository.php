@@ -14,8 +14,10 @@ class LogRepository implements LogInterface
         $request = request();
         $request = array_filter($request->all(), fn($value) => $value !== null);
 
-        $query = Log::filter($request)->orderBy('id', 'desc')->get();
-        
+        $query = Log::whereJsonDoesntContain('roles', 'super_admin');
+
+        $query = $query->filter($request)->orderBy('id', 'desc')->get();
+
         return $query;
     }
 
