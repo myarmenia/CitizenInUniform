@@ -30,10 +30,25 @@ class AuthLoginRequest extends FormRequest
 
                 function ($attribute, $value, $fail) {
                     $credentials = $this->only('email', 'password');
+                    $ipAddress = request()->ip();
                     if (!Auth::attempt($credentials)) {
+                        \App\Models\UserLoginLog::create([
+                            'ip' => $ipAddress,
+                            'date' => now(),
+                            'status' => 0, // Failed login
+                            'email' => $this->email,
+                        ]);
                         $fail('Գաղտնաբառը կամ մուտքանունը սխալ է');
+                    }else{
+                        \App\Models\UserLoginLog::create([
+                            'ip' => $ipAddress,
+                            'date' => now(),
+                            'status' => 1, // Failed login
+                            'email' => $this->email,
+                        ]);
+
                     }
-                    
+
                 },
             ],
         ];
