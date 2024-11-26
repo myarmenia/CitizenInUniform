@@ -68,8 +68,8 @@ console.log(form)
                                         </div>
                                     </div>
 
-                                    <div >
-                                        <button  @click.prevent="sendResetLink" class="btn btn-primary mt-3">
+                                    <div class="col-12" >
+                                        <button  @click.prevent="sendResetLink" class="btn btn-primary mt-3 w-100">
                                             Ուղարկեք վերականգնման հղումը
                                         </button>
                                     </div>

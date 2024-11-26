@@ -138,7 +138,7 @@ const realChat = () =>{
             </li>
 
 
-            <li v-for = "role in userMe.roles" :key="role.id" class="nav-item">
+            <li  class="nav-item">
                 <router-link
                   v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorPN')"
                   class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('email-messages.'))}" :to="{name: 'email-messages.index'}">
