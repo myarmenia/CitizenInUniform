@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('room_id')->unsigned();
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
+            $table->bigInteger('writer_id')->unsigned();
             $table->enum('writer', ['user', 'operator', 'closed']);
             $table->mediumText('content');
-            $table->boolean('read');
+            $table->boolean('readed')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

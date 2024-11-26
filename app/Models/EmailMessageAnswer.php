@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\BaseModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -28,6 +29,9 @@ class EmailMessageAnswer extends Model
 
             $answer->email_message->update(['has_answer' => 1]);
         });
+
+        static::observe(BaseModelObserver::class);
+
 
 
     }

@@ -52,6 +52,7 @@ import ResetPasswordReset from '../views/auth/password/Reset.vue'
 
 import Welcome from '../views/welcome/Index.vue'
 import Report from '../views/reports/Index.vue'
+import Log from '../views/logs/Index.vue'
 
 
     const usersRoute = [
@@ -271,6 +272,15 @@ import Report from '../views/reports/Index.vue'
         }
     ]
 
+    const logRoutes = [
+        {
+
+            path: '/logs',
+            name: 'log',
+            component: Log
+        }
+    ]
+
 
 
     const routes = [
@@ -290,7 +300,8 @@ import Report from '../views/reports/Index.vue'
                 ...messageCategoriesRoutes,
                 ...forgetPasswordRoutes,
                 ...welcomeRoutes,
-                ...reportRoutes
+                ...reportRoutes,
+                ...logRoutes
             ]
 
         }

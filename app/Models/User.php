@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\BaseModelObserver;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -67,6 +68,13 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(GoverningBodyUser::class);
     }
 
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::observe(BaseModelObserver::class);
+    }
 
 
 }
