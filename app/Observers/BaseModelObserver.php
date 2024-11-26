@@ -26,22 +26,36 @@ class BaseModelObserver
     protected function logAction(Model $model, string $action)
     {
         $user = Auth::user();
-        
+
         $roles = $user ? json_encode($user->roles->pluck('name')) : null;
 
-        $originalAttributes = $model->getOriginal();
-        $changedAttributes = $model->getDirty();
+        // $originalAttributes = $model->getOriginal();
+        // $changedAttributes = $model->getDirty();
 
+        // $details = [
+        //     'old' => array_intersect_key($originalAttributes, $changedAttributes),
+        //     'new' => $changedAttributes,
+        //     'id' => $model->id
+        // ];
 
-        if(isset($model->password)){
-             unset($changedAttributes['password']);
+        if ($action == 'deleted') {
+            $details = $model->getOriginal();
+        } else {
+            $details = $model->getDirty();
+            $details['id'] = $model->id;
+
         }
 
-        $details = [
-            'old' => array_intersect_key($originalAttributes, $changedAttributes),
-            'new' => $changedAttributes,
-            'id' => $model->id
-        ];
+        if(isset($model->password)){
+             unset($details['password']);
+        }
+
+        if (array_key_exists('path', $details) && $details['path'] == null) {
+
+            unset($details['path']);
+        }
+
+        $details = json_encode($details);
 
 
         Log::create([
@@ -49,7 +63,7 @@ class BaseModelObserver
             'roles' => $roles,
             'tb_name' => $model->getTable(),
             'action' => $action,
-            'details' => json_encode($details),  //getDirty,   getAttributes
+            'details' => $details,  //getDirty
             'ip' => request()->ip(),
         ]);
     }
