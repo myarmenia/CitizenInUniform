@@ -175,6 +175,13 @@ const realChat = () =>{
                 </router-link>
             </li>
 
+            <li class="nav-item">
+                <router-link  class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('log'))}" :to="{name: 'log'}">
+                    <i class="bx bx-data"></i>
+                    <span>Լոգավորում</span>
+                </router-link>
+            </li>
+
         </ul>
         <!-- {{ userMe.roles }} -->
     </aside>

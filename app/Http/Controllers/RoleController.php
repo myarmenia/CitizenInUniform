@@ -147,7 +147,7 @@ class RoleController extends Controller
                         ->with('success','Role deleted successfully');
     }
     public function all(){
-        
+
         $data ='';
         if(auth()->user()->hasRole('super_admin')){
             $data = Role::where([
@@ -160,6 +160,20 @@ class RoleController extends Controller
         }
 
         return response()->json(['roles'=>$data], 200);
+
+    }
+
+
+    public function allRoleList(){
+
+
+        $data = Role::where('interface', 'admin')->pluck('name', 'name')
+            ->map(function ($name) {
+                return __("roles.$name");
+            });
+
+        return response()->json(['roles' => $data], 200);
+
 
     }
 }

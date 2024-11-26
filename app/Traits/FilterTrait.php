@@ -19,6 +19,8 @@ trait FilterTrait
         $defaultFillableFields = $this->defaultFillableFields;
         $relationFilter = $this->relationFilter;
         $multiLikeFilterFields = $this->multiLikeFilterFields;
+        $jsonFields = $this->jsonFields;
+
 
         foreach ($filters as $field => $value) {
 
@@ -43,6 +45,21 @@ trait FilterTrait
                 continue;
 
             }
+
+            if (isset($jsonFields) && in_array($field, $jsonFields)) {
+
+                // Пример фильтрации по JSON массиву с помощью whereJsonContains
+                if (is_array($value)) {
+                    // Если значение $value является массивом, применяем whereJsonContains для каждого значения
+                    foreach ($value as $val) {
+                        $builder->whereJsonContains($field, $val);
+                    }
+                } else {
+                    // Если значение $value не массив, применяем один фильтр
+                    $builder->whereJsonContains($field, $value);
+                }
+            }
+
 
             if ($field == "from_created_at") {
 
