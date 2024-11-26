@@ -22,13 +22,8 @@ class LogController extends BaseController
     public function __invoke(Request $request)
     {
         $page = request()->page ?? 1;
-        $perPage = 3;
-
-        // $data = array_filter($request->all(), fn($value) => $value !== null);
-
-        // $data = $this->service->logs(LogDto::fromLogDto($request->all()));
+        $perPage = 20;
         $data = $this->service->logs();
-
 
         $data = LogResource::collection($data);
         $data = $this->arrayPaginator($data, $request, $perPage);
