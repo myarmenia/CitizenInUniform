@@ -30,6 +30,7 @@ class EmailMessageAnswer extends Model
             $answer->email_message->update(['has_answer' => 1]);
         });
 
+        
         static::observe(BaseModelObserver::class);
 
 

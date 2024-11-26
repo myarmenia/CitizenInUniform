@@ -26,7 +26,7 @@ class BaseModelObserver
     protected function logAction(Model $model, string $action)
     {
         $user = Auth::user();
-
+        $tb_name = $model->getTable();
         $roles = $user ? json_encode($user->roles->pluck('name')) : null;
 
         // $originalAttributes = $model->getOriginal();
@@ -44,6 +44,10 @@ class BaseModelObserver
             $details = $model->getDirty();
             $details['id'] = $model->id;
 
+        }
+
+        if (isset($details['content']) && ($tb_name == 'email_message_answers' || $tb_name == 'messages')) {
+            unset($details['content']);
         }
 
         if(isset($model->password)){
