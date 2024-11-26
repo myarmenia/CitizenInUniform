@@ -49,6 +49,7 @@ const realChat = () =>{
 </script>
 
 <template>
+
     <aside id="sidebar" class="sidebar">
 
 
@@ -140,7 +141,7 @@ const realChat = () =>{
 
             <li  class="nav-item">
                 <router-link
-                  v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorPN')"
+                  v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorPN' ||  role.name === 'super_admin')"
                   class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('email-messages.'))}" :to="{name: 'email-messages.index'}">
                     <i class="ri-mail-line"></i>
                     <span>Նամակագրություն</span>
@@ -156,12 +157,14 @@ const realChat = () =>{
                     <span>Նամակագրության կատեգորիա</span>
                 </router-link>
             </li>
-            <li v-for = "role in userMe.roles" :key="role.id">
+            <li class="cursor-pointer" >
 
-                <div  v-if="role.name!='admin' && role.name!='content_manager'"  class="nav-link collapsed" @click.prevent="realChat"
+                <div
+                  v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorPN' ||  role.name === 'super_admin')"
+                  class="nav-link collapsed  realChat" @click.prevent="realChat"
                   target="_blank" rel="noopener noreferrer">
                     <i class="bi bi-chat-left-dots"></i>
-                    <span>Կենդանի զրույց </span>
+                    <span >Կենդանի զրույց </span>
                     <span class="badge  badge-number mx-4" :class="chatMessageCount < 3  ?  'bg-primary' : (chatMessageCount > 2 && chatMessageCount < 5 ? 'bg-warning' : 'bg-danger')">{{ chatMessageCount }}</span>
                 </div>
             </li>
@@ -188,4 +191,10 @@ const realChat = () =>{
         <!-- {{ userMe.roles }} -->
     </aside>
 </template>
+<style>
+    .realChat{
+        cursor:pointer
+
+        }
+</style>
 
