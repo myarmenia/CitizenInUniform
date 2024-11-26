@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthLoginRequest;
 use App\Models\PasswordPolicy;
+use App\Models\UserLoginLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -36,6 +37,9 @@ class AuthController extends Controller
 
         $token = auth()->attempt($credentials);
         $user = auth()->user();
+           
+
+
 
 
         // Check if the user's status is 1
@@ -89,7 +93,7 @@ class AuthController extends Controller
 
 
 
-       
+
 
         return response()->json(['message' => 'Successfully logged out']);
     }
@@ -114,6 +118,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+
 
 
         return response()->json([
