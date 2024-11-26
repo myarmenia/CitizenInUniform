@@ -41,7 +41,7 @@ console.log(link)
 
     activePage.value = link.label
 
-    api.value.get(link.url)
+    api.value.post(link.url)
         .then((response) =>{
             console.log(response.data.result)
             logs.value = response.data.result.data
@@ -91,13 +91,14 @@ const cancelFilter = () => {
 const sendRequest = async () => {
     try {
 
+        activePage.value = 1
         const response = await api.value.post(`/api/auth/logs?page=${activePage.value}`, form);
+
         let result = response.data.result
 
-            lastPage.value = response.data.result.last_page
-            logs.value = response.data.result.data
-
-            links.value = response.data.result.links
+            lastPage.value = result.last_page
+            logs.value = result.data
+            links.value = result.links
 
 
     } catch (error) {
@@ -155,13 +156,9 @@ onMounted(() => {
                                             <select class="form-select"  v-model="actionType"  @change="handleSelectionChange('action_type')" >
                                                 <option disabled selected>Գործողության տեսակ</option>
                                                 <option value="">Բոլորը </option>
-                                                <option value="created">Ստողծել </option>
-                                                <option value="updated">Փոփոխել </option>
-                                                <option value="deleted">Ջնջել </option>
-                                                <!-- <option value="deleted">Նամակագրություն </option>
-                                                <option value="deleted">Չատ </option> -->
-
-
+                                                <option value="created">Ստեղծված </option>
+                                                <option value="updated">Փոփոխված </option>
+                                                <option value="deleted">Ջնջված </option>
                                             </select>
                                         </div>
 
@@ -174,14 +171,6 @@ onMounted(() => {
                                             </select>
                                         </div>
 
-
-                                        <!-- <div class="col-2  mx-2">
-                                            <select class="form-select"  v-model="governingBody"  @change="handleSelectionChange('governing_body')" >
-                                                <option disabled selected>Պետական մարմին </option>
-                                                <option value="">Բոլորը </option>
-                                                <option v-for="body in governingBodies" :key="body.id" :value="body.id">{{body.name}}</option>
-                                            </select>
-                                        </div> -->
 
                                         <div class="col-2  mx-2">
                                             <input type="date" title="Սկիզբ" class="form-control selectdate" id="datefrom" placeholder="Ստեղծման ամսաթիվ" v-model="form.from_created_at" value="" >
@@ -211,8 +200,9 @@ onMounted(() => {
                                         <th>Անուն ազգանուն</th>
                                         <th>Դեր</th>
                                         <th>Գործողության</th>
+                                        <th>Բաժին</th>
                                         <th>IP</th>
-                                        <th>Պարունակություն</th>
+                                        <th>Տվյալներ</th>
                                         <th>Ամսաթիվ</th>
                                     </tr>
                                 </thead>
@@ -222,6 +212,7 @@ onMounted(() => {
                                         <td>{{ log.user_name }}</td>
                                         <td>{{ log.roles }}</td>
                                         <td>{{ log.action }}</td>
+                                        <td>{{ log.tb_name }}</td>
                                         <td>{{ log.ip }}</td>
                                         <td>{{ log.details }}</td>
                                         <td>{{ log.date }}</td>
