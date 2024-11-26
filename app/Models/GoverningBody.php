@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Observers\BaseModelObserver;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -24,5 +25,13 @@ class GoverningBody extends Model
     public function governing_body_phone_numbers(): HasMany
     {
         return $this->hasMany(GoverningBodyInfo::class)->where('type', 'phone');
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::observe(BaseModelObserver::class);
+
     }
 }
