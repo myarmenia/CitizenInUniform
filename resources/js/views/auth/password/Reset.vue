@@ -27,6 +27,7 @@ onMounted(async () =>{
 const confirmPassword = () =>{
 
 console.log(form)
+
     errors.value = {};
 
 

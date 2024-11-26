@@ -12,7 +12,7 @@ import {useRouter,  useRoute } from 'vue-router';
 
     const isAuthenticated = ref(false);
     onMounted(() => {
-       
+
 
         isAuthenticated.value = !!localStorage.getItem('access_token');
     });
@@ -31,16 +31,13 @@ import {useRouter,  useRoute } from 'vue-router';
             // Allow unauthenticated access to reset password
             return;
         }
-        if (!isAuthenticated.value && newRoute ==='Login') {
-            console.log(1111111112)
-            // Redirect unauthenticated users to login
-            router.push('/login' );
-        }
+
     }
 );
 
 </script>
 <template>
+    {{ route.name }}
 
     <ResetPasswordEmail v-if="route.name === 'password.reset'" />
     <ResetPasswordReset v-if=" !isAuthenticated && route.name === 'reset.password.reset'" />
