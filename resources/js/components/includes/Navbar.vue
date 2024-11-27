@@ -3,7 +3,7 @@ import { ref, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import api, { initApi } from "../../api";
 import {me} from "../../me";
-import ModalDelete from './ModalDelete.vue';
+import LoginHistoryModal from './LoginHistoryModal.vue';
 const router = useRouter();
 const {userMe} = me(router)
 
@@ -24,8 +24,26 @@ const clickBurger = () => {
     const body = document.body;
     body.classList.toggle('toggle-sidebar');
 }
+const modalData = ref([]);
 
-const isModalOpen = ref(false);
+
+
+
+const openModal = async () => {
+
+    try {
+        let response = await api.value.get('/api/auth/user-login-logs');
+        modalData.value = response.data
+        console.log(modalData)
+
+
+    } catch (error) {
+        errorMessage.value = error
+    }
+    };
+
+
+
 
 </script>
 
@@ -68,10 +86,15 @@ const isModalOpen = ref(false);
                 </li>
 
                 <li>
-                <a class="dropdown-item d-flex align-items-center" @click="isModalOpen = true">
+                <a class="dropdown-item d-flex align-items-center"
+                   data-bs-toggle="modal"
+                   data-bs-target="#loginhHistory"
+                   @click="openModal"
+                   >
                     <i class="bi bi-person"></i>
                     <span>Մուտքերի պատմություն</span>
                 </a>
+
                 </li>
                 <li>
                 <hr class="dropdown-divider">
@@ -115,5 +138,6 @@ const isModalOpen = ref(false);
         </nav><!-- End Icons Navigation -->
 
     </header>
-    <ModalDelete  :show="isModalOpen" @close="isModalOpen = false" />
+    <LoginHistoryModal :data="modalData"  />
+
 </template>

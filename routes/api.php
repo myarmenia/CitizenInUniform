@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\Notifications\SendNotificationToUserController;
 use App\Http\Controllers\Api\Mobile\MobileUserController;
 use App\Http\Controllers\Api\Reports\ReportController;
 use App\Http\Controllers\Api\Settings\SettingController;
+use App\Http\Controllers\Api\UserLoginLogsController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\DeleteItemController;
 use App\Http\Controllers\FaqCategoryController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Models\UserLoginLog;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/user', function (Request $request) {
@@ -40,7 +42,7 @@ use Illuminate\Support\Facades\Route;
     Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
     // after email get form reset password form and  make password.update
     Route::put('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-    
+
     Route::post('/confirm-password-changes', ConfirmPasswordChangesController::class);
 
 
@@ -109,9 +111,9 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
         Route::get('delete-item/{tb_name}/{id}', [DeleteItemController::class, 'index'])->name('delete_item');
         Route::post('/change-status', [ChangeStatusController::class, 'change_status'])->name('change_status');
+        Route::get('user-login-logs',UserLoginLogsController::class);
 
     });
-    // ====================
-    // ======================
+
 
 });
