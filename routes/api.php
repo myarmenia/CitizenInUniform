@@ -58,6 +58,8 @@ Route::group(['prefix' => 'mobile'], function ($router) {
     Route::post('email-messages/store', [EmailMessgeController::class, 'store']);
     Route::post('phone-call/store', [PhoneCallController::class, 'store']);
 
+    Route::get('faq-categories',[FaqCategoryController::class,'mobile_faqCategory']);
+
 });
 
 Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
