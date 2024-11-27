@@ -15,7 +15,7 @@ let lastPage = ref(1)
 let roles = ref([])
 const selectedRole = ref('Դերեր');
 const actionType = ref('Գործողության տեսակ')
-const messageType = ref('Հաղորթագրության տեսակ')
+const messageType = ref('Հաղորդագրության տեսակ')
 
 const form = reactive({
     action: '',
@@ -76,7 +76,7 @@ const filterMessages = () => {
 const cancelFilter = () => {
 
     actionType.value = 'Գործողության տեսակ'
-    messageType.value = 'Հաղորթագրության տեսակ'
+    messageType.value = 'Հաղորդագրության տեսակ'
     selectedRole.value = 'Դերեր'
     form.action = ''
     form.roles = ''
