@@ -15,7 +15,7 @@ let lastPage = ref(1)
 let roles = ref([])
 const selectedRole = ref('Դերեր');
 const actionType = ref('Գործողության տեսակ')
-const messageType = ref('Հաղորթագրության տեսակ')
+const messageType = ref('Հաղորդագրության տեսակ')
 
 const form = reactive({
     action: '',
@@ -76,7 +76,7 @@ const filterMessages = () => {
 const cancelFilter = () => {
 
     actionType.value = 'Գործողության տեսակ'
-    messageType.value = 'Հաղորթագրության տեսակ'
+    messageType.value = 'Հաղորդագրության տեսակ'
     selectedRole.value = 'Դերեր'
     form.action = ''
     form.roles = ''
@@ -164,7 +164,7 @@ onMounted(() => {
 
                                         <div class="col-2  mx-2">
                                             <select class="form-select"  v-model="messageType"  @change="handleSelectionChange('message_type')" >
-                                                <option disabled selected>Հաղորթագրության տեսակ </option>
+                                                <option disabled selected>Հաղորդագրության տեսակ </option>
                                                 <option value="">Բոլորը </option>
                                                 <option value="email_message_answers">Նամակագրություն </option>
                                                 <option value="messages">Չատ </option>
