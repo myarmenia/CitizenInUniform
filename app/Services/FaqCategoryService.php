@@ -20,6 +20,10 @@ class FaqCategoryService{
         return $this->faqCategoryRepository->store( $data->toArray());
 
     }
+    public function getActiveFaqCategories(){
+
+        return $this->faqCategoryRepository->activeFaqCategory();
+    }
 
 
 }

@@ -42,6 +42,11 @@ class FAQCategory extends Model
 
     }
 
+    public function active_f_a_q_sub_categories(){
+        return $this->hasMany(FAQSubCategory::class)->where('status',1);
+
+    }
+
 
 }
 
