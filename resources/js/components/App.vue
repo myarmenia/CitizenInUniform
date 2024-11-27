@@ -37,11 +37,11 @@ import {useRouter,  useRoute } from 'vue-router';
             // Redirect unauthenticated users to login
             router.push('/login' );
         }
-        // if (isAuthenticated.value && newRoute ==='Login') {
-        //     // localStorage.removeItem('access_token');
+          if (isAuthenticated.value && newRoute ==='Login') {
+              localStorage.removeItem('access_token');
 
-        //     window.location.href='/welcome'
-        // }
+             window.location.href='/login'
+         }
 
     }
 );

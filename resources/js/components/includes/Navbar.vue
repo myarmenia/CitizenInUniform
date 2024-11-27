@@ -3,6 +3,7 @@ import { ref, onMounted, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import api, { initApi } from "../../api";
 import {me} from "../../me";
+import ModalDelete from './ModalDelete.vue';
 const router = useRouter();
 const {userMe} = me(router)
 
@@ -23,6 +24,8 @@ const clickBurger = () => {
     const body = document.body;
     body.classList.toggle('toggle-sidebar');
 }
+
+const isModalOpen = ref(false);
 
 </script>
 
@@ -64,15 +67,15 @@ const clickBurger = () => {
                 <hr class="dropdown-divider">
                 </li>
 
-                <!-- <li>
-                <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <li>
+                <a class="dropdown-item d-flex align-items-center" @click="isModalOpen = true">
                     <i class="bi bi-person"></i>
-                    <span>My Profile</span>
+                    <span>Մուտքերի պատմություն</span>
                 </a>
                 </li>
                 <li>
                 <hr class="dropdown-divider">
-                </li> -->
+                </li>
 
                 <li>
                 <router-link class="dropdown-item d-flex align-items-center" :to="{name:'change-password.index'}">
@@ -112,4 +115,5 @@ const clickBurger = () => {
         </nav><!-- End Icons Navigation -->
 
     </header>
+    <ModalDelete  :show="isModalOpen" @close="isModalOpen = false" />
 </template>
