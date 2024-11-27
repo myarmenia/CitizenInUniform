@@ -39,11 +39,10 @@ use Illuminate\Support\Facades\Route;
 
 
     Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+    // this url required for above route
     Route::post('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.reset');
     // after email get form reset password form and  make password.update
     Route::put('/password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-
-    Route::post('/confirm-password-changes', ConfirmPasswordChangesController::class);
 
 
 // ======================== Mobile ======================================

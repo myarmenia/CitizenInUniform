@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from  "vue-router";
 import AdminLayout from '../components/AdminLayout.vue'
 import notFound from '../components/notFound.vue'
 
+
 import Categories from '../views/categories/Index.vue'
 import CategoriesCreate from '../views/categories/Create.vue'
 import CategoriesEdit from '../views/categories/Edit.vue'
@@ -85,11 +86,7 @@ import Log from '../views/logs/Index.vue'
             name: 'permission.index',
             component: PermissionIndex
         },
-        {
-            path:'/:any(.*)*',
-            name:'notfound',
-            component: notFound
-        }
+
     ]
 
     const faqCategoryRoutes = [
@@ -203,12 +200,7 @@ import Log from '../views/logs/Index.vue'
             name: 'change-password.index',
             component: ChangePasswordIndex
         },
-        // {
 
-        //     path: '/password/reset',
-        //     name: 'password-reset.index',
-        //     component: PasswordResetIndex
-        // },
 
     ]
 
@@ -285,6 +277,13 @@ import Log from '../views/logs/Index.vue'
             component: Log
         }
     ]
+    const notFoundRoutes = [
+        {
+            path:'/:any(.*)*',
+            name:'notfound',
+            component: notFound
+        }
+    ]
 
 
     const routes = [
@@ -305,7 +304,8 @@ import Log from '../views/logs/Index.vue'
                 ...forgetPasswordRoutes,
                 ...welcomeRoutes,
                 ...reportRoutes,
-                ...logRoutes
+                ...logRoutes,
+                ...notFoundRoutes
 
 
             ]
@@ -314,18 +314,12 @@ import Log from '../views/logs/Index.vue'
     ]
 
 
+
+
 const router = createRouter({
     history: createWebHistory(),
     routes
 })
 
-// router.beforeEach((to, from, next) => {
-//     const token = localStorage.getItem('access_token');
-//     if (!token && to.path !== '/login') {
-//         next('/login');
-//     } else {
-//         next();
-//     }
-// });
 
 export default router
