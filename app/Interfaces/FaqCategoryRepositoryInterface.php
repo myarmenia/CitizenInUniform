@@ -9,4 +9,5 @@ interface  FaqCategoryRepositoryInterface {
     public function store($data);
 
     public function update();
+    public function activeFaqCategory();
 }
