@@ -17,7 +17,7 @@ const goBack = () => {
 
         <img src="https://citizen.trigger.ltd/assets/img/logo.png" alt="citizenInUniform" id="logo" style="width: 100px">
         <!-- <router-link to="/">Վերադառնալ</router-link> -->
-        <button type="button" class="btn mt-2" @click="goBack">Go Back</button>
+        <button type="button" class="btn mt-2" @click="goBack">Վերադառնալ նախորդ էջ</button>
       </section>
 
     </div>
