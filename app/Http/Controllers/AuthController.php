@@ -37,7 +37,11 @@ class AuthController extends Controller
 
         $token = auth()->attempt($credentials);
         $user = auth()->user();
-           
+        if($token){
+            $user->online=1;
+            $user->save();
+        }
+
 
 
 
@@ -88,6 +92,8 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
+        auth()->user()->online=0;
+        auth()->user()->save();
 
         auth()->logout();
 

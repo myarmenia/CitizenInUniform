@@ -16,9 +16,13 @@ class FaqCategoryRepository implements FaqCategoryRepositoryInterface
     public function store($data){
 
         return FaqCategory::create($data);
-        
+
     }
     public function update(){
 
+    }
+    public function activeFaqCategory(){
+
+        return FAQCategory::where('status',1)->with('f_a_q_sub_categories')->get();
     }
 }

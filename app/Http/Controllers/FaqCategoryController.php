@@ -7,6 +7,7 @@ use App\DTO\FaqCategoryDto;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Requests\FaqCategoryRequest;
 use App\Http\Resources\FaqCategoryResource;
+use App\Http\Resources\Mobile\MFaqCategoryResource;
 use App\Models\FAQCategory;
 use App\Services\FaqCategoryService;
 use App\Traits\Paginator;
@@ -32,16 +33,11 @@ class FaqCategoryController extends BaseController
         $data = FaqCategoryResource::collection($data );
         $data = $this->arrayPaginator($data, $request, $perPage);
 
-    return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
-
-
-
+        return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
     }
 
     public function store(FaqCategoryRequest $request){
-
-
 
         $data = $this->faqCategoryService->storeFaqCategory(FaqCategoryDTO::fromFaqCategoryDto($request));
 
@@ -59,7 +55,7 @@ class FaqCategoryController extends BaseController
         $faqCategory = FAQCategory::find($id);
 
         $faqCategory->title=$request->title;
-        // $faqCategory->status=$request->status;
+
         $faqCategory->save();
     }
 
@@ -68,6 +64,14 @@ class FaqCategoryController extends BaseController
         $data = FAQCategory::where('status',1)->get();
 
         return response()->json(['faqCategories'=>$data],200);
+
+    }
+    public function mobile_faqCategory(){
+        $data = $this->faqCategoryService->getActiveFaqCategories();
+
+
+        return $data != null ? $this->sendResponse(MFaqCategoryResource::collection($data), 'success') : $this->sendError('error');
+
 
     }
 }
