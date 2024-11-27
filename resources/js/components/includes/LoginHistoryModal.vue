@@ -10,6 +10,18 @@ const props = defineProps({
         default: () => [],
     },
 });
+// const formatDate = (date) => {
+//   const options = {
+//     day: '2-digit',
+//     month: '2-digit',
+//     year: 'numeric',
+//     hour: '2-digit',
+//     minute: '2-digit',
+//     second: '2-digit',
+//     hour12: false // чтобы время было в 24-часовом формате
+//   };
+//   return new Date(date).toLocaleString('hy-AM', options); // можно выбрать 'en-GB' или любой другой локаль
+// };
 
 </script>
 <template>
@@ -38,7 +50,7 @@ const props = defineProps({
 
                     <th scope="row">{{ ++index }}</th>
                     <td>{{ item.ip }}</td>
-                    <td>{{ item.date }}</td>
+                    <td>{{  item.date  }}</td>
                     <td>{{ item.status == 1 ? 'Հաջող' : 'Անհաջող' }}</td>
                   </tr>
                 </tbody>
