@@ -40,8 +40,8 @@ const props = defineProps({
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">ip</th>
-                    <th scope="col">Օր/ժամանակ</th>
+                    <th scope="col">IP</th>
+                    <th scope="col">Ամսաթիվ</th>
                     <th scope="col">Կարգավիճակ</th>
                   </tr>
                 </thead>

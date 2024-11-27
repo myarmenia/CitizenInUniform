@@ -16,7 +16,7 @@ class UserLoginLogsController extends Controller
                              ->get()->take(5)
                              ->map(function ($log) {
                                 // Format the date in 'd/m/Y H:i:s' (day/month/year hour:minute:second)
-                                $log->date = Carbon::parse($log->date)->format('d/m/Y H:i:s');
+                                $log->date = Carbon::parse($log->date)->format('d.m.Y H:i:s');
                                 return $log;
                             });
 
