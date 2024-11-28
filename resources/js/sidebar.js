@@ -11,8 +11,8 @@ export function useGoverningBodies(router) {
     const getGoverningBodies = async () => {
 
         try {
-            const response = await api.value.get('/api/auth/governing-bodies');
-           
+            const response = await api.value.get('/api/mobile/governing-bodies');
+
             governingBodies.value = response.data.result;
         } catch (error) {
             console.error("Error fetching governing bodies:", error);
