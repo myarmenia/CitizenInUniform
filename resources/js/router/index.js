@@ -53,9 +53,6 @@ import Report from '../views/reports/Index.vue'
 import Log from '../views/logs/Index.vue'
 
 
-
-
-
     const usersRoute = [
         {
             path: '/',
