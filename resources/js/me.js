@@ -11,13 +11,12 @@ export function me (router){
 
     initApi(router);
 
-
     const me = async () => {
         try {
         let response = await api.value.post('/api/auth/me');
         let result = response.data
         userMe.value = result
-        console.log(123)
+
         console.log(result)
         if(result.message!='') {
             toast.fire({icon:"error",title:result.message,
@@ -38,7 +37,7 @@ export function me (router){
 
     onMounted( async () =>{
         me()
-        // console.log(me)
+
     })
     return {userMe}
   };
