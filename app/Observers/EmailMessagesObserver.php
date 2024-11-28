@@ -12,11 +12,11 @@ class EmailMessagesObserver
      */
     public function created(EmailMessages $emailMessages): void
     {
-
-        $unAnsweredCount = EmailMessages::where('has_answer', 0)->get()->count();
+        $governingId = $emailMessages->governing_body_id;
+        $unAnsweredCount = EmailMessages::where('has_answer', 0)->where('governing_body_id', $governingId)->count();
 
         event(
-            new MessagesEvent($unAnsweredCount, 'email_message')
+            new MessagesEvent($unAnsweredCount, 'email_message', $governingId)
         );
     }
 
@@ -25,11 +25,11 @@ class EmailMessagesObserver
      */
     public function updated(EmailMessages $emailMessages): void
     {
-        $unAnsweredCount = EmailMessages::where('has_answer', 0)->get()->count();
+        // $unAnsweredCount = EmailMessages::where('has_answer', 0)->get()->count();
 
-        event(
-            new MessagesEvent($unAnsweredCount, 'email_message')
-        );
+        // event(
+        //     new MessagesEvent($unAnsweredCount, 'email_message')
+        // );
     }
 
     /**

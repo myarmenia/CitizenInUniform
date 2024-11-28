@@ -19,12 +19,15 @@ class MessagesEvent implements ShouldBroadcast
      */
     public $count;
     public $type;
+    public $governing_body_id;
 
-    public function __construct(int $count, string $type)
+
+    public function __construct(int $count, string $type, $governing_body_id)
     {
 
         $this->count = $count;
         $this->type = $type;
+        $this->governing_body_id = $governing_body_id;
 
     }
 
@@ -35,8 +38,12 @@ class MessagesEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
+        
         return [
-            new Channel('messages-count'),
+            // new PrivateChannel('messages-count'),
+            new PrivateChannel('messages-count.' . $this->governing_body_id)
         ];
     }
+
+
 }

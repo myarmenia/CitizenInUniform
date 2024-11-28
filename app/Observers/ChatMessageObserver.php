@@ -12,11 +12,11 @@ class ChatMessageObserver
      */
     public function created(Message $message): void
     {
-        $unAnsweredCount = Message::where('readed', 0)->get()->count();
+        // $unAnsweredCount = Message::where('readed', 0)->get()->count();
 
-        event(
-            new MessagesEvent($unAnsweredCount, 'chat_message')
-        );
+        // event(
+        //     new MessagesEvent($unAnsweredCount, 'chat_message')
+        // );
     }
 
     /**
@@ -24,11 +24,11 @@ class ChatMessageObserver
      */
     public function updated(Message $message): void
     {
-        $unAnsweredCount = Message::where('readed', 0)->get()->count();
+        // $unAnsweredCount = Message::where('readed', 0)->get()->count();
 
-        event(
-            new MessagesEvent($unAnsweredCount, 'chat_message')
-        );
+        // event(
+        //     new MessagesEvent($unAnsweredCount, 'chat_message')
+        // );
     }
 
     /**

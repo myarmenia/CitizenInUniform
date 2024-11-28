@@ -21,7 +21,7 @@ const getUnAmsweredEmailMessages = async () => {
 
     let response = api.value.get ( '/api/auth/get-messages-counts')
     .then((response) => {
-
+        console.log(response)
         let result = response.data.result
 
         emailMessageCount.value = result.email_messages_count
@@ -30,11 +30,16 @@ const getUnAmsweredEmailMessages = async () => {
     })
 }
 
-window.Echo.channel('messages-count').listen('MessagesEvent', (e) => {
-    // console.log(e)
+window.Echo.private('messages-count.2').listen('MessagesEvent', (e) => {
+    console.log(e)
      e.type == 'email_message' ? emailMessageCount.value = e.count : chatMessageCount.value = e.count
 });
 
+// let governingId = 2
+// window.Echo.private('messages-count.2')
+//     .listen('MessagesEvent', (data) => {
+//         console.log('Unanswered count for governing_id:', governingId, 'is', data.count);
+//     });
 
 
 const realChat = () =>{
