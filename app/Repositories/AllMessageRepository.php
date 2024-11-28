@@ -35,12 +35,13 @@ class AllMessageRepository implements AllMessageInterface
     public function chatMessage()
     {
         $governing_id = MyHelper::getGoverningBodyIdFromOperator();
+        $user_id = Auth::id();
 
         $query = Message::where('readed', 0)->where('writer', 'user');
 
         if ($governing_id != null) {
-            $query->whereHas('room', function ($query) use ($governing_id) {
-                $query->where('governing_body_id', $governing_id);
+            $query->whereHas('room', function ($query) use ($governing_id, $user_id) {
+                $query->where('governing_body_id', $governing_id)->where('operator_id', $user_id);
             });
 
         }
