@@ -1,6 +1,6 @@
 <script setup>
 
-import {ref, onMounted, watch} from 'vue';
+import {ref, onMounted,onUnmounted, watch} from 'vue';
 import {useRouter,  useRoute } from 'vue-router';
     import AdminLayout from "./AdminLayout.vue";
     import Login from "../views/auth/Login.vue";
@@ -10,15 +10,21 @@ import {useRouter,  useRoute } from 'vue-router';
 
     const route = useRoute();
     const router = useRouter()
-
-
-
     const isAuthenticated = ref(false);
+
+    const handleWindowClose = () => {
+        localStorage.removeItem('access_token');
+    };
+
     onMounted(() => {
 
-
-
         isAuthenticated.value = !!localStorage.getItem('access_token');
+
+    });
+
+    onUnmounted(() => {
+        // Remove the event listener to avoid memory leaks
+        window.removeEventListener('beforeunload', handleWindowClose);
     });
     watch(
     () => route.name,
@@ -53,7 +59,7 @@ import {useRouter,  useRoute } from 'vue-router';
         }
 
         if (!isAuthenticated.value && newRoute ==='Login') {
-            console.log(1111111112)
+
             // Redirect unauthenticated users to login
             router.push('/login' );
         }
@@ -71,13 +77,12 @@ import {useRouter,  useRoute } from 'vue-router';
          }
 
 
+
     }
 );
 
 </script>
 <template>
-
-
     <ResetPasswordEmail v-if=" route.name === 'password.reset'" />
     <ResetPasswordReset v-if="!isAuthenticated && route.name === 'reset.password.reset'" />
     <AdminLayout v-if="isAuthenticated && route.name !== 'password.reset' && route.name !== 'Login'" />
