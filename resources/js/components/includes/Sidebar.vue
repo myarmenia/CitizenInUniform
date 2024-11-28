@@ -141,7 +141,7 @@ const realChat = () =>{
 
             <li  class="nav-item">
                 <router-link
-                  v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorPN' ||  role.name === 'super_admin')"
+                  v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorPN')"
                   class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('email-messages.'))}" :to="{name: 'email-messages.index'}">
                     <i class="ri-mail-line"></i>
                     <span>Նամակագրություն</span>
@@ -160,7 +160,7 @@ const realChat = () =>{
             <li class="cursor-pointer" >
 
                 <div
-                  v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorPN' ||  role.name === 'super_admin')"
+                  v-if="userMe.roles?.some(role => role.name === 'operatorMIP' ||  role.name === 'operatorPN' )"
                   class="nav-link collapsed  realChat" @click.prevent="realChat"
                   target="_blank" rel="noopener noreferrer">
                     <i class="bi bi-chat-left-dots"></i>
