@@ -23,9 +23,18 @@ import {useRouter,  useRoute } from 'vue-router';
     watch(
     () => route.name,
     (newRoute) => {
+        const allRoutes = router.getRoutes();
+        console.log(allRoutes)
+        if( !isAuthenticated.value && newRoute!="Login"){
 
-        console.log(newRoute)
-        if( !isAuthenticated.value && newRoute=="notfound"){
+           window.location.href='/login'
+
+        }
+
+
+
+
+        if( !isAuthenticated.value && newRoute=="Login"){
             console.log("notfound")
             return;
 
@@ -68,9 +77,9 @@ import {useRouter,  useRoute } from 'vue-router';
 </script>
 <template>
 
-    <NotFound v-if="!isAuthenticated && route.name === 'notfound'" />
+
     <ResetPasswordEmail v-if=" route.name === 'password.reset'" />
     <ResetPasswordReset v-if="!isAuthenticated && route.name === 'reset.password.reset'" />
     <AdminLayout v-if="isAuthenticated && route.name !== 'password.reset' && route.name !== 'Login'" />
-    <Login  v-if="!isAuthenticated && route.name === 'Login'" />
+     <Login  v-if="!isAuthenticated && route.name === 'Login'" />
 </template>
