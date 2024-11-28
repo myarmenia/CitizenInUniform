@@ -317,6 +317,15 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 })
+router.beforeEach((to, from, next) => {
+    const isAuthenticated = !!localStorage.getItem('access_token'); // Check token
+    if (to.meta.requiresAuth && !isAuthenticated) {
+        console.log(95656)
+      next('/login'); // Redirect to login
+    } else {
+      next(); // Proceed
+    }
+  });
 
 
 export default router
