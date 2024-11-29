@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRouter } from "vue-router";
 import { useGoverningBodies } from "../../sidebar";
 import api, { initApi } from "../../api";
@@ -9,6 +9,7 @@ const router = useRouter();
 
 const { governingBodies } = useGoverningBodies(router);
 const {userMe} = me(router)
+const govBodyId = ref()
 
 const emailMessageCount = ref()
 const chatMessageCount = ref()
@@ -17,30 +18,35 @@ onMounted(async () => {
     getUnAmsweredEmailMessages()
 })
 
+
+
 const getUnAmsweredEmailMessages = async () => {
+    try {
+        let response = await api.value.get('/api/auth/get-messages-counts');
+        let result = response.data.result;
 
-    let response = api.value.get ( '/api/auth/get-messages-counts')
-    .then((response) => {
-        console.log(response)
-        let result = response.data.result
+        emailMessageCount.value = result.email_messages_count;
+        chatMessageCount.value = result.chat_messages_count;
+        govBodyId.value = result.governing_body_id;
 
-        emailMessageCount.value = result.email_messages_count
-        chatMessageCount.value = result.chat_messages_count
+    } catch (error) {
+        console.error("Ошибка при получении данных:", error);
+    }
+};
 
-    })
-}
-
-window.Echo.private('messages-count.2').listen('MessagesEvent', (e) => {
-    console.log(e)
-     e.type == 'email_message' ? emailMessageCount.value = e.count : chatMessageCount.value = e.count
+watch(govBodyId, (newGovBodyId) => {
+    if (newGovBodyId) {
+        subscribeToMessagesChannel(newGovBodyId);
+    }
 });
 
-// let governingId = 2
-// window.Echo.private('messages-count.2')
-//     .listen('MessagesEvent', (data) => {
-//         console.log('Unanswered count for governing_id:', governingId, 'is', data.count);
-//     });
 
+const subscribeToMessagesChannel = (govBodyId) => {
+    window.Echo.private(`messages-count.${govBodyId}`).listen('MessagesEvent', (e) => {
+console.log(e)
+        e.type == 'email_message' ? emailMessageCount.value = e.count : chatMessageCount.value = e.count
+    });
+};
 
 const realChat = () =>{
     const accessToken = localStorage.getItem('access_token'); // Replace with actual token

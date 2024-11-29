@@ -38,9 +38,8 @@ class MessagesEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        
+
         return [
-            // new PrivateChannel('messages-count'),
             new PrivateChannel('messages-count.' . $this->governing_body_id)
         ];
     }
