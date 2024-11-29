@@ -68,6 +68,10 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(GoverningBodyUser::class);
     }
 
+    public function canAccessGoverningId($governingId): bool
+    {
+        return ($this->governing_body_user && $governingId == $this->governing_body_user->governing_body_id) ? true : false;
+    }
 
     protected static function boot()
     {
