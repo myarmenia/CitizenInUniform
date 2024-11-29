@@ -4,29 +4,15 @@
     "src": "public/assets/img/logo.png"
   },
   "resources/js/app.js": {
-<<<<<<< HEAD
-    "file": "assets/app-Cy26zObo.js",
-=======
-
-
-
-    "file": "assets/app-B6hOxJlf.js",
-
-
->>>>>>> faac9d4aad252545a88300711d3cb4e2752523fb
+    "file": "assets/app-B3rw5I9I.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-
-      "assets/app-REpI0-3u.css"
-
+      "assets/app-pC0cd_lj.css"
     ],
-
     "assets": [
       "assets/logo-C4R9DgcX.png"
-
-
     ]
   },
   "resources/sass/app.scss": {
