@@ -43,7 +43,10 @@ watch(govBodyId, (newGovBodyId) => {
 
 const subscribeToMessagesChannel = (govBodyId) => {
     window.Echo.private(`messages-count.${govBodyId}`).listen('MessagesEvent', (e) => {
+        
 console.log(e)
+
+
         e.type == 'email_message' ? emailMessageCount.value = e.count : chatMessageCount.value = e.count
     });
 };
