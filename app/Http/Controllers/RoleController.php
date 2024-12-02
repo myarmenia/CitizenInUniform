@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
@@ -175,5 +176,11 @@ class RoleController extends Controller
         return response()->json(['roles' => $data], 200);
 
 
+    }
+
+    public function getAuthUserRoles(){
+        $roles = Auth::user()->roles->pluck('name')->toArray();
+
+        return response()->json(['roles' => $roles], 200);
     }
 }

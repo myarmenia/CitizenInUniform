@@ -15,15 +15,34 @@ const emailMessageCount = ref()
 const chatMessageCount = ref()
 const roomIds = ref([]);
 const activeSubscriptions = {}; // Хранение подписок для обоих каналов
+const hasOperator = ref(null)
 
 onMounted(async () => {
-    getUnAmsweredEmailMessages()
+    getAuthUserRoles()
+
+    if(hasOperator){
+        getUnAmsweredEmailMessages()
+    }
 })
 
+
+const getAuthUserRoles = async () => {
+    try {
+
+        let response = await api.value.get('/api/auth/get-auth-user-roles');
+        let result = response.data.roles;
+
+        hasOperator.value = result.includes('operatorMIP') || result.includes('operatorPN');
+
+    } catch (error) {
+        console.error("Ошибка при получении данных:", error);
+    }
+};
 
 
 const getUnAmsweredEmailMessages = async () => {
     try {
+        console.log(userMe.roles)
         let response = await api.value.get('/api/auth/get-messages-counts');
         let result = response.data.result;
 
@@ -33,6 +52,7 @@ const getUnAmsweredEmailMessages = async () => {
 
         if (result.room_ids) {
             roomIds.value = result.room_ids;
+            console.log(roomIds.value)
         }
 
     } catch (error) {
@@ -69,6 +89,8 @@ const unsubscribeFromChannel = (channelName) => {
         delete activeSubscriptions[channelName];
     }
 };
+
+
 
 // Следим за изменениями govBodyId
 watch(govBodyId, (newGovBodyId, oldGovBodyId) => {
