@@ -7,12 +7,14 @@ import {useRouter,  useRoute } from 'vue-router';
     import ResetPasswordEmail from '../views/auth/password/Email.vue';
     import ResetPasswordReset from '../views/auth/password/Reset.vue';
     import NotFound from './notFound.vue';
+    import api, { initApi } from "../api";
     import {logoutFunction} from '../logout';
 
 
 
     const route = useRoute();
     const router = useRouter()
+    initApi(router);
     const isAuthenticated = ref(false);
     const {logout} = logoutFunction(router)
 
@@ -37,6 +39,9 @@ import {useRouter,  useRoute } from 'vue-router';
             }else if(newRoute == 'reset.password.reset'){
                 return;
             }else{
+
+               
+
                 router.push('/login')
 
             }
@@ -44,7 +49,9 @@ import {useRouter,  useRoute } from 'vue-router';
 
         if(isAuthenticated.value){
             if(newRoute =='Login'){
-                
+
+        {{ logout }}
+
 
                 localStorage.removeItem('access_token');
                 window.location.href='/login'
@@ -66,7 +73,7 @@ import {useRouter,  useRoute } from 'vue-router';
 
 </script>
 <template>
-    {{ route.name }}
+
     <!-- <NotFound v-if=" route.name === 'password.reset'" /> -->
     <ResetPasswordEmail v-if="!isAuthenticated && route.name === 'password.reset'" />
     <ResetPasswordReset v-if="!isAuthenticated && route.name === 'reset.password.reset'" />
