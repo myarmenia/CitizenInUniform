@@ -40,7 +40,7 @@ import {useRouter,  useRoute } from 'vue-router';
                 return;
             }else{
 
-               
+
 
                 router.push('/login')
 
@@ -50,7 +50,7 @@ import {useRouter,  useRoute } from 'vue-router';
         if(isAuthenticated.value){
             if(newRoute =='Login'){
 
-        {{ logout }}
+                //  {{ logout }} //chi ashxatum heto najel
 
 
                 localStorage.removeItem('access_token');
