@@ -9,10 +9,11 @@ class ChangeStatusService
 {
     public static function change_status($request){
 
+
         $status = filter_var($request->status, FILTER_VALIDATE_BOOLEAN);
 
         $className = 'App\Models\\' . Str::studly(Str::singular($request->tb_name));
-      
+
 
         $model = '';
 
@@ -23,10 +24,18 @@ class ChangeStatusService
 
         if(!is_string($model)){
             $item = $model->where('id', $request->id)->first();
-
+            self::user_online_status($item,$status);
             $update = $item->update([$request->field_name => $status]);
 
+
             return $update;
+        }
+
+    }
+    public static function user_online_status($item,$status){
+    
+        if($status==false){
+            $item->online=0;
         }
 
     }
