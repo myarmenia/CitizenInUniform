@@ -3,10 +3,12 @@
 namespace App\Services;
 
 
+use App\Events\ChatMessagesEvent;
 use App\Interfaces\CategoryInterface;
 use App\Interfaces\EmailMessageAnswerInterface;
 use App\Interfaces\EmailMessageInterface;
 use App\Mail\SendEmailMessage;
+use App\Models\Message;
 use Auth;
 use Illuminate\Http\Request;
 use Mail;
@@ -67,6 +69,31 @@ class EmailMessageService
 
         return $messageAnswer;
 
+    }
+
+    public function chatMessageCount($id){
+
+        $message = Message::where('id', $id);
+        $roomId = $message->room_id;
+
+        // $unAnsweredCount = Message::where('readed', 0)->where('governing_body_id', $governingId)->count();
+        $unAnsweredCount = $message->where('readed', 0)->where('writer', 'user');
+        $userId = $message->room ? $message->room->operator_id : null;
+
+        if ($userId != null) {
+            $unAnsweredCount->whereHas('room', function ($query) use ($userId) {
+                $query->where('operator_id', $userId);
+            });
+
+        }
+
+        $unAnsweredCount = $unAnsweredCount->count();
+
+        event(
+            new ChatMessagesEvent($unAnsweredCount, 'chat_message', $roomId)
+        );
+
+        return true;
     }
 
 

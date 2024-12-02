@@ -23,13 +23,9 @@ class AllMessageRepository implements AllMessageInterface
             $query->where('governing_body_id', $governing_id);
         }
 
-        $query = $query->get();
+        $query = $query->count();
 
-        if ($governing_id != null || Auth::user()->hasRole('super_admin')) {
-            return $query;
-        }
-
-        return false;
+        return $query;
     }
 
     public function chatMessage()
@@ -46,13 +42,9 @@ class AllMessageRepository implements AllMessageInterface
 
         }
 
-        $query = $query->get();
+        $query = $query->count();
 
-        if ($governing_id != null || Auth::user()->hasRole('super_admin')) {
-            return $query;
-        }
-
-        return false;
+        return $query;
 
     }
 
