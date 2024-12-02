@@ -88,9 +88,9 @@ class EmailMessageService
         }
 
         $unAnsweredCount = $unAnsweredCount->count();
-  
+
         event(
-            new ChatMessagesEvent($unAnsweredCount, 'chat_message', $roomId)
+            new ChatMessagesEvent($unAnsweredCount, 'chat_message', $userId)
         );
 
         return true;
