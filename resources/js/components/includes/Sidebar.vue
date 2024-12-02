@@ -72,8 +72,18 @@ const subscribeToEmailMessagesChannel = (govBodyId) => {
 };
 
 // Подписка на канал сообщений чата
-const subscribeToChatMessagesChannel = (roomId) => {
-    const channelName = `chat-messages-count.${roomId}`;
+// const subscribeToChatMessagesChannel = (roomId) => {
+//     const channelName = `chat-messages-count.${roomId}`;
+//     if (!activeSubscriptions[channelName]) {
+//         activeSubscriptions[channelName] = window.Echo.private(channelName).listen('ChatMessagesEvent', (e) => {
+//             chatMessageCount.value = e.count; // Обновляем chatMessageCount
+
+//         });
+//     }
+// };
+
+const subscribeToChatMessagesChannel = (govBodyId) => {
+    const channelName = `chat-messages-count.${govBodyId}`;
     if (!activeSubscriptions[channelName]) {
         activeSubscriptions[channelName] = window.Echo.private(channelName).listen('ChatMessagesEvent', (e) => {
             chatMessageCount.value = e.count; // Обновляем chatMessageCount
@@ -103,9 +113,20 @@ watch(govBodyId, (newGovBodyId, oldGovBodyId) => {
 });
 
 // Следим за изменениями roomIds
-watch(roomIds, (newRoomIds, oldRoomIds) => {
-    const addedRoomIds = newRoomIds.filter((id) => !oldRoomIds.includes(id));
-    const removedRoomIds = oldRoomIds.filter((id) => !newRoomIds.includes(id));
+// watch(roomIds, (newRoomIds, oldRoomIds) => {
+//     const addedRoomIds = newRoomIds.filter((id) => !oldRoomIds.includes(id));
+//     const removedRoomIds = oldRoomIds.filter((id) => !newRoomIds.includes(id));
+
+//     // Подписываемся на новые roomId
+//     addedRoomIds.forEach((roomId) => subscribeToChatMessagesChannel(roomId));
+
+//     // Отписываемся от удалённых roomId
+//     removedRoomIds.forEach((roomId) => unsubscribeFromChannel(`chat-messages-count.${roomId}`));
+// }, { deep: true }); // Глубокое наблюдение за массивом
+
+watch(govBodyId, (newGovBodyId, oldGovBodyId) => {
+    const addedRoomIds = newGovBodyId.filter((id) => !oldGovBodyId.includes(id));
+    const removedRoomIds = oldGovBodyId.filter((id) => !newGovBodyId.includes(id));
 
     // Подписываемся на новые roomId
     addedRoomIds.forEach((roomId) => subscribeToChatMessagesChannel(roomId));
@@ -113,6 +134,7 @@ watch(roomIds, (newRoomIds, oldRoomIds) => {
     // Отписываемся от удалённых roomId
     removedRoomIds.forEach((roomId) => unsubscribeFromChannel(`chat-messages-count.${roomId}`));
 }, { deep: true }); // Глубокое наблюдение за массивом
+
 
 
 const realChat = () =>{
