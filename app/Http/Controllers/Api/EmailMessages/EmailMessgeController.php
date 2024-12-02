@@ -99,8 +99,9 @@ class EmailMessgeController extends BaseController
     }
 
     public function chatMessagesStore(Request $request){
+       
+        $data = $this->service->chatMessageCount($request->id);
 
-        $data = Message::create($request->all());
         return $data != null ? $this->sendResponse([], 'success') : $this->sendError('error');
 
     }
