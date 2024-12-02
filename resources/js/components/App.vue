@@ -40,11 +40,11 @@ import {useRouter,  useRoute } from 'vue-router';
 
 
 
-        if( !isAuthenticated.value && newRoute=="Login"){
-            console.log("notfound")
-            return;
+        // if( !isAuthenticated.value && newRoute=="Login"){
+        //     console.log("notfound")
+        //     return;
 
-        }
+        // }
         if (!isAuthenticated.value && newRoute === 'password.reset') {
 
 

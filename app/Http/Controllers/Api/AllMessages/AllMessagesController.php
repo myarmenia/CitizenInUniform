@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\AllMessageInterface;
 use App\Interfaces\ChatMessageInterface;
 use App\Interfaces\EmailMessageAnswerInterface;
+use Auth;
 use Illuminate\Http\Request;
 
 class AllMessagesController extends BaseController
@@ -23,10 +24,14 @@ class AllMessagesController extends BaseController
 
         $chatMessagesCount = $this->allMessageRepository->chatMessage()->count();
 
+        $user = Auth::user();
+        $room_ids = $user->rooms->pluck('id')->toArray();
+
         $data = [
             'email_messages_count' =>  $emailMessagesCount,
             'chat_messages_count' =>  $chatMessagesCount,
-            'governing_body_id' => $governing_id
+            'governing_body_id' => $governing_id,
+            'room_ids' => $room_ids
 
         ];
 
