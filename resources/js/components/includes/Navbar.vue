@@ -4,21 +4,15 @@ import { useRouter } from 'vue-router';
 import api, { initApi } from "../../api";
 import {me} from "../../me";
 import LoginHistoryModal from './LoginHistoryModal.vue';
+import {logoutFunction} from '../../logout';
 const router = useRouter();
 const {userMe} = me(router)
+const {logout} = logoutFunction(router)
 
 initApi(router);
 const errorMessage = ref(false);
 
-const logout = async () => {
-  try {
-    await api.value.post('/api/auth/logout');
-    localStorage.removeItem('access_token');
-      window.location.href = '/login';
-  } catch (error) {
-    errorMessage.value = error
-  }
-};
+
 
 const clickBurger = () => {
     const body = document.body;
