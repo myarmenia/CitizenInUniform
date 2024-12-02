@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Mobile\EmailMessageRequest;
 use App\Http\Resources\EmailMessageResource;
 use App\Http\Resources\EmailSingleMessageResource;
+use App\Models\Message;
 use App\Services\EmailMessageService;
 use App\Traits\Paginator;
 use Illuminate\Http\Request;
@@ -95,6 +96,13 @@ class EmailMessgeController extends BaseController
     public function destroy(string $id)
     {
         //
+    }
+
+    public function chatMessagesStore(Request $request){
+
+        $data = Message::create($request->all());
+        return $data != null ? $this->sendResponse([], 'success') : $this->sendError('error');
+
     }
 
 }

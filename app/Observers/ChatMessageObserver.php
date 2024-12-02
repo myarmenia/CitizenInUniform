@@ -2,8 +2,11 @@
 
 namespace App\Observers;
 
+use App\Events\ChatMessagesEvent;
 use App\Events\MessagesEvent;
 use App\Models\Message;
+use App\Models\User;
+use Auth;
 
 class ChatMessageObserver
 {
@@ -12,19 +15,21 @@ class ChatMessageObserver
      */
     public function created(Message $message): void
     {
-        // $unAnsweredCount = Message::where('readed', 0)->get()->count();
 
-        // event(
-        //     new MessagesEvent($unAnsweredCount, 'chat_message')
-        // );
         $governingId = $message->room ? $message->room->governing_body_id : null;
+        $roomId = $message->room_id;
+
         // $unAnsweredCount = Message::where('readed', 0)->where('governing_body_id', $governingId)->count();
         $unAnsweredCount = Message::where('readed', 0)->where('writer', 'user');
         $userId = $message->room ? $message->room->operator_id : null;
 
-        if ($governingId != null && $userId != null) {
-            $unAnsweredCount->whereHas('room', function ($query) use ($governingId, $userId) {
-                $query->where('governing_body_id', $governingId)->where('operator_id', $userId);
+
+
+
+        if ($userId != null) {
+            $unAnsweredCount->whereHas('room', function ($query) use ($userId) {
+
+                $query->where('operator_id', $userId);
             });
 
         }
@@ -32,7 +37,7 @@ class ChatMessageObserver
         $unAnsweredCount = $unAnsweredCount->count();
 
         event(
-            new MessagesEvent($unAnsweredCount, 'email_message', $governingId)
+            new ChatMessagesEvent($unAnsweredCount, 'chat_message', $roomId)
         );
     }
 
@@ -62,7 +67,7 @@ class ChatMessageObserver
         $unAnsweredCount = $unAnsweredCount->count();
 
         event(
-            new MessagesEvent($unAnsweredCount, 'email_message', $governingId)
+            new ChatMessagesEvent($unAnsweredCount, 'chat_message', $governingId)
         );
     }
 

@@ -13,6 +13,8 @@ const govBodyId = ref()
 
 const emailMessageCount = ref()
 const chatMessageCount = ref()
+const roomIds = ref([]);
+const activeSubscriptions = {}; // Хранение подписок для обоих каналов
 
 onMounted(async () => {
     getUnAmsweredEmailMessages()
@@ -29,27 +31,67 @@ const getUnAmsweredEmailMessages = async () => {
         chatMessageCount.value = result.chat_messages_count;
         govBodyId.value = result.governing_body_id;
 
+        if (result.room_ids) {
+            roomIds.value = result.room_ids;
+        }
+
     } catch (error) {
         console.error("Ошибка при получении данных:", error);
     }
 };
 
-watch(govBodyId, (newGovBodyId) => {
+
+// Подписка на канал сообщений email
+const subscribeToEmailMessagesChannel = (govBodyId) => {
+    const channelName = `messages-count.${govBodyId}`;
+    if (!activeSubscriptions[channelName]) {
+        activeSubscriptions[channelName] = window.Echo.private(channelName).listen('MessagesEvent', (e) => {
+            emailMessageCount.value = e.count; // Обновляем emailMessageCount
+        });
+    }
+};
+
+// Подписка на канал сообщений чата
+const subscribeToChatMessagesChannel = (roomId) => {
+    const channelName = `chat-messages-count.${roomId}`;
+    if (!activeSubscriptions[channelName]) {
+        activeSubscriptions[channelName] = window.Echo.private(channelName).listen('ChatMessagesEvent', (e) => {
+            chatMessageCount.value = e.count; // Обновляем chatMessageCount
+
+        });
+    }
+};
+
+// Отписка от канала
+const unsubscribeFromChannel = (channelName) => {
+    if (activeSubscriptions[channelName]) {
+        window.Echo.leave(channelName);
+        delete activeSubscriptions[channelName];
+    }
+};
+
+// Следим за изменениями govBodyId
+watch(govBodyId, (newGovBodyId, oldGovBodyId) => {
+    if (oldGovBodyId) {
+        unsubscribeFromChannel(`messages-count.${oldGovBodyId}`); // Отписываемся от старого канала
+    }
     if (newGovBodyId) {
-        subscribeToMessagesChannel(newGovBodyId);
+        subscribeToEmailMessagesChannel(newGovBodyId); // Подписываемся на новый канал
     }
 });
 
+// Следим за изменениями roomIds
+watch(roomIds, (newRoomIds, oldRoomIds) => {
+    const addedRoomIds = newRoomIds.filter((id) => !oldRoomIds.includes(id));
+    const removedRoomIds = oldRoomIds.filter((id) => !newRoomIds.includes(id));
 
-const subscribeToMessagesChannel = (govBodyId) => {
-    window.Echo.private(`messages-count.${govBodyId}`).listen('MessagesEvent', (e) => {
-        
-console.log(e)
+    // Подписываемся на новые roomId
+    addedRoomIds.forEach((roomId) => subscribeToChatMessagesChannel(roomId));
 
+    // Отписываемся от удалённых roomId
+    removedRoomIds.forEach((roomId) => unsubscribeFromChannel(`chat-messages-count.${roomId}`));
+}, { deep: true }); // Глубокое наблюдение за массивом
 
-        e.type == 'email_message' ? emailMessageCount.value = e.count : chatMessageCount.value = e.count
-    });
-};
 
 const realChat = () =>{
     const accessToken = localStorage.getItem('access_token'); // Replace with actual token

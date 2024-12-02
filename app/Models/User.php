@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Observers\BaseModelObserver;
 use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -68,9 +69,21 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(GoverningBodyUser::class);
     }
 
+    public function rooms(): HasMany
+    {
+        return $this->hasMany(Room::class, 'operator_id');
+    }
+
     public function canAccessGoverningId($governingId): bool
     {
         return ($this->governing_body_user && $governingId == $this->governing_body_user->governing_body_id) ? true : false;
+    }
+
+    public function canAccessRoomId($roomId): bool
+    {
+        $roomIds = $this->rooms->pluck('id')->toArray();
+    
+        return $this->rooms && in_array($roomId, $roomIds) ? true : false;
     }
 
     protected static function boot()
