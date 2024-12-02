@@ -19,16 +19,16 @@ class ChatMessagesEvent implements ShouldBroadcast
      */
     public $count;
     public $type;
-    public $governing_body_id;
+    public $user_id;
 
 
-    public function __construct(int $count, string $type, $governing_body_id)
+    public function __construct(int $count, string $type, $user_id)
     {
 
         $this->count = $count;
         $this->type = $type;
         // $this->room_id = $room_id;
-        $this->governing_body_id = $governing_body_id;
+        $this->user_id = $user_id;
 
 
     }
@@ -42,7 +42,7 @@ class ChatMessagesEvent implements ShouldBroadcast
     {
 
         return [
-            new PrivateChannel('chat-messages-count.' . $this->governing_body_id)
+            new PrivateChannel('chat-messages-count.' . $this->user_id)
         ];
     }
 
