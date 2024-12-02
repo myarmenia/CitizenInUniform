@@ -10,6 +10,13 @@
 
 (function() {
   "use strict";
+  window.addEventListener('beforeunload', () => {
+    
+    navigator.sendBeacon('/api/auth/logout');
+  });
+
+
+
 
   /**
    * Easy selector helper function
