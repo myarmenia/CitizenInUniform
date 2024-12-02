@@ -10,6 +10,8 @@ const router = useRouter();
 const { governingBodies } = useGoverningBodies(router);
 const {userMe} = me(router)
 const govBodyId = ref()
+const authId = ref()
+
 
 const emailMessageCount = ref()
 const chatMessageCount = ref()
@@ -29,9 +31,11 @@ const getAuthUserRoles = async () => {
     try {
 
         let response = await api.value.get('/api/auth/get-auth-user-roles');
-        let result = response.data.roles;
+        let result = response.data.result;
 
-        hasOperator.value = result.includes('operatorMIP') || result.includes('operatorPN');
+            authId.value = result.user_id;
+
+            hasOperator.value = result.roles.includes('operatorMIP') || result.roles.includes('operatorPN');
 
     } catch (error) {
         console.error("Ошибка при получении данных:", error);
@@ -41,7 +45,7 @@ const getAuthUserRoles = async () => {
 
 const getUnAmsweredEmailMessages = async () => {
     try {
-        console.log(userMe.roles)
+
         let response = await api.value.get('/api/auth/get-messages-counts');
         let result = response.data.result;
 
@@ -80,8 +84,8 @@ const subscribeToEmailMessagesChannel = (govBodyId) => {
 //     }
 // };
 
-const subscribeToChatMessagesChannel = (userId) => {
-    const channelName = `chat-messages-count.${userId}`;
+const subscribeToChatMessagesChannel = (authId) => {
+    const channelName = `chat-messages-count.${authId}`;
     if (!activeSubscriptions[channelName]) {
         activeSubscriptions[channelName] = window.Echo.private(channelName).listen('ChatMessagesEvent', (e) => {
             chatMessageCount.value = e.count; // Обновляем chatMessageCount
@@ -110,14 +114,15 @@ const unsubscribeFromChannel = (channelName) => {
 //     }
 // });
 
-watch( () => {
-    subscribeToChatMessagesChannel(4)
-    // subscribeToEmailMessagesChannel(govBodyId)
-    //
-});
+watch(
+    () => authId.value, // Указываем зависимость
+    (newAuthId) => {    // Действия при изменении
+        subscribeToChatMessagesChannel(newAuthId);
+    }
+);
 // Следим за изменениями govBodyId
 watch(govBodyId, (newGovBodyId, oldGovBodyId) => {
-  
+
     if (oldGovBodyId) {
         unsubscribeFromChannel(`messages-count.${oldGovBodyId}`); // Отписываемся от старого канала
     }

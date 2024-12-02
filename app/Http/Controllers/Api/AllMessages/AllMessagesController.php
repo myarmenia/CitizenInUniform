@@ -31,7 +31,8 @@ class AllMessagesController extends BaseController
             'email_messages_count' =>  $emailMessagesCount ?? 0,
             'chat_messages_count' =>  $chatMessagesCount ?? 0,
             'governing_body_id' => $governing_id,
-            'room_ids' => $room_ids
+            'room_ids' => $room_ids,
+            'user_id' => $user->id
 
         ];
 
