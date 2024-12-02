@@ -180,7 +180,11 @@ class RoleController extends Controller
 
     public function getAuthUserRoles(){
         $roles = Auth::user()->roles->pluck('name')->toArray();
+        $result = [
+            'roles' => $roles,
+            'user_id' => Auth::id()
+        ];
 
-        return response()->json(['roles' => $roles], 200);
+        return response()->json(['result' => $result], 200);
     }
 }
