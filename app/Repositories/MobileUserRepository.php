@@ -31,7 +31,16 @@ class MobileUserRepository implements MobileUserInterface
 
     public function destroy($device_id)
     {
-        
+
         return MobileUser::where('device_id', $device_id)->first()->delete();
+    }
+
+
+    public function updateFcmToken($data)
+    {
+
+        $user = MobileUser::where('id', 2)->first();
+dd($user);
+        return $user->update(['fcm_token' => $data['fcm_token']]);
     }
 }
