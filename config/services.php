@@ -40,7 +40,6 @@ return [
     // ],
 
     // 'fcm' => [
-    //     'key' => env('FCM_SERVER_KEY'), // Ключ сервера FCM
+    //     'credentials' => env('FIREBASE_CREDENTIALS'),
     // ],
-
 ];

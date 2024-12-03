@@ -9,6 +9,7 @@ interface MobileUserInterface
     public function getAllMobileUsersWithActiveSettings();
     public function getSingle($id);
     public function destroy($id);
+    public function updateFcmToken($data);
 
 
 }
