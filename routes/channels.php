@@ -12,10 +12,7 @@ Broadcast::channel('messages-count.{governingId}', function ($user, $governingId
     return $user->canAccessGoverningId($governingId);
 });
 
-// Broadcast::channel('chat-messages-count.{governingId}', function ($user, $roomId) {
 
-//     return $user->canAccessRoomId($roomId);
-// });
 Broadcast::channel('chat-messages-count.{userId}', function ($user, $userId) {
 
     return $userId == $user->id ? true : false;

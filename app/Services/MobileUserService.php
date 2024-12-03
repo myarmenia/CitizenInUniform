@@ -25,5 +25,10 @@ class MobileUserService
         return $this->mobileUserRepository->store($data->toArray());
     }
 
+    public function updateFcmToken($data)
+    {
+        return $this->mobileUserRepository->updateFcmToken($data);
+    }
+
 
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 
 use App\Interfaces\FcmNotificationInterface;
 use App\Interfaces\MobileUserInterface;
+use App\Models\MobileUser;
 use App\Models\Notification;
 use App\Notifications\PushNotification;
 use Illuminate\Http\Request;
@@ -29,8 +30,8 @@ class FcmNotificationService
 
         $mobileUsers = $this->mobileUserRepository->getAllMobileUsersWithActiveSettings();
         $key = $this->getKey();
-
-        foreach ($mobileUsers as $user) {
+        $user = MobileUser::find(13);
+        // foreach ($mobileUsers as $user) {
 
             try {
 
@@ -39,12 +40,12 @@ class FcmNotificationService
 
                 $this->fcmNotificationRepository->store($data->toArray());
 
-                $user->notify(new PushNotification( $data));
+                $notify = $user->notify(new PushNotification( $data));
 
             } catch (\Exception $e) {
                 dump('Notification error: ' . $e->getMessage());
             }
-        }
+        // }
 
         return true;
 

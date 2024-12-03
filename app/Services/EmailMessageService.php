@@ -74,9 +74,7 @@ class EmailMessageService
     public function chatMessageCount($id){
 
         $message = Message::where('id', $id)->first();
-        $roomId = $message->room_id;
 
-        // $unAnsweredCount = Message::where('readed', 0)->where('governing_body_id', $governingId)->count();
         $unAnsweredCount = Message::where('readed', 0)->where('writer', 'user');
         $userId = $message->room ? $message->room->operator_id : null;
 

@@ -11,6 +11,7 @@ use NotificationChannels\Fcm\FcmMessage;
 use NotificationChannels\Fcm\Resources\Notification as FcmNotification;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\CloudMessage;
+use Log;
 class PushNotification extends Notification
 {
     use Queueable;
@@ -75,21 +76,25 @@ class PushNotification extends Notification
         //     'content' => $this->content,
         //     'read_at' => null, // Уведомление еще не прочитано
         // ]);
-
+$notifiable['fcm_token'] = 'eWPj6UzmQvOVj6pPZBpKUu:APA91bEBWYExqdcD3nrxoNMDXcOIMGvalqD2f1RYd8zoCSJpdIxQr7fLiKmtrNgjL4TmoxbRIjycdgqtRvKFT_HhCCE_1MviGhOW40plOtWyf5AQuR2xSd0';
         // FcmNotificationService::storeNotification();
-
-        return FcmMessage::create()
+        Log::info("successfuly -----    $notifiable");
+        $message = FcmMessage::create()
                     ->notification(
                         FcmNotification::create()
                             ->title($this->title)
                             ->body($this->content)
                     )
                     ->data([
-                        'mobile_user_id' => (string) $notifiable->id,
+                        'fcm_token' => (string) $notifiable->fcm_token,
                         'title' => $this->title,
                         'content' => $this->content,
                         // 'setting_name' => $this->setting_name
                     ]);
+
+
+        Log::info(print_r($message));
+        return $message;
 
     }
 
