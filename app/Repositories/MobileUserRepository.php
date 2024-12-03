@@ -39,8 +39,8 @@ class MobileUserRepository implements MobileUserInterface
     public function updateFcmToken($data)
     {
 
-        $user = MobileUser::where('id', 2)->first();
-dd($user);
+        $user = MobileUser::find($data['user_id']);
+
         return $user->update(['fcm_token' => $data['fcm_token']]);
     }
 }
