@@ -25,7 +25,6 @@ use App\Models\Log;
 use App\Models\Message;
 use App\Models\MessageCategory;
 use App\Observers\BaseModelObserver;
-use App\Observers\ChatMessageObserver;
 use App\Observers\EmailMessagesObserver;
 use App\Repositories\AllMessageRepository;
 use App\Repositories\CategoryRepository;
@@ -90,7 +89,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Paginator::useBootstrapFive();
         EmailMessages::observe(EmailMessagesObserver::class);
-        Message::observe(ChatMessageObserver::class);
 
     }
 }
