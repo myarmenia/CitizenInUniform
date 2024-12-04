@@ -50,8 +50,8 @@ class NotificationController extends BaseController
 
         // $response = $firebaseService->sendNotification($deviceToken, $title, $body, $data);
         // dd($response);
-
-        $data = $this->service->store(FcmNotificationDto::fromFcmNotificationDto($request));
+        $data = NotifyService::sendNotification();
+        // $data = $this->service->store(FcmNotificationDto::fromFcmNotificationDto($request));
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }

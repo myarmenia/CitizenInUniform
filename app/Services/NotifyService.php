@@ -1,36 +1,39 @@
 <?php
 namespace App\Services;
 
-use Kreait\Firebase\Factory;
+// use Kreait\Firebase\Messaging\CloudMessage;
+// use Kreait\Firebase\Messaging\RegistrationToken;
+// use Kreait\Firebase\Messaging\Notification;
+// use Kreait\Firebase\Exception\Messaging\SendException;
+// use Log;
+// use Kreait\Firebase\Factory;
+
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
-
+use Kreait\Laravel\Firebase\Facades\Firebase;
+use Log;
 class NotifyService
 {
-    protected $messaging;
 
-    public function __construct()
+
+    public static function sendNotification()
     {
-        $this->messaging = (new Factory())
-            ->withServiceAccount(config('firebase.credentials'))
-            ->createMessaging();
-    }
 
-    public function sendNotification(string $deviceToken, string $title, string $body, array $data = [])
-    {
-        $notification = Notification::create($title, $body);
-        // $notification = ['title' => $title, 'body' => $body];
+        $deviceToken = 'f9QOSx3lSwOv2XpxwW0iTo:APA91bE4Lg66byiaA-SP6CQYIcdB9vnuJJuS-kR-FL1GyNoR78kQY5WDwLNY8eexNQm6xh0GI191TDqnP4AhhD8PMbgyvXyUi-LQc2Uj6TFpePmoSLWwtfI';  // Токен устройства получателя
 
-
+        $notification = Notification::create('Заголовок уведомления', 'Текст уведомления');
         $message = CloudMessage::withTarget('token', $deviceToken)
-            ->withNotification($notification)
-            ->withData($data);
+            ->withNotification($notification);
 
         try {
-            $this->messaging->send($message);
-            return ['success' => true, 'message' => 'Notification sent'];
+
+            Firebase::messaging()->send($message);
+            Log::info("FCM message created: " . print_r($message, true));
+
         } catch (\Exception $e) {
-            return ['success' => false, 'message' => $e->getMessage()];
+          
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
+
 }
