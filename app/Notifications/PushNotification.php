@@ -68,17 +68,11 @@ class PushNotification extends Notification
     public function toFcm($notifiable): FcmMessage
     {
 
-
-        // $notification = \App\Models\Notification::create([
-        //     'setting_id' => null, // Укажите значение или сделайте поле nullable
-        //     'mobile_user_id' => $notifiable->id,
-        //     'title' => $this->title,
-        //     'content' => $this->content,
-        //     'read_at' => null, // Уведомление еще не прочитано
-        // ]);
-$notifiable['fcm_token'] = 'eWPj6UzmQvOVj6pPZBpKUu:APA91bEBWYExqdcD3nrxoNMDXcOIMGvalqD2f1RYd8zoCSJpdIxQr7fLiKmtrNgjL4TmoxbRIjycdgqtRvKFT_HhCCE_1MviGhOW40plOtWyf5AQuR2xSd0';
+        // $notifiable['fcm_token'] = 'f9QOSx3lSwOv2XpxwW0iTo:APA91bE4Lg66byiaA-SP6CQYIcdB9vnuJJuS-kR-FL1GyNoR78kQY5WDwLNY8eexNQm6xh0GI191TDqnP4AhhD8PMbgyvXyUi-LQc2Uj6TFpePmoSLWwtfI';
         // FcmNotificationService::storeNotification();
-        Log::info("successfuly -----    $notifiable");
+
+
+        // Log::info("successfuly -----    $notifiable");
         $message = FcmMessage::create()
                     ->notification(
                         FcmNotification::create()
@@ -93,8 +87,32 @@ $notifiable['fcm_token'] = 'eWPj6UzmQvOVj6pPZBpKUu:APA91bEBWYExqdcD3nrxoNMDXcOIM
                     ]);
 
 
-        Log::info(print_r($message));
+        Log::info("FCM message created: " . print_r($message, true));
+
         return $message;
+
+        // $fcmToken = $notifiable->fcm_token;
+        // $fcmToken = 'f9QOSx3lSwOv2XpxwW0iTo:APA91bE4Lg66byiaA-SP6CQYIcdB9vnuJJuS-kR-FL1GyNoR78kQY5WDwLNY8eexNQm6xh0GI191TDqnP4AhhD8PMbgyvXyUi-LQc2Uj6TFpePmoSLWwtfI';
+
+
+        // $message = FcmMessage::create()
+        //     ->notification(
+        //         FcmNotification::create()
+        //             ->title($this->title)
+        //             ->body($this->content)
+        //     )
+        //     ->data([
+        //         // 'fcm_token' => (string) $notifiable->fcm_token,
+        //         'fcm_token' => (string) $fcmToken,
+
+        //         'title' => $this->title,
+        //         'content' => $this->content,
+        //     ]);
+
+        // // Логирование отправленного сообщения
+        // Log::info("FCM message created: " . print_r($message, true));
+
+        // return $message;
 
     }
 

@@ -43,6 +43,7 @@ class FcmNotificationService
                 $notify = $user->notify(new PushNotification( $data));
 
             } catch (\Exception $e) {
+                dd(888);
                 dump('Notification error: ' . $e->getMessage());
             }
         // }
