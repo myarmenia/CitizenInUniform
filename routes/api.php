@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\GoverningBodies\GoverningBodyController;
 use App\Http\Controllers\Api\Logs\LogController;
 use App\Http\Controllers\Api\MessageCategories\MessageCategoryController;
 use App\Http\Controllers\Api\Mobile\PhoneCallController;
+use App\Http\Controllers\Api\Mobile\UserNotificationController;
 use App\Http\Controllers\Api\Notifications\NotificationController;
 use App\Http\Controllers\Api\Notifications\SendNotificationToUserController;
 use App\Http\Controllers\Api\Mobile\MobileUserController;
@@ -32,8 +33,6 @@ use App\Models\UserLoginLog;
 use Illuminate\Support\Facades\Route;
 
 
-
-// Route::post('send-notification', SendNotificationToUserController::class);
 
 
     Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
@@ -60,6 +59,8 @@ Route::group(['prefix' => 'mobile'], function ($router) {
 
     Route::post('chat-messages-store', [EmailMessgeController::class, 'chatMessagesStore']);
     Route::post('update-fcm-token', [MobileUserController::class, 'updateFcmToken']);
+    Route::post('notifications', [UserNotificationController::class, 'getUserNotifications']);
+
 
 });
 

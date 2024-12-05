@@ -15,6 +15,7 @@ use App\Interfaces\GoverningBodyInterface;
 use App\Interfaces\LogInterface;
 use App\Interfaces\MessageCategoryInterface;
 use App\Interfaces\MobileUserInterface;
+use App\Interfaces\MobileUserNotificationInterface;
 use App\Interfaces\PhoneCallInterface;
 use App\Interfaces\ReportInterface;
 use App\Interfaces\SettingInterface;
@@ -37,6 +38,7 @@ use App\Repositories\FileRepository;
 use App\Repositories\GoverningBoryRepository;
 use App\Repositories\LogRepository;
 use App\Repositories\MessageCategoryRepository;
+use App\Repositories\MobileUserNotificationRepository;
 use App\Repositories\MobileUserRepository;
 use App\Repositories\PhoneCallRepository;
 use App\Repositories\ReportRepository;
@@ -71,6 +73,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PhoneCallInterface::class, PhoneCallRepository::class);
         $this->app->bind(ReportInterface::class, ReportRepository::class);
         $this->app->bind(LogInterface::class, LogRepository::class);
+        $this->app->bind(MobileUserNotificationInterface::class, MobileUserNotificationRepository::class);
+
 
 
 

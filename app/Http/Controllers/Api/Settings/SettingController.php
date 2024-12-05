@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class SettingController extends BaseController
 {
-    public function __construct(protected SettingInterface $settingRepository, )
+    public function __construct(protected SettingInterface $settingRepository )
     {
 
     }
