@@ -30,23 +30,29 @@ class FcmNotificationService
 
         $mobileUsers = $this->mobileUserRepository->getAllMobileUsersWithActiveSettings();
         $key = $this->getKey();
-        $user = MobileUser::find(13);
-        // foreach ($mobileUsers as $user) {
+
+        foreach ($mobileUsers as $user) {
 
             try {
+
+                if (!$user->fcm_token) {
+                    throw new \Exception('FCM token is missing');
+                }
 
                 $data->mobile_user_id = $user->id;
                 $data->key = $key;
 
                 $this->fcmNotificationRepository->store($data->toArray());
 
+                $user_notify_sound = $user->mobile_user_active_setting->sound;
+                $data->sound = $user_notify_sound ? 'default' : '';
+             
                 $notify = $user->notify(new PushNotification( $data));
 
             } catch (\Exception $e) {
-                dd(888);
-                dump('Notification error: ' . $e->getMessage());
+                \Log::channel('notify')->error('Notification error for user ' . $user->id . ': ' . $e->getMessage());
             }
-        // }
+        }
 
         return true;
 
