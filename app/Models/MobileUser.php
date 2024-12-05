@@ -17,9 +17,7 @@ class MobileUser extends Model
 
     public function routeNotificationForFcm()
     {
-        // return $this->device_id; // Убедитесь, что у вас есть поле fcm_token
-        $token = 'f9QOSx3lSwOv2XpxwW0iTo:APA91bE4Lg66byiaA-SP6CQYIcdB9vnuJJuS-kR-FL1GyNoR78kQY5WDwLNY8eexNQm6xh0GI191TDqnP4AhhD8PMbgyvXyUi-LQc2Uj6TFpePmoSLWwtfI';
-        return $token;
+        return $this->fcm_token;
     }
 
     public function mobile_user_setting(): HasOne

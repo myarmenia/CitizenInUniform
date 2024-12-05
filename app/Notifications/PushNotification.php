@@ -18,6 +18,8 @@ class PushNotification extends Notification
 
     private $title;
     private $content;
+
+    private $sound;
     // private $setting_name;
 
     private $data;
@@ -25,18 +27,15 @@ class PushNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    // public function __construct($title, $content)
-    // {
 
-    //     $this->title = $title;
-    //     $this->content = $content;
-    // }
 
     public function __construct($data)
     {
 
         $this->title = $data->title;
         $this->content = $data->content;
+        $this->sound = $data->sound;
+
         // $this->setting_name = $data->setting_name;
 
     }
@@ -68,11 +67,6 @@ class PushNotification extends Notification
     public function toFcm($notifiable): FcmMessage
     {
 
-        // $notifiable['fcm_token'] = 'f9QOSx3lSwOv2XpxwW0iTo:APA91bE4Lg66byiaA-SP6CQYIcdB9vnuJJuS-kR-FL1GyNoR78kQY5WDwLNY8eexNQm6xh0GI191TDqnP4AhhD8PMbgyvXyUi-LQc2Uj6TFpePmoSLWwtfI';
-        // FcmNotificationService::storeNotification();
-
-
-        // Log::info("successfuly -----    $notifiable");
         $message = FcmMessage::create()
                     ->notification(
                         FcmNotification::create()
@@ -80,39 +74,24 @@ class PushNotification extends Notification
                             ->body($this->content)
                     )
                     ->data([
-                        'fcm_token' => (string) $notifiable->fcm_token,
-                        'title' => $this->title,
-                        'content' => $this->content,
-                        // 'setting_name' => $this->setting_name
-                    ]);
+                            'title' => $this->title,
+                            'content' => $this->content,
+                            // 'setting_name' => $this->setting_name
+                        ]
+                    )
+                     ->android([
+                            'sound' => $this->sound  // Android sound option /custom_sound.mp3
+                        ]
+                    )
+                    ->apns([
+                            'sound' => $this->sound  // iOS sound option
+                        ]
+                    );
 
 
-        Log::info("FCM message created: " . print_r($message, true));
+        // Log::channel('notify')->info('Notification error for user ' . "FCM message created: " . print_r($message, true));
 
         return $message;
-
-        // $fcmToken = $notifiable->fcm_token;
-        // $fcmToken = 'f9QOSx3lSwOv2XpxwW0iTo:APA91bE4Lg66byiaA-SP6CQYIcdB9vnuJJuS-kR-FL1GyNoR78kQY5WDwLNY8eexNQm6xh0GI191TDqnP4AhhD8PMbgyvXyUi-LQc2Uj6TFpePmoSLWwtfI';
-
-
-        // $message = FcmMessage::create()
-        //     ->notification(
-        //         FcmNotification::create()
-        //             ->title($this->title)
-        //             ->body($this->content)
-        //     )
-        //     ->data([
-        //         // 'fcm_token' => (string) $notifiable->fcm_token,
-        //         'fcm_token' => (string) $fcmToken,
-
-        //         'title' => $this->title,
-        //         'content' => $this->content,
-        //     ]);
-
-        // // Логирование отправленного сообщения
-        // Log::info("FCM message created: " . print_r($message, true));
-
-        // return $message;
 
     }
 

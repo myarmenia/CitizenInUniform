@@ -26,6 +26,10 @@ class SettingSeeder extends Seeder
             [
                 'id' => 3,
                 'name' => 'Այլ'
+            ],
+            [
+                'id' => 4,
+                'name' => 'Նոր հաղորդագրություն'
             ]
 
 
