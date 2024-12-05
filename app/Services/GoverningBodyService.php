@@ -3,10 +3,7 @@
 namespace App\Services;
 
 
-use App\Interfaces\CategoryInterface;
 use App\Interfaces\GoverningBodyInterface;
-use Illuminate\Http\Request;
-use Storage;
 
 class GoverningBodyService
 {
@@ -26,7 +23,7 @@ class GoverningBodyService
 
     public function update($data, $id)
     {
-       
+
         return $this->governingBodyRepository->update($data->toArray(), $id);
     }
 
