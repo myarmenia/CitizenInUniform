@@ -22,7 +22,8 @@ const hasOperator = ref(null)
 onMounted(async () => {
     getAuthUserRoles()
 
-    if(hasOperator){
+    if(hasOperator.value){
+        console.log(888888899)
         getUnAmsweredEmailMessages()
     }
 })
