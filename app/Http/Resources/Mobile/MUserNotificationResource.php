@@ -20,7 +20,8 @@ class MUserNotificationResource extends JsonResource
             "setting_id" => $this->setting_id,
             "mobile_user_id" => $this->mobile_user_id,
             "title" => $this->setting->name ?? null,
-            "content" => ($this->title ?? null) . " - " . ($this->content ?? null)
+            "content" => ($this->title ?? null) . " - " . ($this->content ?? null),
+            "created_at" => date('d-m-Y H:i', strtotime($this->created_at))
         ];
     }
 }
