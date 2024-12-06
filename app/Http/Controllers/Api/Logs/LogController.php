@@ -21,6 +21,7 @@ class LogController extends BaseController
     }
     public function __invoke(Request $request)
     {
+        // dd($request->all());
         $page = request()->page ?? 1;
         $perPage = 20;
         $data = $this->service->logs();
