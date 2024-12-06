@@ -6,6 +6,7 @@ use App\DTO\FcmNotificationDto;
 use App\Http\Controllers\Api\BaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FcmNotificationRequest;
+use App\Http\Requests\Mobile\readNotificationRequest;
 use App\Http\Requests\Mobile\UserNotificationRequest;
 use App\Http\Resources\Mobile\MUserNotificationResource;
 use App\Models\MobileUser;
@@ -23,12 +24,27 @@ class UserNotificationController extends BaseController
     }
     public function getUserNotifications(UserNotificationRequest $request){
 
-
         $data = $this->service->allNotifications($request->mobile_user_id);
 
         $data = MUserNotificationResource::collection($data);
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
+
+    }
+
+    public function readNotification(Request $request){
+
+        $data = $this->service->readNotification($request->id);
+
+        return $data != null ? $this->sendResponse([], 'success') : $this->sendError('error');
+    }
+
+    public function destroyAll(UserNotificationRequest $request)
+    {
+
+        $data = $this->service->destroyAll($request->mobile_user_id);
+
+        return $data != null ? $this->sendResponse([], 'success') : $this->sendError('error');
 
     }
 
