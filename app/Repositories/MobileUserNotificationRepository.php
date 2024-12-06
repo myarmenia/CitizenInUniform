@@ -3,25 +3,37 @@
 namespace App\Repositories;
 
 use App\Interfaces\MobileUserNotificationInterface;
+use App\Models\MobileUser;
 use App\Models\Notification;
 
 class MobileUserNotificationRepository implements MobileUserNotificationInterface
 {
+    public function getMobileUser($mobile_user_id): MobileUser|null
+    {
+        $user = MobileUser::find($mobile_user_id);
+
+        return $user;
+    }
+
     public function getUnreadNotifications($mobile_user_id)
     {
-        return Notification::where('mobile_user_id', $mobile_user_id)->whereNull('read_at')->get();
+        $user = MobileUser::find($mobile_user_id);
+        
+        return $user ? $user->notifications->whereNull('read_at') : false;
 
     }
-    public function readNotification($id): Notification
+    public function readNotification($id): bool
     {
         $notification = Notification::find($id);
-        return $notification->update(['read_at' => now()]);
+
+        return $notification ? $notification->update(['read_at' => now()]) : false;
     }
 
-    public function deleteAll($mobile_user_id): Notification
+    public function destroyAll($mobile_user_id): bool
     {
-        $notifications = $this->getUnreadNotifications($mobile_user_id);
-        return $notifications->delete();
+        $user = $this->getMobileUser($mobile_user_id);
+
+        return $user ? $user->notifications()->delete() : false;
     }
 
 }

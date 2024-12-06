@@ -9,7 +9,7 @@ class FcmNotificationRepository implements FcmNotificationInterface
 {
     public function index()
     {
-        return Notification::where('setting_id', '!=', 4)->unique('key')->sortByDesc('id')->values();
+        return Notification::where('setting_id', '!=', 4)->get()->unique('key')->sortByDesc('id')->values();
 
     }
     public function store($data): Notification
