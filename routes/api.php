@@ -60,6 +60,8 @@ Route::group(['prefix' => 'mobile'], function ($router) {
     Route::post('chat-messages-store', [EmailMessgeController::class, 'chatMessagesStore']);
     Route::post('update-fcm-token', [MobileUserController::class, 'updateFcmToken']);
     Route::post('notifications', [UserNotificationController::class, 'getUserNotifications']);
+    Route::patch('notifications/{id}', [UserNotificationController::class, 'readNotification']);
+    Route::delete('notifications', [UserNotificationController::class, 'destroyAll']);
 
 
 });

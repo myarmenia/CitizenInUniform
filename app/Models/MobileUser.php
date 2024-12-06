@@ -30,6 +30,11 @@ class MobileUser extends Model
         return $this->HasOne(MobileUserSetting::class)->where('status', 1);
     }
 
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
+
 
     protected static function boot()
     {
