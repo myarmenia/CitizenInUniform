@@ -34,14 +34,14 @@ const getRoles = async () => {
 }
 
 const changePage =(link) =>{
-console.log(link)
+
     if(!link.url || link.active){
         return
     }
 
     activePage.value = link.label
-
-    api.value.post(link.url)
+    
+    api.value.post(link.url, form)
         .then((response) =>{
             console.log(response.data.result)
             logs.value = response.data.result.data
@@ -95,7 +95,7 @@ const sendRequest = async () => {
         const response = await api.value.post(`/api/auth/logs?page=${activePage.value}`, form);
 
         let result = response.data.result
-
+            // console.log(result, 'dddddddddddd')
             lastPage.value = result.last_page
             logs.value = result.data
             links.value = result.links

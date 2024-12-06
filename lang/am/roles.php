@@ -6,6 +6,6 @@ return [
     'admin' => 'Ադմինիստրատոր',
     'content_manager' => 'Բովանդակության կառավարիչ',
     'operatorMIP' => 'Օպերատոր /ՄԻՊ/',
-    'operatorPN' => 'Օպերատոր /ՄԻՊ/'
+    'operatorPN' => 'Օպերատոր /ՊՆ/'
 
 ];
