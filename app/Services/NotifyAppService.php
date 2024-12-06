@@ -1,31 +1,26 @@
 <?php
-
 namespace App\Services;
 
+// use Kreait\Firebase\Messaging\CloudMessage;
+// use Kreait\Firebase\Messaging\RegistrationToken;
+// use Kreait\Firebase\Messaging\Notification;
+// use Kreait\Firebase\Exception\Messaging\SendException;
+// use Log;
+// use Kreait\Firebase\Factory;
 
-use App\Interfaces\FcmNotificationInterface;
-use App\Interfaces\MobileUserInterface;
+use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
+use Kreait\Laravel\Firebase\Facades\Firebase;
+use Log;
 use App\Models\MobileUser;
-use App\Models\Notification;
-use App\Notifications\PushNotification;
-use Illuminate\Http\Request;
-use Str;
-
-// ============================================
-use Kreait\Firebase\Factory;
 
 class NotifyAppService
 {
 
 
-
-
-    public function store()
+    public static function sendNotification()
     {
-
         $mobileUsers = MobileUser::all();
-
-
         foreach ($mobileUsers as $user) {
 
             try {
@@ -36,41 +31,22 @@ class NotifyAppService
 
 
                 // ==============================================
-                $factory = (new Factory())->withServiceAccount(env('FIREBASE_CREDENTIALS'));
-                $messaging = $factory->createMessaging();
+                $deviceToken = $user->fcm_token;
 
-                $message = [
-                    'token' => $user->fcm_token,
-                    'notification' => [
-                        'title' => 'Title',
-                        'body' => 'Message body',
-                        'sound' => '', // Указываем звук
-                    ],
-                    'data' => [
-                        'key' => 'value',
-                    ],
-                ];
+                $notification = Notification::create('aaaaaa', 'bbbbb');
+                $message = CloudMessage::withTarget('token', $deviceToken)
+                    ->withNotification($notification);
 
-                $messaging->send($message);
+
+                Firebase::messaging()->send($message);
+                Log::info("FCM message created: " . print_r($message, true));
 
             } catch (\Exception $e) {
                 \Log::channel('notify')->error('Notification error for user ' . $user->id . ': ' . $e->getMessage());
             }
         }
 
-        return true;
 
-    }
-
-    function getKey()
-    {
-        $currentMilliseconds = time();
-
-        $randomFiveDigits = rand(10000, 99999);
-
-        $key = $currentMilliseconds . $randomFiveDigits;
-
-        return $key;
     }
 
 }
