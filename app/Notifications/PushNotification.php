@@ -78,14 +78,6 @@ class PushNotification extends Notification
                             'content' => $this->content,
                             // 'setting_name' => $this->setting_name
                         ]
-                    )
-                     ->android([
-                            'sound' => $this->sound  // Android sound option /custom_sound.mp3
-                        ]
-                    )
-                    ->apns([
-                            'sound' => $this->sound  // iOS sound option
-                        ]
                     );
 
 

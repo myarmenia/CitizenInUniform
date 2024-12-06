@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FcmNotificationRequest;
 use App\Http\Resources\NotificationResource;
 use App\Services\FcmNotificationService;
+use App\Services\NotifyAppService;
 use App\Services\NotifyService;
 use App\Traits\Paginator;
 use Illuminate\Http\Request;
@@ -41,8 +42,10 @@ class NotificationController extends BaseController
      */
     public function store(FcmNotificationRequest $request)
     {
-        
-        $data = $this->service->store(FcmNotificationDto::fromFcmNotificationDto($request));
+        $service  = new NotifyAppService();
+        // $data = $this->service->store(FcmNotificationDto::fromFcmNotificationDto($request));
+        $data = $service ->store();
+
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
