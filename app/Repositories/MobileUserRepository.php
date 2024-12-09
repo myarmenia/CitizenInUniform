@@ -8,6 +8,14 @@ use App\Models\MobileUser;
 
 class MobileUserRepository implements MobileUserInterface
 {
+
+    public function getMobileUser($mobile_user_id)
+    {
+        $user = MobileUser::find($mobile_user_id);
+
+        return $user;
+    }
+
     public function getAll()
     {
         return MobileUser::all();
@@ -38,9 +46,16 @@ class MobileUserRepository implements MobileUserInterface
 
     public function updateFcmToken($data)
     {
-
-        $user = MobileUser::find($data['user_id']);
+        $user = $this->getMobileUser($data['user_id']);
 
         return $user ? $user->update(['fcm_token' => $data['fcm_token']]) : false;
+    }
+
+    public function updateSettings($data)
+    {
+        $user = $this->getMobileUser($data['mobile_user_id']);
+
+        return $user ? $user->mobile_user_setting->update($data) : false;
+
     }
 }
