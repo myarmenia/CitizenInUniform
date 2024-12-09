@@ -38,8 +38,8 @@ class MobileUserController extends BaseController
 
         $data = $this->service->getMobileUser($mobile_user_id);
 
-        $data = new MUserSettingsResource($data);
-        
+        $data = $data ? new MUserSettingsResource($data) : null;
+
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 
