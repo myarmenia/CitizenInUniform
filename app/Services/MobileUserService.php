@@ -30,5 +30,15 @@ class MobileUserService
         return $this->mobileUserRepository->updateFcmToken($data);
     }
 
+    public function getMobileUser($mobile_user_id)
+    {
+        return $this->mobileUserRepository->getMobileUser($mobile_user_id);
+    }
+
+    public function updateSettings($data)
+    {
+        return $this->mobileUserRepository->updateSettings($data);
+    }
+
 
 }
