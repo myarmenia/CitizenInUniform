@@ -62,6 +62,9 @@ Route::group(['prefix' => 'mobile'], function ($router) {
     Route::post('notifications', [UserNotificationController::class, 'getUserNotifications']);
     Route::patch('notifications/{id}', [UserNotificationController::class, 'readNotification']);
     Route::delete('notifications', [UserNotificationController::class, 'destroyAll']);
+    Route::get('settings/{id}', [MobileUserController::class, 'getSettings']);
+    Route::put('settings', [MobileUserController::class, 'updateSettings']);
+
 
 
 });
