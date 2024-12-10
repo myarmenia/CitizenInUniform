@@ -18,15 +18,17 @@ const chatMessageCount = ref()
 const roomIds = ref([]);
 const activeSubscriptions = {}; // Хранение подписок для обоих каналов
 const hasOperator = ref(null)
+const originalTitle = document.title;
+let notificationInterval;
 
 onMounted(async () => {
-    getAuthUserRoles()
+    await getAuthUserRoles(); // Дождёмся обновления hasOperator
 
-    if(hasOperator.value){
-        console.log(888888899)
-        getUnAmsweredEmailMessages()
+    if (hasOperator.value) {
+        getUnAmsweredEmailMessages();
     }
 })
+
 
 
 const getAuthUserRoles = async () => {
@@ -36,7 +38,6 @@ const getAuthUserRoles = async () => {
         let result = response.data.result;
 
             authId.value = result.user_id;
-
             hasOperator.value = result.roles.includes('operatorMIP') || result.roles.includes('operatorPN');
 
     } catch (error) {
@@ -70,11 +71,41 @@ const subscribeToEmailMessagesChannel = (govBodyId) => {
     const channelName = `messages-count.${govBodyId}`;
     if (!activeSubscriptions[channelName]) {
         activeSubscriptions[channelName] = window.Echo.private(channelName).listen('MessagesEvent', (e) => {
-            emailMessageCount.value = e.count; // Обновляем emailMessageCount
+            emailMessageCount.value = e.count;
+
+            if (document.visibilityState !== 'visible') {
+                playNotificationSound();
+                blinkTitle(`Նոր հաղորդագրություն`);
+            }
+
         });
     }
 };
 
+
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        stopBlinkTitle();
+    }
+});
+
+
+// Функция для мигания заголовка страницы
+const blinkTitle = (message) => {
+    clearInterval(notificationInterval);
+    let toggle = false;
+    notificationInterval = setInterval(() => {
+        document.title = toggle ? message : '*** Նոր հաղորդագրություն ***';
+        toggle = !toggle;
+    }, 1000);
+};
+
+
+// Функция для остановки мигания
+const stopBlinkTitle = () => {
+    clearInterval(notificationInterval);
+    document.title = originalTitle;
+};
 
 
 const subscribeToChatMessagesChannel = (authId) => {
@@ -82,6 +113,10 @@ const subscribeToChatMessagesChannel = (authId) => {
     if (!activeSubscriptions[channelName]) {
         activeSubscriptions[channelName] = window.Echo.private(channelName).listen('ChatMessagesEvent', (e) => {
             chatMessageCount.value = e.count; // Обновляем chatMessageCount
+            if (document.visibilityState !== 'visible') {
+                playNotificationSound();
+                blinkTitle(`Նոր հաղորդագրություն`);
+            }
         });
     }
 };
@@ -132,7 +167,6 @@ const realChat = () =>{
 <template>
 
     <aside id="sidebar" class="sidebar">
-
 
         <ul class="sidebar-nav" id="sidebar-nav" >
 

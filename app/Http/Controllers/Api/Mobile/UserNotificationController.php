@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers\Api\Mobile;
 
-use App\DTO\FcmNotificationDto;
 use App\Http\Controllers\Api\BaseController;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\FcmNotificationRequest;
-use App\Http\Requests\Mobile\readNotificationRequest;
 use App\Http\Requests\Mobile\UserNotificationRequest;
 use App\Http\Resources\Mobile\MUserNotificationResource;
-use App\Models\MobileUser;
-use App\Notifications\PushNotification;
-use App\Services\FcmNotificationService;
 use App\Services\MobileNotificationService;
 use Illuminate\Http\Request;
 
