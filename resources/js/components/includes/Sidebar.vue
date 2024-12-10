@@ -121,6 +121,11 @@ const subscribeToChatMessagesChannel = (authId) => {
     }
 };
 
+// Функция для проигрывания звука
+const playNotificationSound = () => {
+    const audio = new Audio('/public/assets/sound/siren-alert.mp3'); // Замените на свой URL
+    audio.play();
+};
 
 // Отписка от канала
 const unsubscribeFromChannel = (channelName) => {
