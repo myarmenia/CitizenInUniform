@@ -104,15 +104,14 @@ class FcmNotificationService
                     ->withAndroidConfig([
 
                         'notification' => [
-                            'sound' => '', // Отключаем звук на Android
-                            'channelId' => $user_notify_sound ? 'default' : 'silent'
+                            'sound' => '',
+                            'channelId' => $user_notify_sound ? 'default' : 'silent' // Отключаем звук на Android
                         ]
                     ])
                     ->withApnsConfig([
                         'payload' => [
                             'aps' => [
-                                'sound' => '', // Отключаем звук на iOS
-                                'channelId' => $user_notify_sound ? 'default' : ''
+                                'sound' => $user_notify_sound ? 'default' : ''   // Отключаем звук на iOS
 
                             ]
                         ]
