@@ -318,7 +318,7 @@ const router = createRouter({
     routes
 })
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = !!sessionStorage.getItem('access_token'); // Check token
+    const isAuthenticated = !!localStorage.getItem('access_token'); // Check token
     if (to.meta.requiresAuth && !isAuthenticated) {
         console.log(95656)
       next('/login'); // Redirect to login

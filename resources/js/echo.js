@@ -14,7 +14,7 @@ window.Echo = new Echo({
     authEndpoint: '/broadcasting/auth', // Укажите ваш endpoint
     auth: {
         headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('access_token')}`,
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
     },
 });

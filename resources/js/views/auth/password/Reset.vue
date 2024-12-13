@@ -36,7 +36,7 @@ console.log(form)
         console.log(response.data.message)
         messages.value=response.data.message
 
-        sessionStorage.removeItem('access_token');
+        localStorage.removeItem('access_token');
         window.location.href='/login'
     })
      .catch((error) => {
