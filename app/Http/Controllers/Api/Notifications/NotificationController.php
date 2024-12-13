@@ -43,8 +43,8 @@ class NotificationController extends BaseController
     public function store(FcmNotificationRequest $request)
     {
         // $service  = new NotifyAppService();
-        $data = $this->service->store(FcmNotificationDto::fromFcmNotificationDto($request));
-        // $data = $service ->store();
+        // $data = $this->service->store(FcmNotificationDto::fromFcmNotificationDto($request));
+        $data = $this->service->sendNotification(FcmNotificationDto::fromFcmNotificationDto($request));
 
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
