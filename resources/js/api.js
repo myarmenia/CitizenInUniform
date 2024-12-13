@@ -4,7 +4,7 @@ import { ref } from "vue"
 
 
 const api = ref()
-const accessToken = ref(localStorage.getItem('access_token')); // Store the token in a reactive variable
+const accessToken = ref(sessionStorage.getItem('access_token')); // Store the token in a reactive variable
 const userMe = ref(null); // Store user credentials in a reactive variable
 const initApi = (router) => {
 
@@ -12,7 +12,7 @@ const initApi = (router) => {
         //start request
         apiInstance.interceptors.request.use(
             config=>{
-                const token = localStorage.getItem('access_token');
+                const token = sessionStorage.getItem('access_token');
                 if (token) {
                     config.headers = config.headers || {};
                     config.headers.Authorization = `Bearer ${token}`; // Set the Authorization header
@@ -35,7 +35,7 @@ const initApi = (router) => {
         apiInstance.interceptors.response.use(
             config=>{
 
-                const token = localStorage.getItem('access_token');
+                const token = sessionStorage.getItem('access_token');
                 if (token) {
                     console.log('8545')
                     config.headers = config.headers || {};
@@ -52,17 +52,17 @@ const initApi = (router) => {
                     console.log('expired')
                     return axios.post('/api/auth/refresh',{},{
                         headers:{
-                            'authorization': `Bearer ${localStorage.getItem('access_token')}`
+                            'authorization': `Bearer ${sessionStorage.getItem('access_token')}`
                         }
                     })
                     .then(res => {
                         console.log(res,'99999')
                         const newToken = res.data.access_token;
-                        localStorage.setItem('access_token', newToken);
+                        sessionStorage.setItem('access_token', newToken);
 
                         accessToken.value = newToken; // Update the reactive variable
 
-                        error.config.headers.authorization = `Bearer ${localStorage.getItem('access_token')}`
+                        error.config.headers.authorization = `Bearer ${sessionStorage.getItem('access_token')}`
                         console.log(error.config.headers)
                         return  apiInstance.request(error.config.headers)
 
@@ -79,7 +79,7 @@ const initApi = (router) => {
                         toast.fire({ icon: 'error', title: 'Դուք չունեք բավարար թույլատվությունը' });
                         router.push('/permission');
                     }
-                    
+
                 } else {
                     console.error('Unexpected error:', error);
                 }
