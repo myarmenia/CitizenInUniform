@@ -19,7 +19,7 @@ const changePassword = async () => {
   try {
    let response = await api.value.post('/api/auth/change-password', form);
    if(response.data.message=="Successfully logged out"){
-     sessionStorage.removeItem('access_token');
+     localStorage.removeItem('access_token');
     window.location.href='login'
 
 }
