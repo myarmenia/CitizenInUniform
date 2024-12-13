@@ -16,10 +16,10 @@ const login = async () => {
     errors.value={}
   try {
     const response = await axios.post('/api/auth/login', form);
-    sessionStorage.setItem('access_token', response.data.access_token);
+    localStorage.setItem('access_token', response.data.access_token);
 
 
-    if (sessionStorage.getItem('access_token')) {
+    if (localStorage.getItem('access_token')) {
 
         window.location.href = '/welcome';
 
