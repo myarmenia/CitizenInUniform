@@ -78,6 +78,18 @@ class AuthController extends Controller
         }
 
         $data=Auth::user()->load('roles');
+
+
+        $rolesWithTranslations = $data->roles->map(function ($role) {
+            return [
+               
+                'translation' => __('roles.' . $role->name), // Translated role name
+            ];
+        });
+        $data['rolesWithTranslations']=$rolesWithTranslations;
+
+
+
         $data['message']=$message;
 
         return response()->json($data);

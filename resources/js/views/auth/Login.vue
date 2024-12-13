@@ -16,10 +16,10 @@ const login = async () => {
     errors.value={}
   try {
     const response = await axios.post('/api/auth/login', form);
-    localStorage.setItem('access_token', response.data.access_token);
+    sessionStorage.setItem('access_token', response.data.access_token);
 
 
-    if (localStorage.getItem('access_token')) {
+    if (sessionStorage.getItem('access_token')) {
 
         window.location.href = '/welcome';
 
@@ -76,7 +76,7 @@ const login = async () => {
 
 
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12" @keydown.enter="login">
                                 <button class="btn btn-primary w-100" @click.prevent = "login">Մուտք</button>
 
                                     <router-link class="btn btn-link" to="password/reset">
