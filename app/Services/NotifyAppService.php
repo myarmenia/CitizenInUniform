@@ -18,8 +18,9 @@ class NotifyAppService
 {
 
 
-    public static function sendNotification()
+    public function sendNotification()
     {
+        
         $mobileUsers = MobileUser::all();
         foreach ($mobileUsers as $user) {
 
