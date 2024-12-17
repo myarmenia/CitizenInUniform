@@ -52,6 +52,8 @@ import Welcome from '../views/welcome/Index.vue'
 import Report from '../views/reports/Index.vue'
 import Log from '../views/logs/Index.vue'
 
+import PrivacyPolicy from '../views/privacy-policy/Index.vue'
+
 
     const usersRoute = [
         {
@@ -282,6 +284,15 @@ import Log from '../views/logs/Index.vue'
         }
     ]
 
+    const PrivacyPolicyRoutes = [
+        {
+
+            path: '/privacy-policy',
+            name: 'privacy-policy.index',
+            component: PrivacyPolicy
+        }
+    ]
+
 
     const routes = [
         {
@@ -302,8 +313,8 @@ import Log from '../views/logs/Index.vue'
                 ...welcomeRoutes,
                 ...reportRoutes,
                 ...logRoutes,
-                ...notFoundRoutes
-
+                ...notFoundRoutes,
+                ...PrivacyPolicyRoutes
 
             ]
 
