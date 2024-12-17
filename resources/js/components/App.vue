@@ -9,7 +9,7 @@ import {useRouter,  useRoute } from 'vue-router';
     import NotFound from './notFound.vue';
     import api, { initApi } from "../api";
     import {logoutFunction} from '../logout';
-
+    import PrivacyPolicy from '../views/privacy-policy/Index.vue'
 
 
     const route = useRoute();
@@ -38,9 +38,9 @@ import {useRouter,  useRoute } from 'vue-router';
                return
             }else if(newRoute == 'reset.password.reset'){
                 return;
+            }else if(newRoute == 'privacy-policy.index'){
+                return;
             }else{
-
-
 
                 router.push('/login')
 
@@ -147,11 +147,13 @@ import {useRouter,  useRoute } from 'vue-router';
 
 </script>
 <template>
-<div class="" >{{ p }}</div>
+
     <!-- <NotFound v-if=" route.name === 'password.reset'" /> -->
     <ResetPasswordEmail v-if="!isAuthenticated && route.name === 'password.reset'" />
     <ResetPasswordReset v-if="!isAuthenticated && route.name === 'reset.password.reset'" />
     <AdminLayout v-if="isAuthenticated && route.name !== 'password.reset' && route.name !== 'Login'" />
      <Login  v-if="!isAuthenticated && route.name === 'Login'" />
+
+    <PrivacyPolicy  v-if="!isAuthenticated && route.name === 'privacy-policy.index'" />
 </template>
 
