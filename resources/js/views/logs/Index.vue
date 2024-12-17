@@ -40,7 +40,7 @@ const changePage =(link) =>{
     }
 
     activePage.value = link.label
-    
+
     api.value.post(link.url, form)
         .then((response) =>{
             console.log(response.data.result)
@@ -121,7 +121,7 @@ onMounted(() => {
  <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Հաշվետվություն</h1>
+            <h1>Լոգավորում</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item "></li>

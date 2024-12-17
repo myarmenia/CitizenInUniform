@@ -13,7 +13,7 @@ let report = ref([])
 let allMessage = ref('-')
 let emailCategories = ref([])
 const selectedCategory = ref('Նամակի կատեգորիան');
-const messageType = ref('Հաղորթագրության տեսակ')
+const messageType = ref('Հաղորդագրության տեսակ')
 const governingBody = ref('Պետական մարմին')
 
 const { governingBodies } = useGoverningBodies(router);
@@ -61,7 +61,7 @@ const cancelFilter = () => {
     form.message_type = ''
     form.governing_body_id = '',
     selectedCategory.value = 'Նամակի կատեգորիան'
-    messageType.value = 'Հաղորթագրության տեսակ'
+    messageType.value = 'Հաղորդագրության տեսակ'
     governingBody.value = 'Պետական մարմին'
     form.from_created_at = ''
     form.to_created_at = ''
@@ -136,7 +136,7 @@ onMounted(() => {
 
                                         <div class="col-2  mx-2">
                                             <select class="form-select"  v-model="messageType"  @change="handleSelectionChange('message_type')" >
-                                                <option disabled selected>Հաղորթագրության տեսակ </option>
+                                                <option disabled selected>Հաղորդագրության տեսակ </option>
                                                 <option value="">Բոլորը </option>
                                                 <option value="email">Էլ․ փոստ </option>
                                                 <option value="chat">Չատ </option>
