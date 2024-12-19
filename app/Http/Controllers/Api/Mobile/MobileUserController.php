@@ -48,4 +48,8 @@ class MobileUserController extends BaseController
 
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
+
+    public function deleteAccount(){
+        return $this->sendResponse([], 'success');  /// writne only for googlePlay
+    }
 }
