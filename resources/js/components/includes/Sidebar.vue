@@ -231,6 +231,7 @@ const realChat = () =>{
                 <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
                     <li v-for="governingBody in governingBodies" >
                         <router-link
+                                v-if="userMe.roles?.some(role => role.name === 'super_admin' ||  role.name === `admin${governingBody.named}` || role.name === `contentManager${governingBody.named}` )"
                                 :class="{'active': $route.name === 'governing-bodies.edit' && $route.params.id && $route.params.id == governingBody.id}"
                                 :to="{name: 'governing-bodies.edit', params: { id: governingBody.id }}">
                             <i class="bi bi-circle"></i><span>{{governingBody.name}}</span>

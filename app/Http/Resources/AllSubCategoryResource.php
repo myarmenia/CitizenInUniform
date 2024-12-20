@@ -19,7 +19,8 @@ class AllSubCategoryResource extends JsonResource
             "category_name" => $this->category->title,
             "category_id" => $this->category_id,
             "title" => $this->title,
-            "status" => $this->status
+            "status" => $this->status,
+            'governing_body_id' => $this->governing_body_id
         ];
     }
 }
