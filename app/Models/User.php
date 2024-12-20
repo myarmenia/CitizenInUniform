@@ -82,9 +82,10 @@ class User extends Authenticatable implements JWTSubject
     public function canAccessRoomId($roomId): bool
     {
         $roomIds = $this->rooms->pluck('id')->toArray();
-    
+
         return $this->rooms && in_array($roomId, $roomIds) ? true : false;
     }
+    
 
     protected static function boot()
     {
