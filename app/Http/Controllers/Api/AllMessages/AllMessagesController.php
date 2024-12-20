@@ -19,7 +19,7 @@ class AllMessagesController extends BaseController
     }
     public function __invoke()
     {
-        $governing_id = MyHelper::getGoverningBodyIdFromOperator();
+        $governing_id = MyHelper::getAuthUserGoverningBodyId();
 
         $emailMessagesCount = $this->allMessageRepository->emailMessage();
         $chatMessagesCount = $this->allMessageRepository->chatMessage();

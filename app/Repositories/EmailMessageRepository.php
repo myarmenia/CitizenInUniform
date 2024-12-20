@@ -12,7 +12,7 @@ class EmailMessageRepository implements EmailMessageInterface
 {
     public function index(){
         $request = request();
-        $governing_id = MyHelper::getGoverningBodyIdFromOperator();
+        $governing_id = MyHelper::getAuthUserGoverningBodyId();
 
         $request = array_filter($request->all(), fn($value) => $value !== null);
 
