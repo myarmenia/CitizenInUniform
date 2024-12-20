@@ -15,7 +15,7 @@ class AllMessageRepository implements AllMessageInterface
     public function emailMessage()
     {
 
-        $governing_id = MyHelper::getGoverningBodyIdFromOperator();
+        $governing_id = MyHelper::getAuthUserGoverningBodyId();
 
         $query = EmailMessages::where('has_answer', 0);
 
@@ -30,7 +30,7 @@ class AllMessageRepository implements AllMessageInterface
 
     public function chatMessage()
     {
-        $governing_id = MyHelper::getGoverningBodyIdFromOperator();
+        $governing_id = MyHelper::getAuthUserGoverningBodyId();
         $user_id = Auth::id();
 
         $query = Message::where('readed', 0)->where('writer', 'user');

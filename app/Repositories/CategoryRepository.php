@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helpers\MyHelper;
 use App\Interfaces\CategoryInterface;
 use App\Models\Category;
 
@@ -14,6 +15,8 @@ class CategoryRepository implements CategoryInterface
 
     public function store($data): Category
     {
+        $data = MyHelper::addActionPermission($data);
+     
         return Category::create($data);
     }
     public function getItem(string $id){

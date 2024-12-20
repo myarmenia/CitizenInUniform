@@ -7,8 +7,8 @@ use Auth;
 
 class MyHelper
 {
-    
-    public static function getGoverningBodyIdFromOperator()
+
+    public static function getAuthUserGoverningBodyId()
     {
         $user = Auth::user();
 
@@ -24,6 +24,15 @@ class MyHelper
         $user_name = $user ? $user->name . ' ' . $user->surname : null;
 
         return $user_name;
+    }
+
+    public static function addActionPermission($data)
+    {
+
+        $governingBodyId = self::getAuthUserGoverningBodyId();
+        $data['governing_body_id'] = $governingBodyId;
+
+        return $data;
     }
 
 
