@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('message_categories', function (Blueprint $table) {
             $table->id();
-            // $table->bigInteger('governing_body_id')->unsigned();
-            // $table->foreign('governing_body_id')->references('id')->on('governing_bodies')->onDelete('cascade');
+            $table->bigInteger('governing_body_id')->unsigned();
+            $table->foreign('governing_body_id')->references('id')->on('governing_bodies');
+            
             $table->mediumText('title');
             $table->softDeletes();
             $table->timestamps();
