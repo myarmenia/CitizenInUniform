@@ -24,7 +24,9 @@ class ChangeStatusService
 
         if(!is_string($model)){
             $item = $model->where('id', $request->id)->first();
-            self::user_online_status($item,$status);
+            if(isset( $item->online)){
+                self::user_online_status($item,$status);
+            }
             $update = $item->update([$request->field_name => $status]);
 
 
@@ -33,7 +35,7 @@ class ChangeStatusService
 
     }
     public static function user_online_status($item,$status){
-    
+
         if($status==false){
             $item->online=0;
         }

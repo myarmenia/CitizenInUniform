@@ -16,6 +16,7 @@ class FaqCategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'governing_body_id'=>$this->governing_body_id,
             'title' => $this->title,
             'status' => $this->status
         ];

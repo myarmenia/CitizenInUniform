@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\DTO\FaqCategoryDto;
+use App\Helpers\MyHelper;
 use App\Interfaces\FaqCategoryRepositoryInterface;
 use App\Models\FAQCategory;
 
@@ -14,7 +15,7 @@ class FaqCategoryRepository implements FaqCategoryRepositoryInterface
 
     }
     public function store($data){
-
+        $data=MyHelper::addActionPermission($data);
         return FaqCategory::create($data);
 
     }
