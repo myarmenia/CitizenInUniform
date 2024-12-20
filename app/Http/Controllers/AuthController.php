@@ -77,12 +77,12 @@ class AuthController extends Controller
 
         }
 
-        $data=Auth::user()->load('roles');
+        $data = Auth::user()->load('roles','governing_body_user');
 
 
         $rolesWithTranslations = $data->roles->map(function ($role) {
             return [
-               
+
                 'translation' => __('roles.' . $role->name), // Translated role name
             ];
         });
