@@ -79,7 +79,7 @@ const initApi = (router) => {
                         toast.fire({ icon: 'error', title: 'Դուք չունեք բավարար թույլատվությունը' });
                         router.push('/permission');
                     }
-                    
+
                 } else {
                     console.error('Unexpected error:', error);
                 }

@@ -157,9 +157,10 @@ watch(govBodyId, (newGovBodyId, oldGovBodyId) => {
 
 
 
-
 const realChat = () =>{
     const accessToken = localStorage.getItem('access_token'); // Replace with actual token
+
+    sessionStorage.setItem('chat_url', 'chat_url');
 
     const url = `https://citizenw.trigger.ltd/auth?token=${accessToken}`;
     // Open the URL in a new tab

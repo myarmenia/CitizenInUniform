@@ -76,7 +76,7 @@ const login = async () => {
 
 
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12" @keydown.enter="login">
                                 <button class="btn btn-primary w-100" @click.prevent = "login">Մուտք</button>
 
                                     <router-link class="btn btn-link" to="password/reset">

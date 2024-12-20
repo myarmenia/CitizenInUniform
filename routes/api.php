@@ -65,7 +65,7 @@ Route::group(['prefix' => 'mobile'], function ($router) {
     Route::get('settings/{id}', [MobileUserController::class, 'getSettings']);
     Route::put('settings', [MobileUserController::class, 'updateSettings']);
 
-
+    Route::post('user/account-deletion', [MobileUserController::class, 'deleteAccount']);
 
 });
 
