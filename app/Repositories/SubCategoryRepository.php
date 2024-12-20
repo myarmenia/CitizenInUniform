@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helpers\MyHelper;
 use App\Interfaces\SubCategoryInterface;
 use App\Models\SubCategory;
 
@@ -14,6 +15,8 @@ class SubCategoryRepository implements SubCategoryInterface
 
     public function store($data): SubCategory
     {
+        $data = MyHelper::addActionPermission($data);
+        
         return SubCategory::create($data);
     }
     public function getItem(string $id){

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\Mobile\MCategoyResource;
+use App\Models\Category;
 use App\Services\CategoryService;
 use App\Traits\Paginator;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class CategoryController extends BaseController
     use Paginator;
     public function __construct(protected CategoryService $service)
     {
-
+        $this->middleware('check_action_permission:' . Category::class, ['only' => ['show']]);
     }
     /**
      * Display a listing of the resource.

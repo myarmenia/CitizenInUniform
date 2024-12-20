@@ -33,7 +33,7 @@ class ChangeStatusService
 
     }
     public static function user_online_status($item,$status){
-    
+
         if($status==false){
             $item->online=0;
         }
