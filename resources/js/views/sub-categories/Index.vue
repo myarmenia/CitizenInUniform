@@ -36,6 +36,8 @@ const getSubCategories = async () => {
         statusArray.value = response.data.result.data.map(item => item.status);
         links.value = response.data.result.links
 
+        console.log(subCategories.value)
+
     })
 }
 
@@ -168,7 +170,7 @@ const deleteItem = (id, tb_name) =>{
                                         </td>
 
                                         <td>
-                                            <div class="dropdown action" v-if="category.governing_body_id == userMe.governing_body_id" >
+                                            <div class="dropdown action" v-if="subCategory.governing_body_id == userMe.governing_body_id" >
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
