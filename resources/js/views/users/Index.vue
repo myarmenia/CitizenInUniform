@@ -176,8 +176,15 @@ const deleteItem = (id, tb_name) =>{
                                                 <td>{{ user.email }}</td>
                                                 <td>
                                                 <label v-for="role in user.roles" class="badge bg-primary mx-2" :key="role">
-                                                    <!-- {{ role }} -->
-                                                    {{ role=="admin" ? "Ադմինիստրատոր":(role=="content_manager" ? "Բովանդակության կառավարիչ":(role=="operatorMIP" ? "Օպերատոր /ՄԻՊ/":(role=="operatorPN" ? "Օպերատոր /ՊՆ/" :null)))}}
+                                                   
+                                                    {{ role == "adminMIP" ? "Ադմինիստրատոր/ՄԻՊ/" :
+                                                        (role == "adminPN" ? "Ադմինիստրատոր/ՊՆ/" :
+                                                        (role == "contentManagerMIP" ? "Բովանդակության կառավարիչ /ՄԻՊ/" :
+                                                        (role == "contentManagerPN" ? "Բովանդակության կառավարիչ /ՊՆ/" :
+                                                        (role == "operatorMIP" ? "Օպերատոր /ՄԻՊ/" :
+                                                        (role == "operatorPN" ? "Օպերատոր /ՊՆ/" : null)))))}}
+
+
                                                 </label>
 
                                                 </td>
