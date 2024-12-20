@@ -19,26 +19,40 @@ class CreateRolesSeeder extends Seeder
                 'position_name' => 'super_admin',
                 'interface' => 'super_admin'
             ],
+
             [
-                'name' => 'admin',
+                'name' => 'adminPN',
                 'position_name' => 'super_admin',
-                'interface' => 'admin'
+                'interface' => 'admin_pn'
             ],
             [
-                'name' => 'content_manager',
-                'position_name' => 'admin',
-                'interface' => 'admin'
+                'name' => 'adminMIP',
+                'position_name' => 'super_admin',
+                'interface' => 'admin_mip'
+            ],
+
+            [
+                'name' => 'contentManagerMIP',
+                'position_name' => 'admin_mip',
+                'interface' => 'admin_mip'
+            ],
+            [
+                'name' => 'contentManagerPN',
+                'position_name' => 'admin_pn',
+                'interface' => 'admin_pn'
             ],
             [
                 'name' => 'operatorMIP',
-                'position_name' => 'admin',
-                'interface' => 'admin'
+                'position_name' => 'admin_mip',
+                'interface' => 'admin_mip'
             ],
             [
                 'name' => 'operatorPN',
-                'position_name' => 'admin',
-                'interface' => 'admin'
+                'position_name' => 'admin_pn',
+                'interface' => 'admin_pn'
             ],
+
+
 
 
         ];

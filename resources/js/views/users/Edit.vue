@@ -229,8 +229,8 @@ const changeSelectedRole = ()=>{
                                         :value = "value"
                                         :key = "value"
                                          >
-                                        <!-- {{ label }} -->
-                                        {{ label=="admin" ? "Ադմինիստրատոր":(label=="content_manager" ? "Բովանդակության կառավարիչ":(label=="operatorMIP" ? "Օպերատոր /ՄԻՊ/":(label=="operatorPN" ? "Օպերատոր /ՊՆ/" :null)))}}
+                                        {{ label }}
+                                      
                                 </option>
                             </select>
 

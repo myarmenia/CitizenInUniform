@@ -46,6 +46,7 @@ class UserRepository implements UserRepositoryInterface
         foreach($data['roles'] as $role){
             if($role=="operatorMIP" || $role=="operatorPN"){
                 $explode = explode('operator',$role);
+         
                 $governingBody=GoverningBody::where('named',$explode[1])->value('id');
 
                 $governing_body_users=GoverningBodyUser::create([

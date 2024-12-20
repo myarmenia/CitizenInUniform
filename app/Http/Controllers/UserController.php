@@ -89,6 +89,7 @@ class UserController extends BaseController
     {
         $user = User::find($id);
         $data = new UserResource($user);
+        // dd($data);
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
 
     }

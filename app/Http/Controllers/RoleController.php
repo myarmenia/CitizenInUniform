@@ -154,11 +154,29 @@ class RoleController extends Controller
             $data = Role::where([
                 ['position_name','=','super_admin'],
                 ['interface','!=','super_admin']
-            ])->pluck('name', 'name')->all();
+            ])->pluck('name', 'name')
+            ->map(function ($value) {
+                return __('roles.' . $value);
+            })
+            ->all();
         }
-        if(auth()->user()->hasRole('admin')){
-            $data = Role::where('position_name','admin')->pluck('name', 'name')->all();
+        if(auth()->user()->hasRole('adminMIP')){
+            $data = Role::where('position_name','admin_mip')
+            ->pluck('name', 'name')
+            ->map(function ($value) {
+                return __('roles.' . $value);
+            })
+            ->all();
         }
+        if(auth()->user()->hasRole('adminPN')){
+            $data = Role::where('position_name','admin_pn')
+            ->pluck('name', 'name')
+            ->map(function ($value) {
+                return __('roles.' . $value);
+            })
+            ->all();
+        }
+
 
         return response()->json(['roles'=>$data], 200);
 
