@@ -22,7 +22,7 @@ class FaqCategorySubcategoryController extends BaseController
      */
     public function __construct(protected FaqCategorySubcategoryService $service)
     {
-
+        $this->middleware('check_action_permission:' . FAQSubCategory::class, ['only' => ['show']]);
     }
     public function index(Request $request)
     {

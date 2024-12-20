@@ -21,6 +21,7 @@ class FaqCategoryController extends BaseController
 
 
     public function __construct( protected FaqCategoryService $faqCategoryService){
+        $this->middleware('check_action_permission:' . FAQCategory::class, ['only' => ['edit']]);
 
     }
     public function index(Request $request){
