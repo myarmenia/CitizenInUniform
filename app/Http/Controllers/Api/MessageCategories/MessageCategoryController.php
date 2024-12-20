@@ -21,6 +21,7 @@ class MessageCategoryController extends BaseController
      *
      */
     public function __construct(protected MessageCategoryService $service){
+        $this->middleware('check_action_permission:' . MessageCategory::class, ['only' => ['show']]);
 
 
     }
@@ -111,7 +112,7 @@ class MessageCategoryController extends BaseController
     public function categoryWithTrashed(){
 
         $data = $this->service->withTrashed();
-     
+
         return $data != null ? $this->sendResponse($data, 'success') : $this->sendError('error');
     }
 }

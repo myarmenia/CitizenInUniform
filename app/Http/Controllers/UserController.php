@@ -28,6 +28,7 @@ class UserController extends BaseController
     {
         $this->userService = $userService;
         $this->middleware('user');
+        $this->middleware('check_action_permission:' . User::class, ['only' => ['show']]);
     }
     /**
      * Display a listing of the resource.

@@ -3,9 +3,11 @@ import { reactive,ref, onMounted, watch } from "vue"
 import { useRouter } from "vue-router"
 import axios from "axios";
 import api, { initApi } from "../../api";
+import {me} from "../../me";
 
 
 const router = useRouter()
+const {userMe} = me(router)
 initApi(router);
 
 let allData = ref([]);
@@ -172,7 +174,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
                                             <td>{{item.title}}</td>
 
                                             <td>
-                                                <div class="dropdown action" >
+                                                <div class="dropdown action" v-if="item.governing_body_id == userMe.governing_body_id">
                                                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                         data-bs-toggle="dropdown">
                                                         <i class="bx bx-dots-vertical-rounded"></i>
@@ -189,6 +191,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
                                                             Ջնջել</button>
                                                     </div>
                                                 </div>
+                                                <div v-else><i class="bx bx-stop-circle me-1"></i></div>
                                             </td>
                                         </tr>
                                     </tbody>

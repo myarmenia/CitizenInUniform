@@ -2,8 +2,10 @@
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
 import api, { initApi } from "../../api";
+import {me} from "../../me";
 
 const router = useRouter()
+const {userMe} = me(router)
 initApi(router); // Initialize the API with the router
 
 let allData = ref([])
@@ -176,7 +178,7 @@ const deleteItem = (id, tb_name) =>{
                                                 <td>{{ user.email }}</td>
                                                 <td>
                                                 <label v-for="role in user.roles" class="badge bg-primary mx-2" :key="role">
-                                                   
+
                                                     {{ role == "adminMIP" ? "Ադմինիստրատոր/ՄԻՊ/" :
                                                         (role == "adminPN" ? "Ադմինիստրատոր/ՊՆ/" :
                                                         (role == "contentManagerMIP" ? "Բովանդակության կառավարիչ /ՄԻՊ/" :
@@ -196,7 +198,7 @@ const deleteItem = (id, tb_name) =>{
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <div class="dropdown action" >
+                                                    <div class="dropdown action" v-if="user.governing_body_id == userMe.governing_body_id">
 
                                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                             data-bs-toggle="dropdown">
@@ -227,6 +229,7 @@ const deleteItem = (id, tb_name) =>{
                                                                 Ջնջել</button>
                                                         </div>
                                                     </div>
+                                                    <div v-else><i class="bx bx-stop-circle me-1"></i></div>
                                                 </td>
 
                                             </tr>
