@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\SubCategoryRequest;
 use App\Http\Resources\AllSubCategoryResource;
 use App\Http\Resources\SubCategoryResource;
+use App\Models\SubCategory;
 use App\Services\SubCategoryService;
 use App\Traits\Paginator;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class SubCategoryController extends BaseController
     use Paginator;
     public function __construct(protected SubCategoryService $service)
     {
-
+        $this->middleware('check_action_permission:' . SubCategory::class, ['only' => ['show']]);
     }
     /**
      * Display a listing of the resource.

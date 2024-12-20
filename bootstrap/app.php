@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckActionPermission;
 use App\Http\Middleware\UserMiddleware;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Application;
@@ -27,6 +28,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
 
             'user' => UserMiddleware::class,
+            'check_action_permission' => CheckActionPermission::class,
+
 
         ]);
         $middleware->validateCsrfTokens(except: [
