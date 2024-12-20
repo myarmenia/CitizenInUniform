@@ -113,7 +113,7 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
         });
 
-        Route::group(['middleware' => ['role:super_admin|admin']], function () {
+        Route::group(['middleware' => ['role:super_admin|adminPN|adminMIP']], function () {
             Route::resource('users', UserController::class);
             Route::resource('roles', RoleController::class);
             Route::post('logs', LogController::class);

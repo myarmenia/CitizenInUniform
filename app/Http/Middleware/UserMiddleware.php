@@ -18,7 +18,7 @@ class UserMiddleware
     {
         $authUser = Auth::user();
 
-        if(!$authUser->hasAnyRole(['super_admin', 'admin'])){
+        if(!$authUser->hasAnyRole(['super_admin', 'adminMIP','adminPN'])){
             return response()->json(['message',"You dont have permition"],403);
         }
         return $next($request);

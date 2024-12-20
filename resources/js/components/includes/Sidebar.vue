@@ -251,7 +251,7 @@ const realChat = () =>{
 
             <li  class="nav-item">
                 <router-link
-                  v-if="userMe.roles?.some(role => role.name === 'super_admin' ||  role.name === 'admin'  )"
+                  v-if="userMe.roles?.some(role => role.name === 'super_admin' ||  role.name === 'adminMIP' ||  role.name === 'adminPN'  )"
                   class="nav-link" :class="{'collapsed': !($route.name && $route.name.startsWith('users.index'))}" :to="{name: 'users.index'}">
                     <i class="bi bi-person"></i>
                     <span>Օգտատերեր </span>
