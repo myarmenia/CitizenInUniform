@@ -12,7 +12,7 @@ class MyHelper
     {
         $user = Auth::user();
 
-        $governingBodyId = $user->governing_body_user ? $user->governing_body_user->governing_body_id : null;
+        $governingBodyId = $user && $user->governing_body_user ? $user->governing_body_user->governing_body_id : null;
 
         return $governingBodyId;
     }
