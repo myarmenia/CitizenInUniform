@@ -17,8 +17,8 @@ class FcmNotificationRepository implements FcmNotificationInterface
     {
         $governing_bory_id = MyHelper::getAuthUserGoverningBodyId();
 
-        $data['governing_bory_id'] = $governing_bory_id;
-        
+        $data['governing_body_id'] = $governing_bory_id;
+
         return Notification::create($data);
     }
 
