@@ -28,7 +28,7 @@ class UserController extends BaseController
     {
         $this->userService = $userService;
         $this->middleware('user');
-        $this->middleware('check_action_permission:' . User::class, ['only' => ['show']]);
+       
     }
     /**
      * Display a listing of the resource.
@@ -88,6 +88,7 @@ class UserController extends BaseController
      */
     public function show($id)
     {
+
         $user = User::find($id);
         $data = new UserResource($user);
         // dd($data);
@@ -101,14 +102,7 @@ class UserController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id): View
-    {
-        $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('users.edit',compact('user','roles','userRole'));
-    }
 
     /**
      * Update the specified resource in storage.
