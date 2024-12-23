@@ -23,7 +23,7 @@ class CreateAdminUserSeeder extends Seeder
         ]);
 
         $role = Role::updateOrCreate(['name' => 'super_admin', 'position_name' => 'super_admin',
-        'interface' => 'admin']);
+        'interface' => 'super_admin']);
 
         $permissions = Permission::pluck('id','id')->all();
 
