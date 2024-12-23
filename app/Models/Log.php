@@ -10,7 +10,7 @@ class Log extends Model
 {
     use HasFactory, FilterTrait;
     protected $guarded = [];
-    protected $defaultFillableFields = ['tb_name', 'action'];
+    protected $defaultFillableFields = ['tb_name', 'action', 'governing_body_id'];
     protected $jsonFields = ['roles'];
 
 
