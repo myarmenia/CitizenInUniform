@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreign('setting_id')->references('id')->on('settings')->onDelete('cascade');
             $table->bigInteger('mobile_user_id')->unsigned();
             $table->foreign('mobile_user_id')->references('id')->on('mobile_users')->onDelete('cascade');
+            $table->bigInteger('governing_body_id')->unsigned();
+            $table->foreign('governing_body_id')->references('id')->on('governing_bodies');
             $table->mediumText('title')->nullable();
             $table->longText('content')->nullable();
             $table->string('key');

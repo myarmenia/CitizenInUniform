@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->bigInteger('governing_body_id')->unsigned()->nullable();
+            $table->foreign('governing_body_id')->references('id')->on('governing_bodies');
             $table->json('roles')->nullable();
             $table->string('tb_name');
             $table->string('action');

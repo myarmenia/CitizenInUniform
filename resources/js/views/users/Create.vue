@@ -32,6 +32,7 @@ const getAllRoles = () =>{
     let response =  api.value.get('/api/auth/all-roles')
         .then((response)=>{
             allRoles.value = response.data.roles
+        console.log(allRoles.value)
 
         })
 }
@@ -184,9 +185,9 @@ const handleSave = () =>{
                                         :value = "value"
                                         :key = "value"
                                         :selected="selectedRoles.includes(value)" >
-                                        {{ label=="admin" ? "Ադմինիստրատոր":(label=="content_manager" ? "Բովանդակության կառավարիչ":(label=="operatorMIP" ? "Օպերատոր /ՄԻՊ/":(label=="operatorPN" ? "Օպերատոր /ՊՆ/" :null)))
+                                       {{label }}
 
-                                        }}
+
 
                                 </option>
                             </select>

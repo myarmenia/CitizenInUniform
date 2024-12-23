@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('f_a_q_category_id')->unsigned();
             $table->foreign('f_a_q_category_id')->references('id')->on('f_a_q_categories')->onDelete('cascade');
+            $table->bigInteger('governing_body_id')->unsigned();
+            $table->foreign('governing_body_id')->references('id')->on('governing_bodies');
             $table->mediumText('title');
             $table->longText('content');
             $table->boolean('status')->default(0);

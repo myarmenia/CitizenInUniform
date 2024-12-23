@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Helpers\MyHelper;
 use App\Interfaces\MessageCategoryInterface;
 use App\Models\MessageCategory;
 
@@ -13,7 +14,7 @@ class MessageCategoryRepository implements MessageCategoryInterface{
     }
     public  function store($data){
 
-
+        $data=MyHelper::addActionPermission($data);
         return MessageCategory::create($data);
 
 

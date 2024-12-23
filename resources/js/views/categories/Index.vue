@@ -2,8 +2,11 @@
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
 import api, { initApi } from "../../api";
+import {me} from "../../me";
 
 const router = useRouter()
+const {userMe} = me(router)
+
 initApi(router); // Initialize the API with the router
 
 let categories = ref([])
@@ -162,14 +165,14 @@ const deleteItem = (id, tb_name) =>{
 
                                             </td>
                                         <td>
-                                            <div class="dropdown action" >
+                                            <div class="dropdown action" v-if="category.governing_body_id == userMe.governing_body_id">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <router-link class="dropdown-item" :to="{name: 'categories.edit', params: { id: category.id } }">
-                                                        <i class="bx bx-edit-alt me-1"></i>Խմբագրել</router-link>
+                                                        <i class="bx bx-edit-alt me-1"></i>Խմբագրել </router-link>
                                                     <a class="dropdown-item d-flex" href="javascript:void(0);">
                                                         <div class="form-check form-switch">
                                                             <input class="form-check-input change_status" type="checkbox"
@@ -185,6 +188,7 @@ const deleteItem = (id, tb_name) =>{
                                                         Ջնջել</button>
                                                 </div>
                                             </div>
+                                            <div v-else><i class="bx bx-stop-circle me-1"></i></div>
                                         </td>
                                     </tr>
                                 </tbody>

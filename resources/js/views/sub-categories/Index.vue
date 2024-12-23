@@ -2,8 +2,11 @@
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
 import api, { initApi } from "../../api";
+import {me} from "../../me";
 
 const router = useRouter()
+const {userMe} = me(router)
+
 initApi(router); // Initialize the API with the router
 
 let subCategories = ref([])
@@ -32,6 +35,8 @@ const getSubCategories = async () => {
         subCategories.value = response.data.result.data
         statusArray.value = response.data.result.data.map(item => item.status);
         links.value = response.data.result.links
+
+        console.log(subCategories.value)
 
     })
 }
@@ -165,7 +170,7 @@ const deleteItem = (id, tb_name) =>{
                                         </td>
 
                                         <td>
-                                            <div class="dropdown action" >
+                                            <div class="dropdown action" v-if="subCategory.governing_body_id == userMe.governing_body_id" >
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
@@ -187,6 +192,7 @@ const deleteItem = (id, tb_name) =>{
                                                         Ջնջել</button>
                                                 </div>
                                             </div>
+                                            <div v-else><i class="bx bx-stop-circle me-1"></i></div>
                                         </td>
                                     </tr>
                                 </tbody>

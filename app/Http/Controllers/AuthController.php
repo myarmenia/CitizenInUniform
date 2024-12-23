@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\MyHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthLoginRequest;
@@ -77,12 +78,15 @@ class AuthController extends Controller
 
         }
 
-        $data=Auth::user()->load('roles');
+        $data = Auth::user()->load('roles');
+        $data['governing_body_id']=MyHelper::getAuthUserGoverningBodyId();
+
+
 
 
         $rolesWithTranslations = $data->roles->map(function ($role) {
             return [
-               
+
                 'translation' => __('roles.' . $role->name), // Translated role name
             ];
         });
@@ -91,6 +95,7 @@ class AuthController extends Controller
 
 
         $data['message']=$message;
+
 
         return response()->json($data);
 
