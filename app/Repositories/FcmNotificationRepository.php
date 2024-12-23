@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Helpers\MyHelper;
 use App\Interfaces\FcmNotificationInterface;
 use App\Models\Notification;
 
@@ -14,6 +15,10 @@ class FcmNotificationRepository implements FcmNotificationInterface
     }
     public function store($data): Notification
     {
+        $governing_bory_id = MyHelper::getAuthUserGoverningBodyId();
+
+        $data['governing_bory_id'] = $governing_bory_id;
+        
         return Notification::create($data);
     }
 
