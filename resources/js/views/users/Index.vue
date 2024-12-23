@@ -172,7 +172,7 @@ const deleteItem = (id, tb_name) =>{
                                     <tbody>
                                         <tr v-for="(user, index) in allData" :key="user.id">
 
-                                                <td>{{ ++index }}</td>
+                                                <td>{{ ++index }} </td>
                                                 <td>{{ user.name }}</td>
                                                 <td>{{ user.surname }}</td>
                                                 <td>{{ user.email }}</td>
@@ -198,7 +198,7 @@ const deleteItem = (id, tb_name) =>{
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <div class="dropdown action" v-if="user.governing_body_id == userMe.governing_body_id">
+                                                    <div class="dropdown action">
 
                                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                             data-bs-toggle="dropdown">
@@ -229,7 +229,7 @@ const deleteItem = (id, tb_name) =>{
                                                                 Ջնջել</button>
                                                         </div>
                                                     </div>
-                                                    <div v-else><i class="bx bx-stop-circle me-1"></i></div>
+                                                    
                                                 </td>
 
                                             </tr>
