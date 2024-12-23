@@ -185,11 +185,27 @@ class RoleController extends Controller
 
     public function allRoleList(){
 
+        $user = Auth::user();
+        $roles =$user->roles->pluck('interface')->toArray();
 
-        $data = Role::where('interface', 'admin')->pluck('name', 'name')
-            ->map(function ($name) {
-                return __("roles.$name");
-            });
+
+        $processedRoles = array_map(function ($role) {
+            return preg_replace('/^admin_/', '', $role);
+        }, $roles);
+
+
+        $processedRoles = array_unique($processedRoles)[0]; // admin_mip or admin_pn
+        
+
+        $data = $user->hasRole('super_admin') ?
+            Role::whereNot('interface', 'super_admin')->pluck('name', 'name')
+                ->map(function ($name) {
+                    return __("roles.$name");
+                }) :
+            Role::where('interface', "admin_$processedRoles")->pluck('name', 'name')
+                ->map(function ($name) {
+                    return __("roles.$name");
+                });
 
         return response()->json(['roles' => $data], 200);
 

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Helpers\MyHelper;
 use App\Models\Log;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -29,15 +30,9 @@ class BaseModelObserver
         $tb_name = $model->getTable();
         $roles = $user ? json_encode($user->roles->pluck('name')) : null;
 
-        // $originalAttributes = $model->getOriginal();
-        // $changedAttributes = $model->getDirty();
+        $governing_body_id = MyHelper::getAuthUserGoverningBodyId();
 
-        // $details = [
-        //     'old' => array_intersect_key($originalAttributes, $changedAttributes),
-        //     'new' => $changedAttributes,
-        //     'id' => $model->id
-        // ];
-
+        
         if ($action == 'deleted') {
             $details = $model->getOriginal();
         } else {
@@ -46,9 +41,9 @@ class BaseModelObserver
 
         }
 
-        if (isset($details['content']) && ($tb_name == 'email_message_answers' || $tb_name == 'messages')) {
-            unset($details['content']);
-        }
+        // if (isset($details['content']) && ($tb_name == 'email_message_answers' || $tb_name == 'messages')) {
+        //     unset($details['content']);
+        // }
 
         if(isset($model->password)){
              unset($details['password']);
@@ -64,6 +59,7 @@ class BaseModelObserver
 
         Log::create([
             'user_id' => $user ? $user->id : null,
+            'governing_body_id' => $governing_body_id,
             'roles' => $roles,
             'tb_name' => $model->getTable(),
             'action' => $action,

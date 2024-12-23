@@ -3,10 +3,13 @@ import { useRouter, useRoute } from "vue-router"
 import { ref, reactive, onMounted, watch } from  "vue"
 import api, { initApi } from "../../api";
 import { useGoverningBodies } from "../../sidebar";
+import {me} from "../../me";
 
 
 const router = useRouter()
 const route = useRoute()
+const {userMe} = me(router)
+
 initApi(router); // Initialize the API with the router
 
 let report = ref([])
@@ -143,7 +146,7 @@ onMounted(() => {
                                             </select>
                                         </div>
 
-                                        <div class="col-2  mx-2">
+                                        <div class="col-2  mx-2" v-if="userMe.roles?.some(role => role.name === 'super_admin')">
                                             <select class="form-select"  v-model="governingBody"  @change="handleSelectionChange('governing_body')" >
                                                 <option disabled selected>Պետական մարմին </option>
                                                 <option value="">Բոլորը </option>

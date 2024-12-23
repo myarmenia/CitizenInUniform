@@ -17,9 +17,6 @@ return new class extends Migration
             $table->bigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->bigInteger('governing_body_id')->unsigned();
-            $table->foreign('governing_body_id')->references('id')->on('governing_bodies');  //??????
-            
             $table->bigInteger('email_message_id')->unsigned()->nullable();
             $table->foreign('email_message_id')->references('id')->on('email_messages')->onDelete('cascade');
             $table->longText('content');
