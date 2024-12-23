@@ -79,7 +79,8 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
     Route::group(['middleware'=>'jwt.auth'],function(){
 
-        Route::group(['middleware' => ['role:super_admin|admin|content_manager']],function(){
+        Route::group(['middleware' => ['role:super_admin|adminPN|adminMIP|contentManagerMIP|contentManagerPN']],function(){
+
             Route::apiResource('categories', CategoryController::class);
             Route::get('active-categories', [CategoryController::class, 'activeCategories']);
             Route::apiResource('sub-categories', SubCategoryController::class);
@@ -113,10 +114,12 @@ Route::group(['middleware' => 'api','prefix' => 'auth'], function ($router) {
 
         });
 
-        Route::group(['middleware' => ['role:super_admin|admin']], function () {
+        Route::group(['middleware' => ['role:super_admin|adminPN|adminMIP']], function () {
             Route::resource('users', UserController::class);
             Route::resource('roles', RoleController::class);
             Route::post('logs', LogController::class);
+            Route::post('reports', [ReportController::class, 'report']);
+
         });
 
 

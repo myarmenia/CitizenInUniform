@@ -2,8 +2,10 @@
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
 import api, { initApi } from "../../api";
+import {me} from "../../me";
 
 const router = useRouter()
+const {userMe} = me(router)
 initApi(router); // Initialize the API with the router
 
 let allData = ref([])
@@ -170,14 +172,21 @@ const deleteItem = (id, tb_name) =>{
                                     <tbody>
                                         <tr v-for="(user, index) in allData" :key="user.id">
 
-                                                <td>{{ ++index }}</td>
+                                                <td>{{ ++index }} </td>
                                                 <td>{{ user.name }}</td>
                                                 <td>{{ user.surname }}</td>
                                                 <td>{{ user.email }}</td>
                                                 <td>
                                                 <label v-for="role in user.roles" class="badge bg-primary mx-2" :key="role">
-                                                    <!-- {{ role }} -->
-                                                    {{ role=="admin" ? "Ադմինիստրատոր":(role=="content_manager" ? "Բովանդակության կառավարիչ":(role=="operatorMIP" ? "Օպերատոր /ՄԻՊ/":(role=="operatorPN" ? "Օպերատոր /ՊՆ/" :null)))}}
+
+                                                    {{ role == "adminMIP" ? "Ադմինիստրատոր/ՄԻՊ/" :
+                                                        (role == "adminPN" ? "Ադմինիստրատոր/ՊՆ/" :
+                                                        (role == "contentManagerMIP" ? "Բովանդակության կառավարիչ /ՄԻՊ/" :
+                                                        (role == "contentManagerPN" ? "Բովանդակության կառավարիչ /ՊՆ/" :
+                                                        (role == "operatorMIP" ? "Օպերատոր /ՄԻՊ/" :
+                                                        (role == "operatorPN" ? "Օպերատոր /ՊՆ/" : null)))))}}
+
+
                                                 </label>
 
                                                 </td>
@@ -189,7 +198,7 @@ const deleteItem = (id, tb_name) =>{
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <div class="dropdown action" >
+                                                    <div class="dropdown action">
 
                                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                             data-bs-toggle="dropdown">
@@ -220,6 +229,7 @@ const deleteItem = (id, tb_name) =>{
                                                                 Ջնջել</button>
                                                         </div>
                                                     </div>
+                                                    
                                                 </td>
 
                                             </tr>

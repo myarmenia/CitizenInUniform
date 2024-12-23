@@ -17,6 +17,7 @@ class FaqCategorySubcategoryResource extends JsonResource
 
         return [
             "id"=>$this->id,
+            "governing_body_id"=>$this->governing_body_id,
             "f_a_q_category_id"=>$this->f_a_q_category_id ?? null,
             "f_a_q_category_name"=>$this->f_a_q_category->title ?? null,
             "title"=>$this->title ?? null,

@@ -7,17 +7,8 @@ use Auth;
 
 class MyHelper
 {
-    public static function binaryToDecimal($binaryString)
-    {
-        $substring = substr($binaryString, 9, 16); // Индексы начинаются с 0, поэтому берем с 9 символа и длиной 16
 
-        // Преобразуем бинарную подстроку в десятичное число
-        $decimal = bindec($substring);
-
-        return $decimal;
-    }
-
-    public static function getGoverningBodyIdFromOperator()
+    public static function getAuthUserGoverningBodyId()
     {
         $user = Auth::user();
 
@@ -33,6 +24,15 @@ class MyHelper
         $user_name = $user ? $user->name . ' ' . $user->surname : null;
 
         return $user_name;
+    }
+
+    public static function addActionPermission($data)
+    {
+
+        $governingBodyId = self::getAuthUserGoverningBodyId();
+        $data['governing_body_id'] = $governingBodyId;
+
+        return $data;
     }
 
 

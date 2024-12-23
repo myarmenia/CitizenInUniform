@@ -30,6 +30,7 @@ const getRoles = async () => {
     .then((response) => {
 
        roles.value = response.data.roles
+       console.log(roles.value)
     })
 }
 
