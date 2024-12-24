@@ -10,6 +10,7 @@ use App\Http\Requests\GoverningBodyInfoRequest;
 use App\Http\Resources\GoverningBodyResource;
 use App\Http\Resources\GoverningBodyWithInfoResource;
 use App\Http\Resources\Mobile\MGoverningBodyResource;
+use App\Models\GoverningBody;
 use App\Services\GoverningBodyService;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,7 @@ class GoverningBodyController extends BaseController
 {
     public function __construct(protected GoverningBodyService $service)
     {
+        $this->middleware('check_action_permission:' . GoverningBody::class, ['only' => ['show']]);
 
     }
     /**

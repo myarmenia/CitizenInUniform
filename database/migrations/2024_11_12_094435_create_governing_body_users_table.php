@@ -19,7 +19,7 @@ return new class extends Migration
 
             $table->bigInteger('governing_body_id')->unsigned();
             $table->foreign('governing_body_id')->references('id')->on('governing_bodies')->onDelete('cascade');
-            
+            $table->boolean("operator")->default(0);
             $table->timestamps();
         });
     }

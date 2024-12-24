@@ -20,6 +20,7 @@ class CheckActionPermission
 
 
         $governing_body_id = MyHelper::getAuthUserGoverningBodyId();
+
         $routeParameters = $request->route()->parameters();
         $modelId = reset($routeParameters); // Получаем первый параметр маршрута
 
@@ -35,10 +36,20 @@ class CheckActionPermission
             return response()->json(['error' => 'Resource not found'], 403);
         }
 
-        // Проверяем доступ по governing_body_id
-        if ($governing_body_id !== $model->governing_body_id) {
-            return response()->json(['error' => 'Access denied'], 403);
+        if($model->getTable() == 'governing_bodies' ){
+
+            if($governing_body_id != $modelId){
+                return response()->json(['error' => 'Access denied'], 403);
+            }
         }
+        else{
+
+            // Проверяем доступ по governing_body_id
+            if ($governing_body_id !== $model->governing_body_id) {
+                return response()->json(['error' => 'Access denied'], 403);
+            }
+        }
+
 
         return $next($request);
     }
