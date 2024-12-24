@@ -32,7 +32,7 @@ class BaseModelObserver
 
         $governing_body_id = MyHelper::getAuthUserGoverningBodyId();
 
-        
+
         if ($action == 'deleted') {
             $details = $model->getOriginal();
         } else {
