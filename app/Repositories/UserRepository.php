@@ -10,6 +10,7 @@ use App\Models\GoverningBody;
 use App\Models\GoverningBodyUser;
 use Auth;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -37,68 +38,108 @@ class UserRepository implements UserRepositoryInterface
                 $query->where('position_name', '=', 'admin_pn');
             });
         }
-      
+
         return  $query->orderBy('id','desc')->get();
 
     }
     public function store(array $data): User
     {
+        try {
+            DB::beginTransaction();
 
-        $user = User::create($data);
-        $user->password_changes_at = $user->created_at;
-        $user->save();
+            $user = User::create($data);
+            $user->password_changes_at = $user->created_at;
+            $user->save();
 
-        $user->assignRole($data['roles']);
-        $governingBodyIds=GoverningBody::all()->pluck('id','named')->toArray();
+            $user->assignRole($data['roles']);
 
-        $governingBodyUserData = [];
-        foreach($data['roles'] as $role){
+            $governingBodyIds = GoverningBody::all()->pluck('id', 'named')->toArray();
+            $governingBodyUserData = [];
 
-            $governingBody = str_contains($role, 'MIP') ? $governingBodyIds['MIP'] : $governingBodyIds['PN'];
+            foreach ($data['roles'] as $role) {
 
-            $governingBodyUserData[] = [
-                'user_id' => $user->id,
-                'governing_body_id' => $governingBody
-            ];
+                $governingBody = str_contains($role, 'MIP')
+                                    ? $governingBodyIds['MIP']
+                                    : $governingBodyIds['PN'];
+
+                 $row = [
+                    'user_id' => $user->id,
+                    'governing_body_id' => $governingBody
+                ];
+
+                // Add 'operator' field if role matches
+                if ($role == "operatorMIP" || $role == "operatorPN") {
+                    $row['operator'] = 1;
+                }else{
+                    $row['operator'] = 0;
+                }
+
+
+                $governingBodyUserData[] = $row;
+            }
+
+
+            GoverningBodyUser::insert($governingBodyUserData);
+
+            DB::commit(); // Commit the transaction if everything goes well
+
+            return $user;
+
+        } catch (\Exception $e) {
+            DB::rollBack(); // Revert all changes if an error occurs
+            dd($e->getMessage()); // Debug the exception
         }
-        GoverningBodyUser::insert($governingBodyUserData);
 
 
-        return $user;
 
     }
     public function update($id, $data){
 
+        try {
+            DB::beginTransaction();
+                $user=User::where('id',$id)->first();
 
-        $user=User::where('id',$id)->first();
+                $user->update($data);
+                $user->password_changes_at = $user->updated_at;
+                $user->save();
+                $user->roles()->detach();
+                $user->assignRole($data['roles']);
 
-        $user->update($data);
-        $user->password_changes_at = $user->updated_at;
-        $user->save();
-        $user->roles()->detach();
-        $user->assignRole($data['roles']);
+                $user->governing_body_user()->delete();
 
-        foreach($data['roles'] as $role){
-            if($role == "operatorMIP" || $role == "operatorPN"){
+                $governingBodyIds = GoverningBody::all()->pluck('id', 'named')->toArray();
 
-                $explode = explode('operator',$role);
+                $governingBodyUserData = [];
 
-                $governingBody=GoverningBody::where('named',$explode[1])->value('id');
+            foreach ($data['roles'] as $role) {
 
-                $governing_body_users=GoverningBodyUser::where('user_id',$id)->first();
-                if($governing_body_users){
-                    $governing_body_users->governing_body_id=$governingBody;
-                    $governing_body_users->save();
+                $governingBody = str_contains($role, 'MIP')
+                                    ? $governingBodyIds['MIP']
+                                    : $governingBodyIds['PN'];
+
+                 $row = [
+                    'user_id' => $user->id,
+                    'governing_body_id' => $governingBody
+                ];
+
+                // Add 'operator' field if role matches
+                if ($role == "operatorMIP" || $role == "operatorPN") {
+                    $row['operator'] = 1;
                 }else{
-                    $governing_body_users=GoverningBodyUser::create([
-                        "user_id"=>$user->id,
-                        "governing_body_id"=>$governingBody,
-                    ]);
+                    $row['operator'] = 0;
                 }
 
+
+                $governingBodyUserData[] = $row;
             }
-        }
-        return $user;
+
+                GoverningBodyUser::insert($governingBodyUserData);
+                DB::commit();
+                return $user;
+            } catch (\Exception $e) {
+                DB::rollBack(); // Revert all changes if an error occurs
+                dd($e->getMessage()); // Debug the exception
+            }
     }
 
     public function findByEmail(string $email): ?User
