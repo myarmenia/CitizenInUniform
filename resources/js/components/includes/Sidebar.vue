@@ -4,6 +4,7 @@ import { useRouter } from "vue-router";
 import { useGoverningBodies } from "../../sidebar";
 import api, { initApi } from "../../api";
 import {me} from "../../me";
+import { state } from '../../reactive-state';
 
 const router = useRouter();
 
@@ -13,7 +14,6 @@ const govBodyId = ref()
 const authId = ref()
 
 
-const emailMessageCount = ref()
 const chatMessageCount = ref()
 const roomIds = ref([]);
 const activeSubscriptions = {}; // Хранение подписок для обоих каналов
@@ -52,7 +52,7 @@ const getUnAmsweredEmailMessages = async () => {
         let response = await api.value.get('/api/auth/get-messages-counts');
         let result = response.data.result;
 
-        emailMessageCount.value = result.email_messages_count;
+        state.emailMessageCount = result.email_messages_count;
         chatMessageCount.value = result.chat_messages_count;
         govBodyId.value = result.governing_body_id;
 
@@ -71,7 +71,7 @@ const subscribeToEmailMessagesChannel = (govBodyId) => {
     const channelName = `messages-count.${govBodyId}`;
     if (!activeSubscriptions[channelName]) {
         activeSubscriptions[channelName] = window.Echo.private(channelName).listen('MessagesEvent', (e) => {
-            emailMessageCount.value = e.count;
+            state.emailMessageCount = e.count;
 
             if (document.visibilityState !== 'visible') {
                 playNotificationSound();
@@ -267,7 +267,7 @@ const realChat = () =>{
                   class="nav-link " :class="{'collapsed': !($route.name && $route.name.startsWith('email-messages.'))}" :to="{name: 'email-messages.index'}">
                     <i class="ri-mail-line"></i>
                     <span>Նամակագրություն</span>
-                    <span class="badge badge-number mx-4" :class="emailMessageCount < 3  ?  'bg-primary' : (emailMessageCount > 2 && emailMessageCount < 5 ? 'bg-warning' : 'bg-danger')">{{ emailMessageCount }}</span>
+                    <span class="badge badge-number mx-4" :class="state.emailMessageCount < 3  ?  'bg-primary' : (state.emailMessageCount > 2 && state.emailMessageCount < 5 ? 'bg-warning' : 'bg-danger')">{{ state.emailMessageCount }}</span>
                 </router-link>
             </li>
             <li class="nav-item">
