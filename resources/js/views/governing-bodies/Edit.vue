@@ -5,6 +5,7 @@ import api, { initApi } from "../../api";
 import EmailComponent from './EmailComponent.vue';
 import PhoneComponent from './PhoneComponent.vue';
 import GlobalSettingComponent from './GlobalSettingComponent.vue';
+import {me} from "../../me";
 
 const router = useRouter()
 const route = useRoute()
@@ -13,6 +14,7 @@ const email = ref({ text: '', status: false });
 const showEmail = ref({ text: '', status: false });
 const phones = ref([]);
 const globalSettings = ref([])
+const {userMe} = me(router)
 
 let governingBody = ref([])
 let errors = ref([])
@@ -129,7 +131,8 @@ function handleSave(type, updatedValue) {
                             <div class="info-box card">
                                  <div class="d-flex justify-content-between">
                                     <img :src="governingBody.path" class="image">
-                                    <button class="btn btn-primary" @click="showComponent('globalSettingComponent')"><i class="bi bi-pencil cwhith fts-20" ></i></button>
+                                    <button v-if="userMe.roles?.some(role => role.name != 'super_admin')"
+                                        class="btn btn-primary" @click="showComponent('globalSettingComponent')"><i class="bi bi-pencil cwhith fts-20" ></i></button>
                                 </div>
                                 <h3 >{{governingBody.name}}</h3>
                             </div>
@@ -138,7 +141,8 @@ function handleSave(type, updatedValue) {
                             <div class="info-box card">
                                 <div class="d-flex justify-content-between">
                                     <i class="bi bi-envelope"></i>
-                                    <button class="btn btn-primary" @click="showComponent('emailComponent')"><i class="bi bi-pencil cwhith fts-20" ></i></button>
+                                    <button v-if="userMe.roles?.some(role => role.name != 'super_admin')"
+                                        class="btn btn-primary" @click="showComponent('emailComponent')"><i class="bi bi-pencil cwhith fts-20" ></i></button>
                                 </div>
 
                                 <h3 >Էլ․ փոստ</h3>
@@ -151,7 +155,8 @@ function handleSave(type, updatedValue) {
                             <div class="info-box card">
                                 <div class="d-flex justify-content-between">
                                     <i class="bi bi-telephone"></i>
-                                    <button class="btn btn-primary" @click="showComponent('phoneComponent')"><i class="bi bi-pencil cwhith fts-20" ></i></button>
+                                    <button v-if="userMe.roles?.some(role => role.name != 'super_admin')"
+                                        class="btn btn-primary" @click="showComponent('phoneComponent')"><i class="bi bi-pencil cwhith fts-20" ></i></button>
                                 </div>
                                 <h3 >Հեռախոս</h3>
                                 <p v-if="phones.length > 0 && phones.some(phone => phone.status)" v-for="phone in phones"><span v-if="phone.status"> {{phone.text}}</span> </p>

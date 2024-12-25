@@ -18,7 +18,6 @@ class CheckActionPermission
     public function handle(Request $request, Closure $next, $modelClass): Response
     {
 
-
         $governing_body_id = MyHelper::getAuthUserGoverningBodyId();
 
         $routeParameters = $request->route()->parameters();
@@ -38,7 +37,7 @@ class CheckActionPermission
 
         if($model->getTable() == 'governing_bodies' ){
 
-            if($governing_body_id != $modelId){
+            if($governing_body_id != $modelId && !Auth::user()->hasRole('super_admin')){
                 return response()->json(['error' => 'Access denied'], 403);
             }
         }

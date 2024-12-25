@@ -151,8 +151,10 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
 
 
                                     </h5>
-                                    <div class="pull-right d-flex justify-content-end m-3" >
-                                        <router-link class="btn btn-primary  mb-2"  :to="{name: 'faqCategorySubcategory.cteate'}">
+                                    <div class="pull-right d-flex justify-content-end m-3"  >
+                                        <router-link
+                                            v-if="userMe.roles?.some(role =>role.name === 'adminMIP' ||  role.name === 'adminPN'  )"
+                                         class="btn btn-primary  mb-2"  :to="{name: 'faqCategorySubcategory.cteate'}">
                                         <i class="fa fa-plus"></i> Ստեղծել</router-link>
                                     </div>
                                 </div>

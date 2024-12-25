@@ -27,7 +27,7 @@ class EmailMessgeController extends BaseController
     {
 
         $page = request()->page ?? 1;
-        $perPage = 3;
+        $perPage = 10;
 
         $data = $this->service->index();
 
@@ -99,7 +99,7 @@ class EmailMessgeController extends BaseController
     }
 
     public function chatMessagesStore(Request $request){
-       
+
         $data = $this->service->chatMessageCount($request->id);
 
         return $data != null ? $this->sendResponse([], 'success') : $this->sendError('error');

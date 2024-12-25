@@ -2,18 +2,22 @@
 import { useRouter, useRoute } from "vue-router"
 import { ref, reactive, onMounted, watch } from  "vue"
 import api, { initApi } from "../../api";
+import { state } from '../../reactive-state';
 
 const router = useRouter()
 const route = useRoute()
 const selectedCategory = ref('Ընտրել հարցի կատեգորիան');
 initApi(router); // Initialize the API with the router
 
+console.log(state.emailMessageCount, 555)
 let messages = ref([])
 let links = ref([])
 let activePage = ref(1)
 let lastPage = ref(1)
 let statusArray=ref([])
 let emailCategories = ref([])
+
+
 
 const form = reactive({
     has_answer: 0,
@@ -23,6 +27,7 @@ const form = reactive({
     to_created_at: '',
     action: null
 })
+
 
 const getEmailCategies = async () => {
     let response =  api.value.get ( '/api/mobile/message-categories')
@@ -97,6 +102,13 @@ watch(
         activePage.value = 1; // сбрасываем страницу на первую при изменении фильтра
 
         sendRequest()
+    }
+);
+
+watch(
+    () => state.emailMessageCount,
+    (newCount) => {
+        sendRequest(newCount); // Вызываем функцию при изменении
     }
 );
 
@@ -175,7 +187,7 @@ const changePage =(link) =>{
                                     <div class="mb-3 d-flex justify-content-end ">
                                         <div class="col-6">
                                             <div class="input-group mb-3">
-                                                <input type="text" class="form-control" v-model="form.searchText" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2">
+                                                <input type="text" class="form-control" v-model="form.searchText" placeholder="Search" aria-label="Search" aria-describedby="basic-addon2" @keydown.enter="serachMessages">
                                                 <span class="input-group-text" id="basic-addon2" @click="serachMessages"><i class="bi bi-search"></i></span>
                                             </div>
                                         </div>
@@ -234,16 +246,8 @@ const changePage =(link) =>{
                                         <td>{{ message.date }}</td>
 
                                         <td>
-                                            <div class="dropdown action" >
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                    data-bs-toggle="dropdown">
-                                                    <i class="bx bx-dots-vertical-rounded"></i>
-                                                </button>
-                                                <div class="dropdown-menu">
-                                                    <router-link class="dropdown-item" :to="{name: 'email-messages.edit', params: { id: message.id } }">
-                                                        <i class="bx bx-edit-alt me-1"></i>Դիտել</router-link>
-                                                </div>
-                                            </div>
+                                            <router-link class="" :to="{name: 'email-messages.edit', params: { id: message.id } }">
+                                                <i class="bx bx-edit-alt me-1"></i>Դիտել</router-link>
                                         </td>
                                     </tr>
                                 </tbody>
