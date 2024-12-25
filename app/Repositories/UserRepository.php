@@ -29,15 +29,16 @@ class UserRepository implements UserRepositoryInterface
         elseif($authUser->hasRole('adminMIP')){
 
             $query->whereHas('roles', function ($query) {
-                $query->where('position_name', '=', 'admin_mip');
+                $query->where('interface', '=', 'admin_mip');
             });
         }
         elseif($authUser->hasRole('adminPN')){
 
             $query->whereHas('roles', function ($query) {
-                $query->where('position_name', '=', 'admin_pn');
+                $query->where('interface', '=', 'admin_pn');
             });
         }
+        
 
         return  $query->orderBy('id','desc')->get();
 
