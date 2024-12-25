@@ -147,7 +147,7 @@ const deleteItem = (id, tb_name) =>{
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <div class="pull-left">
                                 <div class = "d-flex justify-content-between">
                                     <h5 class="card-title">Օգտատերեր</h5>
@@ -157,7 +157,7 @@ const deleteItem = (id, tb_name) =>{
                                 </div>
                             </div>
 
-                            <table class="table table-bordered" >
+                            <table class="table table-bordered " >
                                 <thead>
                                     <tr>
                                         <th>Հ/Հ</th>
@@ -229,7 +229,7 @@ const deleteItem = (id, tb_name) =>{
                                                                 Ջնջել</button>
                                                         </div>
                                                     </div>
-                                                    
+
                                                 </td>
 
                                             </tr>

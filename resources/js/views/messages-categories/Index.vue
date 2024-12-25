@@ -153,7 +153,7 @@ const changeStatus = (index, event, id, tb_name, field_name) => {
                                     <h5 class="card-title">
                                         <!-- ՀՏՀ կատեգորիա -->
                                     </h5>
-                                    <div class="pull-right d-flex justify-content-end m-3" >
+                                    <div class="pull-right d-flex justify-content-end m-3"  v-if="userMe.roles?.some(role =>role.name === 'adminMIP' ||  role.name === 'adminPN'  )">
                                         <router-link class="btn btn-primary  mb-2" :to="{name:'messages-categories.create'}"><i class="fa fa-plus"></i> Ստեղծել</router-link>
                                     </div>
                                 </div>

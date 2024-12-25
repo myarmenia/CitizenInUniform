@@ -139,7 +139,7 @@ const deleteItem = (id, tb_name) =>{
                             <div class="pull-left">
                                 <div class = "d-flex justify-content-between">
                                     <h5 class="card-title">Մենյուի ենթաբաժիններ</h5>
-                                    <div class="pull-right d-flex justify-content-end m-3" >
+                                    <div class="pull-right d-flex justify-content-end m-3" v-if="userMe.roles?.some(role =>role.name === 'adminMIP' ||  role.name === 'adminPN'  )" >
                                         <router-link class="btn btn-primary  mb-2" :to="{name: 'subCategories.create'}"><i class="fa fa-plus"></i> Ստեղծել </router-link>
                                     </div>
                                 </div>
