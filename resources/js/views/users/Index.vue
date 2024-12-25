@@ -198,11 +198,13 @@ const deleteItem = (id, tb_name) =>{
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <div class="dropdown action">
+                                                    <div class="dropdown action"
+                                                        v-if="!user.roles.some(role => ['adminMIP', 'adminPN'].includes(role))">
 
                                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                             data-bs-toggle="dropdown">
                                                             <i class="bx bx-dots-vertical-rounded"></i>
+
                                                         </button>
                                                         <div class="dropdown-menu">
                                                             <router-link class="dropdown-item"   :to="{name:'users.edit', params: { id: user.id } }"><i
@@ -229,6 +231,7 @@ const deleteItem = (id, tb_name) =>{
                                                                 Ջնջել</button>
                                                         </div>
                                                     </div>
+                                                    <div v-else><i class="bx bx-stop-circle me-1"></i></div>
 
                                                 </td>
 
