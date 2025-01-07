@@ -39,8 +39,8 @@ class CategoryService
     {
 
         if($data->file){
-
             $path = $this->addFile($data->file, $id);
+
             $data->path = $path;
         }
 
