@@ -28,7 +28,7 @@ class UserController extends BaseController
     {
         $this->userService = $userService;
         $this->middleware('user');
-       
+
     }
     /**
      * Display a listing of the resource.
