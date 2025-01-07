@@ -16,6 +16,11 @@ class EmailMessageAnswer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function user_withTrashed(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
+    }
+
     public function email_message(): BelongsTo
     {
         return $this->belongsTo(EmailMessages::class);
@@ -30,7 +35,7 @@ class EmailMessageAnswer extends Model
             $answer->email_message->update(['has_answer' => 1]);
         });
 
-        
+
         static::observe(BaseModelObserver::class);
 
 

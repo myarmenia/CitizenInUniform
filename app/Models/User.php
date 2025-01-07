@@ -85,7 +85,7 @@ class User extends Authenticatable implements JWTSubject
 
         return $this->rooms && in_array($roomId, $roomIds) ? true : false;
     }
-    
+
 
     protected static function boot()
     {
