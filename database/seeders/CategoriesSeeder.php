@@ -43,7 +43,7 @@ class CategoriesSeeder extends Seeder
             $category['path'] = "public/$category[path]";
             unset($category['public_path']);
 
-            Category::updateOrCreate( $category);
+            Category::updateOrCreate($category);
 
             $this->copyFile($public_path, $path, $category['id']);
         }
@@ -71,6 +71,7 @@ class CategoriesSeeder extends Seeder
             File::copy($sourcePath, $destinationPath);
 
         }
+        //comment offff
         // comment
 
     }
