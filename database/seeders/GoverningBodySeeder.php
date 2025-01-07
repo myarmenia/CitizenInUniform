@@ -53,7 +53,7 @@ class GoverningBodySeeder extends Seeder
         // Исходный путь (путь из public/assets)
         $sourcePath = public_path("/assets/$path");
 
-        // Путь назначения (storage/app/public/governing_body)
+        // Путь назначения (storage/app/public/governing_bodies)
         $destinationPath = storage_path("/app/public/$path");
 
         // Проверка, существует ли исходный файл

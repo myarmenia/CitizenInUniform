@@ -170,7 +170,9 @@ const deleteItem = (id, tb_name) =>{
                                         </td>
 
                                         <td>
-                                            <div class="dropdown action" v-if="subCategory.governing_body_id == userMe.governing_body_id" >
+                                            <div  v-if="(userMe.governing_body_id == 2 && subCategory.category_id == 1 ) || (userMe.governing_body_id == 1 && subCategory.category_id == 2 )"><i class="bx bx-stop-circle me-1"></i></div>
+
+                                            <div v-else class="dropdown action" >
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
@@ -192,7 +194,7 @@ const deleteItem = (id, tb_name) =>{
                                                         Ջնջել</button>
                                                 </div>
                                             </div>
-                                            <div v-else><i class="bx bx-stop-circle me-1"></i></div>
+                                            <!-- <div v-else><i class="bx bx-stop-circle me-1"></i></div> -->
                                         </td>
                                     </tr>
                                 </tbody>
