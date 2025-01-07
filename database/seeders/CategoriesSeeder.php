@@ -51,15 +51,15 @@ class CategoriesSeeder extends Seeder
 
     public function copyFile($public_path, $path, $category_id)
     {
-        // Исходный путь (путь из public/assets)
+        // Исходный путь (путь из public/assets) /
         $sourcePath = public_path("/assets/$public_path");
 
-        // Путь назначения (storage/app/public/categories)
+        // Путь назначения (storage/app/public/categories) //
         $destinationPath = storage_path("/app/public/$path");
 
         // Проверка, существует ли исходный файл
         if (File::exists($sourcePath)) {
-            // Создаём директорию, если её нет
+            // Создаём директорию, если её нет //
             $directory = storage_path("app/public/categories/$category_id");
             $category_directory = storage_path("app/public/categories");
             if (!File::exists($directory)) {
