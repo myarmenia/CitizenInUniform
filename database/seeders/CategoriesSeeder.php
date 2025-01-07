@@ -24,7 +24,6 @@ class CategoriesSeeder extends Seeder
                 'path' => 'categories/1/pn.png'
 
             ],
-
             [
                 'id' => 2,
                 'governing_body_id' => 2,
@@ -73,6 +72,8 @@ class CategoriesSeeder extends Seeder
         }
         //comment offff
         // comment
+        // comment
+
 
     }
 }
