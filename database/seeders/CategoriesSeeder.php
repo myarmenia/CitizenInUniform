@@ -34,7 +34,6 @@ class CategoriesSeeder extends Seeder
 
             ]
 
-
         ];
 
         foreach ($categories as $category) {
@@ -72,6 +71,7 @@ class CategoriesSeeder extends Seeder
             File::copy($sourcePath, $destinationPath);
 
         }
+        // comment
 
     }
 }
