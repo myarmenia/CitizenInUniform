@@ -54,7 +54,7 @@ const categoryEdit = async () => {
     formData.append('title', form.title);
     formData.append('file', form.dataFile)
 
-    formData.append('_method', 'PUT');
+    formData.append('_method', 'PATCH');
 
     let response = api.value.post(`/api/auth/categories/${route.params.id}`, formData, {
             headers: {

@@ -29,10 +29,12 @@ class CategoryDto
 
     public function toArray()
     {
-        return [
-            'title' => $this->title,
-            'path' => $this->path ?? null
-        ];
+        return array_filter([
+        'title' => $this->title,
+        'path' => $this->path,
+    ], function ($value) {
+        return $value !== null;
+    });
     }
 
 
