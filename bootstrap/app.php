@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CheckActionPermission;
+use App\Http\Middleware\CheckActionPermissionForCategories;
 use App\Http\Middleware\UserMiddleware;
 use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Foundation\Application;
@@ -29,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             'user' => UserMiddleware::class,
             'check_action_permission' => CheckActionPermission::class,
+            'check_action_permission_for_category' => CheckActionPermissionForCategories::class,
 
 
         ]);
