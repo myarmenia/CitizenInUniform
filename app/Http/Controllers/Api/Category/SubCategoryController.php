@@ -18,7 +18,7 @@ class SubCategoryController extends BaseController
     use Paginator;
     public function __construct(protected SubCategoryService $service)
     {
-        $this->middleware('check_action_permission:' . SubCategory::class, ['only' => ['show']]);
+        $this->middleware('check_action_permission_for_category:' . SubCategory::class, ['only' => ['show']]);
     }
     /**
      * Display a listing of the resource.

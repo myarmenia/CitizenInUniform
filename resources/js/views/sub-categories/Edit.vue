@@ -3,10 +3,12 @@ import { useRouter, useRoute } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted, watch } from  "vue"
 import api, { initApi } from "../../api";
 import { initTinyMCE } from '@/tinymce-init.js';
+import {me} from "../../me";
 
 const router = useRouter()
 const route = useRoute()
 initApi(router); // Initialize the API with the router
+const {userMe} = me(router)
 
 
 let errors = ref([])
@@ -204,7 +206,10 @@ const dataEdit = async () => {
 
                                         <select class="form-select"  v-model="form.category_id"  >
                                                 <option disabled >Ընտրել բաժինը </option>
-                                                <option v-for="category in activeCategories" :key="category.id" :value="category.id" > {{category.title}} </option>
+                                                <template v-for="category in activeCategories" >
+                                                    <option v-if="(userMe.governing_body_id == 2 && category.id !== 1 ) || (userMe.governing_body_id == 1 && category.id !== 2 )"
+                                                        :key="category.id" :value="category.id" >{{category.title}}</option>
+                                                </template>
                                         </select>
 
                                         <div class="mb-3 row " v-if="errors.category_id">

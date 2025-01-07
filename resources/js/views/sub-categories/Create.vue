@@ -3,10 +3,12 @@ import { useRouter } from "vue-router"
 import { ref, reactive, onMounted, onUnmounted } from  "vue"
 import api, { initApi } from "../../api";
 import { initTinyMCE } from '@/tinymce-init.js';
+import {me} from "../../me";
 
 
 const router = useRouter()
 initApi(router); // Initialize the API with the router
+const {userMe} = me(router)
 
 let errors = ref([])
 let activeCategories = ref([])
@@ -171,7 +173,10 @@ const dataSave = async () => {
 
                                         <select class="form-select"  v-model="selectedCategory"  @change="handleSelectionChange" >
                                                 <option disabled selected>Ընտրել բաժինը </option>
-                                                <option v-for="category in activeCategories" :key="category.id" :value="category.id">{{category.title}}</option>
+                                                <template v-for="category in activeCategories" >
+                                                    <option v-if="(userMe.governing_body_id == 2 && category.id !== 1 ) || (userMe.governing_body_id == 1 && category.id !== 2 )"
+                                                        :key="category.id" :value="category.id" >{{category.title}}</option>
+                                                </template>
                                         </select>
 
                                         <div class="mb-3 row " v-if="errors.category_id">

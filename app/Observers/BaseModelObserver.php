@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Helpers\MyHelper;
 use App\Models\Log;
+use App\Models\User;
 use Auth;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,11 +27,23 @@ class BaseModelObserver
 
     protected function logAction(Model $model, string $action)
     {
-        $user = Auth::user();
-        $tb_name = $model->getTable();
-        $roles = $user ? json_encode($user->roles->pluck('name')) : null;
 
-        $governing_body_id = MyHelper::getAuthUserGoverningBodyId();
+        $tb_name = $model->getTable();
+
+        if($tb_name == 'messages'){
+            $operator_id = $model->writer == 'operator' ? $model->writer_id : null;
+            $user = $operator_id ? User::find( $operator_id) : null;
+
+            $governing_body_id = $user ? $user->governing_body_user->governing_body_id : null;
+
+        }
+        else{
+            $user = Auth::user();
+
+            $governing_body_id = MyHelper::getAuthUserGoverningBodyId();
+        }
+
+        $roles = $user ? json_encode($user->roles->pluck('name')) : null;
 
 
         if ($action == 'deleted') {
@@ -41,10 +54,7 @@ class BaseModelObserver
 
         }
 
-        // if (isset($details['content']) && ($tb_name == 'email_message_answers' || $tb_name == 'messages')) {
-        //     unset($details['content']);
-        // }
-
+        
         if(isset($model->password)){
              unset($details['password']);
         }
