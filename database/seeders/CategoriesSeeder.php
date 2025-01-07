@@ -63,7 +63,7 @@ class CategoriesSeeder extends Seeder
             // Создаём директорию, если её нет
             $directory = storage_path("app/public/categories/$category_id");
             if (!File::exists($directory)) {
-                File::makeDirectory($directory, 0755, true);
+                File::makeDirectory($directory, 0777, true);
             }
 
             // Копируем файл
