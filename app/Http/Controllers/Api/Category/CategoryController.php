@@ -18,7 +18,7 @@ class CategoryController extends BaseController
     use Paginator;
     public function __construct(protected CategoryService $service)
     {
-        $this->middleware('check_action_permission:' . Category::class, ['only' => ['show']]);
+        $this->middleware('check_action_permission_for_category:' . Category::class, ['only' => ['show']]);
     }
     /**
      * Display a listing of the resource.
