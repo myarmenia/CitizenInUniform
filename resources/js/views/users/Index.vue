@@ -3,9 +3,20 @@ import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
 import api, { initApi } from "../../api";
 import {me} from "../../me";
+import { computed } from 'vue';
 
 const router = useRouter()
 const {userMe} = me(router)
+console.log(userMe.roles)
+// Accessing roles
+const userRoles = userMe?.roles || [];
+// Check if the user is a super admin
+const isSuperAdmin = userRoles.includes('superAdmin');
+console.log(isSuperAdmin)
+
+
+
+
 initApi(router); // Initialize the API with the router
 
 let allData = ref([])
@@ -127,6 +138,15 @@ const deleteItem = (id, tb_name) =>{
     });
 }
 
+    // v-if="!user.roles.some(role => ['adminMIP', 'adminPN'].includes(role))"
+    // <div v-else><i class="bx bx-stop-circle me-1"></i></div>
+
+    // Computed property to format roles
+    const authUserRoles = computed(() =>
+     userMe.value.roles?.[0]?.name || ''
+   );
+
+
 
 </script>
 
@@ -172,7 +192,9 @@ const deleteItem = (id, tb_name) =>{
                                     <tbody>
                                         <tr v-for="(user, index) in allData" :key="user.id">
 
-                                                <td>{{ ++index }} </td>
+                                                <td>{{ ++index }}
+
+                                                </td>
                                                 <td>{{ user.name }}</td>
                                                 <td>{{ user.surname }}</td>
                                                 <td>{{ user.email }}</td>
@@ -199,7 +221,8 @@ const deleteItem = (id, tb_name) =>{
                                                 </td>
                                                 <td>
                                                     <div class="dropdown action"
-                                                        v-if="!user.roles.some(role => ['adminMIP', 'adminPN'].includes(role))">
+                                                            v-if="authUserRoles=='super_admin' || !user.roles.some(role => ['adminMIP', 'adminPN'].includes(role))"
+                                                        >
 
                                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                             data-bs-toggle="dropdown">
@@ -214,7 +237,6 @@ const deleteItem = (id, tb_name) =>{
                                                                 <div class="form-check form-switch">
                                                                     <input class="form-check-input change_status" type="checkbox"
                                                                         role="switch"
-
                                                                         :checked="user.status"
                                                                         @change="changeStatus(index, $event, user.id,'users','status')"
                                                                     >
@@ -232,6 +254,7 @@ const deleteItem = (id, tb_name) =>{
                                                         </div>
                                                     </div>
                                                     <div v-else><i class="bx bx-stop-circle me-1"></i></div>
+
 
                                                 </td>
 

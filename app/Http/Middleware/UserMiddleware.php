@@ -20,6 +20,7 @@ class UserMiddleware
     {
         $authUser = Auth::user();
         $governing_body_id = MyHelper::getAuthUserGoverningBodyId();
+    
         $routeParameters = $request->route()->parameters();
         // dd($routeParameters);
         $modelId = reset($routeParameters); // Получаем первый параметр маршрута
@@ -38,7 +39,7 @@ class UserMiddleware
             if(isset($userGoverningBody)){
 
                  if($governing_body_id!=$userGoverningBody){
-         
+
                 return response()->json(['message',"You dont have permition"],403);
             }
 
