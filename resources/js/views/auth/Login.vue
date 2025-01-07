@@ -68,7 +68,7 @@ const login = async () => {
                                     <label for="yourPassword" class="form-label">Գաղտնաբառ</label>
                                     <div class="input-group has-validation">
 
-                                        <input type="password" v-model="form.password" class="form-control" id="yourPassword" required>
+                                        <input type="password" v-model="form.password" class="form-control" id="yourPassword" required @keyup.enter="login">
                                     </div>
                                     <div  v-if="errors.password" class="mb-3 row justify-content-start">
                                         <div class="col-sm-9 text-danger fts-14">{{ errors.password }}</div>

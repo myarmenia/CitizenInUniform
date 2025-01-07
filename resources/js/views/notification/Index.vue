@@ -2,8 +2,10 @@
 import { useRouter } from "vue-router"
 import { ref, reactive, onMounted } from  "vue"
 import api, { initApi } from "../../api";
+import {me} from "../../me";
 
 const router = useRouter()
+const {userMe} = me(router)
 initApi(router);
 
 let notifications = ref([])
@@ -79,7 +81,7 @@ const formatDate = (dateString) => {
                             <div class="pull-left">
                                 <div class = "d-flex justify-content-between">
                                     <h5 class="card-title">Ծանուցումներ</h5>
-                                    <div class="pull-right d-flex justify-content-end m-3" >
+                                    <div class="pull-right d-flex justify-content-end m-3" v-if="userMe.roles?.some(role =>role.name === 'adminMIP' ||  role.name === 'adminPN'  )"  >
                                         <router-link class="btn btn-primary  mb-2" :to="{name: 'notifications.create'}"><i class="fa fa-plus"></i> Ստեղծել</router-link>
                                     </div>
                                 </div>

@@ -147,7 +147,7 @@ const deleteItem = (id, tb_name) =>{
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body table-responsive">
                             <div class="pull-left">
                                 <div class = "d-flex justify-content-between">
                                     <h5 class="card-title">Օգտատերեր</h5>
@@ -157,7 +157,7 @@ const deleteItem = (id, tb_name) =>{
                                 </div>
                             </div>
 
-                            <table class="table table-bordered" >
+                            <table class="table table-bordered " >
                                 <thead>
                                     <tr>
                                         <th>Հ/Հ</th>
@@ -198,11 +198,13 @@ const deleteItem = (id, tb_name) =>{
                                                     </button>
                                                 </td>
                                                 <td>
-                                                    <div class="dropdown action">
+                                                    <div class="dropdown action"
+                                                        v-if="!user.roles.some(role => ['adminMIP', 'adminPN'].includes(role))">
 
                                                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                             data-bs-toggle="dropdown">
                                                             <i class="bx bx-dots-vertical-rounded"></i>
+
                                                         </button>
                                                         <div class="dropdown-menu">
                                                             <router-link class="dropdown-item"   :to="{name:'users.edit', params: { id: user.id } }"><i
@@ -229,7 +231,8 @@ const deleteItem = (id, tb_name) =>{
                                                                 Ջնջել</button>
                                                         </div>
                                                     </div>
-                                                    
+                                                    <div v-else><i class="bx bx-stop-circle me-1"></i></div>
+
                                                 </td>
 
                                             </tr>
