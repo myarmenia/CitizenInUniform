@@ -15,16 +15,19 @@ class SendEmailMessage extends Mailable
     public $message;
     public $subject;
     public $email;
+    public $mailer_name;
+
 
 
     /**
      * Create a new message instance.
      */
-    public function __construct($message, $subject, $email)
+    public function __construct($message, $subject, $email, $mailer_name)
     {
         $this->message = $message;
         $this->subject = $subject;
         $this->email = $email;
+        $this->mailer_name = $mailer_name;
 
     }
 
@@ -60,6 +63,7 @@ class SendEmailMessage extends Mailable
             'data' => $this->message,
         ])->to($this->email);
 
+        $mail->replyTo(env("MAIL_FROM_ADDRESS_$this->mailer_name"), 'Այս նամակին պատասխանելու համար օգտվեք հավելվածից։');
 
         return $mail;
     }
