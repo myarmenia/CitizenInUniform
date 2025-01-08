@@ -63,7 +63,7 @@ class SendEmailMessage extends Mailable
             'data' => $this->message,
         ])->to($this->email);
 
-        $mail->replyTo(env("MAIL_FROM_ADDRESS_$this->mailer_name"), 'Այս նամակին պատասխանելու համար օգտվեք հավելվածից։');
+        $mail->replyTo(env("MAIL_FROM_ADDRESS_$this->mailer_name"), 'Մի՛ պատասխանեք այս նամակին։ Պատասխանելու համար օգտվեք հավելվածից։');
 
         return $mail;
     }
