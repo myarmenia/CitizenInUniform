@@ -52,14 +52,14 @@ class EmailMessageService
             $subject = $email_message->message_category_withTrashed->title;
 
             $governing_body = $email_message->governing_body;
-dd($governing_body);
+
             $message['message_title'] = $governing_body->name;
             $message['content'] = $data['content'];
             $message['mobile_user_content'] = $email_message->content;
 
             $mailer_name = $governing_body->named;
             $mailer = "smtp_$mailer_name";
-
+           
             Mail::mailer($mailer)->send(new SendEmailMessage($message, $subject, $email, $mailer_name));
 
 
