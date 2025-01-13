@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,7 +23,7 @@ class EmailSingleMessageResource extends JsonResource
                                     'title' => $this->message_category_withTrashed->title
                                 ],
             "date" => date('d-m-Y H:i', strtotime($this->created_at)),
-            "content" => $this->content,
+            "content" => MyHelper::decryptData($this->content),
             "answers" => EmailMessageAnswerResource::collection($this->answers)
         ];
     }

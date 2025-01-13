@@ -40,11 +40,14 @@ class EmailMessageRepository implements EmailMessageInterface
             foreach ($governing_body_ids as $key => $value) {
 
                 $data['governing_body_id'] = $value;
-
+                $data['content'] = MyHelper::encryptData($value['content']);
+                dd($data);
                 $message = EmailMessages::create($data);
             }
         }
         else{
+            $data['content'] = MyHelper::encryptData($data['content']);
+
             $message = EmailMessages::create($data);
         }
 

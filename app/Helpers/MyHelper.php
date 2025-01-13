@@ -36,4 +36,22 @@ class MyHelper
     }
 
 
+    public static function encryptData($data)
+    {
+        $key = env('ENCRYPTION_KEY');
+        $iv = substr($key, 0, 16); // Первые 16 символов ключа для IV
+        $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
+        return $encrypted;
+    }
+
+
+    public static function decryptData($encryptedText)
+    {
+        $key = env('ENCRYPTION_KEY');
+        $iv = substr($key, 0, 16); // Первые 16 символов ключа для IV
+        $decrypted = openssl_decrypt($encryptedText, 'aes-256-cbc', $key, 0, $iv);
+        return $decrypted;
+    }
+
+
 }

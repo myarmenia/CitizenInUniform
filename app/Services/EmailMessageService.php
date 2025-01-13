@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Events\ChatMessagesEvent;
+use App\Helpers\MyHelper;
 use App\Interfaces\CategoryInterface;
 use App\Interfaces\EmailMessageAnswerInterface;
 use App\Interfaces\EmailMessageInterface;
@@ -46,6 +47,9 @@ class EmailMessageService
         try {
             $data['user_id'] = Auth::id();
 
+            $message_content = $data['content'];
+            $data['content'] = MyHelper::encryptData($data['content']);
+
             $messageAnswer = $this->emailMessageAnswerRepo->store($data);
             $email_message = $messageAnswer->email_message;
             $email = $email_message->email;
@@ -54,12 +58,12 @@ class EmailMessageService
             $governing_body = $email_message->governing_body;
 
             $message['message_title'] = $governing_body->name;
-            $message['content'] = $data['content'];
-            $message['mobile_user_content'] = $email_message->content;
+            $message['content'] = $message_content;
+            $message['mobile_user_content'] = MyHelper::decryptData($email_message->content);
 
             $mailer_name = $governing_body->named;
             $mailer = "smtp_$mailer_name";
-           
+
             Mail::mailer($mailer)->send(new SendEmailMessage($message, $subject, $email, $mailer_name));
 
 
