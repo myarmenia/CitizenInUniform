@@ -40,7 +40,8 @@ class MyHelper
     {
         $key = env('ENCRYPTION_KEY');
         $iv = substr($key, 0, 16); // Первые 16 символов ключа для IV
-        $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
+
+        $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
         return bin2hex($encrypted);
     }
 
@@ -49,8 +50,12 @@ class MyHelper
     {
         $key = env('ENCRYPTION_KEY');
         $iv = substr($key, 0, 16); // Первые 16 символов ключа для IV
+
+        // Преобразуем Hex в бинарные данные
         $encryptedText = hex2bin($encryptedText);
-        $decrypted = openssl_decrypt($encryptedText, 'aes-256-cbc', $key, 0, $iv);
+
+        // Расшифровка
+        $decrypted = openssl_decrypt($encryptedText, 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
         return $decrypted;
     }
 
