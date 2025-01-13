@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,7 +17,7 @@ class EmailMessageAnswerResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "content" => $this->content,
+            "content" => MyHelper::decryptData($this->content),
             "user_name" => $this->user_withTrashed->name . ' ' . $this->user_withTrashed->surname,
             "date" => date('d-m-Y H:i', strtotime($this->created_at))
         ];
