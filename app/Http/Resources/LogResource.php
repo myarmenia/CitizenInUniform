@@ -23,7 +23,8 @@ class LogResource extends JsonResource
         if ( $this->tb_name == 'email_message_answers' || $this->tb_name == 'messages') {
             $details = json_decode($details, true);
             $details['content'] = MyHelper::decryptData($details['content']);
-            $details = json_encode($details);
+
+            $details = json_encode($details, JSON_UNESCAPED_UNICODE);
         }
 
         return [

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Mobile;
 
+use App\Helpers\MyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,7 +24,7 @@ class MUserNotificationResource extends JsonResource
             "content" => $this->setting_id != 4 ?
                         ($this->title && $this->content ?  $this->title . " - " . $this->content :
                         ($this->title ? $this->title :
-                        ($this->content ?? null)))  : ($this->content ?? null),
+                        ($this->content ?? null)))  : ($this->content ? MyHelper::decryptData($this->content) : null),
             "created_at" => $this->created_at
 
         ];
