@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Helpers\MyHelper;
 use App\Interfaces\EmailMessageInterface;
 use App\Models\EmailMessages;
+use App\Services\FileUploadService;
 use Auth;
 
 
@@ -44,10 +45,31 @@ class EmailMessageRepository implements EmailMessageInterface
                 $message = EmailMessages::create($data);
             }
         }
+
         else{
             $data['content'] = MyHelper::encryptData($data['content']);
 
+            $data_without_file=array_diff_key($data, ['files' => '']);
+
+        
             $message = EmailMessages::create($data);
+            dd($data['files']);
+           if(!empty($data['files'])){
+                foreach($data['files'] as $file){
+                    dd($file);
+                    $path = FileUploadService::upload( $file, $table_name . '/' . $item->id);
+                    $photoData = [
+                      'path' => $path,
+                      'name' => $photo->getClientOriginalName()
+                    ];
+
+                    $item->images()->create($photoData);
+
+                }
+            }
+
+
+// ============
         }
 
         return $message;

@@ -6,6 +6,7 @@ use App\Traits\FilterTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class EmailMessages extends Model
@@ -36,5 +37,10 @@ class EmailMessages extends Model
     {
         return $this->hasMany(EmailMessageAnswer::class, 'email_message_id');
     }
+    public function emailMessagesfiles(): HasMany
+    {
+        return $this->hasMany(EmailMessagesFile::class);
+    }
+
 
 }

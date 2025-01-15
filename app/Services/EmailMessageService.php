@@ -29,7 +29,7 @@ class EmailMessageService
 
     public function store($data)
     {
-
+        // dd($data);
         return $this->emailMessageRepository->store($data->toArray());
 
     }
