@@ -57,6 +57,23 @@ const dataSave = async () => {
     }
 }
 
+const isImage = (file) => {
+  const imageFormats = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg'];
+  const fileExtension = file.name.split('.').pop().toLowerCase();
+  return imageFormats.includes(fileExtension);
+};
+
+const isOther = (file) => {
+  const documentFormats = ['doc', 'docx', 'xls', 'xlsx', 'txt'];
+  const fileExtension = file.name.split('.').pop().toLowerCase();
+  return documentFormats.includes(fileExtension);
+};
+const isPdf = (file) => {
+  const fileExtension = file.name.split('.').pop().toLowerCase();
+  return fileExtension === 'pdf';
+};
+
+
 </script>
 
 
@@ -106,6 +123,10 @@ const dataSave = async () => {
                                         <div class="col-lg-3 col-md-4 label">Էլ․ հասցե</div>
                                         <div class="col-lg-9 col-md-8">{{message.email}}</div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Հեռախոսահամար</div>
+                                        <div class="col-lg-9 col-md-8">{{message.phone}}</div>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Ամսաթիվ</div>
@@ -113,6 +134,35 @@ const dataSave = async () => {
                                     </div>
                                     <h5 class="card-title">Հաղորդագրություն</h5>
                                     <p class="small fst-italic">{{message.content}}</p>
+                                    <h5 class="card-title">Կից ֆայլեր</h5>
+
+                                    <div class="justify-content-start" v-if="message.files && message.files.length > 0">
+                                        <div v-for="(file, index) in message.files" :key="index" class="mx-2">
+
+
+                                                <div class="d-flex justify-content-start col-sm-9 flex-wrap" v-if="isImage(file)">
+
+                                                    <div class="files d-flex align-items-start">
+                                                        <a :href="file.path" target="_blank">
+                                                            <img :src="file.path" alt="Изображение" class="image img-thumbnail mx-0 my-2" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div v-else-if="isOther(file)">
+                                                        <a :href="file.path" target="_blank">
+                                                            <i class="fa fa-file"></i> {{ file.name }}
+                                                        </a>
+                                                </div>
+                                                <div v-else-if="isPdf(file)">
+                                                    <a :href="file.path" target="_blank">
+                                                        <i class="fa fa-file"></i> {{ file.name }}
+                                                    </a>
+                                                </div>
+
+
+                                        </div>
+
+                                    </div>
 
                                 </div>
                             </div>
