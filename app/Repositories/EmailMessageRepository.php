@@ -7,7 +7,7 @@ use App\Interfaces\EmailMessageInterface;
 use App\Models\EmailMessages;
 use App\Services\FileUploadService;
 use Auth;
-
+use Illuminate\Support\Arr;
 
 class EmailMessageRepository implements EmailMessageInterface
 {
@@ -49,27 +49,29 @@ class EmailMessageRepository implements EmailMessageInterface
         else{
             $data['content'] = MyHelper::encryptData($data['content']);
 
-            $data_without_file=array_diff_key($data, ['files' => '']);
+            $files = $data['files'];
 
-        
+            $data_without_files= Arr::forget($data, 'files');
+
             $message = EmailMessages::create($data);
-            dd($data['files']);
-           if(!empty($data['files'])){
-                foreach($data['files'] as $file){
-                    dd($file);
-                    $path = FileUploadService::upload( $file, $table_name . '/' . $item->id);
-                    $photoData = [
+
+           if(!empty($files)){
+            $email_messages_file=[];
+                foreach($files as $file){
+
+                    $path = FileUploadService::upload( $file,  'email_messages/' . $message->id);
+                    $email_messages_file[] = [
                       'path' => $path,
-                      'name' => $photo->getClientOriginalName()
+                      'name' => $file->getClientOriginalName()
                     ];
-
-                    $item->images()->create($photoData);
-
                 }
+
+                $message->email_messages_files()->createMany($email_messages_file);
+
             }
 
 
-// ============
+
         }
 
         return $message;

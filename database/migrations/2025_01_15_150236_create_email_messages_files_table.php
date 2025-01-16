@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('email_messages_files', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('email_message_id')->unsigned();
-            $table->foreign('email_message_id')->references('id')->on('email_messages')->onDelete('cascade');
+            $table->bigInteger('email_messages_id')->unsigned();
+            $table->foreign('email_messages_id')->references('id')->on('email_messages')->onDelete('cascade');
             $table->string('path');
             $table->string('name');
             $table->timestamps();

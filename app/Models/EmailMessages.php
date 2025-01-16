@@ -37,7 +37,8 @@ class EmailMessages extends Model
     {
         return $this->hasMany(EmailMessageAnswer::class, 'email_message_id');
     }
-    public function emailMessagesfiles(): HasMany
+    public function email_messages_files(): HasMany
+
     {
         return $this->hasMany(EmailMessagesFile::class);
     }

@@ -12,6 +12,6 @@ class EmailMessagesFile extends Model
 
     public function email_messages(): BelongsTo
     {
-        return $this->belongsTo(EmailMessages::class,'email_message_id');
+        return $this->belongsTo(EmailMessages::class);
     }
 }
