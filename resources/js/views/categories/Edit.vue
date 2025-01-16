@@ -28,6 +28,7 @@ const getCategy = async () => {
 
        form.title = response.data.result.title
        form.file = response.data.result.path
+       console.log(form.file)
 
     })
 }

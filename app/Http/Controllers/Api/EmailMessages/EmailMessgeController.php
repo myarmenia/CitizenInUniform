@@ -51,9 +51,7 @@ class EmailMessgeController extends BaseController
     public function store(EmailMessageRequest $request)
     {
 
-        // dd($request->all());
         $data = $this->service->store(EmailMessageDto::fromEmailMessageDto($request));
-
         return $data != null ? $this->sendResponse([], 'success') : $this->sendError('error');
 
     }
@@ -66,6 +64,7 @@ class EmailMessgeController extends BaseController
     {
 
         $data = $this->service->getItem($id);
+        // dd($data);
 
         $data = $data != null ? EmailSingleMessageResource::make($data) : null;
 
