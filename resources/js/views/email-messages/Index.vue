@@ -233,6 +233,7 @@ const changePage =(link) =>{
                                         <th>Հարցի կատեգորիա</th>
                                         <th>Անուն Ազգանուն</th>
                                         <th>Էլ․ հասցե</th>
+                                        <th>Հեռախոսահամար</th>
                                         <th>Ամսաթիվ</th>
                                         <th width="10%">Գործողություն</th>
                                     </tr>
@@ -243,6 +244,7 @@ const changePage =(link) =>{
                                         <td>{{ message.msg_category_name }}</td>
                                         <td>{{ message.fullname }}</td>
                                         <td>{{ message.email }}</td>
+                                        <td>{{ message.phone }}</td>
                                         <td>{{ message.date }}</td>
 
                                         <td>
